@@ -2,7 +2,7 @@
 
 ## TEAM BRAND
 
-## Values: team and user efficiency, quality, aesthetic
+## Team and User Efficiency, Quality, Aesthetic
 
 ---
 ## Members:
