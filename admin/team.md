@@ -19,4 +19,5 @@ Hi.  I'm Eric (3rd year CS major).  I like chilling out with my friends.  If I'm
 8. **Shirley Qi**: 
 I'm a second year Math-CS major from ERC. In my free time, I enjoy dancing, as well as watch anime and youtube. Here is my Github Pages: [Shirley Qi](https://sq19.github.io/shirley.github.io/)
 9.  **Yunhao Du**
+10.  **Andrew Slater**
 
