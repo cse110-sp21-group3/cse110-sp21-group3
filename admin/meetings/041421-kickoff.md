@@ -4,6 +4,7 @@
 
 *Type of Meeting*: Kickoff
 *Time/Place*: Zoom, 4:00 PM
+*Time ended*: 5:05 PM
 
 *Attendance*:
 - [X] Amy Nguyen
