@@ -7,7 +7,7 @@
 ---
 ## Members:
 1. **Amy Nguyen**:
-Hi! I'm a second year CS major in Revelle College, and one of the co-leads for this project! I enjoy painting on records, cooking, and hiking! I also love wiener dogs! Here's a link to my Github Pages: https://amytnguyen01.github.io/CSE110Lab1/
+Hi! I'm a second year CS major in Revelle College, and one of the co-leads for this project! I enjoy painting on records, cooking, and hiking! I also love wiener dogs! Here's a link to my Github Pages: [Amy Nguyen] (https://amytnguyen01.github.io/CSE110Lab1/)
 2. **Brian Chen**: 
 I am a second year CS major in Warren College, and one of the co-leads for this project! Some of my hobbies include playing video games with my friends, cooking, and trying new foods. Here is my Github Pages: [Brian Chen](https://brichen.github.io/brian/)
 3. **Aman Aggarwal**
