@@ -1,6 +1,6 @@
 # TaskOverflow
 
-## Team Brand
+## [![brand image](branding/taskoverflow.png)](branding/taskoverflow.mp4)
 
 ## Team and User Efficiency, Quality, Aesthetic
 
