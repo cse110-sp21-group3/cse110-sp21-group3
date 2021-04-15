@@ -21,3 +21,10 @@
 
 - Team Page
 - Team Intro Video
+- Group Contract
+
+## Decisions
+
+- Team Name - TaskOverflow
+- Team Roles
+- Team video idea
