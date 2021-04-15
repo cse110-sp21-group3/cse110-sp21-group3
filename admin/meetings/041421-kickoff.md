@@ -25,6 +25,6 @@
 
 ## Decisions
 
-- Team Name - TaskOverflow
+- Team Name - "TaskOverflow"
 - Team Roles
-- Team video idea
+- Team Video Idea - Problem statement + individual intros
