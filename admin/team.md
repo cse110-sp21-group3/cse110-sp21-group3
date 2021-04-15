@@ -1,6 +1,6 @@
 # TaskOverflow
 
-## [Brand Video](branding/Task Overflow.mp4)
+## Team Brand
 
 ## Team and User Efficiency, Quality, Aesthetic
 
