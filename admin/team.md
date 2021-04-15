@@ -17,7 +17,7 @@ I'm a 2nd year Computer Engineering major in Warren College. My hobbies include 
 5. **Brian Seo** I'm a 2nd year Math-CS major in ERC. I like to play a lot of sports such as basketball, baseball, and spikeball. I also do music production in my free time for fun. Here is my GitHub: [Brian Seo](https://brianseo718.github.io/lab1-cse110/)
 6. **Eric Chen**
 Hi.  I'm Eric (3rd year CS major).  I like chilling out with my friends.  If I'm by myself, then I'll probably watch anime or go on a walk.  Here is my Github pages: [Eric Chen](https://erc003.github.io/cse110Page/)
-7. **Matei Gardus**
+7. **Matei Gardus** I'm a 2nd year CS major in Warren. I like coding and heaving a healthy work-life balance. My free time is almost exclusively filled by playing board games, video games and hanging out with friends. I have a [personal website](https://stormhub.io), but this is my GitHub page: [Matei-Alexandru Gardus](https://stormfirefox1.github.io/CSE110-Lab1/).
 8. **Shirley Qi**: 
 I'm a second year Math-CS major from ERC. In my free time, I enjoy dancing, as well as watch anime and youtube. Here is my Github Pages: [Shirley Qi](https://sq19.github.io/shirley.github.io/)
 9.  **Yunhao Du** I am a third year student of CS major in Sixth college. I like to play video games and watch anime in my free time. Here is my Github pages:[Yunhao Du](https://github.com/xuanyuanhaotian/CSE110_lab1)
