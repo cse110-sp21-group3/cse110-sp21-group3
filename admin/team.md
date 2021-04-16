@@ -12,9 +12,9 @@ TaskOverflow will allow you manage and contain your tasks, plans, ideas, and mor
 
 ## Team Values
 
-- Team and User Efficiency: allow the user to get the most out of products through team productivity
-- Quality: provide high-quality products that goes above and beyond for the users
-- Aesthetic: present products that are elegant and well-polished 
+- **Team and User Efficiency**: allow the user to get the most out of products through team productivity
+- **Quality**: provide high-quality products that goes above and beyond for the users
+- **Aesthetic**: present products that are elegant and well-polished 
 
 
 ---
