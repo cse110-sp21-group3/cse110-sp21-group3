@@ -17,9 +17,6 @@ TaskOverflow will allow you manage and contain your tasks, plans, ideas, and mor
 - Aesthetic: present products that are elegant and well-polished 
 
 
-
-## Team and User Efficiency, Quality, Aesthetic
-
 ---
 ## Members:
 1. **Amy Nguyen**:
