@@ -2,6 +2,22 @@
 
 ## [![brand image](branding/taskoverflow.png)](branding/taskoverflow.mp4)
 
+<img src="./branding/taskoverflow-icon.png" width=200> 
+
+## Team Mission & Goals
+
+Provide **innovative**, **effective**, and **quality solutions** that empowers _you_ to **achieve more**.  
+
+TaskOverflow will allow you manage and contain your tasks, plans, ideas, and more and keep them from...**_overflowing_**.
+
+## Team Values
+
+- Team and User Efficiency: allow the user to get the most out of products through team productivity
+- Quality: provide high-quality products that goes above and beyond for the users
+- Aesthetic: present products that are elegant and well-polished 
+
+
+
 ## Team and User Efficiency, Quality, Aesthetic
 
 ---
@@ -24,3 +40,4 @@ I'm a second year Math-CS major from ERC. In my free time, I enjoy dancing, as w
 9.  **Yunhao Du** I am a third year student of CS major in Sixth college. I like to play video games and watch anime in my free time. Here is my Github pages:[Yunhao Du](https://github.com/xuanyuanhaotian/CSE110_lab1)
 11.  **Andrew Slater** Hi I'm AJ a 2nd year CS major in Warren. I like swimming, surfing, the beach, video games, and reading. [Andrew Slater](https://ajslaterhb2000.github.io/PagesProject/)
 
+[Meet Us!](https://youtu.be/4dB7LYlNhpE)
