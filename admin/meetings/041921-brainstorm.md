@@ -3,6 +3,7 @@
 ## Brainstorm meeting 1
 
 *Type of Meeting*: Brainstorming
+
 *Time/Place*: Zoom, 6:00-7:00 PM
 
 *Attendance*:
