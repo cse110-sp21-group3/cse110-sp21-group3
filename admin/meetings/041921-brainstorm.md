@@ -15,12 +15,14 @@
 - [x] Eric Chen
 - [x] Shirley Qi
 - [x] Yunhao Du
-- [ ] Matei-Alexandru Gardus
+- [x] Matei-Alexandru Gardus
 
 ## Agenda
 ### Brainstorming ideas for the Bullet Journal
 Came up with ideas individually
+
 Ideas discussed in breakout rooms
+
 1. Design - What theme should it have?
 2. Functionality - What functions do we want?
 
