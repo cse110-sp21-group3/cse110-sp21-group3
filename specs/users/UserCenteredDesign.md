@@ -5,7 +5,7 @@ for the "product", Task Overflow's Bullet Journal
 ## Defining the Users & Their Goals
 
 ### Users
-- The users are those, particularly the ages 15-35 (and especially those in college or recent grads), who want to strive for productivity, but are unable to achieve their needs due to a lack of direction or organization, and they can come from all walks of life. Users may have previously used Bullet Journaling or a similar method, or are completely new to the domain and looking for a fresh solution. 
+- The users are those, particularly the ages 15-35 (especially students in high school & college or recent grads), who want to strive for productivity (in health/lifestyle, outlook, achieving goals, finance, and more), but are unable to achieve their needs due to a lack of direction or organization, and they can come from all walks of life. Users may have previously used Bullet Journaling or a similar method, or are completely new to the domain and looking for a fresh solution. 
 
 ### Goals & Jobs to be Done
 - Users want to be able to improve their daily and future lifestyle by following themes and noting habits.
