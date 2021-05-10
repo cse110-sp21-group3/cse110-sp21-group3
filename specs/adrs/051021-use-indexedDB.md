@@ -1,4 +1,4 @@
-# [short title of solved problem and solution]
+# [Data Storage Method]
 
 * Status: Accepted  <!-- optional -->
 * Deciders: All Team <!-- optional -->
