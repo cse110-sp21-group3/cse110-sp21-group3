@@ -2,8 +2,8 @@
 
 ## Meeting Information
 
-*Type of Meeting*: Discussing CI/CD Pipeline and Starting Design
-*Time/Place*:
+*Type of Meeting*: Discussing CI/CD Pipeline and Starting Design.  
+*Time/Place*: 6-7 Zoom
 
 *Attendance*:
 - [ ] Amy Nguyen
