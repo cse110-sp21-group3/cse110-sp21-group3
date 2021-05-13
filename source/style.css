@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+* {
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    background-color: #efefef;
+}
+
+.menu {
+    position: absolute;
+    background-color: #EEE4E1;
+    height: 60px;
+    width: 60px;
+    left: 30px;
+    top: 30px;
+    border-radius: 15px;
+    transition: transform .3s cubic-bezier(0, .52, 0, 1);
+}
+
+.menu > img {
+    position: absolute;
+    width: 39px;
+    height: 39px;
+    top: 11px;
+    left: 10px;
+}
+
+.menu:hover {
+    background-color: #CCB9B3;
+}
+
+header {
+    text-align: center;
+}
+
+.top-header{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.title {   
+    margin-top: -5px;
+    margin-bottom: -5px;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 72px;
+    line-height: 98px;
+
+    color: #000000;
+}
+
+.question {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 33px;
+    letter-spacing: 0em;
+
+    width: 100vw;
+
+    color: #FFFFFF;
+    background-color: #64A6BD;
+}
+
+#nav {
+    position: fixed;
+    width: 25vw;
+    height: 100vh;
+    background-color: #EEE4E1;
+    transform: translate3d(-100vw, 0, 0);
+    transition: 1s;
+    z-index: 1000;
+    top: 0px;
+    left: 0px;
+    overflow: scroll;
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.nav-component {
+    border-bottom: 1px solid #9A9A9A;
+}
+
+.nav-component > p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 29px;
+    line-height: 49px;
+
+    color: #000000;
+}
+
+.nav-component > p:hover {
+    text-decoration: underline;
+}
+
+#nav.show {
+    transform: translate3d(0vw, 0, 0);
+    transition: .3s;
+}
+
+.log-body {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.daily-log {
+    text-align: center;
+    position: relative;
+}
+
+.daily-log > p {
+    margin-top: -5px;
+    margin-bottom: 5px;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 49px;
+
+    color: #000000;
+}
+
+.daily-log-form {
+    width: 1042px;
+    height: 666px;
+
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 44px;
+}
+
+.habits {
+    text-align: center;
+}
+
+.habits > p {
+    margin-top: -5px;
+    margin-bottom: 5px;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 49px;
+
+    color: #000000;
+}
+
+.habits-form {
+    width: 249px;
+    height: 666px;
+
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 44px;
+}
+
+.add-log{
+    display: flex;
+}
+
+.add {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    border-radius: 100%;
+    left: 34px;
+    bottom: 28px;
+    background-color: #64A6BD;
+    border-style: none;
+    color: #FFFFFF;
+    font-size: xx-large;
+}
+
+.add:hover {
+    background-color: #7AC9E4;
+}
+
+.add-log > p {
+    position: absolute;
+    left: 116px;
+    bottom: 20px;
+
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 33px;
+    /* identical to box height */
+
+    color: #A4A4A4;
+    background-color: white;
+}
