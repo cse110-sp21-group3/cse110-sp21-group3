@@ -32,3 +32,20 @@ function openForm(e) {
 function closeForm(e) {
     modal.style.display = "none";
 }
+
+
+///
+
+const submit = document.getElementById('submitForm');
+submit.onclick = (e) => {
+
+    const bullet = document.getElementById('bullet').value;
+    console.log(bullet);
+
+    let newPost;
+    const mainContainer = document.getElementsByTagName('main')[0];
+    newPost = document.createElement('bullet-log');
+    mainContainer.appendChild(newPost);
+}
+
+
