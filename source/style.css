@@ -126,11 +126,18 @@ cursor: pointer;
 .log-body {
     display: flex;
     justify-content: space-evenly;
+
+    width: 100%;
+    height: 100%;
 }
 
 .daily-log {
     text-align: center;
     position: relative;
+
+    width: 60%;
+    height: 100%;
+
 }
 
 .daily-log > p {
@@ -146,8 +153,7 @@ cursor: pointer;
 }
 
 .daily-log-form {
-    width: 1042px;
-    height: 666px;
+    height: 500px;
 
     background: #FFFFFF;
     border: 2px solid #FFFFFF;
@@ -160,6 +166,9 @@ cursor: pointer;
 
 .habits {
     text-align: center;
+
+    width: 20%;
+    height: 100%;
 }
 
 .habits > p {
@@ -175,8 +184,8 @@ cursor: pointer;
 }
 
 .habits-form {
-    width: 249px;
-    height: 666px;
+
+    height: 500px;
 
     background: #FFFFFF;
     border: 2px solid #FFFFFF;
@@ -187,6 +196,10 @@ cursor: pointer;
 
 .add-log{
     display: flex;
+    position: absolute;
+    bottom: 20px;
+    height: 100px;
+    width: 100%;
 }
 
 .add {

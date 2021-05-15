@@ -9,12 +9,14 @@ class BulletLog extends HTMLElement {
             <style>
                 .entry {
                     background-color: red;
+                    margin-left: 30px;
                     border-radius: 6px;
                     list-style-type: none;
                     margin-bottom: 30px;
-                    max-width: 700px;
-                    padding: 20px;
                     width: 80%;
+                }
+                .entry p {
+                    display: inline-block;
                 }
         
             </style>
@@ -35,11 +37,24 @@ class BulletLog extends HTMLElement {
     }
 
     set entry(entry) {
+        
         const modifier = this.shadowRoot.querySelector('.modifier');
-        modifier.innerHTML = modifier.title;
+        if (entry.modifier === 'importance'){
+            modifier.innerHTML = '*';
+        } else {
+            modifier.innerHTML = '!'
+        }
     
         const type = this.shadowRoot.querySelector('.type');
-        type.innerHTML = type.date;
+        if (entry.type === 'task') {
+            type.innerHTML = '&bull;'
+        } else if (entry.type === 'note') {
+            type.innerHTML = '&ndash;'
+        } else if (entry.type === 'event') {
+            type.innerHTML = '&#9702;'
+        } else {
+            type.innerHTML = '&#11088;'
+        }
         
         const content = this.shadowRoot.querySelector('.content')
         content.innerHTML = entry.content;

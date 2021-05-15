@@ -39,23 +39,22 @@ function closeForm(e) {
 const submit = document.getElementById('submitForm');
 submit.onclick = () => {
 
-    const bullet = document.getElementById('bullet').value;
-    console.log(bullet);
+    const content = document.getElementById('bullet').value;
+    const type = document.getElementById('bullet-type').value;
+    const modifier = document.getElementById('bullet-modifier').value;
 
 
-    const test = {
-        modifier: '!',
-        type: '-',
-        content: 'Hello World',
+    const entry = {
+        modifier: modifier,
+        type: type,
+        content: content,
     };
 
     let bulletLog;
-    const mainContainer = document.getElementsByTagName('main')[0];
-
     const dailyLog = document.getElementById('daily-log-form')
     bulletLog = document.createElement('bullet-log');
-    bulletLog.setAttribute('entry', test);
-    bulletLog.entry = test;
+    bulletLog.setAttribute('entry', entry);
+    bulletLog.entry = entry;
     dailyLog.prepend(bulletLog);
 
     closeForm();
