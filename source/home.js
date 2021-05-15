@@ -37,15 +37,28 @@ function closeForm(e) {
 ///
 
 const submit = document.getElementById('submitForm');
-submit.onclick = (e) => {
+submit.onclick = () => {
 
     const bullet = document.getElementById('bullet').value;
     console.log(bullet);
 
-    let newPost;
+
+    const test = {
+        modifier: '!',
+        type: '-',
+        content: 'Hello World',
+    };
+
+    let bulletLog;
     const mainContainer = document.getElementsByTagName('main')[0];
-    newPost = document.createElement('bullet-log');
-    mainContainer.appendChild(newPost);
-}
+
+    const dailyLog = document.getElementById('daily-log-form')
+    bulletLog = document.createElement('bullet-log');
+    bulletLog.setAttribute('entry', test);
+    bulletLog.entry = test;
+    dailyLog.prepend(bulletLog);
+
+    closeForm();
+};
 
 
