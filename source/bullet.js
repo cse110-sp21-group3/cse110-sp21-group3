@@ -73,8 +73,10 @@ class BulletLog extends HTMLElement {
         const modifier = this.shadowRoot.querySelector('.modifier');
         if (entry.modifier === 'importance'){
             modifier.innerHTML = '*';
-        } else {
+        } else if (entry.modifier === 'inspiration'){
             modifier.innerHTML = '!'
+        } else {
+            modifier.innerHTML = "";
         }
     
         const type = this.shadowRoot.querySelector('.type');
