@@ -1,13 +1,13 @@
 var currKey;
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.length != 1) {
-        Object.keys(localStorage).map(k => {
-            const entry = JSON.parse(localStorage.getItem(k));
-            currKey = k;
+    Object.keys(localStorage).map(k => {
+        const entry = JSON.parse(localStorage.getItem(k));
+        currKey = k;
+        if (currKey != "replaced_stats") {
             addEntry(entry);
-        });
-    }
+        }
+    });
 });
 
 var menuButton = document.querySelector(".menu");
