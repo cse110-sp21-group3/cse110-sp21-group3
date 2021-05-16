@@ -1,11 +1,13 @@
 var currKey;
 
 document.addEventListener('DOMContentLoaded', () => {
-    Object.keys(localStorage).map(k => {
-        const entry = JSON.parse(localStorage.getItem(k));
-        currKey = k;
-        addEntry(entry);
-    });
+    if (localStorage.length != 1) {
+        Object.keys(localStorage).map(k => {
+            const entry = JSON.parse(localStorage.getItem(k));
+            currKey = k;
+            addEntry(entry);
+        });
+    }
 });
 
 var menuButton = document.querySelector(".menu");
@@ -86,8 +88,6 @@ function addEntry(entry) {
     bulletLog.modifier = entry.modifier;
     bulletLog.content = entry.content;
     bulletLog.keyname = currKey;
-
-    console.log(currKey);
 
     let deleteButton = bulletLog.shadowRoot.querySelector(".deleteBtn");
     deleteButton.addEventListener("click", () => {deleteEntry(bulletLog)});
