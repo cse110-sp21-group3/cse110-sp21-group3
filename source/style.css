@@ -249,11 +249,51 @@ cursor: pointer;
   
   /* Modal Content/Box */
   .modal-content {
-    background-color: #fefefe;
+    background-color: #efefef;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
+    border-radius: 20px;
+  }
+
+  #bullet {
+    border-radius: 20px;
+    width: 90%;
+    border: none;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+
+  .selectors {
+      display: flex;
+  }
+
+  .type {
+      margin-right: 5%;
+  }
+
+  #bullet-type {
+    border-radius: 5px;
+    border: 1px solid #888;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  #bullet-modifier {
+    border-radius: 5px;
+    border: 1px solid #888;
+    margin-bottom: 5px;
+  }
+
+  .submit {
+      display: flex;
+      justify-content: flex-end;
+  }
+
+  #submitForm {
+      border-radius: 5px;
+      border: 1px solid #888;
   }
   
   /* The Close Button */
