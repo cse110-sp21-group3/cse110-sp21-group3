@@ -1,3 +1,11 @@
+document.addEventListener('DOMContentLoaded', () => {
+    Object.keys(localStorage).map(k => {
+        const entry = JSON.parse(localStorage.getItem(k));
+        retrieveEntry(entry);
+    });
+    console.log(Object.keys(localStorage));
+});
+
 var menuButton = document.querySelector(".menu");
 menuButton.addEventListener("click", showMenu, false);
 
@@ -39,16 +47,23 @@ function closeForm(e) {
 const submit = document.getElementById('submitForm');
 submit.onclick = () => {
 
-    const content = document.getElementById('bullet').value;
-    const type = document.getElementById('bullet-type').value;
     const modifier = document.getElementById('bullet-modifier').value;
-
+    const type = document.getElementById('bullet-type').value;
+    const content = document.getElementById('bullet').value;
 
     const entry = {
         modifier: modifier,
         type: type,
         content: content,
     };
+
+    addEntry(entry);
+
+    closeForm();
+};
+
+
+function addEntry(entry) {
 
     let bulletLog;
     const dailyLog = document.getElementById('daily-log-form')
@@ -57,7 +72,16 @@ submit.onclick = () => {
     bulletLog.entry = entry;
     dailyLog.prepend(bulletLog);
 
-    closeForm();
-};
+    localStorage.setItem(Math.random(10), JSON.stringify(entry));
 
+}
+
+function retrieveEntry(entry){
+    let bulletLog;
+    const dailyLog = document.getElementById('daily-log-form')
+    bulletLog = document.createElement('bullet-log');
+    bulletLog.setAttribute('entry', entry);
+    bulletLog.entry = entry;
+    dailyLog.prepend(bulletLog);
+}
 

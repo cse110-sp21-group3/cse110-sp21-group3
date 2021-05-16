@@ -14,6 +14,8 @@ class BulletLog extends HTMLElement {
                     list-style-type: none;
                     margin-bottom: 30px;
                     width: 80%;
+                    text-align: left;
+                    padding: 20px;
                 }
                 .entry p {
                     display: inline-block;
