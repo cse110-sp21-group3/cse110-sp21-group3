@@ -42,7 +42,9 @@ function closeForm(e) {
 }
 
 
-///
+/*
+** For bullet entries
+*/
 
 const submit = document.getElementById('submitForm');
 submit.onclick = () => {

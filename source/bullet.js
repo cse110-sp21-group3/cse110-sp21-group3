@@ -8,26 +8,56 @@ class BulletLog extends HTMLElement {
         template.innerHTML = `
             <style>
                 .entry {
-                    background-color: red;
                     margin-left: 30px;
                     border-radius: 6px;
                     list-style-type: none;
-                    margin-bottom: 30px;
                     width: 80%;
                     text-align: left;
-                    padding: 20px;
+                    padding-left: 20px;
+                    display: flex;
+                    align-items: center;
                 }
+
                 .entry p {
                     display: inline-block;
+                    font-size: 20px;
                 }
+
+                .editBtn {
+                    display: none;
+                    margin-left: auto;
+                    margin-right: 10px;
+                }
+                .deleteBtn {
+                    display: none;  
+                }
+
+                .entry:hover .editBtn{
+                    display: inline-block;
+                }
+                .entry:hover .deleteBtn{
+                    display: inline-block;
+                }
+
         
             </style>
+
             <div class="entry">
                 <p class="modifier">Modifier</p>
                 <p class="type">Type</p>
                 <p class="content">Bullet Content</p>
+                <button class="editBtn">Edit</button>
+                <button class="deleteBtn">Delete</button>
             </div>
+
+            <script>
+                const x = document.querySelector('.deleteBtn');
+                x.onclick = () => {
+                    alert('a');
+                };
+            </script>
         `;
+
 
         this.attachShadow({ mode: 'open' })
         this.shadowRoot.appendChild(template.content.cloneNode(true))
@@ -63,7 +93,6 @@ class BulletLog extends HTMLElement {
 
         this.setAttribute('entry', entry);
     }
-
 
 }
 
