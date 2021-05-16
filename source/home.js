@@ -64,20 +64,25 @@ submitAdd.onclick = () => {
     };
 
     if (content != "") {
-        addEntry(entry);
-        localStorage.setItem(Math.random(10), JSON.stringify(entry));
+        let keyname = Math.random(10);
+        addEntry(entry, keyname);
+        localStorage.setItem(keyname, JSON.stringify(entry));
         closeForm();
     }
 };
 
 
-function addEntry(entry) {
+function addEntry(entry, keyname) {
 
     let bulletLog;
     const dailyLog = document.getElementById('daily-log-form');
     bulletLog = document.createElement('bullet-log');
     bulletLog.setAttribute('entry', entry);
     bulletLog.entry = entry;
+    bulletLog.type = entry.type;
+    bulletLog.modifier = entry.modifier;
+    bulletLog.content = entry.content;
+    bulletLog.keyname = keyname;
 
     let deleteButton = bulletLog.shadowRoot.querySelector(".deleteBtn");
     deleteButton.addEventListener("click", () => {deleteEntry(bulletLog)});
@@ -98,6 +103,10 @@ function addEntry(entry) {
         };
         if (content != "") {
             bulletLog.entry = entry;
+            bulletLog.content = entry.content;
+            bulletLog.modifier = entry.modifier;
+            bulletLog.type = entry.type;
+            localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
             closeForm(editForm);
         }
     })
@@ -109,28 +118,14 @@ function addEntry(entry) {
 function deleteEntry(bulletLog) {
     const dailyLog = document.getElementById('daily-log-form');
     dailyLog.removeChild(bulletLog);
+    localStorage.removeItem(bulletLog.keyname);
+    console.log(localStorage.getItem(bulletLog.keyname) === null);
 }
 
 function editEntry(editForm, bulletLog) {
-    let modifier = bulletLog.shadowRoot.querySelector(".modifier").innerHTML;
-    if (modifier == '*') {
-        modifier = 'importance';
-    } else if (modifier == '!') {
-        modifier = 'inspiration';
-    } else {
-        modifier = 'none'
-    }
-    let type = bulletLog.shadowRoot.querySelector(".type").innerHTML;
-    if (type == '&bull;') {
-        type = 'task';
-    } else if (type == '&ndash;') {
-        type = 'note';
-    } else if (type == '&#9702;') {
-        type = 'event';
-    } else {
-        type = 'theme'
-    }
-    let content = bulletLog.shadowRoot.querySelector(".content").innerHTML;
+    let modifier = bulletLog.modifier;
+    let type = bulletLog.type;
+    let content = bulletLog.content;
 
     let bulletModifier = editForm.querySelector('#bullet-modifier');
     let bulletType = editForm.querySelector('#bullet-type');
@@ -139,7 +134,7 @@ function editEntry(editForm, bulletLog) {
     bullet.value = content;
     bulletType.value = type;
     bulletModifier.value = modifier;
-    
+
     openForm(editForm);
 }
 

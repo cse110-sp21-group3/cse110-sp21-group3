@@ -210,6 +210,38 @@ class BulletLog extends HTMLElement {
         this.setAttribute('entry', entry);
     }
 
+    get modifier() {
+        return this.getAttribute('modifier');
+    }
+
+    set modifier(modifier) {
+        this.setAttribute('modifier', modifier);
+    }
+
+    get content() {
+        return this.getAttribute('content');
+    }
+
+    set content(content) {
+        this.setAttribute('content', content);
+    }
+
+    get type() {
+        return this.getAttribute('type');
+    }
+
+    set type(type) {
+        this.setAttribute('type', type);
+    }
+
+    get keyname() {
+        return this.getAttribute('keyname');
+    }
+
+    set keyname(keyname) {
+        this.setAttribute('keyname', keyname);
+    }
+
 }
 
 customElements.define('bullet-log', BulletLog);
