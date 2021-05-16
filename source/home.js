@@ -1,22 +1,32 @@
-var currKey;
-
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * Retrieve entries from localStorage on load
+ */
+let currKey;
+document.addEventListener("DOMContentLoaded", () => {
     Object.keys(localStorage).map(k => {
         const entry = JSON.parse(localStorage.getItem(k));
         currKey = k;
-        if (currKey != "replaced_stats") {
-            addEntry(entry);
-        }
+        // if (currKey != "replaced_stats") {if showing up in localStorage}
+        addEntry(entry);
     });
 });
 
-var menuButton = document.querySelector(".menu");
+/**
+ * Hamburger menu button
+ */
+const menuButton = document.querySelector(".menu");
 menuButton.addEventListener("click", showMenu, false);
 
-var flyoutMenu = document.querySelector("#nav");
-
-var navSpan = document.querySelector(".close-nav");
+/**
+ * Close menu button 
+ */
+const navSpan = document.querySelector(".close-nav");
 navSpan.addEventListener("click", hideMenu, false);
+
+/**
+ * Menu 
+ */
+const flyoutMenu = document.querySelector("#nav");
 
 function showMenu(e) {
     flyoutMenu.classList.add("show");
@@ -25,122 +35,165 @@ function showMenu(e) {
 function hideMenu(e) {
     flyoutMenu.classList.remove("show");
     e.stopPropagation();
-
     document.body.style.overflow = "auto";
 }   
 
-var addForm = document.querySelector("#addForm");
-
-var addBullet = document.querySelector(".add");
-addBullet.addEventListener("click", () => {
-    openForm(addForm);
-});
-
-var addClose = addForm.querySelector(".close-form");
-addClose.addEventListener("click", () => {closeForm(addForm)});
-
+/**
+ * Open and close a modal/form
+ */
 function openForm(form) {
     form.style.display = "block";
 }
 
 function closeForm(form) {
     form.style.display = "none";
-    form.querySelector('#bullet').value = "";
-    form.querySelector('#bullet-type').selectedIndex = 0;
-    form.querySelector('#bullet-modifier').selectedIndex = 0;
+    form.querySelector("#bullet").value = "";
+    form.querySelector("#bullet-type").selectedIndex = 0;
+    form.querySelector("#bullet-modifier").selectedIndex = 0;
 }
 
+/**
+ * Buttons for opening and closing bullet entry modal
+ */
+const addForm = document.querySelector("#addForm");
+
+const addBullet = document.querySelector(".add");
+addBullet.addEventListener("click", () => {openForm(addForm)});
+
+const addClose = addForm.querySelector(".close-form");
+addClose.addEventListener("click", () => {closeForm(addForm)});
 
 /*
-** For bullet entries
+** Add Bullet Entry
 */
-
-const submitAdd = addForm.querySelector('.submit #submitForm');
+const submitAdd = addForm.querySelector(".submit #submitForm");
 submitAdd.onclick = () => {
 
-    const modifier = addForm.querySelector('#bullet-modifier').value;
-    const type = addForm.querySelector('#bullet-type').value;
-    const content = addForm.querySelector('#bullet').value;
+    // modifier, type, and content from the form
+    const modifier = addForm.querySelector("#bullet-modifier").value;
+    const type = addForm.querySelector("#bullet-type").value;
+    const content = addForm.querySelector("#bullet").value;
 
+    // populate entry object
     const entry = {
         modifier: modifier,
         type: type,
         content: content,
     };
 
+    // add entry to DOM & localStorage if content isn't empty
     if (content != "") {
+        // current key workaround for testing, use auto-incremented keys when refactoring with Dexie/IndexedDB
         currKey = Math.random(10);
         addEntry(entry);
         localStorage.setItem(currKey, JSON.stringify(entry));
         closeForm(addForm);
+    } else {
+        alert("Please add your thoughts");
     }
 };
 
-
+/**
+ * Add Entry 
+ */
 function addEntry(entry) {
 
+    // Set bullet log attributes based on current entry
     let bulletLog;
-    const dailyLog = document.getElementById('daily-log-form');
-    bulletLog = document.createElement('bullet-log');
-    bulletLog.setAttribute('entry', entry);
+    bulletLog = document.createElement("bullet-log");
+    // bulletLog.setAttribute('entry', entry); // do we need this?
     bulletLog.entry = entry;
     bulletLog.type = entry.type;
     bulletLog.modifier = entry.modifier;
     bulletLog.content = entry.content;
     bulletLog.keyname = currKey;
 
-    let deleteButton = bulletLog.shadowRoot.querySelector(".deleteBtn");
+    // delete button
+    const deleteButton = bulletLog.shadowRoot.querySelector(".deleteBtn");
     deleteButton.addEventListener("click", () => {deleteEntry(bulletLog)});
-    let editForm = bulletLog.shadowRoot.querySelector("#editForm");
-    let editButton = bulletLog.shadowRoot.querySelector(".editBtn");
-    editButton.addEventListener("click", () => {editEntry(editForm, bulletLog)});
-    let closeEdit = bulletLog.shadowRoot.querySelector(".close-form");
-    closeEdit.addEventListener("click", () => {closeForm(editForm)});
-    let submitEdit = bulletLog.shadowRoot.querySelector("#submitForm");
-    submitEdit.addEventListener("click", () => {
-        const modifier = editForm.querySelector('#bullet-modifier').value;
-        const type = editForm.querySelector('#bullet-type').value;
-        const content = editForm.querySelector('#bullet').value;
-        const entry = {
-            modifier: modifier,
-            type: type,
-            content: content
-        };
-        if (content != "") {
-            bulletLog.entry = entry;
-            bulletLog.content = entry.content;
-            bulletLog.modifier = entry.modifier;
-            bulletLog.type = entry.type;
-            currKey = bulletLog.keyname;
-            localStorage.setItem(currKey, JSON.stringify(entry));
-            closeForm(editForm);
-        }
-    })
 
+    // edit form
+    const editForm = bulletLog.shadowRoot.querySelector("#editForm");
+
+    // open edit button
+    const editButton = bulletLog.shadowRoot.querySelector(".editBtn");
+    editButton.addEventListener("click", () => {openEditEntry(editForm, bulletLog)});
+
+    // close edit button
+    const closeEdit = bulletLog.shadowRoot.querySelector(".close-form");
+    closeEdit.addEventListener("click", () => {closeForm(editForm)});
+
+    // submit edit button
+    const submitEdit = bulletLog.shadowRoot.querySelector("#submitForm");
+    submitEdit.addEventListener("click", () => {submitEditEntry(editForm, bulletLog)});
+
+    // add bulletLog to DOM
+    const dailyLog = document.getElementById("daily-log-form");
     dailyLog.prepend(bulletLog);
 
 }
 
+/**
+ * Delete Entry
+ */
 function deleteEntry(bulletLog) {
-    const dailyLog = document.getElementById('daily-log-form');
+    // remove from DOM
+    const dailyLog = document.getElementById("daily-log-form");
     dailyLog.removeChild(bulletLog);
+
+    // remove from localStorage
     currKey = bulletLog.keyname;
     localStorage.removeItem(currKey);
 }
 
-function editEntry(editForm, bulletLog) {
-    let modifier = bulletLog.modifier;
-    let type = bulletLog.type;
-    let content = bulletLog.content;
+/**
+ * Open Edit Entry 
+ */
+function openEditEntry(editForm, bulletLog) {
 
-    let bulletModifier = editForm.querySelector('#bullet-modifier');
-    let bulletType = editForm.querySelector('#bullet-type');
-    let bullet = editForm.querySelector('#bullet');
+    // get current modifier, type, content
+    const modifier = bulletLog.modifier;
+    const type = bulletLog.type;
+    const content = bulletLog.content;
 
-    bullet.value = content;
+    // get modifier, type, content elements in edit form modal
+    const bulletModifier = editForm.querySelector("#bullet-modifier");
+    const bulletType = editForm.querySelector("#bullet-type");
+    const bulletContent = editForm.querySelector("#bullet");
+    
+    // set elements fields to current values
+    bulletContent.value = content;
     bulletType.value = type;
     bulletModifier.value = modifier;
 
     openForm(editForm);
+}
+
+/**
+ * Submit Edit Entry
+ */
+function submitEditEntry(editForm, bulletLog) {
+
+    // get new modifier, type, content
+    const modifier = editForm.querySelector("#bullet-modifier").value;
+    const type = editForm.querySelector("#bullet-type").value;
+    const content = editForm.querySelector("#bullet").value;
+    
+    // populate entry object with new values
+    const entry = {
+        modifier: modifier,
+        type: type,
+        content: content
+    };
+
+    // set elements fields to new values
+    bulletLog.entry = entry;
+    bulletLog.content = entry.content;
+    bulletLog.modifier = entry.modifier;
+    bulletLog.type = entry.type;
+    currKey = bulletLog.keyname;
+    
+    localStorage.setItem(currKey, JSON.stringify(entry));
+    closeForm(editForm);
 }
 

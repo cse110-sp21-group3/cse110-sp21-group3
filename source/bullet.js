@@ -3,10 +3,11 @@ class BulletLog extends HTMLElement {
     constructor () {
         super();
 
-
         const template = document.createElement('template');
+        
         template.innerHTML = `
             <style>
+                /* Entry (bullet log) display */
                 .entry {
                     margin-left: 30px;
                     border-radius: 6px;
@@ -126,9 +127,9 @@ class BulletLog extends HTMLElement {
                     cursor: pointer;
                 }
 
-        
             </style>
 
+            <!-- Template -->
             <div class="entry">
                 <p class="modifier">Modifier</p>
                 <p class="type">Type</p>
@@ -136,9 +137,9 @@ class BulletLog extends HTMLElement {
                 <button class="editBtn">Edit</button>
                 <button class="deleteBtn">Delete</button>
             </div>
-            
+
+            <!-- Edit modal -->
             <div id="editForm" class="modal">
-            <!-- Modal content -->
             <div class="modal-content">
                 <span class="close-form">&times;</span>
                 <form>
@@ -178,13 +179,17 @@ class BulletLog extends HTMLElement {
 
     }
 
+    /**
+     * Entry
+     */
     get entry() {
         return this.getAttribute('entry');
     }
 
     set entry(entry) {
-        
-        let modifier = this.shadowRoot.querySelector('.modifier');
+
+        // set modifier
+        const modifier = this.shadowRoot.querySelector('.modifier');
         if (entry.modifier === 'importance'){
             modifier.innerHTML = '*';
         } else if (entry.modifier === 'inspiration'){
@@ -193,7 +198,8 @@ class BulletLog extends HTMLElement {
             modifier.innerHTML = " ";
         }
     
-        let type = this.shadowRoot.querySelector('.type');
+        // set type
+        const type = this.shadowRoot.querySelector('.type');
         if (entry.type === 'task') {
             type.innerHTML = '&bull;'
         } else if (entry.type === 'note') {
@@ -201,15 +207,19 @@ class BulletLog extends HTMLElement {
         } else if (entry.type === 'event') {
             type.innerHTML = '&#9702;'
         } else {
-            type.innerHTML = '&#11088;'
+            type.innerHTML = '&#11088;' // theme system star
         }
         
-        let content = this.shadowRoot.querySelector('.content')
+        // set content (text)
+        const content = this.shadowRoot.querySelector('.content')
         content.innerHTML = entry.content;
 
         this.setAttribute('entry', entry);
     }
 
+    /**
+     * Modifier (!,*)
+     */
     get modifier() {
         return this.getAttribute('modifier');
     }
@@ -218,6 +228,20 @@ class BulletLog extends HTMLElement {
         this.setAttribute('modifier', modifier);
     }
 
+    /**
+     * Type (note, event, task, theme)
+     */
+     get type() {
+        return this.getAttribute('type');
+    }
+
+    set type(type) {
+        this.setAttribute('type', type);
+    }    
+
+    /**
+     * Content (logging)
+     */
     get content() {
         return this.getAttribute('content');
     }
@@ -226,14 +250,9 @@ class BulletLog extends HTMLElement {
         this.setAttribute('content', content);
     }
 
-    get type() {
-        return this.getAttribute('type');
-    }
-
-    set type(type) {
-        this.setAttribute('type', type);
-    }
-
+    /**
+     * Keyname for storage
+     */
     get keyname() {
         return this.getAttribute('keyname');
     }
