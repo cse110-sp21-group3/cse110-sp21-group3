@@ -4,8 +4,8 @@
   "description": "This is the bullet journal project for CSE 110 Spring 2021 Group 3.",
   "main": "index.js",
   "scripts": {
-    "build" : "postcss source/css/tailwind.css -o source/public/styles.css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "postcss source/css/tailwind.css -o source/public/styles.css",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/cse110-sp21-group3/cse110-sp21-group3#readme",
   "devDependencies": {
     "autoprefixer": "^10.2.5",
+    "jest": "^26.6.3",
     "postcss": "^8.2.15",
     "tailwindcss": "^2.1.2"
   },
