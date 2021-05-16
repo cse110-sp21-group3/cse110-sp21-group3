@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     Object.keys(localStorage).map(k => {
         const entry = JSON.parse(localStorage.getItem(k));
-        retrieveEntry(entry);
+        addEntry(entry);
     });
-    console.log(Object.keys(localStorage));
 });
 
 var menuButton = document.querySelector(".menu");
@@ -39,6 +38,9 @@ function openForm() {
 
 function closeForm() {
     modal.style.display = "none";
+    document.getElementById('bullet').value = "";
+    document.getElementById('bullet-type').selectedIndex = 0;
+    document.getElementById('bullet-modifier').selectedIndex = 0;
 }
 
 
@@ -61,6 +63,7 @@ submit.onclick = () => {
 
     if (content != "") {
         addEntry(entry);
+        localStorage.setItem(Math.random(10), JSON.stringify(entry));
         closeForm();
     }
 };
@@ -73,30 +76,23 @@ function addEntry(entry) {
     bulletLog = document.createElement('bullet-log');
     bulletLog.setAttribute('entry', entry);
     bulletLog.entry = entry;
+
     let deleteButton = bulletLog.shadowRoot.querySelector(".deleteBtn");
-    deleteButton.addEventListener("click", () => {deleteBullet(bulletLog)});
+    deleteButton.addEventListener('click', () => {deleteEntry(bulletLog)});
     let editButton = bulletLog.shadowRoot.querySelector(".editBtn");
-    editButton.addEventListener("click", () => {editBullet(bulletLog)});
+    editButton.addEventListener('click', () => {editEntry(bulletLog)});
+
     dailyLog.prepend(bulletLog);
 
-    localStorage.setItem(Math.random(10), JSON.stringify(entry));
 }
 
-function deleteBullet(bulletLog) {
+function deleteEntry(bulletLog) {
     const dailyLog = document.getElementById('daily-log-form');
+    console.log(bulletLog);
     dailyLog.removeChild(bulletLog);
 }
 
-function editBullet(bulletLog) {
-    console.log("edit");
-}
-
-function retrieveEntry(entry){
-    let bulletLog;
-    const dailyLog = document.getElementById('daily-log-form')
-    bulletLog = document.createElement('bullet-log');
-    bulletLog.setAttribute('entry', entry);
-    bulletLog.entry = entry;
-    dailyLog.prepend(bulletLog);
+function editEntry(bulletLog) {
+    console.log('edit');
 }
 
