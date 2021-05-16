@@ -1,0 +1,29 @@
+{
+  "name": "cse110-sp21-group3",
+  "version": "1.0.0",
+  "description": "This is the bullet journal project for CSE 110 Spring 2021 Group 3.",
+  "main": "index.js",
+  "scripts": {
+    "build" : "postcss source/css/tailwind.css -o source/public/styles.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cse110-sp21-group3/cse110-sp21-group3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cse110-sp21-group3/cse110-sp21-group3/issues"
+  },
+  "homepage": "https://github.com/cse110-sp21-group3/cse110-sp21-group3#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.15",
+    "tailwindcss": "^2.1.2"
+  },
+  "dependencies": {
+    "postcss-cli": "^8.3.1"
+  }
+}
