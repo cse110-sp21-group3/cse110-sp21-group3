@@ -64,7 +64,7 @@ const addClose = addForm.querySelector(".close-form");
 addClose.addEventListener("click", () => {closeForm(addForm)});
 
 /*
-** Add Bullet Entry
+** Submit Add Bullet Entry
 */
 const submitAdd = addForm.querySelector(".submit #submitForm");
 submitAdd.onclick = () => {
@@ -192,8 +192,10 @@ function submitEditEntry(editForm, bulletLog) {
     bulletLog.modifier = entry.modifier;
     bulletLog.type = entry.type;
     currKey = bulletLog.keyname;
-    
+
+    // update localStorage
     localStorage.setItem(currKey, JSON.stringify(entry));
+    
     closeForm(editForm);
 }
 
