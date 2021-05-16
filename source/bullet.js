@@ -23,6 +23,10 @@ class BulletLog extends HTMLElement {
                     font-size: 20px;
                 }
 
+                .type {
+                    margin-right: 5px;
+                }
+
                 .editBtn {
                     display: none;
                     margin-left: auto;
@@ -48,15 +52,8 @@ class BulletLog extends HTMLElement {
                 <p class="content">Bullet Content</p>
                 <button class="editBtn">Edit</button>
                 <button class="deleteBtn">Delete</button>
-            </div>
-
-            <script>
-                const x = document.querySelector('.deleteBtn');
-                x.onclick = () => {
-                    alert('a');
-                };
-            </script>
-        `;
+            </div>`
+            ;
 
 
         this.attachShadow({ mode: 'open' })
