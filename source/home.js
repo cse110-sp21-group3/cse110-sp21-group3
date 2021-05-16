@@ -1,6 +1,9 @@
+var currKey;
+
 document.addEventListener('DOMContentLoaded', () => {
     Object.keys(localStorage).map(k => {
         const entry = JSON.parse(localStorage.getItem(k));
+        currKey = k;
         addEntry(entry);
     });
 });
@@ -64,15 +67,15 @@ submitAdd.onclick = () => {
     };
 
     if (content != "") {
-        let keyname = Math.random(10);
-        addEntry(entry, keyname);
-        localStorage.setItem(keyname, JSON.stringify(entry));
-        closeForm();
+        currKey = Math.random(10);
+        addEntry(entry);
+        localStorage.setItem(currKey, JSON.stringify(entry));
+        closeForm(addForm);
     }
 };
 
 
-function addEntry(entry, keyname) {
+function addEntry(entry) {
 
     let bulletLog;
     const dailyLog = document.getElementById('daily-log-form');
@@ -82,7 +85,9 @@ function addEntry(entry, keyname) {
     bulletLog.type = entry.type;
     bulletLog.modifier = entry.modifier;
     bulletLog.content = entry.content;
-    bulletLog.keyname = keyname;
+    bulletLog.keyname = currKey;
+
+    console.log(currKey);
 
     let deleteButton = bulletLog.shadowRoot.querySelector(".deleteBtn");
     deleteButton.addEventListener("click", () => {deleteEntry(bulletLog)});
@@ -106,7 +111,8 @@ function addEntry(entry, keyname) {
             bulletLog.content = entry.content;
             bulletLog.modifier = entry.modifier;
             bulletLog.type = entry.type;
-            localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
+            currKey = bulletLog.keyname;
+            localStorage.setItem(currKey, JSON.stringify(entry));
             closeForm(editForm);
         }
     })
@@ -118,8 +124,8 @@ function addEntry(entry, keyname) {
 function deleteEntry(bulletLog) {
     const dailyLog = document.getElementById('daily-log-form');
     dailyLog.removeChild(bulletLog);
-    localStorage.removeItem(bulletLog.keyname);
-    console.log(localStorage.getItem(bulletLog.keyname) === null);
+    currKey = bulletLog.keyname;
+    localStorage.removeItem(currKey);
 }
 
 function editEntry(editForm, bulletLog) {
