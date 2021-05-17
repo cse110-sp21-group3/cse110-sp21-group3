@@ -30,7 +30,7 @@ Team Video:
   - Next Steps: (25 sec)
     - try to refactor from localStorage to indexedDB/Dexie
     - work on design/display features 
-      - date
+      - date (refresh every day, store old data)
       - bullet symbols for dropdown
       - strikethrough for delete (?)
       - complete task functionality (check mark)
