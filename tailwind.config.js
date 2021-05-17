@@ -1,4 +1,4 @@
-const enablePurge = process.env.NODE_ENV === "production" ? true : false;
+const enablePurge = process.env.NODE_ENV === 'production';
 module.exports = {
   purge: {
     enabled: enablePurge,
