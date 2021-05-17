@@ -22,3 +22,11 @@ npm test
 ```
 
 Any other tests must be added in `__tests__/`
+
+
+## Using Linter
+To run linter locally, use the following command:
+```
+npm run lint /path/to/file
+```
+Note: Run this command from the root of the repo
