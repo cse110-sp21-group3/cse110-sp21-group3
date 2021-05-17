@@ -6,7 +6,8 @@
   "scripts": {
     "build": "postcss source/css/tailwind.css -o source/public/styles.css",
     "test": "jest",
-    "lint" : "./node_modules/.bin/eslint"
+    "lint": "eslint --ext js source/src/",
+    "lint:fix": "eslint --ext js source/src/ --fix"
   },
   "repository": {
     "type": "git",
