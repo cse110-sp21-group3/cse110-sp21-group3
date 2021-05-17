@@ -35,5 +35,6 @@ Team Video:
       - strikethrough for delete (?)
       - complete task functionality (check mark)
       - bullet nesting
+      - remove modal and have submit form below daily log? 
     - habit tracker 
     - integrate styles/themes from journal onboarding/creation
