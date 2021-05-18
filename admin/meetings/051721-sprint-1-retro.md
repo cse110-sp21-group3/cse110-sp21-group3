@@ -2,8 +2,8 @@
 
 ## Meeting Information
 
-*Type of Meeting*:
-*Time/Place*:
+*Type of Meeting*: Sprint 1 Retrospective   
+*Time/Place*: Zoom 4:45-5:15 & asynchronously
 
 *Attendance*:
 - [X] Amy Nguyen

@@ -2,8 +2,8 @@
 
 ## Meeting Information
 
-*Type of Meeting*:
-*Time/Place*:
+*Type of Meeting*: Sprint 1 Review   
+*Time/Place*: Zoom 4-4:45   
 
 *Attendance*:
 - [X] Amy Nguyen
@@ -38,6 +38,7 @@ Challenges: Blocked on designs to get started with coding
 Team Daily Log
 Positives: Got basic functionalities setup
 Challenges: Storing the data
+Demo: [Included in Status Video](../videos/statusvideo1.md)
 
 ### Technical Decisions
 - Decided to store data like themes and journal colors in local storage
