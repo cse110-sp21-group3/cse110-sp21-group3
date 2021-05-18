@@ -22,6 +22,7 @@
 
 ![Retro thoughts 1](media/retrium-thoughts-1.png)
 ![Retro thoughts 2](media/retrium-thoughts-2.png)
+![Retro thoughts 3](media/retrium-thoughts-3.png)
 
 ### Top 5 voted thoughts from Retrium Retrospective
 - There were still confusions about how to implement IndexedDB and how to implement rapid logging without a submit button
