@@ -1,2 +1,5 @@
 extends:
   - "airbnb"
+
+env:
+  browser: true # Added for eslint to allow using DOM objects
