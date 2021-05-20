@@ -97,8 +97,8 @@ header {
 }
 
 .title {   
-    margin-top: -5px;
-    margin-bottom: -5px;
+    margin-top: -1rem;
+    margin-bottom: -1rem;
 
     font-style: normal;
     font-weight: bold;
@@ -134,7 +134,7 @@ header {
     position: relative;
 
     width: 60%;
-    height: 550px;
+    height: 100%;
 }
 
 .daily-log-title {
@@ -175,7 +175,7 @@ header {
 .habits > p {
     margin-top: -1rem;
     margin-bottom: 1rem;
-    
+
     font-style: normal;
     font-weight: bold;
     font-size: 36px;
@@ -254,11 +254,11 @@ header {
 }
 
 #bullet {
-    border-radius: 20px;
+    border-radius: 1rem;
     width: 90%;
     border: none;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 .selectors {
@@ -266,20 +266,20 @@ header {
 }
 
 .type {
-    margin-right: 5%;
+    margin-right: 1rem;
 }
 
 #bullet-type {
-    border-radius: 5px;
+    border-radius: 1rem;
     border: 1px solid #888;
-    margin-bottom: 5px;
+    margin-bottom: 1rem;
     width: 100%;
 }
 
 #bullet-modifier {
-    border-radius: 5px;
+    border-radius: 1rem;
     border: 1px solid #888;
-    margin-bottom: 5px;
+    margin-bottom: 1rem;
 }
 
 .submit {
@@ -288,7 +288,7 @@ header {
 }
 
 #submitForm {
-    border-radius: 5px;
+    border-radius: 1rem;
     border: 1px solid #888;
 }
 
