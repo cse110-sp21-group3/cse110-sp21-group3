@@ -5,32 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trends</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
-    <body class="bg-gray-200 h-screen">
-        <h1 class="text-4xl text-center m-4">trends</h1>
-        <div class="w-screen h-8 bg-blue-300"></div>
+    <body>
+        <h1 id="header-title">trends</h1>
+        <div id="bar"></div>
         <!-- Turn each 2 x 3 grid into its own component -->
-        <div id="grid1" class="grid grid-rows-2 grid-cols-3 gap-8 m-8 h-full">
+        <div id="grid1">
         <!-- <grid-elem num=1> -->
-            <div class="flex flex-col text-center">
-                <h1 class="text-3xl m-4">add new habit</h1>
-                <div id="add" class="flex flex-col justify-center bg-gray-400 text-center rounded-3xl h-auto flex-grow hover:bg-gray-500">
-                    <p class="text-8xl text-white">+</p>
+            <div id="add-div">
+                <h1 id="add-label">add new habit</h1>
+                <div id="add">
+                    <p>+</p>
                 </div>
             </div>
         <!-- </grid-elem> -->
         </div>
 </body>
-<script src="trends.js" type="module"></script>
 
 <template>
     <div id="habit">
         <h1 class="title">Habit</h1>
         <div class="habit-grid"></div>
     </div>
-  </template>
+</template>
 
+<template>
+    <div class="circle"></div>
+</template>
+
+<script src="trends.js" type="module"></script>
 <script src="tracker.js" type="module"></script>
+<script src="habitCircle.js" type="module"></script>
 <script src="grid.js" type="module"></script>
+
 </html>
