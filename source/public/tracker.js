@@ -7,22 +7,32 @@ class Tracker extends HTMLElement {
         
         template.innerHTML = `
             <style>
-                @import "./styles.css"
+                .habit {
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .title {
+                    font-size: 3xl;
+                    margin: 1rem;
+                }
+
+                .habit-grid {
+                    display: grid;
+                    grid-template-rows: repeat(5, minmax(0, 1fr));
+                    grid-template-columns: repeat(5, minmax(0, 1fr));
+                    gap: 2rem;
+                    padding: 1rem;
+                    flex-grow: 1;
+                    background-color: white;
+                    border-radius: 1.5rem;
+                }
             </style>
             <!-- Template -->
-            <div id="habit" class="flex flex-col text-center">
-                <h1 id="title" class="text-3xl m-4">Habit</h1>
-                <div id="habit-grid" class="grid grid-rows-5 grid-cols-7 gap-8 p-4 flex-grow bg-white rounded-3xl">
-                    <script>
-                        let habitGrid = document.getElementById("habit-grid");
-                        for (let i = 0; i < 31; i++) {
-                            let habitCircle = document.createElement("div");
-                            habitCircle.className = "rounded-full border-none bg-gray-200";
-                            habitCircle.id = i + 1;
-                            habitGrid.appendChild(habitCircle);
-                        }
-                    </script>
-                </div>
+            <div class="habit">
+                <h1 class="title">habit</h1>
+                <div class="habit-grid"></div>
             </div>`
             ;
 
@@ -41,11 +51,19 @@ class Tracker extends HTMLElement {
 
     set habit(habit) {
         // Set title of grid and id of div to habit
-        const title = this.shadowRoot.querySelector('#title');
+        const title = this.shadowRoot.querySelector('.title');
         title.innerHTML = habit;
-        const grid = this.shadowRoot.querySelector('#habit');
+        const grid = this.shadowRoot.querySelector('.habit');
         grid.id = habit;
         this.setAttribute('habit', habit);
+    }
+
+    get color() {
+        return this.getAttribute('color');
+    }
+
+    set color(color) {
+        this.setAttribute('color', color);
     }
 
     /**
@@ -60,4 +78,4 @@ class Tracker extends HTMLElement {
     }
 }
 
-customElements.define('tracker', Tracker);
+customElements.define('tracker-elem', Tracker);

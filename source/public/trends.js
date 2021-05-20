@@ -1,14 +1,22 @@
-
-let habitGrid = document.getElementById("habit-grid");
-for (let i = 0; i < 31; i++) {
-    let habitCircle = document.createElement("div");
-    habitCircle.className = "rounded-full border-none bg-gray-200";
-    habitGrid.appendChild(habitCircle);
-}
-
 let add = document.getElementById("add");
-addHabit.addEventListener("click", () => {addHabit()});
+add.addEventListener("click", () => {addHabit()});
 
 function addHabit() {
     alert("add habit");
 }
+
+let water = document.createElement("tracker-elem");
+water.habit = "water";
+water.color = "#599fe0";
+let grid1 = document.getElementById("grid1");
+grid1.prepend(water);
+
+// let habitGrid = document.querySelector("tracker-elem[habit='water']");
+// for (let i = 1; i <= 31; i++) {
+//     let habitCircle = document.createElement("div");
+//     habitCircle.id = "circle"+i;
+//     habitCircle.style.borderRadius = "100%";
+//     habitCircle.style.border = "none";
+//     habitCircle.style.backgroundColor = "#dbdbdb";
+//     habitGrid.appendChild(habitCircle);
+// }

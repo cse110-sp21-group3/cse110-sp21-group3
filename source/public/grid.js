@@ -7,10 +7,17 @@ class Grid extends HTMLElement {
         
         template.innerHTML = `
             <style>
-                @import "./styles.css"
+                .habit-grid {
+                    display: grid;
+                    grid-template-rows: repeat(2, minmax(0, 1fr));
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                    gap: 2rem;
+                    margin: 2rem;
+                    height: 100vh;
+                }
             </style>
             <!-- Template -->
-            <div id="0" class="grid grid-rows-2 grid-cols-3 gap-8 m-8 h-full"></div>`
+            <div id="grid0" class="habit-grid"></div>`
             ;
 
 
@@ -28,10 +35,10 @@ class Grid extends HTMLElement {
 
     set num(num) {
         // Set id of div to num
-        const grid = this.shadowRoot.querySelector('#0');
-        grid.id = num;
+        const grid = this.shadowRoot.querySelector('.habit-grid');
+        grid.id = "grid"+num;
         this.setAttribute('num', num);
     }
 }
 
-customElements.define('grid', Grid);
+customElements.define('grid-elem', Grid);

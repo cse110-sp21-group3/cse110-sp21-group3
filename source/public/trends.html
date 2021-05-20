@@ -7,37 +7,30 @@
     <title>Trends</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
     <body class="bg-gray-200 h-screen">
         <h1 class="text-4xl text-center m-4">trends</h1>
         <div class="w-screen h-8 bg-blue-300"></div>
         <!-- Turn each 2 x 3 grid into its own component -->
-        <div class="grid grid-rows-2 grid-cols-3 gap-8 m-8 h-full">
-            <!-- Turn each habit tracker into its own component -->
-            <div id="water" class="flex flex-col text-center">
-                <h1 id="title" class="text-3xl m-4">water</h1>
-                <div id="habit-grid" class="grid grid-rows-5 grid-cols-7 gap-8 p-4 flex-grow bg-white rounded-3xl">
-                    <script>
-                        let habitGrid = document.getElementById("habit-grid");
-                        for (let i = 0; i < 31; i++) {
-                            let habitCircle = document.createElement("div");
-                            habitCircle.className = "rounded-full border-none bg-gray-200";
-                            habitCircle.id = i + 1;
-                            habitGrid.appendChild(habitCircle);
-                        }
-                    </script>
-                </div>
-            </div>
+        <div id="grid1" class="grid grid-rows-2 grid-cols-3 gap-8 m-8 h-full">
+        <!-- <grid-elem num=1> -->
             <div class="flex flex-col text-center">
                 <h1 class="text-3xl m-4">add new habit</h1>
                 <div id="add" class="flex flex-col justify-center bg-gray-400 text-center rounded-3xl h-auto flex-grow hover:bg-gray-500">
                     <p class="text-8xl text-white">+</p>
                 </div>
             </div>
+        <!-- </grid-elem> -->
         </div>
-    </body>
 </body>
-<script src="./trends.js" type="module"></script>
-<script src="./tracker.js" type="module"></script>
-<script src="./grid.js" type="module"></script>
+<script src="trends.js" type="module"></script>
+
+<template>
+    <div id="habit">
+        <h1 class="title">Habit</h1>
+        <div class="habit-grid"></div>
+    </div>
+  </template>
+
+<script src="tracker.js" type="module"></script>
+<script src="grid.js" type="module"></script>
 </html>
