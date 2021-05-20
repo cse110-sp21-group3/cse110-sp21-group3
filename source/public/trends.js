@@ -1,3 +1,22 @@
+const DATE = new Date();
+const currMonth = DATE.getMonth();
+const currYear = DATE.getFullYear();
+let numDays;
+if (currMonth == 0 || currMonth == 2 || currMonth == 4 || currMonth == 6 || currMonth == 7 || currMonth == 9 || currMonth == 11) {
+    numDays = 31;
+}
+else if (currMonth == 1) {
+    if (currYear % 4 == 0) {
+        numDays = 29;
+    }
+    else {
+        numDays = 28;
+    }
+}
+else {
+    numDays = 30;
+}
+
 /**
  * Hamburger menu button
  */
@@ -61,7 +80,7 @@ function addHabit(habit, color) {
     tracker.habit = habit;
     tracker.color = color;
     let habitGrid = tracker.shadowRoot.querySelector(".habit-grid");
-    for (let i = 1; i <= 31; i++) {
+    for (let i = 1; i <= numDays; i++) {
         let habitCircle = document.createElement("div");
         habitCircle.id = "circle"+i;
         habitCircle.style.borderRadius = "100%";
@@ -94,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     water.habit = "water";
     water.color = "#599fe0";
     let habitGrid = water.shadowRoot.querySelector(".habit-grid");
-    for (let i = 1; i <= 31; i++) {
+    for (let i = 1; i <= numDays; i++) {
         let habitCircle = document.createElement("div");
         habitCircle.id = "circle"+i;
         habitCircle.style.borderRadius = "100%";

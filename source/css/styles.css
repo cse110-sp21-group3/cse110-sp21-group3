@@ -26,18 +26,16 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #EEE4E1;
-    height: 5rem;
-    width: 5rem;
-    left: 5rem;
-    top: 5rem;
+    height: 4rem;
+    width: 4rem;
     border-radius: 1rem;
     transition: transform .3s cubic-bezier(0, .52, 0, 1);
     margin: 1rem;;
 }
 
 .menu > img {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3rem;
+    height: 3rem;
 }
 
 .menu:hover {
