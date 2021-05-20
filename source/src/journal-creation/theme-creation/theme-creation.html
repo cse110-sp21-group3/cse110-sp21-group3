@@ -11,10 +11,10 @@
 </head>
 
 <body class="font-sans bg-light-gray">
-    <div class = "dropdown"> 
+    <div class = "absolute inline-block inset-y-0 right-20 underline hover-trigger"> 
         <span> What is the Theme System?</span>
-        <div class = "dropdown-content">
-            <p>The <b>theme system</b> is an easy way for you to make progress towards a certain theme that you can keep in mind during your day-to-day decision making. The theme system encourages self-reflection and helps gradually modify human behavior rather than brutely trying to force change on certain aspects of your life. 
+        <div class = "absolute bg-white w-72 min-w-min shadow z-10 p-4 px-4 hover-target">
+            <p>The <b><u>theme system</u></b> is an easy way for you to make progress towards a certain theme that you can keep in mind during your day-to-day decision making. The theme system encourages self-reflection and helps gradually modify human behavior rather than brutely trying to force change on certain aspects of your life. 
                 <br><br>
                 For an even better understanding of the theme system, watch <a href= "https://www.youtube.com/watch?v=NVGuFdX5guE" target="_blank"><u>here.</u></a>
             </p>
@@ -33,4 +33,12 @@
     <script src="theme.js" type="module"></script>
     
 </body>
+<style>
+    .hover-trigger .hover-target{
+        display:none;
+    }
+    .hover-trigger:hover .hover-target {
+        display:block;
+    }
+</style>
 </html>
