@@ -1,0 +1,32 @@
+* {
+    font-family: 'Nunito', sans-serif;
+}
+body{
+    --tw-bg-opacity: 1;
+    background-color: rgba(229, 229, 229, var(--tw-bg-opacity));
+}
+
+/** 
+ * Styling for 'What is the theme system?'onboarding component on theme
+ * creation page with hover and hyperlink to video.
+ *
+ */
+ .dropdown{
+    position: absolute;
+    top:4px;
+    right:120px;
+    display: inline-block;
+}
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+.dropdown-content{
+    display: none;
+    position: absolute;
+    right:1px;
+    background-color: #f9f9f9;
+    min-width: 300px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
