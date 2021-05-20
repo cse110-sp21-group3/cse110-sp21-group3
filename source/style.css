@@ -246,73 +246,77 @@ cursor: pointer;
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+}
   
   /* Modal Content/Box */
-  .modal-content {
+.modal-content {
     background-color: #efefef;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
     border-radius: 20px;
-  }
+}
 
-  #bullet {
+#bullet {
     border-radius: 20px;
     width: 90%;
     border: none;
     padding: 10px;
     margin-bottom: 5px;
-  }
+}
 
-  .selectors {
-      display: flex;
-  }
+.selectors {
+    display: flex;
+}
 
-  .type {
-      margin-right: 5%;
-  }
+.type {
+    margin-right: 5%;
+}
 
-  #bullet-type {
+#bullet-type {
     border-radius: 5px;
     border: 1px solid #888;
     margin-bottom: 5px;
     width: 100%;
-  }
+}
 
-  #bullet-modifier {
+#bullet-modifier {
     border-radius: 5px;
     border: 1px solid #888;
     margin-bottom: 5px;
-  }
+}
 
-  .submit {
-      display: flex;
-      justify-content: flex-end;
-  }
+.submit {
+    display: flex;
+    justify-content: flex-end;
+}
 
-  #submitForm {
-      border-radius: 5px;
-      border: 1px solid #888;
-  }
+#submitForm {
+    border-radius: 5px;
+    border: 1px solid #888;
+}
 
-  #submitForm:hover {
-      background-color: #A4A4A4;
-      color: white;
-  }
+#submitForm:hover {
+    background-color: #A4A4A4;
+    color: white;
+}
   
-  /* The Close Button */
-  .close-form {
+/* The Close Button */
+.close-form {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
+}
   
-  .close-form:hover,
-  .close-form:focus {
+.close-form:hover,
+.close-form:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-  }
+}
+
+p.date {
+    font-size: large;
+}

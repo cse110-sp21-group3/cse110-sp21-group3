@@ -1,11 +1,29 @@
+import { DATE } from './date.js';
+import { currentDate } from './date.js'
+import { clearDailyLog } from './date.js'
+
+
 /**
  * Retrieve entries from localStorage on load
  */
 let currKey;
+let currDate;
 document.addEventListener("DOMContentLoaded", () => {
     // display entries from newest to oldest (time added to log)
     const dateKeys = Object.keys(localStorage);
     dateKeys.sort();
+
+    const d = dateKeys.find(k => k === "DATE");
+    if (d === undefined) {
+        localStorage.setItem("DATE", currentDate);
+        currDate = currentDate;
+        localStorage.removeItem("DATE");
+    } else {
+        currDate = currentDate;
+        localStorage.removeItem("DATE");
+    }
+    console.log(currDate);
+
     dateKeys.map(k => {
         const entry = JSON.parse(localStorage.getItem(k));
         currKey = k;
@@ -13,6 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
             addEntry(entry);
         }
     });
+
+    // localStorage.setItem("DATE", currentDate);
+
+    // clearDailyLog();
+
+    const titleDate = document.querySelector(".date");
+    titleDate.innerHTML = currentDate;
+
 });
 
 /**
@@ -87,8 +113,7 @@ submitAdd.onclick = () => {
 
     // add entry to DOM & localStorage if content isn't empty, using the current UTC date as the key
     if (content != "") {
-        const date = new Date();
-        currKey = date.toUTCString();
+        currKey = DATE.toUTCString();
 
         addEntry(entry);
         localStorage.setItem(currKey, JSON.stringify(entry));
