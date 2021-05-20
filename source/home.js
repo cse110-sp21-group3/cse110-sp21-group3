@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currKey != "replaced_stats") {
             addEntry(entry);
         }
-        //addEntry(entry);
     });
 });
 
