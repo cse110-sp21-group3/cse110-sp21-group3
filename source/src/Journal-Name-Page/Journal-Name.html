@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Journal Name</title>
+    <link rel="stylesheet" href="./../../public/styles.css">
+</head>
+
+<body>
+    <script src="script.js" type="module"></script>
+
+    <form id="set-name" onsubmit="return false" class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+
+        <div class="relative pt-5 pb-1 pr-1 mr-1 sm:max-w-xl sm:mx-auto sm:max-h-xl">
+            <p class="pb-12 text-3xl">
+                Name your Journal
+            </p>
+        </div>
+          
+        <div class="relative pb-1 pr-1 mr-1 sm:max-w-xl sm:mx-auto sm:max-h-xl">
+
+            <div class="absolute pt-20 inset-0 bg-white shadow-lg sm:rounded-lg"></div>
+            <div class="relative py-1 bg-red-500 flex shadow-lg sm:rounded-lg sm:border-2 sm:py-24 sm:px-8">
+                <div class="relative bg-white py-2 px-10 mb-12 -mt-10 sm:rounded-xl"></div>
+            </div>
+
+        </div>
+
+        <div class="relative pt-5 pb-1 pr-1 mr-1 sm:max-w-xl sm:mx-auto sm:max-h-xl">
+            <input type="text" id="journal-name" class="form-input mt-1 block w-full rounded-lg" placeholder="Enter Journal Name...">
+        </div>
+
+        <div class="content-center pt-5 pb-1 pr-1 mr-1 sm:max-w-xl sm:mx-auto sm:max-h-xl">
+          <p id="error" class="text-red-500"></p>
+        </div>
+
+        <div class="content-center pt-5 pb-1 pr-1 mr-1 sm:max-w-xl sm:mx-auto sm:max-h-xl">
+            <button type="submit">Submit</button>
+        </div>
+
+    </div>
+</body>
+
+</html>
