@@ -6,8 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.keys(localStorage).map(k => {
         const entry = JSON.parse(localStorage.getItem(k));
         currKey = k;
-        // if (currKey != "replaced_stats") {if showing up in localStorage}
-        addEntry(entry);
+        if (currKey != "replaced_stats") {
+            addEntry(entry);
+        }
+        //addEntry(entry);
     });
 });
 
