@@ -12,7 +12,7 @@ class BulletLog extends HTMLElement {
                     margin-left: 30px;
                     border-radius: 6px;
                     list-style-type: none;
-                    width: 80%;
+                    width: 90%;
                     text-align: left;
                     padding-left: 20px;
                     display: flex;
@@ -22,26 +22,35 @@ class BulletLog extends HTMLElement {
                 .entry p {
                     display: inline-block;
                     font-size: 20px;
+                    max-width: 70%;
+                    overflow: scroll;
                 }
 
                 .type {
                     margin-right: 5px;
                 }
 
-                .editBtn {
+                .completeBtn {
                     display: none;
                     margin-left: auto;
+                    margin-right: 10px;
+                }
+                .editBtn {
+                    display: none;
                     margin-right: 10px;
                 }
                 .deleteBtn {
                     display: none;  
                 }
 
-                .entry:hover .editBtn{
+                .entry:hover .editBtn {
                     display: inline-block;
                 }
-                .entry:hover .deleteBtn{
+                .entry:hover .deleteBtn {
                     display: inline-block;
+                }
+                .entry:hover .completeBtn {
+                    display: inline-block
                 }
 
                 /* The Modal (background) */
@@ -134,6 +143,7 @@ class BulletLog extends HTMLElement {
                 <p class="modifier">Modifier</p>
                 <p class="type">Type</p>
                 <p class="content">Bullet Content</p>
+                <button class="completeBtn">Complete</button>
                 <button class="editBtn">Edit</button>
                 <button class="deleteBtn">Delete</button>
             </div>
@@ -143,7 +153,7 @@ class BulletLog extends HTMLElement {
             <div class="modal-content">
                 <span class="close-form">&times;</span>
                 <form>
-                <input type="text" id="bullet" placeholder="Add thoughts here..." maxlength="100">
+                <input type="text" id="bullet" placeholder="Add thoughts here..." maxlength="60">
                 <br>
                 <div class="selectors">
                     <div class="type">
@@ -231,7 +241,7 @@ class BulletLog extends HTMLElement {
     /**
      * Type (note, event, task, theme)
      */
-     get type() {
+    get type() {
         return this.getAttribute('type');
     }
 
@@ -259,6 +269,17 @@ class BulletLog extends HTMLElement {
 
     set keyname(keyname) {
         this.setAttribute('keyname', keyname);
+    }
+
+    /**
+     * Completed or not completed
+     */
+    get completed() {
+        return this.getAttribute('completed');
+    }
+
+    set completed(completed){
+        this.setAttribute('completed', completed);
     }
 
 }

@@ -3,7 +3,10 @@
  */
 let currKey;
 document.addEventListener("DOMContentLoaded", () => {
-    Object.keys(localStorage).map(k => {
+    // display entries from newest to oldest (time added to log)
+    const dateKeys = Object.keys(localStorage);
+    dateKeys.sort();
+    dateKeys.map(k => {
         const entry = JSON.parse(localStorage.getItem(k));
         currKey = k;
         // if (currKey != "replaced_stats") {if showing up in localStorage}
@@ -81,12 +84,14 @@ submitAdd.onclick = () => {
         content: content,
     };
 
-    // add entry to DOM & localStorage if content isn't empty
+    // add entry to DOM & localStorage if content isn't empty, using the current UTC date as the key
     if (content != "") {
-        // current key workaround for testing, use auto-incremented keys when refactoring with Dexie/IndexedDB
-        currKey = Math.random(10);
+        const date = new Date();
+        currKey = date.toUTCString();
+
         addEntry(entry);
         localStorage.setItem(currKey, JSON.stringify(entry));
+
         closeForm(addForm);
     } else {
         alert("Please add your thoughts");
@@ -126,6 +131,10 @@ function addEntry(entry) {
     // submit edit button
     const submitEdit = bulletLog.shadowRoot.querySelector("#submitForm");
     submitEdit.addEventListener("click", () => {submitEditEntry(editForm, bulletLog)});
+
+    // complete entry button
+    const completeEntry = bulletLog.shadowRoot.querySelector('.completeBtn');
+    completeEntry.addEventListener("click", () => {completeEntryStrike(bulletLog)});
 
     // add bulletLog to DOM
     const dailyLog = document.getElementById("daily-log-form");
@@ -197,5 +206,18 @@ function submitEditEntry(editForm, bulletLog) {
     localStorage.setItem(currKey, JSON.stringify(entry));
     
     closeForm(editForm);
+}
+
+/**
+ * Complete Entry Strikethrough (still need to persist in localstorage, bulletLog element)
+ */
+function completeEntryStrike(bulletLog) {
+    const modifier = bulletLog.shadowRoot.querySelector('.modifier');
+    const type = bulletLog.shadowRoot.querySelector('.type');
+    const content = bulletLog.shadowRoot.querySelector('.content');
+
+    modifier.style.setProperty('text-decoration', 'line-through');
+    type.style.setProperty('text-decoration', 'line-through');
+    content.style.setProperty('text-decoration', 'line-through');
 }
 
