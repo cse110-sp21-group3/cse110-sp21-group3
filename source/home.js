@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dateKeys.sort();
 
     dateKeys.map(k => {
-        if (k !== "DATE") {
+        if (k !== "MIN") {
             const entry = JSON.parse(localStorage.getItem(k));
             currKey = k;
             if (currKey != "replaced_stats") {
@@ -97,6 +97,7 @@ submitAdd.onclick = () => {
 
     // add entry to DOM & localStorage if content isn't empty, using the current UTC date as the key
     if (content != "") {
+        const DATE = new Date();
         currKey = DATE.toUTCString();
 
         addEntry(entry);
