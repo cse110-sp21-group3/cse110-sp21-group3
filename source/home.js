@@ -1,42 +1,26 @@
-import { DATE } from './date.js';
-import { currentDate } from './date.js'
-import { clearDailyLog } from './date.js'
-
-
 /**
  * Retrieve entries from localStorage on load
  */
 let currKey;
-let currDate;
+const storedDate = localStorage.getItem("MIN");
 document.addEventListener("DOMContentLoaded", () => {
     // display entries from newest to oldest (time added to log)
     const dateKeys = Object.keys(localStorage);
     dateKeys.sort();
 
-    const d = dateKeys.find(k => k === "DATE");
-    if (d === undefined) {
-        localStorage.setItem("DATE", currentDate);
-        currDate = currentDate;
-        localStorage.removeItem("DATE");
-    } else {
-        currDate = currentDate;
-        localStorage.removeItem("DATE");
-    }
-    console.log(currDate);
-
     dateKeys.map(k => {
-        const entry = JSON.parse(localStorage.getItem(k));
-        currKey = k;
-        if (currKey != "replaced_stats") {
-            addEntry(entry);
+        if (k !== "DATE") {
+            const entry = JSON.parse(localStorage.getItem(k));
+            currKey = k;
+            if (currKey != "replaced_stats") {
+                addEntry(entry);
+            }
         }
     });
 
-    // localStorage.setItem("DATE", currentDate);
-
-    // clearDailyLog();
-
     const titleDate = document.querySelector(".date");
+    const DATE = new Date();
+    const currentDate = DATE.toLocaleString().split(",")[0];
     titleDate.innerHTML = currentDate;
 
 });
@@ -247,3 +231,27 @@ function completeEntryStrike(bulletLog) {
     content.style.setProperty('text-decoration', 'line-through');
 }
 
+/**
+ * store and refresh date
+ */
+const storeDate = document.querySelector(".store-date");
+storeDate.addEventListener("click", () => {
+    const DATE = new Date();
+    const minute = DATE.getMinutes();
+    localStorage.setItem("MIN", minute);
+})  
+
+const refreshDate = document.querySelector(".refresh-date");
+refreshDate.addEventListener("click", () => {
+    const DATE = new Date();
+    const currMin = DATE.getMinutes();
+    const storedMin = Number(localStorage.getItem("MIN"));
+
+    if (currMin !== storedMin) {
+        clearDailyLog();
+    }
+});
+
+function clearDailyLog() {
+    console.log('clear');
+}
