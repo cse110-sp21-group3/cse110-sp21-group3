@@ -3,3 +3,8 @@ extends:
 
 env:
   browser: true # Added for eslint to allow using DOM objects
+
+rules:
+  import/extensions:
+    - error
+    - js: ignorePackages # Enabling the use of `.js` in import statements
