@@ -5,6 +5,9 @@ module.exports = {
     content: ["source/public/**/*.html", "source/src/**/*.html", "source/src/**/*.js"]
   },
   darkMode: false, // or 'media' or 'class'
+  theme: {
+    extend: {},
+  },
   variants: {
     extend: {},
   },
