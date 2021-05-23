@@ -24,7 +24,7 @@ body{
     flex-direction: column;
 }
 #theme-input-container > h1 {
-    font-weight: 1000;
+    font-weight: medium;
 
     font-size: 1.5rem;
     line-height: 2rem;
@@ -54,6 +54,8 @@ body{
     line-height: 1.5rem;
     padding: 1rem 0rem;
     color: var(--light-text);
+
+    cursor: pointer;
 }
 #theme-suggestions > a:hover {
     color: var(--dark-text);
@@ -97,18 +99,21 @@ body{
     padding: 12px 16px;
     z-index: 1;
 }
-
+#theme-onboarding {
+    cursor: pointer;
+}
 /*Next button*/
 #submit-theme {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     right: 30px;
-    font-weight: 600px;
+
     text-align: center;
     padding: 0.5rem 1rem;
     border: 1px solid black;
     border-radius: 0.25rem;
 
+    cursor: pointer;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.02);
 }
 #submit-theme:hover {
