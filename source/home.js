@@ -2,14 +2,13 @@
  * Retrieve entries from localStorage on load
  */
 let currKey;
-const storedDate = localStorage.getItem("MIN");
 document.addEventListener("DOMContentLoaded", () => {
     // display entries from newest to oldest (time added to log)
     const dateKeys = Object.keys(localStorage);
     dateKeys.sort();
 
     dateKeys.map(k => {
-        if (k !== "MIN") {
+        if (k !== "DAY") { // if the key is not storing the DAY
             const entry = JSON.parse(localStorage.getItem(k));
             currKey = k;
             if (currKey != "replaced_stats") {
@@ -96,11 +95,13 @@ submitAdd.onclick = () => {
     };
 
     // add entry to DOM & localStorage if content isn't empty, using the current UTC date as the key
+    // also store the current date 
     if (content != "") {
         const DATE = new Date();
         currKey = DATE.toUTCString();
 
         addEntry(entry);
+        storeCurrentDate();
         localStorage.setItem(currKey, JSON.stringify(entry));
 
         closeForm(addForm);
@@ -235,24 +236,32 @@ function completeEntryStrike(bulletLog) {
 /**
  * store and refresh date
  */
-const storeDate = document.querySelector(".store-date");
-storeDate.addEventListener("click", () => {
+
+function storeCurrentDate(){
     const DATE = new Date();
-    const minute = DATE.getMinutes();
-    localStorage.setItem("MIN", minute);
-})  
+    // for testing
+    // const minute = DATE.getMinutes();
+    // localStorage.setItem("MIN", minute);
+    const day = DATE.getDate();
+    localStorage.setItem("DAY", day);
+    console.log(day);
+} 
 
 const refreshDate = document.querySelector(".refresh-date");
 refreshDate.addEventListener("click", () => {
     const DATE = new Date();
-    const currMin = DATE.getMinutes();
-    const storedMin = Number(localStorage.getItem("MIN"));
+    // for testing
+    // const currMin = DATE.getMinutes();  
+    // const storedMin = Number(localStorage.getItem("MIN"));
+    const currDay = DATE.getDate();
+    const storedDay = Number(localStorage.getItem("DAY"));
 
-    if (currMin !== storedMin) {
+    if (storedDay === 0 || currDay !== storedDay) {
         clearDailyLog();
     }
 });
 
 function clearDailyLog() {
-    console.log('clear');
+    localStorage.clear();
+    window.location.reload();
 }
