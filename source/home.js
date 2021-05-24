@@ -93,6 +93,7 @@ submitAdd.onclick = () => {
         type: type,
         content: content, 
         completed: false,
+        nestedAdded: false,
         nested: {   // nested entry initially empty 
             nestedContent: "",
             nestedCompleted: false, 
@@ -133,6 +134,7 @@ function addEntry(entry) {
     bulletLog.completed = entry.completed;
     
     // nested entry
+    bulletLog.nestedAdded = entry.nestedAdded
     bulletLog.nestedEntry = entry.nested;
     bulletLog.nestedContent = entry.nested.nestedContent;
     bulletLog.nestedCompleted = entry.nested.nestedCompleted;
@@ -231,9 +233,10 @@ function submitEditEntry(editForm, bulletLog) {
         type: type,
         content: content,
         completed: false,
+        nestedAdded: bulletLog.nestedAdded === "true",
         nested: {
             nestedContent: bulletLog.nestedContent,
-            nestedComplete: bulletLog.nestedCompleted,
+            nestedCompleted: bulletLog.nestedCompleted,
         },
     };
 
@@ -288,9 +291,10 @@ function completeEntryStrike(bulletLog, completeEntry) {
         type: bulletLog.type,
         content: bulletLog.content,
         completed: true,
+        nestedAdded: bulletLog.nestedAdded === "true",
         nested: {
             nestedContent: bulletLog.nestedContent,
-            nestedComplete: bulletLog.nestedCompleted,
+            nestedCompleted: bulletLog.nestedCompleted,
         },
     };
 
@@ -324,6 +328,7 @@ function removeEntryStrike(bulletLog, completeEntry) {
         type: bulletLog.type,
         content: bulletLog.content,
         completed: false,
+        nestedAdded: bulletLog.nestedAdded === "true",
         nested: {
             nestedContent: bulletLog.nestedContent,
             nestedComplete: bulletLog.nestedCompleted,
@@ -372,7 +377,6 @@ function clearDailyLog() {
  */
 function nestedBulletAppear(bulletLog){
     const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
-    console.log(nestedBullet);
     const nestedStyles =  {
         "display": "inline-block",
         "margin-left": "30px",
@@ -388,8 +392,23 @@ function nestedBulletAppear(bulletLog){
     Object.assign(nestedBullet.style, nestedStyles);
     bulletLog.nestedAdded = true;
 
+    // same entry as before, but now nestedAdded is true
+    const entry = {
+        modifier: bulletLog.modifier,
+        type: bulletLog.type,
+        content: bulletLog.content,
+        completed: false,
+        nestedAdded: true,
+        nested: {
+            nestedContent: bulletLog.nestedContent,
+            nestedCompleted: bulletLog.nestedCompleted,
+        },
+    };
+
+    localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
+
     // nested buttons for complete, edit, delete
-    const nestedComplete = nestedBullet.querySelector(".completeBtn");
+    const nestedComplete = nestedBullet.querySelector(".nestedCompleteBtn");
     nestedComplete.addEventListener("change", () => {
         alert("completed");
     });

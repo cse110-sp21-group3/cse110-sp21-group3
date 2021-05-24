@@ -35,11 +35,6 @@ class BulletLog extends HTMLElement {
                     margin-left: auto;
                     margin-right: 10px;
                 }
-                .nestedCompleteBtn {
-                    display: none;
-                    margin-left: auto;
-                    margin-right: 10px;
-                }
                 .nestBtn {
                     display: none;
                     margin-right: 10px;
@@ -50,6 +45,15 @@ class BulletLog extends HTMLElement {
                 }              
                 .deleteBtn {
                     display: none;  
+                }
+                .nestedCompleteBtn {
+                    display: none;
+                    margin-left: auto;
+                    margin-right: 10px;
+                }
+                .nestedSubmitBtn {
+                    display: none;
+                    margin-right: 10px;
                 }
 
                 /* hover over main bullet */
@@ -69,6 +73,9 @@ class BulletLog extends HTMLElement {
                 /* hover over nested bullet */
                 .nested:hover .nestedCompleteBtn {
                     display: inline-block
+                }
+                .nested:hover .nestedSubmitBtn {
+                    display: inline-block;
                 }
                 .nested:hover .deleteBtn {
                     display: inline-block;
@@ -176,8 +183,9 @@ class BulletLog extends HTMLElement {
                 <button class="deleteBtn">Delete</button>
             </div>
             <div class="nested">
-                <input class="nestedContent" placeholder="Add thoughts here..." maxlength="60">
+                <p class="nestedContent" contenteditable="true">(*/!)(&bull;/&ndash;/&#9702;/&#11088;)(Add thoughts here...)</p>
                 <input type="checkbox" class="nestedCompleteBtn"/>
+                <button class="nestedSubmitBtn">Submit</button>
                 <button class="deleteBtn">Delete</button>
              </div>
 
