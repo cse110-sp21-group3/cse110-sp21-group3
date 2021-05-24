@@ -10,7 +10,6 @@
     --dark-text: black;
 }
 body{
-    --tw-bg-opacity: 1;
     background-color: var(--main-bg);
     padding-left: 1rem;
     padding-right: 1rem;
@@ -57,7 +56,7 @@ body{
 .dropdown{
     position: absolute;
     top:1rem;
-    right:1.5rem;
+    right:0rem;
     display: inline-block;
 }
 .dropdown:hover .dropdown-content{
@@ -73,6 +72,20 @@ body{
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 1rem 1.5rem;
     z-index: 1;
+}
+iframe#theme-onboarding {
+    width: 80vw;
+    height: 50vw;
+}
+
+@media screen and (min-width: 500px) {
+    iframe#theme-onboarding {
+        width: 25rem;
+        height: 15rem;
+    }
+    .dropdown{
+        right:1.5rem;
+    }
 }
 /** Theme input **/
 #theme-input {
@@ -98,7 +111,7 @@ Journal Picker Styling
 
     padding: 1rem 0;
     text-align: center;
-    background: #FFFFFF;
+    background: #FFFFFF; /*TODO: Use variable here*/
     border: 2px solid #FFFFFF;
     box-sizing: border-box;
     border-radius: 1.5rem;
@@ -140,6 +153,7 @@ Journal Picker Styling
 
 
 button.submit {
+    cursor: pointer;
     position: fixed;
     bottom: 2rem;
     right: 2rem;
