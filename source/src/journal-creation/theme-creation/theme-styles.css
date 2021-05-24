@@ -70,6 +70,7 @@ body{
 #theme-title {
     font-weight: bold;
     font-size: xx-large;
+    margin-top: 6rem;
 }
 
 #theme-input {
@@ -88,6 +89,11 @@ body{
 }
 
 #submit-theme {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    min-width: 5rem;
+    
     text-align: center;
     font-weight: 100;
     font-size: medium;
