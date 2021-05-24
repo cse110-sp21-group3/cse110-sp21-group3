@@ -119,7 +119,7 @@ function addEntry(entry) {
     // Set bullet log attributes based on current entry
     let bulletLog;
     bulletLog = document.createElement("bullet-log");
-    // bulletLog.setAttribute('entry', entry); // do we need this?
+
     bulletLog.entry = entry;
     bulletLog.type = entry.type;
     bulletLog.modifier = entry.modifier;
@@ -127,6 +127,7 @@ function addEntry(entry) {
     bulletLog.keyname = currKey;
     bulletLog.completed = entry.completed;
 
+    // if the bullet is completed, then call completeEntryStrike()
     const c = bulletLog.completed == "true" ? true : false; 
     if (c == true) {
         completeEntryStrike(bulletLog);
@@ -151,9 +152,8 @@ function addEntry(entry) {
     const submitEdit = bulletLog.shadowRoot.querySelector("#submitForm");
     submitEdit.addEventListener("click", () => {submitEditEntry(editForm, bulletLog)});
 
-    // complete entry button
+    // complete/uncomplete entry checkbox
     const completeEntry = bulletLog.shadowRoot.querySelector('.completeBtn');
-    // completeEntry.addEventListener("change", () => {completeEntryStrike(bulletLog)});
     completeEntry.addEventListener("change", () => {strikeDecision(bulletLog, completeEntry)});
 
 
@@ -231,7 +231,8 @@ function submitEditEntry(editForm, bulletLog) {
 }
 
 /**
- * Complete Entry Strikethrough (still need to persist in localstorage, bulletLog element)
+ * Completed/Uncomplete functionality that strikes through the bullet text if the
+ * checkbox is checked or it clears the strike when checkbox is unchecked.
  */
 function strikeDecision(bulletLog, completeEntry){
     if (completeEntry.checked) {
@@ -241,21 +242,27 @@ function strikeDecision(bulletLog, completeEntry){
     }
 }
 
+// strikes through bulletLog text 
 function completeEntryStrike(bulletLog, completeEntry) {
 
+    // get elems
     const modifier = bulletLog.shadowRoot.querySelector('.modifier');
     const type = bulletLog.shadowRoot.querySelector('.type');
     const content = bulletLog.shadowRoot.querySelector('.content');
 
+    // strike through
     modifier.style.setProperty('text-decoration', 'line-through');
     type.style.setProperty('text-decoration', 'line-through');
     content.style.setProperty('text-decoration', 'line-through');
 
+    // set checkbox to checked
     const checkbox = bulletLog.shadowRoot.querySelector('.completeBtn');
     checkbox.checked = true;
 
+    // set bulletLog's completed attribute to true
     bulletLog.completed = true;
 
+    // same entry as before, but now completed is true
     const entry = {
         modifier: bulletLog.modifier,
         type: bulletLog.type,
@@ -267,20 +274,27 @@ function completeEntryStrike(bulletLog, completeEntry) {
 
 }
 
+/// clears bulletLog text
 function removeEntryStrike(bulletLog, completeEntry) {
+    
+    // get elems
     const modifier = bulletLog.shadowRoot.querySelector('.modifier');
     const type = bulletLog.shadowRoot.querySelector('.type');
     const content = bulletLog.shadowRoot.querySelector('.content');
 
+    // clear
     modifier.style.setProperty('text-decoration', 'none');
     type.style.setProperty('text-decoration', 'none');
     content.style.setProperty('text-decoration', 'none');
 
+    // set checkbox to unchecked
     const checkbox = bulletLog.shadowRoot.querySelector('.completeBtn');
     checkbox.checked = false;
 
+    // set bulletLog's completed attribute to true
     bulletLog.completed = false;
 
+    // same entry as before, but now completed is true
     const entry = {
         modifier: bulletLog.modifier,
         type: bulletLog.type,
@@ -302,7 +316,6 @@ function storeCurrentDate(){
     // localStorage.setItem("MIN", minute);
     const day = DATE.getDate();
     localStorage.setItem("DAY", day);
-    console.log(day);
 } 
 
 const refreshDate = document.querySelector(".refresh-date");
