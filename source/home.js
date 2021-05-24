@@ -140,6 +140,7 @@ function addEntry(entry) {
     bulletLog.nestedType = entry.nested.nestedType;
     bulletLog.nestedContent = entry.nested.nestedType;
     bulletLog.nestedCompleted = entry.nested.nestedCompleted;
+    bulletLog.nestedAdded = false;
 
 
     // if the bullet is completed, then call completeEntryStrike()
@@ -394,6 +395,7 @@ function nestedBulletAppear(bulletLog){
         "align-items": "center",
     };
     Object.assign(nestedBullet.style, nestedStyles);
+    bulletLog.nestedAdded = true;
     
     // edit form
     const editForm = bulletLog.shadowRoot.querySelector("#editForm");
@@ -404,8 +406,10 @@ function nestedBulletAppear(bulletLog){
         alert("completed");
     });
 
-    const nestedEdit = nestedBullet.querySelector(".editBtn");
-    nestedEdit.addEventListener("click", () => {openEditNested(editForm, bulletLog)});
+    const nestedEdit = nestedBullet.querySelector(".editBtnNested");
+    nestedEdit.addEventListener("click", () => {
+        alert("edit");
+    });
 
     const nestedDelete = nestedBullet.querySelector(".deleteBtn");
     nestedDelete.addEventListener("click", () => {deleteEntryNested(bulletLog)});
@@ -418,24 +422,7 @@ function deleteEntryNested(bulletLog){
     const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
     Object.assign(nestedBullet.style, {"display": "none"});
 
-    // set all fields empty in localStorage
-}
+    bulletLog.nestedAdded = false;
 
-function openEditNested(editForm, bulletLog){
-        // get current modifier, type, content
-        const modifier = bulletLog.nestedModifier;
-        const type = bulletLog.nestedType;
-        const content = bulletLog.nestedContent;
-    
-        // get modifier, type, content elements in edit form modal
-        const bulletModifier = editForm.querySelector("#bullet-modifier");
-        const bulletType = editForm.querySelector("#bullet-type");
-        const bulletContent = editForm.querySelector("#bullet");
-        
-        // set elements fields to current values
-        bulletContent.value = content;
-        bulletType.value = type;
-        bulletModifier.value = modifier;
-    
-        openForm(editForm);
+    // set all fields empty in localStorage
 }

@@ -43,6 +43,10 @@ class BulletLog extends HTMLElement {
                     display: none;
                     margin-right: 10px;
                 }
+                .editBtnNested {
+                    display: none;
+                    margin-right: 10px;
+                }                
                 .deleteBtn {
                     display: none;  
                 }
@@ -68,7 +72,7 @@ class BulletLog extends HTMLElement {
                 .nested:hover .nestBtn {
                     display: inline-block
                 }
-                .nested:hover .editBtn {
+                .nested:hover .editBtnNested {
                     display: inline-block;
                 }
                 .nested:hover .deleteBtn {
@@ -181,7 +185,7 @@ class BulletLog extends HTMLElement {
                 <p class="type">Type</p>
                 <p class="content">Bullet Content</p>
                 <input type="checkbox" class="completeBtn"/>
-                <button class="editBtn">Edit</button>
+                <button class="editBtnNested">Edit</button>
                 <button class="deleteBtn">Delete</button>
              </div>
 
@@ -217,8 +221,10 @@ class BulletLog extends HTMLElement {
                     <button type="button" id="submitForm">Submit</button>
                 </div>
                 </form>
-            </div>`
-            ;
+            </div>
+
+            
+        `;
 
 
         this.attachShadow({ mode: 'open' })
@@ -328,6 +334,15 @@ class BulletLog extends HTMLElement {
 
     set nestedEntry(nestedEntry){
         this.setAttribute('nestedEntry', nestedEntry);
+    }
+
+    // whether nested bullet is added for main bullet
+    get nestedAdded(){
+        return this.getAttribute('nestedAdded');
+    }
+
+    set nestedAdded(nestedAdded){
+        this.setAttribute('nestedAdded', nestedAdded);
     }
 
     // modifier
