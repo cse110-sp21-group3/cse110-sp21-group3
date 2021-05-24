@@ -320,7 +320,7 @@ class BulletLog extends HTMLElement {
     }
 
     /**
-     * Nested Bullet Log  Entry
+     * Nested Bullet Log Entry
      */
     get nestedEntry(){
         return this.getAttribute('nestedEntry');
@@ -329,6 +329,43 @@ class BulletLog extends HTMLElement {
     set nestedEntry(nestedEntry){
         this.setAttribute('nestedEntry', nestedEntry);
     }
+
+    // modifier
+    get nestedModifier(){
+        return this.getAttribute('nestedModifier');
+    }
+
+    set nestedModifier(nestedModifier){
+        this.setAttribute('nestedModifier', nestedModifier);
+    }
+    // type
+    get nestedType(){
+        return this.getAttribute('nestedType');
+    }
+
+    set nestedType(nestedType){
+        this.setAttribute('nestedType', nestedType);
+    }
+
+    // content
+    get nestedContent(){
+        return this.getAttribute('nestedContent');
+    }
+
+    set nestedContent(nestedContent){
+        this.setAttribute('nestedContent', nestedContent);
+    }
+
+    // completed
+    get nestedCompleted(){
+        return this.getAttribute('nestedCompleted');
+    }
+
+    set nestedCompleted(nestedCompleted){
+        this.setAttribute('nestedCompleted', nestedCompleted);
+    }
+
+
 
 }
 

@@ -93,6 +93,12 @@ submitAdd.onclick = () => {
         type: type,
         content: content, 
         completed: false,
+        nested: {   // nested entry initially empty 
+            nestedModifier: "",
+            nestedType: "",
+            nestedContent: "",
+            nestedCompleted: false, 
+        },
     };
 
     // add entry to DOM & localStorage if content isn't empty, using the current UTC date as the key
@@ -120,12 +126,21 @@ function addEntry(entry) {
     let bulletLog;
     bulletLog = document.createElement("bullet-log");
 
+    // main entry
     bulletLog.entry = entry;
     bulletLog.type = entry.type;
     bulletLog.modifier = entry.modifier;
     bulletLog.content = entry.content;
     bulletLog.keyname = currKey;
     bulletLog.completed = entry.completed;
+    
+    // nested entry
+    bulletLog.nestedEntry = entry.nested;
+    bulletLog.nestedModifier = entry.nested.nestedModifier;
+    bulletLog.nestedType = entry.nested.nestedType;
+    bulletLog.nestedContent = entry.nested.nestedType;
+    bulletLog.nestedCompleted = entry.nested.nestedCompleted;
+
 
     // if the bullet is completed, then call completeEntryStrike()
     const c = bulletLog.completed == "true" ? true : false; 
@@ -212,13 +227,19 @@ function submitEditEntry(editForm, bulletLog) {
     const modifier = editForm.querySelector("#bullet-modifier").value;
     const type = editForm.querySelector("#bullet-type").value;
     const content = editForm.querySelector("#bullet").value;
-    
+
     // populate entry object with new values
     const entry = {
         modifier: modifier,
         type: type,
         content: content,
         completed: false,
+        nested: {
+            nestedModifier: bulletLog.nestedModifier,
+            nestedType: bulletLog.nestedType,
+            nestedContent: bulletLog.nestedContent,
+            nestedComplete: bulletLog.nestedCompleted,
+        },
     };
 
     // set elements fields to new values
@@ -272,6 +293,12 @@ function completeEntryStrike(bulletLog, completeEntry) {
         type: bulletLog.type,
         content: bulletLog.content,
         completed: true,
+        nested: {
+            nestedModifier: bulletLog.nestedModifier,
+            nestedType: bulletLog.nestedType,
+            nestedContent: bulletLog.nestedContent,
+            nestedComplete: bulletLog.nestedCompleted,
+        },
     };
 
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
@@ -304,6 +331,12 @@ function removeEntryStrike(bulletLog, completeEntry) {
         type: bulletLog.type,
         content: bulletLog.content,
         completed: false,
+        nested: {
+            nestedModifier: bulletLog.nestedModifier,
+            nestedType: bulletLog.nestedType,
+            nestedContent: bulletLog.nestedContent,
+            nestedComplete: bulletLog.nestedCompleted,
+        },
     };
 
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
@@ -361,4 +394,48 @@ function nestedBulletAppear(bulletLog){
         "align-items": "center",
     };
     Object.assign(nestedBullet.style, nestedStyles);
+    
+    // edit form
+    const editForm = bulletLog.shadowRoot.querySelector("#editForm");
+
+    // nested buttons for complete, edit, delete
+    const nestedComplete = nestedBullet.querySelector(".completeBtn");
+    nestedComplete.addEventListener("change", () => {
+        alert("completed");
+    });
+
+    const nestedEdit = nestedBullet.querySelector(".editBtn");
+    nestedEdit.addEventListener("click", () => {openEditNested(editForm, bulletLog)});
+
+    const nestedDelete = nestedBullet.querySelector(".deleteBtn");
+    nestedDelete.addEventListener("click", () => {deleteEntryNested(bulletLog)});
+}
+
+// delete nested entry
+function deleteEntryNested(bulletLog){
+
+    // set display none
+    const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
+    Object.assign(nestedBullet.style, {"display": "none"});
+
+    // set all fields empty in localStorage
+}
+
+function openEditNested(editForm, bulletLog){
+        // get current modifier, type, content
+        const modifier = bulletLog.nestedModifier;
+        const type = bulletLog.nestedType;
+        const content = bulletLog.nestedContent;
+    
+        // get modifier, type, content elements in edit form modal
+        const bulletModifier = editForm.querySelector("#bullet-modifier");
+        const bulletType = editForm.querySelector("#bullet-type");
+        const bulletContent = editForm.querySelector("#bullet");
+        
+        // set elements fields to current values
+        bulletContent.value = content;
+        bulletType.value = type;
+        bulletModifier.value = modifier;
+    
+        openForm(editForm);
 }
