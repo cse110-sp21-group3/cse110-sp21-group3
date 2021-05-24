@@ -143,7 +143,7 @@ class BulletLog extends HTMLElement {
                 <p class="modifier">Modifier</p>
                 <p class="type">Type</p>
                 <p class="content">Bullet Content</p>
-                <button class="completeBtn">Complete</button>
+                <input type="checkbox" class="completeBtn"/>
                 <button class="editBtn">Edit</button>
                 <button class="deleteBtn">Delete</button>
             </div>

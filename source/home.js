@@ -91,7 +91,8 @@ submitAdd.onclick = () => {
     const entry = {
         modifier: modifier,
         type: type,
-        content: content,
+        content: content, 
+        completed: false,
     };
 
     // add entry to DOM & localStorage if content isn't empty, using the current UTC date as the key
@@ -124,6 +125,12 @@ function addEntry(entry) {
     bulletLog.modifier = entry.modifier;
     bulletLog.content = entry.content;
     bulletLog.keyname = currKey;
+    bulletLog.completed = entry.completed;
+
+    const c = bulletLog.completed == "true" ? true : false; 
+    if (c == true) {
+        completeEntryStrike(bulletLog);
+    }
 
     // delete button
     const deleteButton = bulletLog.shadowRoot.querySelector(".deleteBtn");
@@ -146,7 +153,9 @@ function addEntry(entry) {
 
     // complete entry button
     const completeEntry = bulletLog.shadowRoot.querySelector('.completeBtn');
-    completeEntry.addEventListener("click", () => {completeEntryStrike(bulletLog)});
+    // completeEntry.addEventListener("change", () => {completeEntryStrike(bulletLog)});
+    completeEntry.addEventListener("change", () => {strikeDecision(bulletLog, completeEntry)});
+
 
     // add bulletLog to DOM
     const dailyLog = document.getElementById("daily-log-form");
@@ -204,7 +213,8 @@ function submitEditEntry(editForm, bulletLog) {
     const entry = {
         modifier: modifier,
         type: type,
-        content: content
+        content: content,
+        //completed -- be able to change completed here?
     };
 
     // set elements fields to new values
@@ -223,7 +233,16 @@ function submitEditEntry(editForm, bulletLog) {
 /**
  * Complete Entry Strikethrough (still need to persist in localstorage, bulletLog element)
  */
-function completeEntryStrike(bulletLog) {
+function strikeDecision(bulletLog, completeEntry){
+    if (completeEntry.checked) {
+        completeEntryStrike(bulletLog, completeEntry);
+    } else {
+        removeEntryStrike(bulletLog, completeEntry);
+    }
+}
+
+function completeEntryStrike(bulletLog, completeEntry) {
+
     const modifier = bulletLog.shadowRoot.querySelector('.modifier');
     const type = bulletLog.shadowRoot.querySelector('.type');
     const content = bulletLog.shadowRoot.querySelector('.content');
@@ -231,6 +250,45 @@ function completeEntryStrike(bulletLog) {
     modifier.style.setProperty('text-decoration', 'line-through');
     type.style.setProperty('text-decoration', 'line-through');
     content.style.setProperty('text-decoration', 'line-through');
+
+    const checkbox = bulletLog.shadowRoot.querySelector('.completeBtn');
+    checkbox.checked = true;
+
+    bulletLog.completed = true;
+
+    const entry = {
+        modifier: bulletLog.modifier,
+        type: bulletLog.type,
+        content: bulletLog.content,
+        completed: true,
+    };
+
+    localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
+
+}
+
+function removeEntryStrike(bulletLog, completeEntry) {
+    const modifier = bulletLog.shadowRoot.querySelector('.modifier');
+    const type = bulletLog.shadowRoot.querySelector('.type');
+    const content = bulletLog.shadowRoot.querySelector('.content');
+
+    modifier.style.setProperty('text-decoration', 'none');
+    type.style.setProperty('text-decoration', 'none');
+    content.style.setProperty('text-decoration', 'none');
+
+    const checkbox = bulletLog.shadowRoot.querySelector('.completeBtn');
+    checkbox.checked = false;
+
+    bulletLog.completed = false;
+
+    const entry = {
+        modifier: bulletLog.modifier,
+        type: bulletLog.type,
+        content: bulletLog.content,
+        completed: false,
+    };
+
+    localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
 }
 
 /**
@@ -261,6 +319,7 @@ refreshDate.addEventListener("click", () => {
     }
 });
 
+// clear daily log when user refreshes date (every new day)
 function clearDailyLog() {
     localStorage.clear();
     window.location.reload();
