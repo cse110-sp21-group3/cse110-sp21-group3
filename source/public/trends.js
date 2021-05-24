@@ -1,3 +1,7 @@
+
+/**
+ * Get current month and number of days of the month
+ */
 const DATE = new Date();
 const currMonth = DATE.getMonth();
 const currYear = DATE.getFullYear();
@@ -56,7 +60,7 @@ const add = document.getElementById("add");
 add.addEventListener("click", () => {openForm(addForm)});
 
 /*
-** Submit Add Bullet Entry
+** Submit Add Habit
 */
 const submitAdd = addForm.querySelector(".submit #submitForm");
 submitAdd.onclick = () => {
@@ -75,6 +79,9 @@ submitAdd.onclick = () => {
     }
 };
 
+/**
+ * Create habit tracker for particular habit and store color of habit
+ */
 function addHabit(habit, color) {
     let tracker = document.createElement("tracker-elem");
     tracker.habit = habit;
@@ -85,7 +92,7 @@ function addHabit(habit, color) {
         habitCircle.id = "circle"+i;
         habitCircle.style.borderRadius = "100%";
         habitCircle.style.border = "none";
-        habitCircle.style.backgroundColor = color;
+        habitCircle.style.backgroundColor = "#DBDBDB";
         habitGrid.appendChild(habitCircle);
     }
     let grid1 = document.getElementById("grid1");
