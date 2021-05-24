@@ -35,6 +35,11 @@ class BulletLog extends HTMLElement {
                     margin-left: auto;
                     margin-right: 10px;
                 }
+                .nestedCompleteBtn {
+                    display: none;
+                    margin-left: auto;
+                    margin-right: 10px;
+                }
                 .nestBtn {
                     display: none;
                     margin-right: 10px;
@@ -42,11 +47,7 @@ class BulletLog extends HTMLElement {
                 .editBtn {
                     display: none;
                     margin-right: 10px;
-                }
-                .editBtnNested {
-                    display: none;
-                    margin-right: 10px;
-                }                
+                }              
                 .deleteBtn {
                     display: none;  
                 }
@@ -66,14 +67,8 @@ class BulletLog extends HTMLElement {
                 }
 
                 /* hover over nested bullet */
-                .nested:hover .completeBtn {
+                .nested:hover .nestedCompleteBtn {
                     display: inline-block
-                }
-                .nested:hover .nestBtn {
-                    display: inline-block
-                }
-                .nested:hover .editBtnNested {
-                    display: inline-block;
                 }
                 .nested:hover .deleteBtn {
                     display: inline-block;
@@ -181,11 +176,8 @@ class BulletLog extends HTMLElement {
                 <button class="deleteBtn">Delete</button>
             </div>
             <div class="nested">
-                <p class="modifier">Modifier</p>
-                <p class="type">Type</p>
-                <p class="content">Bullet Content</p>
-                <input type="checkbox" class="completeBtn"/>
-                <button class="editBtnNested">Edit</button>
+                <input class="nestedContent" placeholder="Add thoughts here..." maxlength="60">
+                <input type="checkbox" class="nestedCompleteBtn"/>
                 <button class="deleteBtn">Delete</button>
              </div>
 
@@ -345,24 +337,7 @@ class BulletLog extends HTMLElement {
         this.setAttribute('nestedAdded', nestedAdded);
     }
 
-    // modifier
-    get nestedModifier(){
-        return this.getAttribute('nestedModifier');
-    }
-
-    set nestedModifier(nestedModifier){
-        this.setAttribute('nestedModifier', nestedModifier);
-    }
-    // type
-    get nestedType(){
-        return this.getAttribute('nestedType');
-    }
-
-    set nestedType(nestedType){
-        this.setAttribute('nestedType', nestedType);
-    }
-
-    // content
+    // whether nested bullet is added for main bullet
     get nestedContent(){
         return this.getAttribute('nestedContent');
     }

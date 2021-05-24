@@ -94,8 +94,6 @@ submitAdd.onclick = () => {
         content: content, 
         completed: false,
         nested: {   // nested entry initially empty 
-            nestedModifier: "",
-            nestedType: "",
             nestedContent: "",
             nestedCompleted: false, 
         },
@@ -136,9 +134,7 @@ function addEntry(entry) {
     
     // nested entry
     bulletLog.nestedEntry = entry.nested;
-    bulletLog.nestedModifier = entry.nested.nestedModifier;
-    bulletLog.nestedType = entry.nested.nestedType;
-    bulletLog.nestedContent = entry.nested.nestedType;
+    bulletLog.nestedContent = entry.nested.nestedContent;
     bulletLog.nestedCompleted = entry.nested.nestedCompleted;
     bulletLog.nestedAdded = false;
 
@@ -236,8 +232,6 @@ function submitEditEntry(editForm, bulletLog) {
         content: content,
         completed: false,
         nested: {
-            nestedModifier: bulletLog.nestedModifier,
-            nestedType: bulletLog.nestedType,
             nestedContent: bulletLog.nestedContent,
             nestedComplete: bulletLog.nestedCompleted,
         },
@@ -295,8 +289,6 @@ function completeEntryStrike(bulletLog, completeEntry) {
         content: bulletLog.content,
         completed: true,
         nested: {
-            nestedModifier: bulletLog.nestedModifier,
-            nestedType: bulletLog.nestedType,
             nestedContent: bulletLog.nestedContent,
             nestedComplete: bulletLog.nestedCompleted,
         },
@@ -333,8 +325,6 @@ function removeEntryStrike(bulletLog, completeEntry) {
         content: bulletLog.content,
         completed: false,
         nested: {
-            nestedModifier: bulletLog.nestedModifier,
-            nestedType: bulletLog.nestedType,
             nestedContent: bulletLog.nestedContent,
             nestedComplete: bulletLog.nestedCompleted,
         },
@@ -393,22 +383,15 @@ function nestedBulletAppear(bulletLog){
         "padding-left": "50px",
         "display": "flex",
         "align-items": "center",
+        "backhround-color": "red",
     };
     Object.assign(nestedBullet.style, nestedStyles);
     bulletLog.nestedAdded = true;
-    
-    // edit form
-    const editForm = bulletLog.shadowRoot.querySelector("#editForm");
 
     // nested buttons for complete, edit, delete
     const nestedComplete = nestedBullet.querySelector(".completeBtn");
     nestedComplete.addEventListener("change", () => {
         alert("completed");
-    });
-
-    const nestedEdit = nestedBullet.querySelector(".editBtnNested");
-    nestedEdit.addEventListener("click", () => {
-        alert("edit");
     });
 
     const nestedDelete = nestedBullet.querySelector(".deleteBtn");
