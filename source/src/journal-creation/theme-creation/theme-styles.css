@@ -1,9 +1,13 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
 * {
     font-family: 'Nunito', sans-serif;
 }
 body{
     --tw-bg-opacity: 1;
     background-color: rgba(229, 229, 229, var(--tw-bg-opacity));
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 /** 
@@ -13,8 +17,8 @@ body{
  */
  .dropdown{
     position: absolute;
-    top:4px;
-    right:120px;
+    top:1rem;
+    right:1.5rem;
     display: inline-block;
 }
 .dropdown:hover .dropdown-content{
@@ -26,7 +30,44 @@ body{
     right:1px;
     background-color: #f9f9f9;
     min-width: 300px;
+    max-width: fit-content;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 12px 16px;
+    padding: 1rem 1.5rem;
     z-index: 1;
+}
+
+#theme-title {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+#theme-input {
+    width: 100%;
+    font-size: large;
+    padding: 0.5rem;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 24px;
+}
+
+#theme-suggestions {
+    display: flex;
+    flex-direction: column;
+}
+
+#submit-theme {
+    text-align: center;
+    font-weight: 100;
+    font-size: medium;
+    border: black;
+    margin-top: 1rem;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+#submit-theme:hover {
+    background-color: #8f8f8f;
+    color: white;
 }
