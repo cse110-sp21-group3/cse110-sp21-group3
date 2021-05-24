@@ -67,7 +67,7 @@ body{
     z-index: 1;
 }
 
-#theme-title {
+.standard-h1 {
     font-weight: bold;
     font-size: xx-large;
     margin-top: 6rem;
