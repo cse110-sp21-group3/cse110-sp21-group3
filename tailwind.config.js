@@ -6,17 +6,7 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {
-      colors: {
-        'light-gray' : "#e5e5e5"
-      },
-      fontFamily: {
-        'sans' : ['Nunito', `sans-serif`],
-      },
-      screens: {
-        'mobile' : '450px',
-      }
-    },
+    extend: {},
   },
   variants: {
     extend: {},

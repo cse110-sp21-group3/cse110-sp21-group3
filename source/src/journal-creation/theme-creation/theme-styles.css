@@ -3,19 +3,50 @@
 * {
     font-family: 'Nunito', sans-serif;
 }
+:root {
+    --main-bg: rgba(229, 229, 229, 1);
+    --light-bg: #f9f9f9;
+    --light-text: rgb(166, 169, 173);
+    --dark-text: black;
+}
 body{
     --tw-bg-opacity: 1;
     background-color: rgba(229, 229, 229, var(--tw-bg-opacity));
     padding-left: 1rem;
     padding-right: 1rem;
 }
+#theme-suggestions > a {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: 1rem 0rem;
+    color: var(--light-text);
+
+    cursor: pointer;
+}
+#theme-suggestions > a:hover {
+    color: var(--dark-text);
+}
+@media screen and (min-width: 500px) {
+    #theme-input-container {
+        --x-padding: 5rem;
+    }
+    #theme-input-container > h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+    }
+
+    #theme-suggestions > a, #theme-input {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+}
+
 
 /** 
  * Styling for 'What is the theme system?'onboarding component on theme
  * creation page with hover and hyperlink to video.
- *
  */
- .dropdown{
+.dropdown{
     position: absolute;
     top:1rem;
     right:1.5rem;
@@ -28,7 +59,7 @@ body{
     display: none;
     position: absolute;
     right:1px;
-    background-color: #f9f9f9;
+    background-color: var(--light-bg);
     min-width: 300px;
     max-width: fit-content;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -68,6 +99,5 @@ body{
 }
 
 #submit-theme:hover {
-    background-color: #8f8f8f;
-    color: white;
+    background-color: var(--light-bg);
 }

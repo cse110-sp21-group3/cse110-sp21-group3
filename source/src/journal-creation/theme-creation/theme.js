@@ -1,14 +1,13 @@
-import { theme as themeKey } from '../../storageKeys.js';
+import { themeKey } from '../../storageKeys.js';
 
 const themeSuggestions = ['Health', 'Finance', 'Cooking', 'Academics']; // Suggested Themes
 
+// Theme Suggestions
 const themeInput = document.getElementById('theme-input');
 const suggestionsContainer = document.querySelector('#theme-suggestions');
-const submitBtn = document.getElementById('submit-theme');
 
 themeSuggestions.forEach((theme) => {
   const aTag = document.createElement('a');
-  aTag.className = 'mt-6 text-gray-400 hover:text-black text-base mobile:text-2xl';
   aTag.innerText = theme;
 
   aTag.addEventListener('click', (e) => {
@@ -16,6 +15,9 @@ themeSuggestions.forEach((theme) => {
   });
   suggestionsContainer.appendChild(aTag);
 });
+
+// Submit Theme
+const submitBtn = document.getElementById('submit-theme');
 
 submitBtn.addEventListener('click', () => {
   let theme = null;
