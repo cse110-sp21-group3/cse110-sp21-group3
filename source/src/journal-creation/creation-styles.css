@@ -11,10 +11,17 @@
 }
 body{
     --tw-bg-opacity: 1;
-    background-color: rgba(229, 229, 229, var(--tw-bg-opacity));
+    background-color: var(--main-bg);
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+/* Theme suggestions  */
+#theme-suggestions {
+    display: flex;
+    flex-direction: column;
+}
+
 #theme-suggestions > a {
     font-size: 1rem;
     line-height: 1.5rem;
@@ -26,6 +33,7 @@ body{
 #theme-suggestions > a:hover {
     color: var(--dark-text);
 }
+
 @media screen and (min-width: 500px) {
     #theme-input-container {
         --x-padding: 5rem;
@@ -66,13 +74,7 @@ body{
     padding: 1rem 1.5rem;
     z-index: 1;
 }
-
-.standard-h1 {
-    font-weight: bold;
-    font-size: xx-large;
-    margin-top: 6rem;
-}
-
+/** Theme input **/
 #theme-input {
     width: 100%;
     font-size: large;
@@ -83,12 +85,61 @@ body{
     border-radius: 24px;
 }
 
-#theme-suggestions {
+/**
+Journal Picker Styling
+**/
+#journals-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+    width: 100%;
+    height: 15rem;
+
+    padding: 1rem 0;
+    text-align: center;
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 1.5rem;
+
+    overflow-x: auto;
 }
 
-#submit-theme {
+#journals-container > * {
+    display: inline-block;
+    margin: 0 0.85rem;
+}
+
+/* Name Journal Styling */
+
+#name-input {
+    width: 20rem;
+    height: 3.5rem;
+
+    margin: 1rem auto;
+    padding: 1rem;
+
+    background: var(--light-bg);
+    border: 1px solid var(--light-bg);
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+/* Shared Classes */
+.standard-h1 {
+    font-weight: bold;
+    font-size: xx-large;
+    margin-top: 6rem;
+}
+
+.center-container {
+    text-align: center;
+}
+
+
+button.submit {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
@@ -104,6 +155,6 @@ body{
     padding: 0.5rem;
 }
 
-#submit-theme:hover {
+button.submit:hover {
     background-color: var(--light-bg);
 }

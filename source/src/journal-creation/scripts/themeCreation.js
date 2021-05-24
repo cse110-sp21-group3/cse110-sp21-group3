@@ -2,7 +2,7 @@ import { themeKey } from '../../storageKeys.js';
 
 const themeSuggestions = ['Health', 'Finance', 'Cooking', 'Academics']; // Suggested Themes
 
-// Theme Suggestions
+// Add Theme Suggestions
 const themeInput = document.getElementById('theme-input');
 const suggestionsContainer = document.querySelector('#theme-suggestions');
 
@@ -23,4 +23,5 @@ submitBtn.addEventListener('click', () => {
   let theme = null;
   if (themeInput.value) theme = themeInput.value;
   localStorage.setItem(themeKey, theme);
+  //TODO: Link to next page TBD
 });
