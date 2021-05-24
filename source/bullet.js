@@ -35,6 +35,10 @@ class BulletLog extends HTMLElement {
                     margin-left: auto;
                     margin-right: 10px;
                 }
+                .nestBtn {
+                    display: none;
+                    margin-right: 10px;
+                }
                 .editBtn {
                     display: none;
                     margin-right: 10px;
@@ -43,14 +47,38 @@ class BulletLog extends HTMLElement {
                     display: none;  
                 }
 
+                /* hover over main bullet */
+                .entry:hover .completeBtn {
+                    display: inline-block
+                }
+                .entry:hover .nestBtn {
+                    display: inline-block
+                }
                 .entry:hover .editBtn {
                     display: inline-block;
                 }
                 .entry:hover .deleteBtn {
                     display: inline-block;
                 }
-                .entry:hover .completeBtn {
+
+                /* hover over nested bullet */
+                .nested:hover .completeBtn {
                     display: inline-block
+                }
+                .nested:hover .nestBtn {
+                    display: inline-block
+                }
+                .nested:hover .editBtn {
+                    display: inline-block;
+                }
+                .nested:hover .deleteBtn {
+                    display: inline-block;
+                }
+
+
+                /* nested bullet */
+                .nested {
+                    display: none;
                 }
 
                 /* The Modal (background) */
@@ -144,9 +172,18 @@ class BulletLog extends HTMLElement {
                 <p class="type">Type</p>
                 <p class="content">Bullet Content</p>
                 <input type="checkbox" class="completeBtn"/>
+                <button class="nestBtn">Nest</button>
                 <button class="editBtn">Edit</button>
                 <button class="deleteBtn">Delete</button>
             </div>
+            <div class="nested">
+                <p class="modifier">Modifier</p>
+                <p class="type">Type</p>
+                <p class="content">Bullet Content</p>
+                <input type="checkbox" class="completeBtn"/>
+                <button class="editBtn">Edit</button>
+                <button class="deleteBtn">Delete</button>
+             </div>
 
             <!-- Edit modal -->
             <div id="editForm" class="modal">
@@ -280,6 +317,17 @@ class BulletLog extends HTMLElement {
 
     set completed(completed){
         this.setAttribute('completed', completed);
+    }
+
+    /**
+     * Nested Bullet Log  Entry
+     */
+    get nestedEntry(){
+        return this.getAttribute('nestedEntry');
+    }
+
+    set nestedEntry(nestedEntry){
+        this.setAttribute('nestedEntry', nestedEntry);
     }
 
 }

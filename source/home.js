@@ -156,6 +156,10 @@ function addEntry(entry) {
     const completeEntry = bulletLog.shadowRoot.querySelector('.completeBtn');
     completeEntry.addEventListener("change", () => {strikeDecision(bulletLog, completeEntry)});
 
+    // nested bullet
+    const nestButton = bulletLog.shadowRoot.querySelector(".nestBtn");
+    nestButton.addEventListener("click", () => {nestedBulletAppear(bulletLog)});
+
 
     // add bulletLog to DOM
     const dailyLog = document.getElementById("daily-log-form");
@@ -214,7 +218,7 @@ function submitEditEntry(editForm, bulletLog) {
         modifier: modifier,
         type: type,
         content: content,
-        //completed -- be able to change completed here?
+        completed: false,
     };
 
     // set elements fields to new values
@@ -336,4 +340,25 @@ refreshDate.addEventListener("click", () => {
 function clearDailyLog() {
     localStorage.clear();
     window.location.reload();
+}
+
+
+/**
+ * Nesting bullets
+ */
+function nestedBulletAppear(bulletLog){
+    const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
+    console.log(nestedBullet);
+    const nestedStyles =  {
+        "display": "inline-block",
+        "margin-left": "30px",
+        "border-radius": "6px",
+        "list-style-type": "none",
+        "width": "80%",
+        "text-align": "left",
+        "padding-left": "50px",
+        "display": "flex",
+        "align-items": "center",
+    };
+    Object.assign(nestedBullet.style, nestedStyles);
 }
