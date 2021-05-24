@@ -1,41 +1,40 @@
 import colorThemes from '../../colorThemes.js';
 
 const states = {
-    small: 'small',
-    large: 'large',
-}
+  small: 'small',
+  large: 'large',
+};
 const stateProperties = {
-    small: {
-        width: '94px',
-        height: '139px',
-        labelMarginTop: '1.5rem',
-    },
-    large: {
-        width: '329px',
-        height: '486px',
-        labelMarginTop: '5rem'
-    } //TODO: Add another white box behind
-}
+  small: {
+    width: '94px',
+    height: '139px',
+    labelMarginTop: '1.5rem',
+  },
+  large: {
+    width: '329px',
+    height: '486px',
+    labelMarginTop: '5rem',
+  }, // TODO: Add another white box behind
+};
 
 class JournalIcon extends HTMLElement {
-    constructor(){
-        super();
-        const expectedSize = this.getAttribute('size');
+  constructor() {
+    super();
+    this.state = states.small;
 
-        this.state = states.small;
+    const template = document.createElement('template');
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
 
-        const template = document.createElement('template');
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
-    }
-    set size(size){
-        this.state = (size in states) ? size : null;
-    }
-    set styleName(styleName) {
-        const mainColor = colorThemes[styleName]['main'];
-        
-        const labelMarginTop =
-        this.shadowRoot.innerHTML = `
+  set size(size) {
+    this.state = (size in states) ? size : null;
+  }
+
+  set styleName(styleName) {
+    const mainColor = colorThemes[styleName].main;
+
+    this.shadowRoot.innerHTML = `
             <style>
                 .journal {
                     width: 67vw;
@@ -76,10 +75,10 @@ class JournalIcon extends HTMLElement {
             </style>
             <div class="journal">
                 <div class="white-box"></div>
+                <div></div>
             </div>
-        `
-
-    }
+        `;
+  }
 }
 
 customElements.define('journal-icon', JournalIcon);

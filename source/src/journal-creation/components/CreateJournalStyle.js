@@ -1,11 +1,9 @@
 class CreateJournalStyle extends HTMLElement {
-    constructor(){
-        super();
+  constructor() {
+    super();
 
-        const backgroundColor = this.getAttribute('backgroundColor');
-
-        const template = document.createElement('template');
-        template.innerHTML = `
+    const template = document.createElement('template');
+    template.innerHTML = `
             <style>
                 .journal {
                     width: 94px;
@@ -41,11 +39,10 @@ class CreateJournalStyle extends HTMLElement {
             <div class='journal'>
                 <span>+</span>
             </div>
-        `
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
-
-    }
+        `;
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
 }
 
 customElements.define('create-journal-style', CreateJournalStyle);
