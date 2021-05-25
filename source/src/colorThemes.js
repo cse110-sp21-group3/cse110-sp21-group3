@@ -25,7 +25,7 @@ export default {
   },
   tuscany: {
     main: '#CCA7A2',
-    background: 'red', // TODO: Add
+    background: '#EFE0DE',
   },
   'willow green': {
     main: '#AEBD93',
@@ -35,4 +35,8 @@ export default {
     main: '#BC8034',
     background: '#FFD6A3',
   },
+  lavendar: {
+    main: '#EECFF4',
+    background: '#FCEEFF'
+  }
 };

@@ -2,7 +2,6 @@ import colorThemes from '../../colorThemes.js';
 import { colorStyleKey } from '../../storageKeys.js';
 
 const journalContainer = document.querySelector('#journals-container');
-const createStyle = document.querySelector('create-journal-style');
 
 Object.keys(colorThemes).forEach((colorTheme) => {
   if (colorTheme === 'default') return;
@@ -21,5 +20,5 @@ Object.keys(colorThemes).forEach((colorTheme) => {
   journalDisplayContainer.appendChild(journalElement);
   journalDisplayContainer.appendChild(styleDiscriptor);
 
-  journalContainer.insertBefore(journalDisplayContainer, createStyle);
+  journalContainer.appendChild(journalDisplayContainer);
 });
