@@ -2,49 +2,61 @@
  * Get current month and number of days of the month
  */
 const DATE = new Date();
-Date.prototype.getMonthName = function() {
-  var monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+// eslint-disable-next-line no-extend-native
+Date.prototype.getMonthName = function () {
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   return monthNames[this.getMonth()];
 }
-Date.prototype.getMonthDays = function() {
-  const days = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+// eslint-disable-next-line no-extend-native
+Date.prototype.getMonthDays = function () {
+  const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return days[this.getMonth()];
 }
-Date.prototype.getMonthDaysLeap = function() {
-    const days = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-    return days[this.getMonth()];
+// eslint-disable-next-line no-extend-native
+Date.prototype.getMonthDaysLeap = function () {
+  const days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return days[this.getMonth()];
 }
 const currYear = DATE.getFullYear();
 let numDays;
-if (currYear % 4 == 0) {
+if (currYear % 4 === 0) {
   numDays = DATE.getMonthDaysLeap();
-}
-else {
+} else {
   numDays = DATE.getMonthDays();
 }
 
 let numHabits = 0;
 
 /**
+ * Delete habit
+ */
+function deleteHabit(tracker, gridDiv) {
+  // remove from DOM
+  gridDiv .removeChild(tracker);
+
+  // remove from storage
+}
+
+/**
  * template testing
  */
 document.addEventListener('DOMContentLoaded', () => {
-  let headerTitle = document.getElementById('header-title');
-  const title = 'trends: ' + DATE.getMonthName();
+  const headerTitle = document.getElementById('header-title');
+  const title = `trends: ${DATE.getMonthName()}`;
   headerTitle.innerText = title;
-  let trackerBody = document.getElementById('tracker-body');
+  const trackerBody = document.getElementById('tracker-body');
   // TODO: pull from storage the habits of the particular month
   // TODO: create a new grid for every 6 habits using grid.js
-  let grid = document.createElement('grid-elem');
+  const grid = document.createElement('grid-elem');
   grid.num = 1;
-  let gridDiv = grid.shadowRoot.querySelector('.habit-grid');
+  const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
   // TODO: create a tracker for each habit using tracker.js
-  let tracker = document.createElement('tracker-elem');
+  const tracker = document.createElement('tracker-elem');
   tracker.habit = 'water';
   tracker.color = '#599fe0';
-  let habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
-  let deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  for (let i = 1; i <= numDays; i++) {
+  const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
+  const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+  for (let i = 1; i <= numDays; i = i + 1) {
     let habitCircle = document.createElement('div');
     const id = 'circle'+i;
     habitCircle.id = id;
@@ -57,10 +69,38 @@ document.addEventListener('DOMContentLoaded', () => {
     habitGrid.appendChild(habitCircle);
   }
   gridDiv.append(tracker);
-  deleteHabitBtn.addEventListener('click', () => {deleteHabit(tracker, gridDiv)});
+  deleteHabitBtn.addEventListener('click', () => { deleteHabit(tracker, gridDiv) });
   trackerBody.appendChild(grid);
-  numHabits++;
+  numHabits = numHabits + 1;
 });
+
+/**
+ * Menu 
+ */
+const flyoutMenu = document.querySelector('#nav');
+
+function showMenu() {
+  flyoutMenu.classList.add('show');
+}
+
+function hideMenu(e) {
+  flyoutMenu.classList.remove('show');
+  e.stopPropagation();
+  document.body.style.overflow = 'auto';
+}
+
+/**
+ * Open and close a modal/form
+ */
+function openForm(form) {
+  form.style.display = 'block';
+}
+
+function closeForm(form) {
+  form.style.display = 'none';
+  form.querySelector('#habit').value = '';
+  form.querySelector('#colorpicker').value = '#0000ff';
+}
 
 /**
  * Hamburger menu button
@@ -73,21 +113,6 @@ menuButton.addEventListener('click', showMenu, false);
   */
 const navSpan = document.querySelector('.close-nav');
 navSpan.addEventListener('click', hideMenu, false);
- 
- /**
-  * Menu 
-  */
-const flyoutMenu = document.querySelector('#nav');
-
-function showMenu(e) {
-  flyoutMenu.classList.add('show');
-}
- 
-function hideMenu(e) {
-  flyoutMenu.classList.remove('show');
-  e.stopPropagation();
-  document.body.style.overflow = 'auto';
-}
 
 /**
  * Add new habit button
@@ -95,10 +120,10 @@ function hideMenu(e) {
 const addForm = document.querySelector('#addForm');
 
 const addClose = addForm.querySelector('.close-form');
-addClose.addEventListener('click', () => {closeForm(addForm)});
+addClose.addEventListener('click', () => { closeForm(addForm) });
 
 const add = document.getElementById('add');
-add.addEventListener('click', () => {openForm(addForm)});
+add.addEventListener('click', () => { openForm(addForm) });
 
 /*
 ** Submit Add Habit
@@ -122,61 +147,37 @@ submitAdd.onclick = () => {
  * Create habit tracker for particular habit and store color of habit
  */
 function addHabit(habit, color) {
-  let tracker = document.createElement('tracker-elem');
+  const tracker = document.createElement('tracker-elem');
   tracker.habit = habit;
   tracker.color = color;
   // TODO: show delete button when hovering over element
-  let deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  let habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
-  for (let i = 1; i <= numDays; i++) {
-    let habitCircle = document.createElement('div');
-    const id = 'circle'+i;
+  const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+  const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
+  for (let i = 1; i <= numDays; i += 1) {
+    const habitCircle = document.createElement('div');
+    const id = `circle${i}`;
     habitCircle.id = id;
     habitCircle.style.borderRadius = '100%';
     habitCircle.style.border = 'none';
     habitCircle.style.backgroundColor = '#DBDBDB';
     habitGrid.appendChild(habitCircle);
   }
-  // TODO: if number of habits % 6 == 0, then make new grid and append tracker to new grid
-  let gridList = document.getElementsByTagName('grid-elem');
-  let trackerBody = document.getElementById('tracker-body');
-  if (numHabits % 6 == 0) {
-    let grid = document.createElement('grid-elem');
-    grid.num = gridList.length + 1;
-    let gridDiv = grid.shadowRoot.querySelector('.habit-grid');
-    gridDiv.append(tracker);
-    deleteHabitBtn.addEventListener('click', () => {deleteHabit(tracker, gridDiv)});
-    trackerBody.appendChild(grid);
-  }
+  // If number of habits % 6 === 0, then make new grid and append tracker to new grid
   // otherwise, just append tracker to last grid
-  else {
-    let gridElem = gridList[gridList.length - 1];
-    let gridDiv = gridElem.shadowRoot.querySelector('.habit-grid');
+  const gridList = document.getElementsByTagName('grid-elem');
+  const trackerBody = document.getElementById('tracker-body');
+  if (numHabits % 6 === 0) {
+    const grid = document.createElement('grid-elem');
+    grid.num = gridList.length + 1;
+    const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
     gridDiv.append(tracker);
-    deleteHabitBtn.addEventListener('click', () => {deleteHabit(tracker, gridDiv)});
+    deleteHabitBtn.addEventListener('click', () => { deleteHabit(tracker, gridDiv) });
+    trackerBody.appendChild(grid);
+  } else {
+    const gridElem = gridList[gridList.length - 1];
+    const gridDiv = gridElem.shadowRoot.querySelector('.habit-grid');
+    gridDiv.append(tracker);
+    deleteHabitBtn.addEventListener('click', () => { deleteHabit(tracker, gridDiv) });
   }
-  numHabits++;
-}
-
-/**
- * Delete habit
- */
-function deleteHabit(tracker, gridDiv) {
-  // remove from DOM
-  gridDiv.removeChild(tracker);
-
-  // remove from storage
-}
-
-/**
- * Open and close a modal/form
- */
-function openForm(form) {
-  form.style.display = 'block';
-}
-
-function closeForm(form) {
-  form.style.display = 'none';
-  form.querySelector('#habit').value = '';
-  form.querySelector('#colorpicker').value = '#0000ff';
+  numHabits = numHabits + 1;
 }

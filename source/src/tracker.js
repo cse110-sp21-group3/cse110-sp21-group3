@@ -1,5 +1,5 @@
 class Tracker extends HTMLElement {
-  constructor () {
+  constructor() {
     super();
     const template = document.createElement('template');
     template.innerHTML = `
@@ -49,8 +49,8 @@ class Tracker extends HTMLElement {
             <h1 id="title">habit</h1>
             <div id="habit-grid"></div>
         </div>`;
-    this.attachShadow({ mode: 'open' })
-    this.shadowRoot.appendChild(template.content.cloneNode(true))
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   /**

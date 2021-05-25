@@ -1,5 +1,5 @@
 class Grid extends HTMLElement {
-  constructor () {
+  constructor() {
     super();
     const template = document.createElement('template');
     template.innerHTML = `
@@ -14,8 +14,7 @@ class Grid extends HTMLElement {
         }
     </style>
     <!-- Template -->
-    <div id="grid0" class="habit-grid"></div>`
-    ;
+    <div id="grid0" class="habit-grid"></div>`;
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
@@ -30,8 +29,8 @@ class Grid extends HTMLElement {
   set num(num) {
     // Set id of div to num
     const grid = this.shadowRoot.querySelector('.habit-grid');
-    const id = 'grid'+num;
-    grid.id = id
+    const id = `grid${num}`
+    grid.id = id;
     this.setAttribute('num', num);
   }
 }
