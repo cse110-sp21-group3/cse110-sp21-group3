@@ -6,17 +6,20 @@ const DATE = new Date();
 Date.prototype.getMonthName = function () {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   return monthNames[this.getMonth()];
-}
+};
+
 // eslint-disable-next-line no-extend-native
 Date.prototype.getMonthDays = function () {
   const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return days[this.getMonth()];
-}
+};
+
 // eslint-disable-next-line no-extend-native
 Date.prototype.getMonthDaysLeap = function () {
   const days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return days[this.getMonth()];
-}
+};
+
 const currYear = DATE.getFullYear();
 let numDays;
 if (currYear % 4 === 0) {
@@ -32,7 +35,7 @@ let numHabits = 0;
  */
 function deleteHabit(tracker, gridDiv) {
   // remove from DOM
-  gridDiv .removeChild(tracker);
+  gridDiv.removeChild(tracker);
 
   // remove from storage
 }
@@ -56,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tracker.color = '#599fe0';
   const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
   const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  for (let i = 1; i <= numDays; i = i + 1) {
+  for (let i = 1; i <= numDays; i += 1) {
     let habitCircle = document.createElement('div');
-    const id = 'circle'+i;
+    const id = `circle${i}`;
     habitCircle.id = id;
     habitCircle.style.borderRadius = '100%';
     habitCircle.style.border = 'none';
@@ -71,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   gridDiv.append(tracker);
   deleteHabitBtn.addEventListener('click', () => { deleteHabit(tracker, gridDiv) });
   trackerBody.appendChild(grid);
-  numHabits = numHabits + 1;
+  numHabits += 1;
 });
 
 /**
@@ -133,7 +136,7 @@ submitAdd.onclick = () => {
   const habit = addForm.querySelector('#habit').value;
   const color = addForm.querySelector('#colorpicker').value;
 
-  if (habit != '') {
+  if (habit !== '') {
     console.log(color);
     addHabit(habit, color);
 
@@ -179,5 +182,5 @@ function addHabit(habit, color) {
     gridDiv.append(tracker);
     deleteHabitBtn.addEventListener('click', () => { deleteHabit(tracker, gridDiv) });
   }
-  numHabits = numHabits + 1;
+  numHabits += 1;
 }
