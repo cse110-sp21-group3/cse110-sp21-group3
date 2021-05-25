@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Menu 
+ * Menu
  */
 const flyoutMenu = document.querySelector('#nav');
 
@@ -98,13 +98,15 @@ function hideMenu(e) {
  * Open and close a modal/form
  */
 function openForm(form) {
-  form.style.display = 'block';
+  const f = form;
+  f.style.display = 'block';
 }
 
 function closeForm(form) {
-  form.style.display = 'none';
-  form.querySelector('#habit').value = '';
-  form.querySelector('#colorpicker').value = '#0000ff';
+  const f = form;
+  f.style.display = 'none';
+  f.querySelector('#habit').value = '';
+  f.querySelector('#colorpicker').value = '#0000ff';
 }
 
 /**
@@ -112,10 +114,10 @@ function closeForm(form) {
  */
 const menuButton = document.querySelector('.menu');
 menuButton.addEventListener('click', showMenu, false);
- 
- /**
-  * Close menu button 
-  */
+
+/**
+* Close menu button
+*/
 const navSpan = document.querySelector('.close-nav');
 navSpan.addEventListener('click', hideMenu, false);
 
