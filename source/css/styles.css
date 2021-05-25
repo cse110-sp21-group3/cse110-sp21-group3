@@ -223,6 +223,7 @@ cursor: pointer;
 #submitForm:hover {
     background-color: #A4A4A4;
     color: white;
+    cursor: pointer
 }
 
 tracker-elem {
