@@ -33,9 +33,14 @@ let numHabits = 0;
 /**
  * Delete habit
  */
-function deleteHabit(tracker, gridDiv) {
+function deleteHabit(tracker, gridDiv, grid) {
   // remove from DOM
   gridDiv.removeChild(tracker);
+  numHabits -= 1;
+  if (numHabits % 6 === 0) {
+    const trackerBody = document.getElementById('tracker-body');
+    trackerBody.removeChild(grid);
+  }
 
   // remove from storage
 }
@@ -73,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   gridDiv.append(tracker);
   deleteHabitBtn.addEventListener('click', () => {
-    deleteHabit(tracker, gridDiv);
+    deleteHabit(tracker, gridDiv, grid);
   });
   trackerBody.appendChild(grid);
   numHabits += 1;
@@ -165,15 +170,15 @@ function addHabit(habit, color) {
     const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
     gridDiv.append(tracker);
     deleteHabitBtn.addEventListener('click', () => {
-      deleteHabit(tracker, gridDiv);
+      deleteHabit(tracker, gridDiv, grid);
     });
     trackerBody.appendChild(grid);
   } else {
-    const gridElem = gridList[gridList.length - 1];
-    const gridDiv = gridElem.shadowRoot.querySelector('.habit-grid');
+    const grid = gridList[gridList.length - 1];
+    const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
     gridDiv.append(tracker);
     deleteHabitBtn.addEventListener('click', () => {
-      deleteHabit(tracker, gridDiv);
+      deleteHabit(tracker, gridDiv, grid);
     });
   }
   numHabits += 1;
