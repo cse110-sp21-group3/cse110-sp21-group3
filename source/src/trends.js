@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
   const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
   for (let i = 1; i <= numDays; i += 1) {
-    let habitCircle = document.createElement('div');
+    const habitCircle = document.createElement('div');
     const id = `circle${i}`;
     habitCircle.id = id;
     habitCircle.style.borderRadius = '100%';
@@ -72,7 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
     habitGrid.appendChild(habitCircle);
   }
   gridDiv.append(tracker);
-  deleteHabitBtn.addEventListener('click', () => { deleteHabit(tracker, gridDiv) });
+  deleteHabitBtn.addEventListener('click', () => {
+    deleteHabit(tracker, gridDiv);
+  });
   trackerBody.appendChild(grid);
   numHabits += 1;
 });
@@ -123,28 +125,14 @@ navSpan.addEventListener('click', hideMenu, false);
 const addForm = document.querySelector('#addForm');
 
 const addClose = addForm.querySelector('.close-form');
-addClose.addEventListener('click', () => { closeForm(addForm) });
+addClose.addEventListener('click', () => {
+  closeForm(addForm);
+});
 
 const add = document.getElementById('add');
-add.addEventListener('click', () => { openForm(addForm) });
-
-/*
-** Submit Add Habit
-*/
-const submitAdd = addForm.querySelector('.submit #submitForm');
-submitAdd.onclick = () => {
-  const habit = addForm.querySelector('#habit').value;
-  const color = addForm.querySelector('#colorpicker').value;
-
-  if (habit !== '') {
-    console.log(color);
-    addHabit(habit, color);
-
-    closeForm(addForm);
-  } else {
-    alert('Please fill in habit field');
-  }
-};
+add.addEventListener('click', () => {
+  openForm(addForm);
+});
 
 /**
  * Create habit tracker for particular habit and store color of habit
@@ -174,13 +162,33 @@ function addHabit(habit, color) {
     grid.num = gridList.length + 1;
     const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
     gridDiv.append(tracker);
-    deleteHabitBtn.addEventListener('click', () => { deleteHabit(tracker, gridDiv) });
+    deleteHabitBtn.addEventListener('click', () => {
+      deleteHabit(tracker, gridDiv);
+    });
     trackerBody.appendChild(grid);
   } else {
     const gridElem = gridList[gridList.length - 1];
     const gridDiv = gridElem.shadowRoot.querySelector('.habit-grid');
     gridDiv.append(tracker);
-    deleteHabitBtn.addEventListener('click', () => { deleteHabit(tracker, gridDiv) });
+    deleteHabitBtn.addEventListener('click', () => {
+      deleteHabit(tracker, gridDiv);
+    });
   }
   numHabits += 1;
 }
+
+/*
+** Submit Add Habit
+*/
+const submitAdd = addForm.querySelector('.submit #submitForm');
+submitAdd.onclick = () => {
+  const habit = addForm.querySelector('#habit').value;
+  const color = addForm.querySelector('#colorpicker').value;
+
+  if (habit !== '') {
+    addHabit(habit, color);
+    closeForm(addForm);
+  } else {
+    alert('Please fill in habit field');
+  }
+};

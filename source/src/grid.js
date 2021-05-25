@@ -29,7 +29,7 @@ class Grid extends HTMLElement {
   set num(num) {
     // Set id of div to num
     const grid = this.shadowRoot.querySelector('.habit-grid');
-    const id = `grid${num}`
+    const id = `grid${num}`;
     grid.id = id;
     this.setAttribute('num', num);
   }
