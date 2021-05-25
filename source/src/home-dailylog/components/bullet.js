@@ -1,11 +1,10 @@
 class BulletLog extends HTMLElement {
+  constructor() {
+    super();
 
-    constructor () {
-        super();
+    const template = document.createElement('template');
 
-        const template = document.createElement('template');
-        
-        template.innerHTML = `
+    template.innerHTML = `
 
             <style>
                 /* Entry (bullet log) display */
@@ -238,145 +237,139 @@ class BulletLog extends HTMLElement {
             
         `;
 
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
 
-        this.attachShadow({ mode: 'open' })
-        this.shadowRoot.appendChild(template.content.cloneNode(true))
-
-    }
-
-    /**
+  /**
      * Entry
      */
-    get entry() {
-        return this.getAttribute('entry');
+  get entry() {
+    return this.getAttribute('entry');
+  }
+
+  set entry(entry) {
+    // set modifier
+    const modifier = this.shadowRoot.querySelector('.modifier');
+    if (entry.modifier === 'importance') {
+      modifier.innerHTML = '*';
+    } else if (entry.modifier === 'inspiration') {
+      modifier.innerHTML = '!';
+    } else {
+      modifier.innerHTML = ' ';
     }
 
-    set entry(entry) {
-
-        // set modifier
-        const modifier = this.shadowRoot.querySelector('.modifier');
-        if (entry.modifier === 'importance'){
-            modifier.innerHTML = '*';
-        } else if (entry.modifier === 'inspiration'){
-            modifier.innerHTML = '!'
-        } else {
-            modifier.innerHTML = " ";
-        }
-    
-        // set type
-        const type = this.shadowRoot.querySelector('.type');
-        if (entry.type === 'task') {
-            type.innerHTML = '&bull;'
-        } else if (entry.type === 'note') {
-            type.innerHTML = '&ndash;'
-        } else if (entry.type === 'event') {
-            type.innerHTML = '&#9702;'
-        } else {
-            type.innerHTML = '&#11088;' // theme system star
-        }
-        
-        // set content (text)
-        const content = this.shadowRoot.querySelector('.content')
-        content.innerHTML = entry.content;
-
-        this.setAttribute('entry', entry);
+    // set type
+    const type = this.shadowRoot.querySelector('.type');
+    if (entry.type === 'task') {
+      type.innerHTML = '&bull;';
+    } else if (entry.type === 'note') {
+      type.innerHTML = '&ndash;';
+    } else if (entry.type === 'event') {
+      type.innerHTML = '&#9702;';
+    } else {
+      type.innerHTML = '&#11088;'; // theme system star
     }
 
-    /**
+    // set content (text)
+    const content = this.shadowRoot.querySelector('.content');
+    content.innerHTML = entry.content;
+
+    this.setAttribute('entry', entry);
+  }
+
+  /**
      * Modifier (importance, inspiration, none)
      */
-    get modifier() {
-        return this.getAttribute('modifier');
-    }
+  get modifier() {
+    return this.getAttribute('modifier');
+  }
 
-    set modifier(modifier) {
-        this.setAttribute('modifier', modifier);
-    }
+  set modifier(modifier) {
+    this.setAttribute('modifier', modifier);
+  }
 
-    /**
+  /**
      * Type (note, event, task, theme)
      */
-    get type() {
-        return this.getAttribute('type');
-    }
+  get type() {
+    return this.getAttribute('type');
+  }
 
-    set type(type) {
-        this.setAttribute('type', type);
-    }    
+  set type(type) {
+    this.setAttribute('type', type);
+  }
 
-    /**
+  /**
      * Content (logging)
      */
-    get content() {
-        return this.getAttribute('content');
-    }
+  get content() {
+    return this.getAttribute('content');
+  }
 
-    set content(content) {
-        this.setAttribute('content', content);
-    }
+  set content(content) {
+    this.setAttribute('content', content);
+  }
 
-    /**
+  /**
      * Keyname for storage
      */
-    get keyname() {
-        return this.getAttribute('keyname');
-    }
+  get keyname() {
+    return this.getAttribute('keyname');
+  }
 
-    set keyname(keyname) {
-        this.setAttribute('keyname', keyname);
-    }
+  set keyname(keyname) {
+    this.setAttribute('keyname', keyname);
+  }
 
-    /**
+  /**
      * Completed or not completed
      */
-    get completed() {
-        return this.getAttribute('completed');
-    }
+  get completed() {
+    return this.getAttribute('completed');
+  }
 
-    set completed(completed){
-        this.setAttribute('completed', completed);
-    }
+  set completed(completed) {
+    this.setAttribute('completed', completed);
+  }
 
-    /**
+  /**
      * Nested Bullet Log Entry
      */
-    get nestedEntry(){
-        return this.getAttribute('nestedEntry');
-    }
+  get nestedEntry() {
+    return this.getAttribute('nestedEntry');
+  }
 
-    set nestedEntry(nestedEntry){
-        this.setAttribute('nestedEntry', nestedEntry);
-    }
+  set nestedEntry(nestedEntry) {
+    this.setAttribute('nestedEntry', nestedEntry);
+  }
 
-    // whether nested bullet is added for main bullet
-    get nestedAdded(){
-        return this.getAttribute('nestedAdded');
-    }
+  // whether nested bullet is added for main bullet
+  get nestedAdded() {
+    return this.getAttribute('nestedAdded');
+  }
 
-    set nestedAdded(nestedAdded){
-        this.setAttribute('nestedAdded', nestedAdded);
-    }
+  set nestedAdded(nestedAdded) {
+    this.setAttribute('nestedAdded', nestedAdded);
+  }
 
-    // nested bullet content (input field)
-    get nestedContent(){
-        return this.getAttribute('nestedContent');
-    }
+  // nested bullet content (input field)
+  get nestedContent() {
+    return this.getAttribute('nestedContent');
+  }
 
-    set nestedContent(nestedContent){
-        this.setAttribute('nestedContent', nestedContent);
-    }
+  set nestedContent(nestedContent) {
+    this.setAttribute('nestedContent', nestedContent);
+  }
 
-    // whether nested bullet is completed
-    get nestedCompleted(){
-        return this.getAttribute('nestedCompleted');
-    }
+  // whether nested bullet is completed
+  get nestedCompleted() {
+    return this.getAttribute('nestedCompleted');
+  }
 
-    set nestedCompleted(nestedCompleted){
-        this.setAttribute('nestedCompleted', nestedCompleted);
-    }
-
-
-
+  set nestedCompleted(nestedCompleted) {
+    this.setAttribute('nestedCompleted', nestedCompleted);
+  }
 }
 
 customElements.define('bullet-log', BulletLog);
