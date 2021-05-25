@@ -4,8 +4,6 @@ import { colorStyleKey } from '../../storageKeys.js';
 const journalContainer = document.querySelector('#journals-container');
 
 Object.keys(colorThemes).forEach((colorTheme) => {
-  if (colorTheme === 'default') return;
-
   const journalDisplayContainer = document.createElement('div');
   const journalElement = document.createElement('journal-icon');
   journalElement.styleName = colorTheme;

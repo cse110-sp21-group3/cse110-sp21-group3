@@ -21,7 +21,7 @@ export default {
   },
   sunflower: {
     main: '#FFC145',
-    background: 'red', // TODO: Add
+    background: '#FFE5B1',
   },
   tuscany: {
     main: '#CCA7A2',
