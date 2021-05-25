@@ -138,17 +138,17 @@ function addEntry(entry) {
     bulletLog.nestedCompleted = entry.nestedCompleted;
 
 
-    if (bulletLog.nestedAdded == "true") {
+    if (bulletLog.nestedAdded === "true") {
         nestedBulletAppear(bulletLog, true);
     }
-    if (bulletLog.nestedCompleted == "true") {
-        completeEntryNested(bulletLog);
+    if (bulletLog.nestedCompleted === "true") {
+        completeNestedStrike(bulletLog);
     }
 
 
     // if the bullet is completed, then call completeEntryStrike()
-    const c = bulletLog.completed == "true" ? true : false; 
-    if (c == true) {
+    const c = bulletLog.completed === "true"; 
+    if (c) {
         completeEntryStrike(bulletLog);
     }
 
@@ -240,7 +240,7 @@ function submitEditEntry(editForm, bulletLog) {
         completed: false,
         nestedAdded: bulletLog.nestedAdded === "true",
         nestedContent: bulletLog.nestedContent,
-        nestedCompleted: bulletLog.nestedCompleted,
+        nestedCompleted: bulletLog.nestedCompleted === "true",
     };
 
     // set elements fields to new values
@@ -262,14 +262,14 @@ function submitEditEntry(editForm, bulletLog) {
  */
 function strikeDecision(bulletLog, completeEntry){
     if (completeEntry.checked) {
-        completeEntryStrike(bulletLog, completeEntry);
+        completeEntryStrike(bulletLog);
     } else {
-        removeEntryStrike(bulletLog, completeEntry);
+        removeEntryStrike(bulletLog);
     }
 }
 
 // strikes through bulletLog text 
-function completeEntryStrike(bulletLog, completeEntry) {
+function completeEntryStrike(bulletLog) {
 
     // get elems
     const modifier = bulletLog.shadowRoot.querySelector('.modifier');
@@ -296,7 +296,7 @@ function completeEntryStrike(bulletLog, completeEntry) {
         completed: true,
         nestedAdded: bulletLog.nestedAdded === "true",
         nestedContent: bulletLog.nestedContent,
-        nestedCompleted: bulletLog.nestedCompleted,
+        nestedCompleted: bulletLog.nestedCompleted === "true",
     };
 
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
@@ -304,7 +304,7 @@ function completeEntryStrike(bulletLog, completeEntry) {
 }
 
 /// clears bulletLog text
-function removeEntryStrike(bulletLog, completeEntry) {
+function removeEntryStrike(bulletLog) {
     
     // get elems
     const modifier = bulletLog.shadowRoot.querySelector('.modifier');
@@ -331,7 +331,7 @@ function removeEntryStrike(bulletLog, completeEntry) {
         completed: false,
         nestedAdded: bulletLog.nestedAdded === "true",
         nestedContent: bulletLog.nestedContent,
-        nestedComplete: bulletLog.nestedCompleted,
+        nestedComplete: bulletLog.nestedCompleted === "true",
     };
 
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
@@ -398,10 +398,10 @@ function nestedBulletAppear(bulletLog, flag){
         modifier: bulletLog.modifier,
         type: bulletLog.type,
         content: bulletLog.content,
-        completed: false,
+        completed: bulletLog.completed == "true",
         nestedAdded: true,
         nestedContent: bulletLog.nestedContent,
-        nestedCompleted: bulletLog.nestedCompleted,
+        nestedCompleted: bulletLog.nestedCompleted === "true",
     };
 
     if (flag){
@@ -414,7 +414,7 @@ function nestedBulletAppear(bulletLog, flag){
 
     // nested buttons for complete, submit, delete
     const nestedComplete = nestedBullet.querySelector(".nestedCompleteBtn");
-    nestedComplete.addEventListener("change", () => {completeEntryNested(bulletLog)});
+    nestedComplete.addEventListener("change", () => {nestedStrikeDecision(bulletLog, nestedComplete)});
 
     const nestedSubmit = nestedBullet.querySelector(".nestedSubmitBtn");
     nestedSubmit.addEventListener("click", () => {submitEntryNested(bulletLog)});
@@ -436,7 +436,7 @@ function deleteEntryNested(bulletLog){
         modifier: bulletLog.modifier,
         type: bulletLog.type,
         content: bulletLog.content,
-        completed: bulletLog.completed,
+        completed: bulletLog.completed === "true",
         nestedAdded: false,
         nestedContent: "",
         nestedCompleted: false,
@@ -455,21 +455,33 @@ function submitEntryNested(bulletLog){
         modifier: bulletLog.modifier,
         type: bulletLog.type,
         content: bulletLog.content,
-        completed: false,
+        completed: bulletLog.completed === "true",
         nestedAdded: true,
         nestedContent: nestedContent.innerHTML,
-        nestedCompleted: bulletLog.nestedCompleted,
+        nestedCompleted: bulletLog.nestedCompleted === "true",
     };
 
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
 
 }
 
-function completeEntryNested(bulletLog) {
+
+function nestedStrikeDecision(bulletLog, completeNestedEntry){
+    if (completeNestedEntry.checked) {
+        completeNestedStrike(bulletLog);
+    } else {
+        removeNestedStrike(bulletLog);
+    }
+}
+
+function completeNestedStrike(bulletLog) {
     const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
     const nestedContent = nestedBullet.querySelector(".nestedContent");
 
     nestedContent.style.setProperty('text-decoration', 'line-through');
+
+    const checkbox = nestedBullet.querySelector(".nestedCompleteBtn");
+    checkbox.checked = true;
 
     bulletLog.nestedCompleted = true;
 
@@ -478,12 +490,37 @@ function completeEntryNested(bulletLog) {
         modifier: bulletLog.modifier,
         type: bulletLog.type,
         content: bulletLog.content,
-        completed: bulletLog.completed,
-        nestedAdded: bulletLog.nestedAdded,
+        completed: bulletLog.completed === "true",
+        nestedAdded: bulletLog.nestedAdded === "true",
         nestedContent: bulletLog.nestedContent,
         nestedCompleted: true,
     };
     
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
 
+}
+
+function removeNestedStrike(bulletLog) {
+    const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
+    const nestedContent = nestedBullet.querySelector(".nestedContent");
+
+    nestedContent.style.setProperty('text-decoration', 'none');
+
+    const checkbox = nestedBullet.querySelector(".nestedCompleteBtn");
+    checkbox.checked = false;
+
+    bulletLog.nestedCompleted = false;
+
+    // same entry as before, but with nestedCompleted false
+    const entry = {
+        modifier: bulletLog.modifier,
+        type: bulletLog.type,
+        content: bulletLog.content,
+        completed: bulletLog.completed === "true",
+        nestedAdded: bulletLog.nestedAdded === "true",
+        nestedContent: bulletLog.nestedContent,
+        nestedCompleted: false,
+    };
+    
+    localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
 }
