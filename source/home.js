@@ -441,6 +441,12 @@ function deleteEntryNested(bulletLog){
         nestedContent: "",
         nestedCompleted: false,
     };
+
+    const nestedContent = nestedBullet.querySelector(".nestedContent");
+    nestedContent.innerHTML = "(*/!)(&bull;/&ndash;/&#9702;/&#11088;)(Add thoughts here...)";
+    nestedContent.style.setProperty('text-decoration', 'none');
+    const checkbox = nestedBullet.querySelector(".nestedCompleteBtn");
+    checkbox.checked = false;
     
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
 
