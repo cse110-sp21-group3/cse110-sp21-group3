@@ -2,30 +2,27 @@
  * Get current month and number of days of the month
  */
 const DATE = new Date();
-// eslint-disable-next-line no-extend-native
-Date.prototype.getMonthName = function () {
+function getMonthName(date) {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return monthNames[this.getMonth()];
-};
+  return monthNames[date.getMonth()];
+}
 
-// eslint-disable-next-line no-extend-native
-Date.prototype.getMonthDays = function () {
+function getMonthDays(date) {
   const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  return days[this.getMonth()];
-};
+  return days[date.getMonth()];
+}
 
-// eslint-disable-next-line no-extend-native
-Date.prototype.getMonthDaysLeap = function () {
+function getMonthDaysLeap(date) {
   const days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  return days[this.getMonth()];
-};
+  return days[date.getMonth()];
+}
 
 const currYear = DATE.getFullYear();
 let numDays;
 if (currYear % 4 === 0) {
-  numDays = DATE.getMonthDaysLeap();
+  numDays = getMonthDaysLeap(DATE);
 } else {
-  numDays = DATE.getMonthDays();
+  numDays = getMonthDays(DATE);
 }
 
 let numHabits = 0;
@@ -50,7 +47,7 @@ function deleteHabit(tracker, gridDiv, grid) {
  */
 document.addEventListener('DOMContentLoaded', () => {
   const headerTitle = document.getElementById('header-title');
-  const title = `trends: ${DATE.getMonthName()}`;
+  const title = `trends: ${getMonthName(DATE)}`;
   headerTitle.innerText = title;
   const trackerBody = document.getElementById('tracker-body');
   // TODO: pull from storage the habits of the particular month
