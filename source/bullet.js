@@ -6,6 +6,7 @@ class BulletLog extends HTMLElement {
         const template = document.createElement('template');
         
         template.innerHTML = `
+
             <style>
                 /* Entry (bullet log) display */
                 .entry {
@@ -30,6 +31,7 @@ class BulletLog extends HTMLElement {
                     margin-right: 5px;
                 }
 
+                /* entry buttons */
                 .completeBtn {
                     display: none;
                     margin-left: auto;
@@ -44,18 +46,6 @@ class BulletLog extends HTMLElement {
                     margin-right: 10px;
                 }              
                 .deleteBtn {
-                    display: none;  
-                }
-                .nestedCompleteBtn {
-                    display: none;
-                    margin-left: auto;
-                    margin-right: 10px;
-                }
-                .nestedSubmitBtn {
-                    display: none;
-                    margin-right: 10px;
-                }
-                .nestedDeleteBtn {
                     display: none;  
                 }
 
@@ -93,6 +83,20 @@ class BulletLog extends HTMLElement {
                     width: 60%;       
                     white-space: nowrap;
                     overflow: scroll;
+                }
+
+                /* nested bullet buttons */
+                .nestedCompleteBtn {
+                    display: none;
+                    margin-left: auto;
+                    margin-right: 10px;
+                }
+                .nestedSubmitBtn {
+                    display: none;
+                    margin-right: 10px;
+                }
+                .nestedDeleteBtn {
+                    display: none;  
                 }
 
                 /* The Modal (background) */
@@ -148,6 +152,7 @@ class BulletLog extends HTMLElement {
                     margin-bottom: 5px;
                 }
 
+                /* submit button */
                 .submit {
                     display: flex;
                     justify-content: flex-end;
@@ -180,7 +185,7 @@ class BulletLog extends HTMLElement {
 
             </style>
 
-            <!-- Template -->
+            <!-- Template from home.html -->
             <div class="entry">
                 <p class="modifier">Modifier</p>
                 <p class="type">Type</p>
@@ -230,7 +235,6 @@ class BulletLog extends HTMLElement {
                 </div>
                 </form>
             </div>
-
             
         `;
 
@@ -279,7 +283,7 @@ class BulletLog extends HTMLElement {
     }
 
     /**
-     * Modifier (!,*)
+     * Modifier (importance, inspiration, none)
      */
     get modifier() {
         return this.getAttribute('modifier');
@@ -353,7 +357,7 @@ class BulletLog extends HTMLElement {
         this.setAttribute('nestedAdded', nestedAdded);
     }
 
-    // whether nested bullet is added for main bullet
+    // nested bullet content (input field)
     get nestedContent(){
         return this.getAttribute('nestedContent');
     }
@@ -362,7 +366,7 @@ class BulletLog extends HTMLElement {
         this.setAttribute('nestedContent', nestedContent);
     }
 
-    // completed
+    // whether nested bullet is completed
     get nestedCompleted(){
         return this.getAttribute('nestedCompleted');
     }

@@ -110,7 +110,9 @@
 </body>
 
 
+<!-- Bullet Logging Template -->
 <template>
+  <!-- Main entry with type, modifier, content & complete, nest, edit, delete buttons -->
   <div class="entry">
     <p class="modifier">Modifier</p>
     <p class="type">Type</p>
@@ -119,11 +121,12 @@
     <button class="nestBtn">Nest</button>
     <button class="editBtn">Edit</button>
     <button class="deleteBtn">Delete</button>
-    <div class="nested">
-      <div class="nestedEntry" contenteditable="true">Modifier</div>
-      <input type="checkbox" class="completeBtn"/>
-      <button class="deleteBtn">Delete</button>
-    </div>
+  </div>
+  <!-- Nested entry with input content & complete, delete buttons -->
+  <div class="nested">
+    <div class="nestedEntry" contenteditable="true">Modifier</div>
+    <input type="checkbox" class="completeBtn"/>
+    <button class="deleteBtn">Delete</button>
   </div>
 </template>
 

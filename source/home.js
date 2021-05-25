@@ -8,15 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
     dateKeys.sort();
 
     dateKeys.map(k => {
-        if (k !== "DAY") { // if the key is not storing the DAY
+        if (k !== "DAY") { // if the key is not storing the DAY k!="theme" || k!="colorStyle" || k!="journalName" || k!="replaced_stats"
             const entry = JSON.parse(localStorage.getItem(k));
             currKey = k;
-            if (currKey != "replaced_stats") {
-                addEntry(entry);
-            }
+            addEntry(entry);
         }
     });
 
+    // add current date to title
     const titleDate = document.querySelector(".date");
     const DATE = new Date();
     const currentDate = DATE.toLocaleString().split(",")[0];
@@ -94,7 +93,7 @@ submitAdd.onclick = () => {
         content: content, 
         completed: false,
         nestedAdded: false,
-        nestedContent: "",
+        nestedContent: "(*/!)(&bull;/&ndash;/&#9702;/&#11088;)(Add thoughts here...)",
         nestedCompleted: false, 
     };
 
@@ -138,17 +137,17 @@ function addEntry(entry) {
     bulletLog.nestedCompleted = entry.nestedCompleted;
 
 
+    // if there was a nested bullet for the entry, add it with flag = true
     if (bulletLog.nestedAdded === "true") {
         nestedBulletAppear(bulletLog, true);
     }
+    // if the nested bullet was completed, strikethrough it
     if (bulletLog.nestedCompleted === "true") {
         completeNestedStrike(bulletLog);
     }
 
-
     // if the bullet is completed, then call completeEntryStrike()
-    const c = bulletLog.completed === "true"; 
-    if (c) {
+    if (bulletLog.completed === "true") {
         completeEntryStrike(bulletLog);
     }
 
@@ -237,7 +236,7 @@ function submitEditEntry(editForm, bulletLog) {
         modifier: modifier,
         type: type,
         content: content,
-        completed: false,
+        completed: bulletLog.completed === "true",
         nestedAdded: bulletLog.nestedAdded === "true",
         nestedContent: bulletLog.nestedContent,
         nestedCompleted: bulletLog.nestedCompleted === "true",
@@ -264,11 +263,11 @@ function strikeDecision(bulletLog, completeEntry){
     if (completeEntry.checked) {
         completeEntryStrike(bulletLog);
     } else {
-        removeEntryStrike(bulletLog);
+        uncompleteEntryStrike(bulletLog);
     }
 }
 
-// strikes through bulletLog text 
+// strikes through bulletLog text and makes it completed
 function completeEntryStrike(bulletLog) {
 
     // get elems
@@ -299,12 +298,13 @@ function completeEntryStrike(bulletLog) {
         nestedCompleted: bulletLog.nestedCompleted === "true",
     };
 
+    console.log(bulletLog.nestedContent);
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
 
 }
 
-/// clears bulletLog text
-function removeEntryStrike(bulletLog) {
+/// removes the bulletLog strike and makes it uncompleted
+function uncompleteEntryStrike(bulletLog) {
     
     // get elems
     const modifier = bulletLog.shadowRoot.querySelector('.modifier');
@@ -323,7 +323,7 @@ function removeEntryStrike(bulletLog) {
     // set bulletLog's completed attribute to true
     bulletLog.completed = false;
 
-    // same entry as before, but now completed is true
+    // same entry as before, but now completed is false
     const entry = {
         modifier: bulletLog.modifier,
         type: bulletLog.type,
@@ -331,7 +331,7 @@ function removeEntryStrike(bulletLog) {
         completed: false,
         nestedAdded: bulletLog.nestedAdded === "true",
         nestedContent: bulletLog.nestedContent,
-        nestedComplete: bulletLog.nestedCompleted === "true",
+        nestedCompleted: bulletLog.nestedCompleted === "true",
     };
 
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
@@ -359,7 +359,10 @@ refreshDate.addEventListener("click", () => {
     const currDay = DATE.getDate();
     const storedDay = Number(localStorage.getItem("DAY"));
 
+    // if there is no date stored or the date stored is different from the current day,
+    // this means that we are in a new day, so clear the daily log
     if (storedDay === 0 || currDay !== storedDay) {
+        // TODO: store all existing bullets to display on past daily logs
         clearDailyLog();
     }
 });
@@ -374,10 +377,15 @@ function clearDailyLog() {
 /**
  * Nesting bullets
  */
+
+// display a nested bullet either when the nest button is clicked on the main entry OR
+// if loading from localStorage and an entry has nestedAdded == true, then we pass flag = true to get
+// the bulletLog.nestedContent to appear in nestedContent.innerHTML
 function nestedBulletAppear(bulletLog, flag){
 
     const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
     
+    // styles for appearing (defualt is diplay: none)
     const nestedStyles =  {
         "display": "inline-block",
         "margin-left": "30px",
@@ -391,9 +399,9 @@ function nestedBulletAppear(bulletLog, flag){
         "backhround-color": "red",
     };
     Object.assign(nestedBullet.style, nestedStyles);
-    bulletLog.nestedAdded = true;
-
+    
     // same entry as before, but now nestedAdded is true
+    bulletLog.nestedAdded = true;
     const entry = {
         modifier: bulletLog.modifier,
         type: bulletLog.type,
@@ -404,6 +412,7 @@ function nestedBulletAppear(bulletLog, flag){
         nestedCompleted: bulletLog.nestedCompleted === "true",
     };
 
+    // this is if the bullet log is loaded from local storage, so we need to set its content to what was stored
     if (flag){
         const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
         const nestedContent = nestedBullet.querySelector(".nestedContent");
@@ -412,13 +421,15 @@ function nestedBulletAppear(bulletLog, flag){
 
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
 
-    // nested buttons for complete, submit, delete
+    // nested bullet complete button
     const nestedComplete = nestedBullet.querySelector(".nestedCompleteBtn");
     nestedComplete.addEventListener("change", () => {nestedStrikeDecision(bulletLog, nestedComplete)});
 
+    // nested bullet submit button (needs to be pressed for nested content to be correctly saved)
     const nestedSubmit = nestedBullet.querySelector(".nestedSubmitBtn");
     nestedSubmit.addEventListener("click", () => {submitEntryNested(bulletLog)});
 
+    // nested bullet delete button
     const nestedDelete = nestedBullet.querySelector(".nestedDeleteBtn");
     nestedDelete.addEventListener("click", () => {deleteEntryNested(bulletLog)});
 }
@@ -430,29 +441,34 @@ function deleteEntryNested(bulletLog){
     const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
     Object.assign(nestedBullet.style, {"display": "none"});
 
-    bulletLog.nestedAdded = false;
     // same entry as before, but now nestedAdded is false, and nested is back to default
+    bulletLog.nestedAdded = false;
     const entry = {
         modifier: bulletLog.modifier,
         type: bulletLog.type,
         content: bulletLog.content,
         completed: bulletLog.completed === "true",
         nestedAdded: false,
-        nestedContent: "",
+        nestedContent: "(*/!)(&bull;/&ndash;/&#9702;/&#11088;)(Add thoughts here...)",
         nestedCompleted: false,
     };
 
+    // remove strikethrough
     const nestedContent = nestedBullet.querySelector(".nestedContent");
-    nestedContent.innerHTML = "(*/!)(&bull;/&ndash;/&#9702;/&#11088;)(Add thoughts here...)";
     nestedContent.style.setProperty('text-decoration', 'none');
+    
+    // set checkbox to unchecked
     const checkbox = nestedBullet.querySelector(".nestedCompleteBtn");
     checkbox.checked = false;
     
     localStorage.setItem(bulletLog.keyname, JSON.stringify(entry));
+    window.location.reload();
 
 }
 
+// submit a nested bullet
 function submitEntryNested(bulletLog){
+
     const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
     const nestedContent = nestedBullet.querySelector(".nestedContent");
 
@@ -471,7 +487,7 @@ function submitEntryNested(bulletLog){
 
 }
 
-
+// nested strike decision depending on if the checkbox is checked or unchecked
 function nestedStrikeDecision(bulletLog, completeNestedEntry){
     if (completeNestedEntry.checked) {
         completeNestedStrike(bulletLog);
@@ -480,18 +496,21 @@ function nestedStrikeDecision(bulletLog, completeNestedEntry){
     }
 }
 
+// strikethrough nested text and makes it completed
 function completeNestedStrike(bulletLog) {
+    // get elems
     const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
     const nestedContent = nestedBullet.querySelector(".nestedContent");
 
+    // strike through
     nestedContent.style.setProperty('text-decoration', 'line-through');
 
+    // set checkbox to checked
     const checkbox = nestedBullet.querySelector(".nestedCompleteBtn");
     checkbox.checked = true;
 
-    bulletLog.nestedCompleted = true;
-
     // same entry as before, but with nestedCompleted true
+    bulletLog.nestedCompleted = true;
     const entry = {
         modifier: bulletLog.modifier,
         type: bulletLog.type,
@@ -506,18 +525,21 @@ function completeNestedStrike(bulletLog) {
 
 }
 
+// removes strike through nested bullet and makes it uncompleted
 function removeNestedStrike(bulletLog) {
+    // get elems
     const nestedBullet = bulletLog.shadowRoot.querySelector(".nested");
     const nestedContent = nestedBullet.querySelector(".nestedContent");
 
+    // remove strike
     nestedContent.style.setProperty('text-decoration', 'none');
 
+    // set checkbox to unchecked
     const checkbox = nestedBullet.querySelector(".nestedCompleteBtn");
     checkbox.checked = false;
 
-    bulletLog.nestedCompleted = false;
-
     // same entry as before, but with nestedCompleted false
+    bulletLog.nestedCompleted = false;
     const entry = {
         modifier: bulletLog.modifier,
         type: bulletLog.type,
