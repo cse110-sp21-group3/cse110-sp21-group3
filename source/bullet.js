@@ -55,6 +55,9 @@ class BulletLog extends HTMLElement {
                     display: none;
                     margin-right: 10px;
                 }
+                .nestedDeleteBtn {
+                    display: none;  
+                }
 
                 /* hover over main bullet */
                 .entry:hover .completeBtn {
@@ -70,6 +73,11 @@ class BulletLog extends HTMLElement {
                     display: inline-block;
                 }
 
+                /* nested bullet */
+                .nested {
+                    display: none;
+                }
+
                 /* hover over nested bullet */
                 .nested:hover .nestedCompleteBtn {
                     display: inline-block
@@ -77,14 +85,14 @@ class BulletLog extends HTMLElement {
                 .nested:hover .nestedSubmitBtn {
                     display: inline-block;
                 }
-                .nested:hover .deleteBtn {
+                .nested:hover .nestedDeleteBtn {
                     display: inline-block;
                 }
 
-
-                /* nested bullet */
-                .nested {
-                    display: none;
+                .nestedContent {
+                    width: 60%;       
+                    white-space: nowrap;
+                    overflow: scroll;
                 }
 
                 /* The Modal (background) */
@@ -186,7 +194,7 @@ class BulletLog extends HTMLElement {
                 <p class="nestedContent" contenteditable="true">(*/!)(&bull;/&ndash;/&#9702;/&#11088;)(Add thoughts here...)</p>
                 <input type="checkbox" class="nestedCompleteBtn"/>
                 <button class="nestedSubmitBtn">Submit</button>
-                <button class="deleteBtn">Delete</button>
+                <button class="nestedDeleteBtn">Delete</button>
              </div>
 
             <!-- Edit modal -->
