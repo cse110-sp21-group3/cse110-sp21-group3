@@ -12,19 +12,34 @@ class Tracker extends HTMLElement {
                     flex-direction: column;
                     text-align: center;
                     flex-grow: 1;
+                    height: 100%;
                 }
 
-                .title {
+                .delete-tracker {
+                    float: right;
+                    color: #aaa;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+
+                .delete-tracker:hover,
+                .delete-tracker:focus {
+                    color: black;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+
+                #title {
                     font-size: 3xl;
                     margin: 1rem;
                 }
 
-                .habit-grid {
+                #habit-grid {
                     display: grid;
                     grid-template-rows: repeat(5, minmax(0, 1fr));
                     grid-template-columns: repeat(7, minmax(0, 1fr));
-                    column-gap: 2rem;
-                    row-gap: 1.5rem;
+                    column-gap: 1rem;
+                    row-gap: 1rem;
                     padding: 1rem;
                     flex-grow: 1;
                     background-color: white;
@@ -32,9 +47,10 @@ class Tracker extends HTMLElement {
                 }
             </style>
             <!-- Template -->
+            <span class="delete-tracker">&times;</span>
             <div class="habit">
-                <h1 class="title">habit</h1>
-                <div class="habit-grid"></div>
+                <h1 id="title">habit</h1>
+                <div id="habit-grid"></div>
             </div>`
             ;
 
@@ -53,7 +69,7 @@ class Tracker extends HTMLElement {
 
     set habit(habit) {
         // Set title of grid and id of div to habit
-        const title = this.shadowRoot.querySelector('.title');
+        const title = this.shadowRoot.querySelector('#title');
         title.innerHTML = habit;
         const grid = this.shadowRoot.querySelector('.habit');
         grid.id = habit;

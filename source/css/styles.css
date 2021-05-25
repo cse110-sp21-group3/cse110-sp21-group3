@@ -6,7 +6,13 @@
 
 body {
     background-color: #efefef;
-    height: 100vh;
+}
+.header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: #efefef;
 }
 
 .heading {
@@ -105,13 +111,17 @@ cursor: pointer;
     background-color: #64A6BD;
 }
 
-#grid1 {
+/* #grid1 {
     display: grid;
     grid-template-rows: repeat(2, minmax(0, 1fr));
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
     margin: 2rem;
     height: 100vh;
+} */
+
+#tracker-body {
+    overflow-y: scroll;
 }
 
 #add-div {
@@ -121,7 +131,7 @@ cursor: pointer;
 }
 
 #add-label {
-    font-size: xx-large;
+    font-size: large;
     margin: 1rem;
 }
 
@@ -131,8 +141,9 @@ cursor: pointer;
     justify-content: center;
     background-color: #aeaeae;
     text-align: center;
-    border-radius: 1.5rem;
-    flex-grow: 1;
+    border-radius: 100%;
+    height: 4rem;
+    width: 4rem;
 }
 
 #add:hover {
@@ -177,11 +188,10 @@ cursor: pointer;
     margin-bottom: 1rem;
 }
 
-#color {
+#colorpicker {
     border-radius: 1rem;
-    width: 90%;
+    width: 20%;
     border: none;
-    padding: 1rem;
     margin-bottom: 1rem;
 }
 
