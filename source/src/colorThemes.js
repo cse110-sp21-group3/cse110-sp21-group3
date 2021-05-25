@@ -37,6 +37,6 @@ export default {
   },
   lavendar: {
     main: '#EECFF4',
-    background: '#FCEEFF'
-  }
+    background: '#FCEEFF',
+  },
 };

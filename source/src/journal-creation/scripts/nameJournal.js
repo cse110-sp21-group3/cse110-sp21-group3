@@ -2,7 +2,7 @@ import colorThemes from '../../colorThemes.js';
 import { colorStyleKey, journalNameKey } from '../../storageKeys.js';
 
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
-if (selectedColorStyle == 'null') selectedColorStyle = 'default';
+if (selectedColorStyle === 'null') selectedColorStyle = 'default';
 
 // Set Display CSS Styles
 const root = document.documentElement;
