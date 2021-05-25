@@ -11,8 +11,8 @@ const stateProperties = {
     labelMarginTop: '1.5rem',
   },
   large: {
-    width: '20.5rem',
-    height: '30rem',
+    width: '17rem',
+    height: '23.6rem',
     labelMarginTop: '5rem',
   },
 };

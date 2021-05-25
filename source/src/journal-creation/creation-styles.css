@@ -127,10 +127,10 @@ Journal Picker Styling
 /* Name Journal Styling */
 
 #name-input {
-    width: 20.5rem;
+    width: 17rem;
     height: 3.5rem;
 
-    margin: 1rem auto;
+    margin: 2.5rem auto;
     padding: 1rem;
 
     background: var(--light-bg);
