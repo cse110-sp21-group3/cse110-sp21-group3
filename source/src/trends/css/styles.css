@@ -46,63 +46,7 @@ body {
 
 .menu:hover {
     background-color: #CCB9B3;
-}
-
-#nav {
-    position: fixed;
-    width: 25vw;
-    height: 100vh;
-    background-color: #EEE4E1;
-    transform: translate3d(-100vw, 0, 0);
-    transition: 1s;
-    z-index: 1000;
-    top: 0px;
-    left: 0px;
-    overflow: scroll;
-
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.nav-component {
-    border-bottom: 1px solid #9A9A9A;
-}
-
-.nav-component > p {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 29px;
-    line-height: 49px;
-
-    color: #000000;
-}
-
-.nav-component > p:hover {
-    text-decoration: underline;
-}
-
-#nav.show {
-    transform: translate3d(0vw, 0, 0);
-    transition: .3s;
-}
-
-/* The Close Button */
-.close-nav {
-    position: absolute;
-    color: #aaa;
-    top: 8px;
-    right: 15px;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-.close-nav:hover,
-.close-nav:focus {
-color: black;
-text-decoration: none;
-cursor: pointer;
+    cursor: pointer;
 }
 
 #bar {
