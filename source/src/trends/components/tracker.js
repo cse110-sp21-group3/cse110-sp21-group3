@@ -17,10 +17,14 @@ class Tracker extends HTMLElement {
                 color: #aaa;
                 font-size: 28px;
                 font-weight: bold;
+                visibility: hidden;
             }
 
-            .delete-tracker:hover,
-            .delete-tracker:focus {
+            :host(:hover) .delete-tracker {
+                visibility: visible;
+            }
+
+            .delete-tracker:hover, .delete-tracker:focus {
                 color: black;
                 text-decoration: none;
                 cursor: pointer;

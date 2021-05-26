@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Menu
  */
-const flyoutMenu = document.querySelector('#nav');
+const flyoutMenu = document.querySelector('navbar-elem').shadowRoot.querySelector('#nav');
 
 function showMenu() {
   flyoutMenu.classList.add('show');
@@ -120,7 +120,7 @@ menuButton.addEventListener('click', showMenu, false);
 /**
 * Close menu button
 */
-const navSpan = document.querySelector('.close-nav');
+const navSpan = document.querySelector('navbar-elem').shadowRoot.querySelector('.close-nav');
 navSpan.addEventListener('click', hideMenu, false);
 
 /**
