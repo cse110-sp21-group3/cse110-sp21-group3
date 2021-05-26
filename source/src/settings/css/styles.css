@@ -62,7 +62,8 @@ body{
     border: 2px solid #FFFFFF;
     box-sizing: border-box;
     border-radius: 1.5rem;
-    width: 100%;
+    width: 100%;  
+    margin-bottom: 1rem;  
 }
 
 #journal-color-title {
@@ -94,4 +95,64 @@ Journal Picker Styling
 #journals-container > * {
     display: inline-block;
     margin: 0 0.85rem;
+}
+
+#journal-name {
+    padding: 1rem 0;
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 1.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#journal-name > p {
+    font-size: x-large;
+    margin: 0 0.85rem;
+}
+
+#journal-name-edit {
+    font-size: x-large;
+    border: none;
+    margin: 0 0.85rem;
+    text-align: right;
+}
+
+#journal-theme {
+    padding: 1rem 0;
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 1.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#journal-theme > p {
+    font-size: x-large;
+    margin: 0 0.85rem;
+}
+
+#journal-theme-edit {
+    font-size: x-large;
+    border: none;
+    margin: 0 0.85rem;
+    text-align: right;
+}
+
+#save {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    font-size: large;
+    border-radius: 1.5rem;
+    border: none;
+    background-color: #FFFFFF;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    visibility: hidden;
 }

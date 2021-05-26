@@ -10,19 +10,29 @@
   <script src="../journal-creation/components/JournalIcon.js" type="module"></script>
   <script src="./scripts/journalPicker.js" type="module"></script>
   <script src="../colorThemes.js" type="module"></script>
+  <script src="settings.js" type="module"></script>
   <body>
     <div class="header">
         <div class="heading">
           <div class="menu">
-              <img src="menu-icon.png">
+              <!-- <img src="menu-icon.png"> -->
             </div>
           <h1 id="header-title">settings</h1>
           <div></div>
         </div>
     </div>
-      <div id="journal-color">
+    <div id="journal-name">
+        <p id="journal-name-title">Journal Name</p>
+        <span id="journal-name-edit" contenteditable></span>
+    </div>
+    <div id="journal-color">
         <p id="journal-color-title">Journal Color</p>
         <div id="journals-container"></div>
-      </div>
+    </div>
+    <div id="journal-theme">
+        <p id="journal-theme-title">Journal Theme</p>
+        <span id="journal-theme-edit" contenteditable></span>
+    </div>
+    <button id="save">Save</button>
   </body>
 </html>
