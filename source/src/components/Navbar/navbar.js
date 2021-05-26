@@ -37,6 +37,7 @@ class Navbar extends HTMLElement {
         
         .nav-component > p:hover {
           text-decoration: underline;
+          cursor: pointer;
         }
         
         #nav.show {

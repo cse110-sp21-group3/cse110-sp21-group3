@@ -46,6 +46,7 @@ body {
 
 .menu:hover {
     background-color: #CCB9B3;
+    cursor: pointer;
 }
 
 #bar {
