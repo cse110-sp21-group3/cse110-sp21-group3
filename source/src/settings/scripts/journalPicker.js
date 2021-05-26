@@ -16,7 +16,7 @@ Object.keys(colorThemes).forEach((colorTheme) => {
   journalElement.styleName = colorTheme;
   journalElement.addEventListener('click', () => {
     localStorage.setItem(colorStyleKey, colorTheme);
-    location.reload();
+    window.location.reload();
   });
 
   const styleDiscriptor = document.createElement('p');
