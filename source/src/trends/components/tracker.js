@@ -35,12 +35,29 @@ class Tracker extends HTMLElement {
                 margin: 1rem;
             }
 
+            .habit-header {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+            }
+
+            #habit-color {
+              border-radius: 100%;
+              height: 1rem;
+              width: 1rem;
+            }
+
             #habit-grid {
-                display: grid;
-                grid-template-rows: repeat(5, minmax(0, 1fr));
-                grid-template-columns: repeat(7, minmax(0, 1fr));
-                column-gap: 1rem;
-                row-gap: 1rem;
+                // display: grid;
+                // grid-template-rows: repeat(7, minmax(0, 1fr));
+                // grid-template-columns: repeat(7, minmax(0, 1fr));
+                // column-gap: 1rem;
+                // row-gap: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                width: 100%;
                 padding: 1rem;
                 flex-grow: 1;
                 background-color: white;
@@ -50,7 +67,10 @@ class Tracker extends HTMLElement {
         <!-- Template -->
         <span class="delete-tracker">&times;</span>
         <div class="habit">
-            <h1 id="title">habit</h1>
+            <div class="habit-header">
+              <h1 id="title">habit</h1>
+              <div id="habit-color"></div>
+            </div>
             <div id="habit-grid"></div>
         </div>`;
     this.attachShadow({ mode: 'open' });
@@ -78,6 +98,8 @@ class Tracker extends HTMLElement {
   }
 
   set color(color) {
+    const habitColor = this.shadowRoot.querySelector('#habit-color');
+    habitColor.style.backgroundColor = color;
     this.setAttribute('color', color);
   }
 

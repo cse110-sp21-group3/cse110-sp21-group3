@@ -10,7 +10,6 @@ class Grid extends HTMLElement {
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 2rem;
             margin: 2rem;
-            height: 100vh;
         }
     </style>
     <!-- Template -->

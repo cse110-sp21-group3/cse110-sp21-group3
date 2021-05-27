@@ -13,6 +13,7 @@ root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
  * Get current month and number of days of the month
  */
 const DATE = new Date();
+const calendarDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 function getMonthName(date) {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   return monthNames[date.getMonth()];
@@ -26,6 +27,11 @@ function getMonthDays(date) {
 function getMonthDaysLeap(date) {
   const days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return days[date.getMonth()];
+}
+
+function getFirstDay(date) {
+  const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  return firstDay.getDay();
 }
 
 const currYear = DATE.getFullYear();
@@ -43,12 +49,9 @@ let numHabits = 0;
  */
 function deleteHabit(tracker, gridDiv, grid) {
   // remove from DOM
-  gridDiv.removeChild(tracker);
+  const trackerBody = document.getElementById('tracker-body');
+  trackerBody.removeChild(tracker);
   numHabits -= 1;
-  if (numHabits % 6 === 0) {
-    const trackerBody = document.getElementById('tracker-body');
-    trackerBody.removeChild(grid);
-  }
 
   // remove from storage
   const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
@@ -63,24 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const title = `trends: ${getMonthName(DATE)}`;
   headerTitle.innerText = title;
   const trackerBody = document.getElementById('tracker-body');
-  // TODO: pull from storage the habits of the particular month
+  // pull from storage the habits of the particular month
   const habitKeys = Object.keys(localStorage);
   habitKeys.sort();
-
-  let gridDiv;
-  // create first grid
-  let grid = document.createElement('grid-elem');
-  grid.num = 1;
-  gridDiv = grid.shadowRoot.querySelector('.habit-grid');
-  trackerBody.appendChild(grid);
   habitKeys.forEach((k) => {
-    if (numHabits !== 0 && numHabits % 6 === 0) {
-      // create a new grid for every 6 habits using grid.js
-      grid = document.createElement('grid-elem');
-      grid.num = (numHabits / 6) + 1;
-      gridDiv = grid.shadowRoot.querySelector('.habit-grid');
-      trackerBody.appendChild(grid);
-    }
     if (k.startsWith(`${getMonthName(DATE)}`)) { // if the key is not storing the DAY k!="theme" || k!="colorStyle" || k!="journalName" || k!="replaced_stats"
       const habitEntry = JSON.parse(localStorage.getItem(k));
       // create a tracker for each habit using tracker.js
@@ -90,6 +79,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const days = [...habitEntry.days];
       const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
       const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+      for (let i = 0; i < 7; i += 1) {
+        const day = document.createElement('p');
+        day.innerText = calendarDays[i];
+        day.style.width = '14%'
+        habitGrid.appendChild(day);
+      }
+      const firstDay = getFirstDay(DATE);
+      // create filler circles
+      for (let i = 0; i < firstDay; i += 1) {
+        const habitCircle = document.createElement('div');
+        habitCircle.style.borderRadius = '100%';
+        habitCircle.style.border = 'none';
+        habitCircle.style.backgroundColor = 'white'
+        habitCircle.style.width = '10%';
+        habitCircle.style.paddingBottom = '1.5rem';
+        habitCircle.style.margin = '0.5rem';
+        habitGrid.appendChild(habitCircle);
+      }
       for (let i = 0; i < days.length; i += 1) {
         const habitCircle = document.createElement('div');
         const id = `circle${i + 1}`;
@@ -102,11 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           habitCircle.style.backgroundColor = '#dbdbdb';
         }
-        habitCircle.style.width = '100%';
-        habitCircle.style.height = '100%';
+        habitCircle.style.width = '10%';
+        habitCircle.style.paddingBottom = '10%';
+        habitCircle.style.margin = '0.5rem';
         habitGrid.appendChild(habitCircle);
       }
-      gridDiv.append(tracker);
+      trackerBody.append(tracker);
       deleteHabitBtn.addEventListener('click', () => {
         deleteHabit(tracker, gridDiv, grid);
       });
@@ -155,36 +163,36 @@ function addHabit(habit, color) {
   // show delete button when hovering over element
   const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
   const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
+  for (let i = 0; i < 7; i += 1) {
+    const day = document.createElement('p');
+    day.innerText = calendarDays[i];
+    habitGrid.appendChild(day);
+  }
+  const firstDay = getFirstDay(DATE);
+  // create filler circles
+  for (let i = 0; i < firstDay; i += 1) {
+    const habitCircle = document.createElement('div');
+    habitCircle.style.borderRadius = '100%';
+    habitCircle.style.border = 'none';
+    habitCircle.style.backgroundColor = 'white'
+    habitCircle.style.width = '1.5rem';
+    habitCircle.style.height = '1.5rem';
+    habitGrid.appendChild(habitCircle);
+  }
   for (let i = 1; i <= numDays; i += 1) {
     const habitCircle = document.createElement('div');
     const id = `circle${i}`;
     habitCircle.id = id;
-    habitCircle.style.borderRadius = '100%';
+    habitCircle.style.borderRadius = '1.5rem';
     habitCircle.style.border = 'none';
     habitCircle.style.backgroundColor = '#DBDBDB';
     habitGrid.appendChild(habitCircle);
   }
-  // If number of habits % 6 === 0, then make new grid and append tracker to new grid
-  // otherwise, just append tracker to last grid
-  const gridList = document.getElementsByTagName('grid-elem');
   const trackerBody = document.getElementById('tracker-body');
-  if (numHabits !== 0 && numHabits % 6 === 0) {
-    const grid = document.createElement('grid-elem');
-    grid.num = gridList.length + 1;
-    const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
-    gridDiv.append(tracker);
-    deleteHabitBtn.addEventListener('click', () => {
-      deleteHabit(tracker, gridDiv, grid);
-    });
-    trackerBody.appendChild(grid);
-  } else {
-    const grid = gridList[gridList.length - 1];
-    const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
-    gridDiv.append(tracker);
-    deleteHabitBtn.addEventListener('click', () => {
-      deleteHabit(tracker, gridDiv, grid);
-    });
-  }
+  deleteHabitBtn.addEventListener('click', () => {
+    deleteHabit(tracker, gridDiv, grid);
+  });
+  trackerBody.appendChild(tracker);
   numHabits += 1;
 }
 

@@ -169,6 +169,14 @@ body {
     cursor: pointer
 }
 
+#tracker-body {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 tracker-elem {
     display: flex;
+    width: 30%;
+    height: 50%;
+    margin: 1rem;
 }
