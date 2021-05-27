@@ -12,8 +12,14 @@ class Tracker extends HTMLElement {
                 height: 100%;
             }
 
+            .delete-div {
+              display: flex;
+              flex-direction: row;
+              justify-content: flex-end;
+              width: 100%;
+            }
+
             .delete-tracker {
-                float: right;
                 color: #aaa;
                 font-size: 28px;
                 font-weight: bold;
@@ -53,14 +59,14 @@ class Tracker extends HTMLElement {
               flex-wrap: wrap;
               align-items: center;
               width: 100%;
-              padding: 1rem;
-              flex-grow: 1;
               background-color: white;
               border-radius: 1.5rem;
             }
         </style>
         <!-- Template -->
-        <span class="delete-tracker">&times;</span>
+        <div class="delete-div">
+          <span class="delete-tracker">&times;</span>
+        </div>
         <div class="habit">
             <div class="habit-header">
               <h1 id="title">habit</h1>
