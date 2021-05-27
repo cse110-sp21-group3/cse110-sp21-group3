@@ -47,7 +47,7 @@ let numHabits = 0;
 /**
  * Delete habit
  */
-function deleteHabit(tracker, gridDiv, grid) {
+function deleteHabit(tracker) {
   // remove from DOM
   const trackerBody = document.getElementById('tracker-body');
   trackerBody.removeChild(tracker);
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       trackerBody.append(tracker);
       deleteHabitBtn.addEventListener('click', () => {
-        deleteHabit(tracker, gridDiv, grid);
+        deleteHabit(tracker);
       });
       numHabits += 1;
     }
@@ -191,7 +191,7 @@ function addHabit(habit, color) {
   }
   const trackerBody = document.getElementById('tracker-body');
   deleteHabitBtn.addEventListener('click', () => {
-    deleteHabit(tracker, gridDiv, grid);
+    deleteHabit(tracker);
   });
   trackerBody.appendChild(tracker);
   numHabits += 1;
