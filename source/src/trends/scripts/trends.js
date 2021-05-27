@@ -42,8 +42,6 @@ if (currYear % 4 === 0) {
   numDays = getMonthDays(DATE);
 }
 
-let numHabits = 0;
-
 /**
  * Delete habit
  */
@@ -51,7 +49,6 @@ function deleteHabit(tracker) {
   // remove from DOM
   const trackerBody = document.getElementById('tracker-body');
   trackerBody.removeChild(tracker);
-  numHabits -= 1;
 
   // remove from storage
   const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
@@ -92,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const habitCircle = document.createElement('div');
         habitCircle.style.borderRadius = '100%';
         habitCircle.style.border = 'none';
-        habitCircle.style.backgroundColor = 'white'
+        habitCircle.style.backgroundColor = 'white';
         habitCircle.style.width = '10%';
         habitCircle.style.paddingBottom = '1.5rem';
         habitCircle.style.margin = '0.5rem';
@@ -119,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteHabitBtn.addEventListener('click', () => {
         deleteHabit(tracker);
       });
-      numHabits += 1;
     }
   });
 });
@@ -167,6 +163,8 @@ function addHabit(habit, color) {
   for (let i = 0; i < 7; i += 1) {
     const day = document.createElement('p');
     day.innerText = calendarDays[i];
+    day.style.width = '10%';
+    day.style.margin = '0.5rem';
     habitGrid.appendChild(day);
   }
   const firstDay = getFirstDay(DATE);
@@ -175,18 +173,22 @@ function addHabit(habit, color) {
     const habitCircle = document.createElement('div');
     habitCircle.style.borderRadius = '100%';
     habitCircle.style.border = 'none';
-    habitCircle.style.backgroundColor = 'white'
-    habitCircle.style.width = '1.5rem';
-    habitCircle.style.height = '1.5rem';
+    habitCircle.style.backgroundColor = 'white';
+    habitCircle.style.width = '10%';
+    habitCircle.style.paddingBottom = '1.5rem';
+    habitCircle.style.margin = '0.5rem';
     habitGrid.appendChild(habitCircle);
   }
-  for (let i = 1; i <= numDays; i += 1) {
+  for (let i = 0; i < numDays; i += 1) {
     const habitCircle = document.createElement('div');
-    const id = `circle${i}`;
+    const id = `circle${i + 1}`;
     habitCircle.id = id;
-    habitCircle.style.borderRadius = '1.5rem';
+    habitCircle.style.borderRadius = '100%';
     habitCircle.style.border = 'none';
-    habitCircle.style.backgroundColor = '#DBDBDB';
+    habitCircle.style.backgroundColor = '#dbdbdb';
+    habitCircle.style.width = '10%';
+    habitCircle.style.paddingBottom = '10%';
+    habitCircle.style.margin = '0.5rem';
     habitGrid.appendChild(habitCircle);
   }
   const trackerBody = document.getElementById('tracker-body');
@@ -194,7 +196,6 @@ function addHabit(habit, color) {
     deleteHabit(tracker);
   });
   trackerBody.appendChild(tracker);
-  numHabits += 1;
 }
 
 /*
