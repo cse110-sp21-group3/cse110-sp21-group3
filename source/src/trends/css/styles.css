@@ -39,7 +39,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
   background-color: #eee4e1;
   height: 4rem;
   width: 4rem;
@@ -65,6 +64,8 @@ body {
 }
 
 #tracker-body {
+  display: flex;
+  flex-wrap: wrap;
   overflow-y: scroll;
 }
 
@@ -147,8 +148,9 @@ body {
   font-size: 28px;
   font-weight: bold;
 }
-  
-.close-form:hover, .close-form:focus {
+ 
+.close-form:hover, 
+.close-form:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
@@ -165,14 +167,9 @@ body {
 }
 
 #submitForm:hover {
-  background-color: #A4A4A4;
+  background-color: #a4a4a4;
   color: white;
   cursor: pointer;
-}
-
-#tracker-body {
-  display: flex;
-  flex-wrap: wrap;
 }
 
 tracker-elem {
