@@ -1,174 +1,176 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 
 * {
-    font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
+
 :root {
-    --main-bg: rgba(229, 229, 229, 1);
-    --light-bg: #f9f9f9;
-    --light-text: rgb(166, 169, 173);
-    --dark-text: black;
+  --main-bg: rgba(229, 229, 229, 1);
+  --light-bg: #f9f9f9;
+  --light-text: rgb(166, 169, 173);
+  --dark-text: black;
 }
-body{
-    background-color: var(--main-bg);
-    padding-left: 1rem;
-    padding-right: 1rem;
+
+body {
+  background-color: var(--main-bg);
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 /* Theme suggestions  */
 #theme-suggestions {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 #theme-suggestions > a {
-    font-size: 1rem;
-    line-height: 1.5rem;
-    padding: 1rem 0rem;
-    color: var(--light-text);
-
-    cursor: pointer;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  padding: 1rem 0;
+  color: var(--light-text);
+  cursor: pointer;
 }
+
 #theme-suggestions > a:hover {
-    color: var(--dark-text);
+  color: var(--dark-text);
 }
 
 @media screen and (min-width: 500px) {
-    #theme-input-container {
-        --x-padding: 5rem;
-    }
-    #theme-input-container > h1 {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-    }
+  #theme-input-container {
+    --x-padding: 5rem;
+  }
 
-    #theme-suggestions > a, #theme-input {
-        font-size: 1.5rem;
-        line-height: 2rem;
-    }
+  #theme-input-container > h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  #theme-suggestions > a,
+  #theme-input {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
 }
 
-
-/** 
+/**
  * Styling for 'What is the theme system?'onboarding component on theme
  * creation page with hover and hyperlink to video.
  */
-.dropdown{
-    position: absolute;
-    top:1rem;
-    right:0rem;
-    display: inline-block;
+.dropdown {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  display: inline-block;
 }
-.dropdown:hover .dropdown-content{
-    display: block;
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 1px;
+  background-color: var(--light-bg);
+  min-width: 300px;
+  max-width: fit-content;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  padding: 1rem 1.5rem;
+  z-index: 1;
 }
-.dropdown-content{
-    display: none;
-    position: absolute;
-    right:1px;
-    background-color: var(--light-bg);
-    min-width: 300px;
-    max-width: fit-content;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    padding: 1rem 1.5rem;
-    z-index: 1;
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
+
 iframe#theme-onboarding {
-    width: 80vw;
-    height: 50vw;
+  width: 80vw;
+  height: 50vw;
 }
 
 @media screen and (min-width: 500px) {
-    iframe#theme-onboarding {
-        width: 25rem;
-        height: 15rem;
-    }
-    .dropdown{
-        right:1.5rem;
-    }
+  iframe#theme-onboarding {
+    width: 25rem;
+    height: 15rem;
+  }
+
+  .dropdown {
+    right: 1.5rem;
+  }
 }
+
 /** Theme input **/
 #theme-input {
-    width: 100%;
-    font-size: large;
-    padding: 0.5rem;
-    border: 2px solid #FFFFFF;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 24px;
+  width: 100%;
+  font-size: large;
+  padding: 0.5rem;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
 }
 
 /**
 Journal Picker Styling
 **/
 #journals-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: space-between;
-    width: 100%;
-    height: 15rem;
-
-    padding: 1rem 0;
-    text-align: center;
-    background: #FFFFFF;
-    border: 2px solid #FFFFFF;
-    box-sizing: border-box;
-    border-radius: 1.5rem;
-
-    overflow-x: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: space-between;
+  width: 100%;
+  height: 15rem;
+  padding: 1rem 0;
+  text-align: center;
+  background: #fff;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  border-radius: 1.5rem;
+  overflow-x: auto;
 }
 
 #journals-container > * {
-    display: inline-block;
-    margin: 0 0.85rem;
+  display: inline-block;
+  margin: 0 0.85rem;
 }
 
 /* Name Journal Styling */
 
 #name-input {
-    width: 17rem;
-    height: 3.5rem;
-
-    margin: 2.5rem auto;
-    padding: 1rem;
-
-    background: var(--light-bg);
-    border: 1px solid var(--light-bg);
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+  width: 17rem;
+  height: 3.5rem;
+  margin: 2.5rem auto;
+  padding: 1rem;
+  background: var(--light-bg);
+  border: 1px solid var(--light-bg);
+  box-sizing: border-box;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
 }
 
 /* Shared Classes */
 .standard-h1 {
-    font-weight: bold;
-    font-size: xx-large;
-    margin-top: 6rem;
+  font-weight: bold;
+  font-size: xx-large;
+  margin-top: 6rem;
 }
 
 .center-container {
-    text-align: center;
+  text-align: center;
 }
 
-
 button.submit {
-    cursor: pointer;
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    min-width: 5rem;
-    
-    text-align: center;
-    font-weight: 100;
-    font-size: medium;
-    border: black;
-    margin-top: 1rem;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 0.5rem;
-    padding: 0.5rem;
+  cursor: pointer;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  min-width: 5rem;
+  text-align: center;
+  font-weight: 100;
+  font-size: medium;
+  border: black;
+  margin-top: 1rem;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
 button.submit:hover {
-    background-color: var(--light-bg);
+  background-color: var(--light-bg);
 }
