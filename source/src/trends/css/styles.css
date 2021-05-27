@@ -148,8 +148,8 @@ body {
   font-size: 28px;
   font-weight: bold;
 }
- 
-.close-form:hover, 
+
+.close-form:hover,
 .close-form:focus {
   color: black;
   text-decoration: none;
