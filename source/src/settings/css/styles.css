@@ -1,158 +1,158 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 
 * {
-    font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
+
 :root {
-    --main-bg: rgba(229, 229, 229, 1);
-    --light-bg: #f9f9f9;
-    --light-text: rgb(166, 169, 173);
-    --dark-text: black;
+  --main-bg: rgba(229, 229, 229, 1);
+  --light-bg: #f9f9f9;
+  --light-text: rgb(166, 169, 173);
+  --dark-text: black;
 }
-body{
-    background-color: var(--main-bg);
-    padding-left: 1rem;
-    padding-right: 1rem;
+
+body {
+  background-color: var(--main-bg);
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-    background-color: var(--main-bg);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: var(--main-bg);
 }
 
 .heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #header-title {
-    font-size: xx-large;
-    text-align: center;
-    margin: 1rem;
+  font-size: xx-large;
+  text-align: center;
+  margin: 1rem;
 }
 
 .menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #EEE4E1;
-    height: 4rem;
-    width: 4rem;
-    border-radius: 1rem;
-    transition: transform .3s cubic-bezier(0, .52, 0, 1);
-    margin: 1rem;;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee4e1;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 1rem;
+  transition: transform 0.3s cubic-bezier(0, 0.52, 0, 1);
+  margin: 1rem;
 }
 
 .menu > img {
-    width: 3rem;
-    height: 3rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 .menu:hover {
-    background-color: #CCB9B3;
+  background-color: #ccb9b3;
 }
 
 #journal-color {
-    padding: 1rem 0;
-    background: #FFFFFF;
-    border: 2px solid #FFFFFF;
-    box-sizing: border-box;
-    border-radius: 1.5rem;
-    width: 100%;  
-    margin-bottom: 1rem;  
+  padding: 1rem 0;
+  background: #fff;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  border-radius: 1.5rem;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 #journal-color-title {
-    font-size: x-large;
-    margin: 0 0.85rem;
+  font-size: x-large;
+  margin: 0 0.85rem;
 }
 
 /**
 Journal Picker Styling
 **/
 #journals-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: space-between;
-    width: 100%;
-    height: 15rem;
-
-    padding: 1rem 0;
-    text-align: center;
-    background: #FFFFFF;
-    border: 2px solid #FFFFFF;
-    box-sizing: border-box;
-    border-radius: 1.5rem;
-
-    overflow-x: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: space-between;
+  width: 100%;
+  height: 15rem;
+  padding: 1rem 0;
+  text-align: center;
+  background: #fff;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  border-radius: 1.5rem;
+  overflow-x: auto;
 }
 
 #journals-container > * {
-    display: inline-block;
-    margin: 0 0.85rem;
+  display: inline-block;
+  margin: 0 0.85rem;
 }
 
 #journal-name {
-    padding: 1rem 0;
-    background: #FFFFFF;
-    border: 2px solid #FFFFFF;
-    box-sizing: border-box;
-    border-radius: 1.5rem;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+  padding: 1rem 0;
+  background: #fff;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  border-radius: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 #journal-name > p {
-    font-size: x-large;
-    margin: 0 0.85rem;
+  font-size: x-large;
+  margin: 0 0.85rem;
 }
 
 #journal-name-edit {
-    font-size: x-large;
-    border: none;
-    margin: 0 0.85rem;
-    text-align: right;
+  font-size: x-large;
+  border: none;
+  margin: 0 0.85rem;
+  text-align: right;
 }
 
 #journal-theme {
-    padding: 1rem 0;
-    background: #FFFFFF;
-    border: 2px solid #FFFFFF;
-    box-sizing: border-box;
-    border-radius: 1.5rem;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+  padding: 1rem 0;
+  background: #fff;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  border-radius: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 #journal-theme > p {
-    font-size: x-large;
-    margin: 0 0.85rem;
+  font-size: x-large;
+  margin: 0 0.85rem;
 }
 
 #journal-theme-edit {
-    font-size: x-large;
-    border: none;
-    margin: 0 0.85rem;
-    text-align: right;
+  font-size: x-large;
+  border: none;
+  margin: 0 0.85rem;
+  text-align: right;
 }
 
 #save {
-    position: absolute;
-    bottom: 3rem;
-    right: 3rem;
-    font-size: large;
-    border-radius: 1.5rem;
-    border: none;
-    background-color: #FFFFFF;
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    visibility: hidden;
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  font-size: large;
+  border-radius: 1.5rem;
+  border: none;
+  background-color: #fff;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  visibility: hidden;
 }
