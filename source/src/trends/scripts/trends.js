@@ -82,7 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let i = 0; i < 7; i += 1) {
         const day = document.createElement('p');
         day.innerText = calendarDays[i];
-        day.style.width = '14%'
+        day.style.width = '10%';
+        day.style.margin = '0.5rem';
         habitGrid.appendChild(day);
       }
       const firstDay = getFirstDay(DATE);
