@@ -116,21 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Menu
- */
-const flyoutMenu = document.querySelector('navbar-elem').shadowRoot.querySelector('#nav');
-
-function showMenu() {
-  flyoutMenu.classList.add('show');
-}
-
-function hideMenu(e) {
-  flyoutMenu.classList.remove('show');
-  e.stopPropagation();
-  document.body.style.overflow = 'auto';
-}
-
-/**
  * Open and close a modal/form
  */
 function openForm(form) {
@@ -144,18 +129,6 @@ function closeForm(form) {
   f.querySelector('#habit').value = '';
   f.querySelector('#colorpicker').value = '#0000ff';
 }
-
-/**
- * Hamburger menu button
- */
-const menuButton = document.querySelector('.menu');
-menuButton.addEventListener('click', showMenu, false);
-
-/**
-* Close menu button
-*/
-const navSpan = document.querySelector('navbar-elem').shadowRoot.querySelector('.close-nav');
-navSpan.addEventListener('click', hideMenu, false);
 
 /**
  * Add new habit button
