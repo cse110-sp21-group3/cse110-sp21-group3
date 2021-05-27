@@ -6,8 +6,8 @@
   "scripts": {
     "build": "echo \"Nothing to build for now\"",
     "test": "jest",
-    "lint": "eslint --ext js source/src/",
-    "lint:fix": "eslint --ext js source/src/ --fix"
+    "lint": "eslint --ext js source/src/ && stylelint '**/*.css'",
+    "lint:fix": "eslint --ext js source/src/ --fix && stylelint '**/*.css' --fix"
   },
   "repository": {
     "type": "git",
