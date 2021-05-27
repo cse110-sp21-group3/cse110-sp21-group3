@@ -43,17 +43,143 @@ if (currYear % 4 === 0) {
 }
 
 /**
+ * Open and close a modal/form
+ */
+function openForm(form) {
+  const f = form;
+  f.style.display = 'block';
+}
+
+function closeForm(form) {
+  const f = form;
+  f.style.display = 'none';
+  f.querySelector('#habit').value = '';
+  f.querySelector('#colorpicker').value = '#0000ff';
+}
+
+function closeDeleteForm(form) {
+  const f = form;
+  f.style.display = 'none';
+}
+
+/**
+ * Add new habit button
+ */
+const addForm = document.querySelector('#addForm');
+
+const addClose = addForm.querySelector('#add-close-form');
+addClose.addEventListener('click', () => {
+  closeForm(addForm);
+});
+
+const add = document.getElementById('add');
+add.addEventListener('click', () => {
+  openForm(addForm);
+});
+
+const deleteForm = document.getElementById('delete-form');
+
+const deleteClose = deleteForm.querySelector('#delete-close-form');
+deleteClose.addEventListener('click', () => {
+  closeForm(deleteForm);
+});
+
+const yesBtn = document.querySelector('#yes');
+
+const noBtn = document.querySelector('#no');
+noBtn.addEventListener('click', () => {
+  closeDeleteForm(deleteForm);
+});
+
+/**
  * Delete habit
  */
 function deleteHabit(tracker) {
-  // remove from DOM
-  const trackerBody = document.getElementById('tracker-body');
-  trackerBody.removeChild(tracker);
+  // provide warning of deletion
+  openForm(deleteForm);
 
-  // remove from storage
-  const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
-  localStorage.removeItem(habitKey);
+  yesBtn.addEventListener('click', () => {
+    // remove from DOM
+    const trackerBody = document.getElementById('tracker-body');
+    trackerBody.removeChild(tracker);
+
+    // remove from storage
+    const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
+    localStorage.removeItem(habitKey);
+
+    closeDeleteForm(deleteForm);
+  });
 }
+
+/**
+ * Create habit tracker for particular habit and store color of habit
+ */
+function addHabit(habit, color) {
+  const tracker = document.createElement('tracker-elem');
+  tracker.habit = habit;
+  tracker.color = color;
+  // show delete button when hovering over element
+  const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+  const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
+  for (let i = 0; i < 7; i += 1) {
+    const day = document.createElement('p');
+    day.innerText = calendarDays[i];
+    day.style.width = '10%';
+    day.style.margin = '0.5rem';
+    habitGrid.appendChild(day);
+  }
+  const firstDay = getFirstDay(DATE);
+  // create filler circles
+  for (let i = 0; i < firstDay; i += 1) {
+    const habitCircle = document.createElement('div');
+    habitCircle.style.borderRadius = '100%';
+    habitCircle.style.border = 'none';
+    habitCircle.style.backgroundColor = 'white';
+    habitCircle.style.width = '10%';
+    habitCircle.style.paddingBottom = '1.5rem';
+    habitCircle.style.margin = '0.5rem';
+    habitGrid.appendChild(habitCircle);
+  }
+  for (let i = 0; i < numDays; i += 1) {
+    const habitCircle = document.createElement('div');
+    const id = `circle${i + 1}`;
+    habitCircle.id = id;
+    habitCircle.style.borderRadius = '100%';
+    habitCircle.style.border = 'none';
+    habitCircle.style.backgroundColor = '#dbdbdb';
+    habitCircle.style.width = '10%';
+    habitCircle.style.paddingBottom = '10%';
+    habitCircle.style.margin = '0.5rem';
+    habitGrid.appendChild(habitCircle);
+  }
+  const trackerBody = document.getElementById('tracker-body');
+  trackerBody.appendChild(tracker);
+  deleteHabitBtn.addEventListener('click', () => {
+    deleteHabit(tracker);
+  });
+}
+
+/*
+** Submit Add Habit
+*/
+const submitAdd = addForm.querySelector('.submit #submitForm');
+submitAdd.onclick = () => {
+  const habit = addForm.querySelector('#habit').value;
+  const color = addForm.querySelector('#colorpicker').value;
+
+  if (habit !== '') {
+    addHabit(habit, color);
+    const habitArray = Array(numDays).fill(false);
+    const habitStorage = {
+      habit, color, days: [...habitArray],
+    };
+    const habitKey = `${getMonthName(DATE)}${habit}`;
+    localStorage.setItem(habitKey, JSON.stringify(habitStorage));
+    closeForm(addForm);
+  } else {
+    alert('Please fill in habit field');
+  }
+};
 
 /**
  * template testing
@@ -119,103 +245,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-/**
- * Open and close a modal/form
- */
-function openForm(form) {
-  const f = form;
-  f.style.display = 'block';
-}
-
-function closeForm(form) {
-  const f = form;
-  f.style.display = 'none';
-  f.querySelector('#habit').value = '';
-  f.querySelector('#colorpicker').value = '#0000ff';
-}
-
-/**
- * Add new habit button
- */
-const addForm = document.querySelector('#addForm');
-
-const addClose = addForm.querySelector('.close-form');
-addClose.addEventListener('click', () => {
-  closeForm(addForm);
-});
-
-const add = document.getElementById('add');
-add.addEventListener('click', () => {
-  openForm(addForm);
-});
-
-/**
- * Create habit tracker for particular habit and store color of habit
- */
-function addHabit(habit, color) {
-  const tracker = document.createElement('tracker-elem');
-  tracker.habit = habit;
-  tracker.color = color;
-  // show delete button when hovering over element
-  const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
-  for (let i = 0; i < 7; i += 1) {
-    const day = document.createElement('p');
-    day.innerText = calendarDays[i];
-    day.style.width = '10%';
-    day.style.margin = '0.5rem';
-    habitGrid.appendChild(day);
-  }
-  const firstDay = getFirstDay(DATE);
-  // create filler circles
-  for (let i = 0; i < firstDay; i += 1) {
-    const habitCircle = document.createElement('div');
-    habitCircle.style.borderRadius = '100%';
-    habitCircle.style.border = 'none';
-    habitCircle.style.backgroundColor = 'white';
-    habitCircle.style.width = '10%';
-    habitCircle.style.paddingBottom = '1.5rem';
-    habitCircle.style.margin = '0.5rem';
-    habitGrid.appendChild(habitCircle);
-  }
-  for (let i = 0; i < numDays; i += 1) {
-    const habitCircle = document.createElement('div');
-    const id = `circle${i + 1}`;
-    habitCircle.id = id;
-    habitCircle.style.borderRadius = '100%';
-    habitCircle.style.border = 'none';
-    habitCircle.style.backgroundColor = '#dbdbdb';
-    habitCircle.style.width = '10%';
-    habitCircle.style.paddingBottom = '10%';
-    habitCircle.style.margin = '0.5rem';
-    habitGrid.appendChild(habitCircle);
-  }
-  const trackerBody = document.getElementById('tracker-body');
-  deleteHabitBtn.addEventListener('click', () => {
-    deleteHabit(tracker);
-  });
-  trackerBody.appendChild(tracker);
-}
-
-/*
-** Submit Add Habit
-*/
-const submitAdd = addForm.querySelector('.submit #submitForm');
-submitAdd.onclick = () => {
-  const habit = addForm.querySelector('#habit').value;
-  const color = addForm.querySelector('#colorpicker').value;
-
-  if (habit !== '') {
-    addHabit(habit, color);
-    const habitArray = Array(numDays).fill(false);
-    const habitStorage = {
-      habit, color, days: [...habitArray],
-    };
-    const habitKey = `${getMonthName(DATE)}${habit}`;
-    localStorage.setItem(habitKey, JSON.stringify(habitStorage));
-    closeForm(addForm);
-  } else {
-    alert('Please fill in habit field');
-  }
-};

@@ -32,7 +32,7 @@
     <div id="addForm" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
-        <span class="close-form">&times;</span>
+        <span class="close-form" id="add-close-form">&times;</span>
         <form>
           <input type="text" id="habit" placeholder="Add habit here..." maxlength="60">
           <br>
@@ -41,6 +41,17 @@
             <button type="button" id="submitForm">Submit</button>
           </div>
         </form>
+      </div>
+    </div>
+    <div id="delete-form" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close-form" id="delete-close-form">&times;</span>
+          <p>Delete this habit?</p>
+          <div id="button-group">
+            <button type="button" id="yes">Yes</button>
+            <button type="button" id="no">No</button>
+          </div>
       </div>
     </div>
   </body>

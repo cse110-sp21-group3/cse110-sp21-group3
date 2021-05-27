@@ -179,3 +179,9 @@ tracker-elem {
   height: 50%;
   margin: 1rem;
 }
+
+#button-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
