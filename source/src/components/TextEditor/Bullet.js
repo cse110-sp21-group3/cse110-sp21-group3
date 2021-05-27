@@ -3,6 +3,10 @@ class Bullet extends HTMLElement {
     super();
     this.keysPressed = {};
 
+    this.uniqueID = 0;
+    this.getNextID = () => console.error('Bullet.getNextID is not setup');
+    this.updateCallbacks = {};
+
     this.state = {
       value: (this.getAttribute('value') === null) ? '' : this.getAttribute('value'),
       nestDepthRem: 1,
@@ -32,7 +36,14 @@ class Bullet extends HTMLElement {
 
     const inputElement = this.shadowRoot.querySelector('input');
 
-    const keysToWatch = ['Tab', 'Enter', 'Backspace', 'Shift'];
+    const keysToWatch = [ // Keys used in keyboard shortcuts must be added here
+      'Tab', 
+      'Enter', 
+      'Backspace', 
+      'Shift', 
+      'Control', 
+      's',
+    ]; 
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
         this.keysPressed[key] = state;
@@ -41,43 +52,61 @@ class Bullet extends HTMLElement {
 
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
-      this.setValue(e.target.value);
       if (this.keysPressed.Tab) {
         e.preventDefault();
-        this.tabHandler();
+        this.nestCurrBullet();
       } else if (this.keysPressed.Backspace) {
-        if (this.getValue() === '') this.remove(); // Removes bullet from DOM
+        if (this.getValue() === '') this.deleteBullet(); 
         // TODO: Consider case when user tries to remove the top most bullet
       } else if (this.keysPressed.Shift && this.keysPressed.Enter) {
         this.exitSingleNesting(e);
       } else if (this.keysPressed.Enter) {
         if (this.getValue() === '') return;
-        this.enterHandler();
-      }
+        this.createBullet();
+      } else if (this.keysPressed.Control && this.keysPressed.s){
+        e.preventDefault();
+        this.updateCallbacks.saveData();
+      } 
     };
     inputElement.onkeyup = (e) => {
       watchKeys(e.key, false);
+      this.editContent(e.target.value);
     };
   }
 
-  // Setters and getters
-  setValue(value) {
+  // Setters
+  setUpdateCallbacks(updateCallbacks){
+    this.updateCallbacks = updateCallbacks;
+  }
+  setValue(value, updateDOM = false) {
     this.state.value = value;
-    this.shadowRoot.querySelector('input').value = this.state.value;
+    if (updateDOM)
+      this.shadowRoot.querySelector('input').value = this.state.value;
   }
-
-  getValue() {
-    return this.state.value;
-  }
-
   setNestDepthRem(nestDepthRem) {
     this.state.nestDepthRem = nestDepthRem;
   }
+  setGetNextID(getNextID){
+    this.getNextID = getNextID;
+  }
+  setUniqueID(uniqueID){
+    this.uniqueID = (uniqueID === undefined) ? this.getNextID() : uniqueID;
+  }
 
+  // Getters
+  getValue() {
+    return this.state.value;
+  }
   getNestDepthRem() {
     return this.state.nestDepthRem;
   }
-
+  getUniqueID(){
+    return this.uniqueID;
+  }
+  
+  getParentBullet(){
+    return this.getRootNode().host;
+  }
   // Mutators
   /**
    * Resets key watcher and smoothly transfers focus to `bullet`
@@ -92,7 +121,7 @@ class Bullet extends HTMLElement {
    * Nests `bullet` inside `this` bullet
    * @param {Bullet} bullet - Bullet to be nested
    */
-  nestBullet(bullet) {
+  nestBulletInside(bullet) {
     this.shadowRoot.querySelector('.nested').appendChild(bullet);
     bullet.setNestDepthRem(this.getNestDepthRem() - 1);
   }
@@ -107,16 +136,27 @@ class Bullet extends HTMLElement {
   }
 
   // Event Handlers
-  tabHandler() {
+  editContent(newValue) {
+    this.setValue(newValue);
+    this.updateCallbacks['editContent'](this.uniqueID, this.state.value);
+  }
+  
+  nestCurrBullet() {
     const prevBullet = this.previousElementSibling;
     if (prevBullet == null) return;
     if (this.getNestDepthRem() <= 0) return;
-    prevBullet.nestBullet(this);
+    prevBullet.nestBulletInside(this);
+    this.updateCallbacks['nestCurrBullet'](this.uniqueID, prevBullet.uniqueID, true)
     this.transferFocusTo(this); // Reset focus
   }
 
-  enterHandler() {
+  createBullet() {
     const newBullet = document.createElement('custom-bullet');
+    newBullet.setGetNextID(this.getNextID);
+    newBullet.setUniqueID();
+    newBullet.setUpdateCallbacks(this.updateCallbacks);
+    this.updateCallbacks['createBullet'](this.uniqueID, newBullet);
+
     newBullet.setNestDepthRem(this.getNestDepthRem());
 
     this.after(newBullet);
@@ -124,15 +164,24 @@ class Bullet extends HTMLElement {
   }
 
   exitSingleNesting(e) {
-    const parentBullet = e.target.getRootNode().host.getRootNode().host;
+    const parentBullet = e.target.getRootNode().host.getParentBullet();
     if (parentBullet === undefined) {
       console.log('No levels of nesting found');
       return;
     }
-    parentBullet.after(this); // TODO: Debug why onkeyup is stopped
+    parentBullet.after(this);
+    this.setNestDepthRem(this.getNestDepthRem() + 1);
+
+    const grandParentBullet = parentBullet.getParentBullet()
+    const grandParentID = grandParentBullet.tagName === 'custom-bullet'.toUpperCase() ? grandParentBullet.uniqueID : null;
+    this.updateCallbacks['nestCurrBullet'](this.uniqueID, grandParentID, false);
     this.transferFocusTo(this);
 
-    this.setNestDepthRem(this.getNestDepthRem() + 1);
+  }
+
+  deleteBullet() {
+    this.updateCallbacks['deleteBullet'](this.uniqueID)
+    this.remove();
   }
 }
 
