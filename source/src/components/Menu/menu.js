@@ -16,11 +16,11 @@ function hideMenu(e) {
 /**
  * Hamburger menu button
  */
- const menuButton = document.querySelector('.menu');
- menuButton.addEventListener('click', showMenu, false);
- 
- /**
+const menuButton = document.querySelector('.menu');
+menuButton.addEventListener('click', showMenu, false);
+
+/**
  * Close menu button
  */
- const navSpan = document.querySelector('navbar-elem').shadowRoot.querySelector('.close-nav');
- navSpan.addEventListener('click', hideMenu, false);
+const navSpan = document.querySelector('navbar-elem').shadowRoot.querySelector('.close-nav');
+navSpan.addEventListener('click', hideMenu, false);

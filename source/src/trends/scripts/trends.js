@@ -87,17 +87,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const tracker = document.createElement('tracker-elem');
       tracker.habit = habitEntry.habit;
       tracker.color = habitEntry.color;
-      const habitArray = habitEntry.habitArray;
+      const days = [...habitEntry.days];
       const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
       const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-      for (let i = 0; i < habitArray.length; i += 1) {
+      for (let i = 0; i < days.length; i += 1) {
         const habitCircle = document.createElement('div');
-        const id = `circle${i+1}`;
+        const id = `circle${i + 1}`;
         habitCircle.id = id;
         habitCircle.style.borderRadius = '100%';
         habitCircle.style.border = 'none';
         // if the habit for this day is completed, fill in with color, otherwise make it #dbdbdb
-        if (habitArray[i] === true) {
+        if (days[i] === true) {
           habitCircle.style.backgroundColor = tracker.color;
         } else {
           habitCircle.style.backgroundColor = '#dbdbdb';
@@ -168,7 +168,7 @@ function addHabit(habit, color) {
   // otherwise, just append tracker to last grid
   const gridList = document.getElementsByTagName('grid-elem');
   const trackerBody = document.getElementById('tracker-body');
-  if (numHabits % 6 === 0) {
+  if (numHabits !== 0 && numHabits % 6 === 0) {
     const grid = document.createElement('grid-elem');
     grid.num = gridList.length + 1;
     const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
@@ -199,7 +199,9 @@ submitAdd.onclick = () => {
   if (habit !== '') {
     addHabit(habit, color);
     const habitArray = Array(numDays).fill(false);
-    const habitStorage = {habit: habit, color: color, habitArray: habitArray};
+    const habitStorage = {
+      habit, color, days: [...habitArray],
+    };
     const habitKey = `${getMonthName(DATE)}${habit}`;
     localStorage.setItem(habitKey, JSON.stringify(habitStorage));
     closeForm(addForm);
