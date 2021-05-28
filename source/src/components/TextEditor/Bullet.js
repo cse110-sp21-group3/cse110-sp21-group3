@@ -17,6 +17,7 @@ class Bullet extends HTMLElement {
             <style>
                 input {
                     border: none;
+                    background: inherit;
                 }
                 
                 li custom-bullet {
@@ -37,13 +38,13 @@ class Bullet extends HTMLElement {
     const inputElement = this.shadowRoot.querySelector('input');
 
     const keysToWatch = [ // Keys used in keyboard shortcuts must be added here
-      'Tab', 
-      'Enter', 
-      'Backspace', 
-      'Shift', 
-      'Control', 
+      'Tab',
+      'Enter',
+      'Backspace',
+      'Shift',
+      'Control',
       's',
-    ]; 
+    ];
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
         this.keysPressed[key] = state;
@@ -56,17 +57,17 @@ class Bullet extends HTMLElement {
         e.preventDefault();
         this.nestCurrBullet();
       } else if (this.keysPressed.Backspace) {
-        if (this.getValue() === '') this.deleteBullet(); 
+        if (this.getValue() === '') this.deleteBullet();
         // TODO: Consider case when user tries to remove the top most bullet
       } else if (this.keysPressed.Shift && this.keysPressed.Enter) {
         this.exitSingleNesting(e);
       } else if (this.keysPressed.Enter) {
         if (this.getValue() === '') return;
         this.createBullet();
-      } else if (this.keysPressed.Control && this.keysPressed.s){
+      } else if (this.keysPressed.Control && this.keysPressed.s) {
         e.preventDefault();
         this.updateCallbacks.saveData();
-      } 
+      }
     };
     inputElement.onkeyup = (e) => {
       watchKeys(e.key, false);
@@ -75,21 +76,24 @@ class Bullet extends HTMLElement {
   }
 
   // Setters
-  setUpdateCallbacks(updateCallbacks){
+  setUpdateCallbacks(updateCallbacks) {
     this.updateCallbacks = updateCallbacks;
   }
+
   setValue(value, updateDOM = false) {
     this.state.value = value;
-    if (updateDOM)
-      this.shadowRoot.querySelector('input').value = this.state.value;
+    if (updateDOM) this.shadowRoot.querySelector('input').value = this.state.value;
   }
+
   setNestDepthRem(nestDepthRem) {
     this.state.nestDepthRem = nestDepthRem;
   }
-  setGetNextID(getNextID){
+
+  setGetNextID(getNextID) {
     this.getNextID = getNextID;
   }
-  setUniqueID(uniqueID){
+
+  setUniqueID(uniqueID) {
     this.uniqueID = (uniqueID === undefined) ? this.getNextID() : uniqueID;
   }
 
@@ -97,16 +101,19 @@ class Bullet extends HTMLElement {
   getValue() {
     return this.state.value;
   }
+
   getNestDepthRem() {
     return this.state.nestDepthRem;
   }
-  getUniqueID(){
+
+  getUniqueID() {
     return this.uniqueID;
   }
-  
-  getParentBullet(){
+
+  getParentBullet() {
     return this.getRootNode().host;
   }
+
   // Mutators
   /**
    * Resets key watcher and smoothly transfers focus to `bullet`
@@ -138,15 +145,15 @@ class Bullet extends HTMLElement {
   // Event Handlers
   editContent(newValue) {
     this.setValue(newValue);
-    this.updateCallbacks['editContent'](this.uniqueID, this.state.value);
+    this.updateCallbacks.editContent(this.uniqueID, this.state.value);
   }
-  
+
   nestCurrBullet() {
     const prevBullet = this.previousElementSibling;
     if (prevBullet == null) return;
     if (this.getNestDepthRem() <= 0) return;
     prevBullet.nestBulletInside(this);
-    this.updateCallbacks['nestCurrBullet'](this.uniqueID, prevBullet.uniqueID, true)
+    this.updateCallbacks.nestCurrBullet(this.uniqueID, prevBullet.uniqueID, true);
     this.transferFocusTo(this); // Reset focus
   }
 
@@ -155,7 +162,7 @@ class Bullet extends HTMLElement {
     newBullet.setGetNextID(this.getNextID);
     newBullet.setUniqueID();
     newBullet.setUpdateCallbacks(this.updateCallbacks);
-    this.updateCallbacks['createBullet'](this.uniqueID, newBullet);
+    this.updateCallbacks.createBullet(this.uniqueID, newBullet);
 
     newBullet.setNestDepthRem(this.getNestDepthRem());
 
@@ -172,15 +179,14 @@ class Bullet extends HTMLElement {
     parentBullet.after(this);
     this.setNestDepthRem(this.getNestDepthRem() + 1);
 
-    const grandParentBullet = parentBullet.getParentBullet()
+    const grandParentBullet = parentBullet.getParentBullet();
     const grandParentID = grandParentBullet.tagName === 'custom-bullet'.toUpperCase() ? grandParentBullet.uniqueID : null;
-    this.updateCallbacks['nestCurrBullet'](this.uniqueID, grandParentID, false);
+    this.updateCallbacks.nestCurrBullet(this.uniqueID, grandParentID, false);
     this.transferFocusTo(this);
-
   }
 
   deleteBullet() {
-    this.updateCallbacks['deleteBullet'](this.uniqueID)
+    this.updateCallbacks.deleteBullet(this.uniqueID);
     this.remove();
   }
 }

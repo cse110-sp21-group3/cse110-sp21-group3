@@ -3,131 +3,172 @@
  * it in a bullet list format and also return the updated list of bullets
  * (with nested) as they are edited
  */
-const CHILDREN = 1, VALUE = 0; // Keys for accessing data according to current format
+const CHILDREN = 1;
+const VALUE = 0; // Keys for accessing data according to current format
 
 class BulletList extends HTMLElement {
   constructor() {
     super();
-    const template = document.createElement('template');
-    template.innerHTML = `
-            <div class="bullet-list">
-            </div>
-        `;
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.innerHTML = '<div class="bullet-list"></div>';
+
     this.state = {
       value: [],
       nestLimit: 2,
-      nextID: 1
+      nextID: 1,
     };
 
     this.listData = {
       bulletElements: {},
       tree: {},
-      parents: {}
-    }
+      parents: {},
+    };
+
     // Callbacks for Bullet Editing
     this.nextIDCallback = () => {
       this.state.nextID += 1;
       return this.state.nextID - 1;
-    }
+    };
     this.updateCallbacks = {
-      saveData: () => console.error('Bullet.saveDataCallback is not setup'),
-      createBullet : (sourceID, newBullet) => {
+      saveData: () => console.error('Bullet.saveDataCallback is not setup'), // This callback needs to be provided by the user through `setSaveData()`
+      createBullet: (sourceID, newBullet) => {
         // Assumption: A bullet can be created only in the same nest level as the `sourceID`
-        this.listData.tree[newBullet.uniqueID] = [newBullet.getValue(), []] // Save in tree (value)
+        this.listData.tree[newBullet.uniqueID] = [newBullet.getValue(), []]; // Save in tree (value)
         const parentID = this.listData.parents[sourceID];
 
         if (parentID !== null) {
           const sourceIndex = this.listData.tree[parentID][CHILDREN].indexOf(sourceID);
-          this.listData.tree[parentID][CHILDREN].splice(sourceIndex+1, 0, newBullet.uniqueID); // Save in tree (structure)
+          this.listData.tree[parentID][CHILDREN].splice(
+            sourceIndex + 1, 0, newBullet.uniqueID,
+          ); // Save in tree (structure)
         }
         this.listData.bulletElements[newBullet.uniqueID] = newBullet; // Save in bulletElements
         this.listData.parents[newBullet.uniqueID] = parentID; // Save in parents
       },
-      deleteBullet : (bulletID) => {
+      deleteBullet: (bulletID) => {
         delete this.listData.tree[bulletID];
-        let index = -1; 
+        let index = -1;
 
-        if (this.listData.parents[bulletID] !== null)
+        if (this.listData.parents[bulletID] !== null) {
           index = this.listData.tree[this.listData.parents[bulletID]][CHILDREN].indexOf(bulletID);
-          if (index !== -1) this.listData.tree[this.listData.parents[bulletID]][CHILDREN].splice(index, 1);
+        }
+        if (index !== -1) {
+          this.listData.tree[this.listData.parents[bulletID]][CHILDREN].splice(index, 1);
+        }
 
         delete this.listData.bulletElements[bulletID];
         delete this.listData.parents[bulletID];
       },
-      editContent : (bulletID, newValue) => {
+      editContent: (bulletID, newValue) => {
         this.listData.tree[bulletID][VALUE] = newValue;
       },
-      nestCurrBullet : (bulletID, newParentID, forward) => {
+      nestCurrBullet: (bulletID, newParentID, forward) => {
         let index = -1;
-        if (forward){
+        if (forward) {
           this.listData.tree[newParentID][CHILDREN].push(bulletID);
-        } else {
-          if (newParentID !== null){
-            const oldParentID = this.listData.parents[bulletID];
-            if (oldParentID === null) return; // Bullet is already at lowest nesting level
-            const oldParentIndex = this.listData.tree[newParentID][CHILDREN].indexOf(oldParentID);
-            this.listData.tree[newParentID][CHILDREN].splice(oldParentIndex+1, 0, bulletID);
-          }
+        } else if (newParentID !== null) {
+          const oldParentID = this.listData.parents[bulletID];
+          if (oldParentID === null) return; // Bullet is already at lowest nesting level
+          const oldParentIndex = this.listData.tree[newParentID][CHILDREN].indexOf(oldParentID);
+          this.listData.tree[newParentID][CHILDREN].splice(oldParentIndex + 1, 0, bulletID);
         }
-        if (this.listData.parents[bulletID] !== null) // Remove from the parent in tree structure
+        if (this.listData.parents[bulletID] !== null) { // Remove from the parent in tree structure
           index = this.listData.tree[this.listData.parents[bulletID]][CHILDREN].indexOf(bulletID);
-          if (index !== -1) this.listData.tree[this.listData.parents[bulletID]][CHILDREN].splice(index, 1);
+        }
+        if (index !== -1) {
+          this.listData.tree[this.listData.parents[bulletID]][CHILDREN].splice(index, 1);
+        }
 
         this.listData.parents[bulletID] = newParentID;
       },
-    }
-    
+    };
   }
 
-  
   // Setters
-  setSaveDataCallback(saveDataCallback){
+  /**
+   * Callback must be provided so that the data can be saved through the bullet editor.
+   * @param {*} saveDataCallback: Function which must take an argument `data` that would
+   * contain a JS Object represention of the bullet tree generated by the user
+   * Example of data would be: {
+   *  1: ['Bullet 2', [2, 7, 3]],
+   *  2: ['Sub Bullet 1', []],
+   *  3: ['Sub Bullet 2', []],
+   *  4: ['Sub Bullet 3', [5]],
+   *  5: ['Sub Bullet 4', []],
+   *  6: ['Bullet 5', []],
+   *  7: ['Sample', []]
+   * }
+   *
+   */
+  setSaveDataCallback(saveDataCallback) {
     this.updateCallbacks.saveData = () => saveDataCallback(this.listData.tree);
   }
-  setNextID(nextID){
+
+  /**
+   * Sets the nextID. User should not be setting this unless overriding the automatic
+   * method is causing troubles. By default, nextID is set by parsing the existing IDs
+   * when setValue is called.
+   * @param {*} nextID
+   */
+  setNextID(nextID) {
     this.state.nextID = nextID;
   }
+
+  /**
+   * Sets the nesting limit for the list. By default, this is set to 2.
+   * @param {Integer} nestLimit
+   */
   setNestLimit(nestLimit) {
     this.state.nestLimit = nestLimit;
   }
+
+  /**
+   * Sets and renders the bullet list according to the passed bullet tree
+   * @param {Object} bulletsTree - Tree in format similar to adjacency list.
+   * Example of bulletsTree would be: {
+   *  1: ['Bullet 2', [2, 7, 3]],
+   *  2: ['Sub Bullet 1', []],
+   *  3: ['Sub Bullet 2', []],
+   *  4: ['Sub Bullet 3', [5]],
+   *  5: ['Sub Bullet 4', []],
+   *  6: ['Bullet 5', []],
+   *  7: ['Sample', []]
+   * }
+   */
   setValue(bulletsTree) {
-    const container = this.shadowRoot.querySelector('.bullet-list');
+    const container = this.querySelector('.bullet-list');
 
     this.listData.tree = bulletsTree;
     this.setNextID(Math.max(...Object.keys(bulletsTree)) + 1);
-    Object.keys(bulletsTree).forEach((bulletID) => {
-      bulletID = parseInt(bulletID);
-      if (bulletID in this.listData.bulletElements)
-        return; // Element is already created
+    Object.keys(bulletsTree).forEach((bulletIDStr) => {
+      const bulletID = parseInt(bulletIDStr, 10);
+      if (bulletID in this.listData.bulletElements) return; // Element is already created
 
       this.listData.parents[bulletID] = null;
-      let traversalStack = [bulletID];
-      
-      while (traversalStack.length > 0){
-        let currID = traversalStack.pop();
-        let currBullet = document.createElement('custom-bullet');
+      const traversalStack = [bulletID];
+
+      while (traversalStack.length > 0) {
+        const currID = traversalStack.pop();
+        const currBullet = document.createElement('custom-bullet');
         currBullet.setValue(bulletsTree[currID][VALUE], true);
         currBullet.setGetNextID(this.nextIDCallback);
         currBullet.setUniqueID(currID);
         currBullet.setUpdateCallbacks(this.updateCallbacks);
 
-        if (this.listData.parents[currID] === null){
+        if (this.listData.parents[currID] === null) {
           currBullet.setNestDepthRem(this.state.nestLimit);
         } else {
           this.listData.bulletElements[this.listData.parents[currID]].nestBulletInside(currBullet);
         }
         this.listData.bulletElements[currID] = currBullet;
-        let children = bulletsTree[currID][CHILDREN];
+        const children = bulletsTree[currID][CHILDREN];
 
         children.slice().reverse().forEach((childID) => {
           this.listData.parents[childID] = currID;
           traversalStack.push(childID);
-        })
+        });
       }
       container.appendChild(this.listData.bulletElements[bulletID]);
-    })
+    });
   }
 }
 
