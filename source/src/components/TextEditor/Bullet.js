@@ -180,7 +180,9 @@ class Bullet extends HTMLElement {
     this.setNestDepthRem(this.getNestDepthRem() + 1);
 
     const grandParentBullet = parentBullet.getParentBullet();
-    const grandParentID = grandParentBullet.tagName === 'custom-bullet'.toUpperCase() ? grandParentBullet.uniqueID : null;
+    let grandParentID;
+    if (grandParentBullet === undefined) grandParentID = null;
+    else grandParentID = grandParentBullet.tagName === 'custom-bullet'.toUpperCase() ? grandParentBullet.uniqueID : null;
     this.updateCallbacks.nestCurrBullet(this.uniqueID, grandParentID, false);
     this.transferFocusTo(this);
   }

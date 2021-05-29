@@ -62,6 +62,7 @@ class BulletList extends HTMLElement {
         this.listData.tree[bulletID][VALUE] = newValue;
       },
       nestCurrBullet: (bulletID, newParentID, forward) => {
+        //TODO: Maintain a storage for order of bullets on the first level
         let index = -1;
         if (forward) {
           this.listData.tree[newParentID][CHILDREN].push(bulletID);
