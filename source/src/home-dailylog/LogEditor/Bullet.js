@@ -128,13 +128,13 @@ class Bullet extends HTMLElement {
         e.preventDefault();
         this.updateCallbacks.saveData();
       } else if (this.keysPressed.Control && this.keysPressed.c) {
-        this.strikeToggle();
+        this.editBulletCompleted(!this.state.completed);
       } else if (this.keysPressed.Control && this.keysPressed.o) {
-        this.modifier('none');
+        this.editBulletModifier('none');
       } else if (this.keysPressed.Control && this.keysPressed.p) {
-        this.modifier('priority');
+        this.editBulletModifier('priority');
       } else if (this.keysPressed.Control && this.keysPressed.i) {
-        this.modifier('inspiration')
+        this.editBulletModifier('inspiration')
       }
     };
     inputElement.onkeyup = (e) => {
@@ -161,7 +161,17 @@ class Bullet extends HTMLElement {
 
   setBulletModifier(modifier) {
     this.state.modifier = modifier;
-    this.modifier(modifier);
+    const inputElement = this.shadowRoot.querySelector('input');
+    Object.assign(inputElement.style, bulletModifiers[modifier])
+  }
+
+  setCompleted(isComplete) {
+    this.state.completed = isComplete;
+
+    // Change DOM
+    const inputElement = this.shadowRoot.querySelector('input');
+    const newStrikeState = (isComplete) ? 'line-through' : 'none';
+    inputElement.style.setProperty('text-decoration', newStrikeState);
   }
 
   setNestDepthRem(nestDepthRem) {
@@ -222,9 +232,17 @@ class Bullet extends HTMLElement {
   }
 
   // Event Handlers
+  editBulletCompleted(isCompleted){
+    this.setCompleted(isCompleted);
+    this.updateCallbacks.editBulletCompleted(this.uniqueID, this.state.completed);
+  }
   editBulletType(newType){
     this.setBulletType(newType);
     this.updateCallbacks.editBulletType(this.uniqueID, this.state.type);
+  }
+  editBulletModifier(newModifier){
+    this.setBulletModifier(newModifier);
+    this.updateCallbacks.editBulletModifier(this.uniqueID, this.state.modifier);
   }
   editContent(newValue) {
     this.setValue(newValue);
@@ -275,29 +293,6 @@ class Bullet extends HTMLElement {
     if (allowDelete) this.remove();
     else console.log('Only bullet remaining. Delete not allowed');
   }
-
-  strikeToggle() {
-    const inputElement = this.shadowRoot.querySelector('input');
-    const currStrikeState = inputElement.style.getPropertyValue('text-decoration');
-    switch (currStrikeState) {
-      case 'line-through':
-        inputElement.style.setProperty('text-decoration', 'none');
-        break;
-      case '':
-      case 'none':
-        inputElement.style.setProperty('text-decoration', 'line-through');
-        break;
-      default:
-        break;
-    }
-  }
-  
-  modifier(style) {
-    const inputElement = this.shadowRoot.querySelector('input');
-    Object.assign(inputElement.style, bulletModifiers[style])
-  }
-
-
   
 }
 

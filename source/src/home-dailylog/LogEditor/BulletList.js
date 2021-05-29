@@ -36,7 +36,7 @@ class BulletList extends HTMLElement {
       saveData: () => console.error('Bullet.saveDataCallback is not setup'), // This callback needs to be provided by the user through `setSaveData()`
       createBullet: (sourceID, newBullet) => {
         // Assumption: A bullet can be created only in the same nest level as the `sourceID`
-        this.listData.tree[newBullet.uniqueID] = [newBullet.getValue(), []]; // Save in tree (value)
+        this.listData.tree[newBullet.uniqueID] = [newBullet.getValue(), false, 'none', 'none', []]; // Save in tree (value)
         const parentID = this.listData.parents[sourceID];
 
         if (parentID !== null) {
@@ -70,8 +70,13 @@ class BulletList extends HTMLElement {
         this.listData.tree[bulletID][VALUE] = newValue;
       },
       editBulletType: (bulletID, newType) => {
-        console.log('BulletList::editBulletType')
         this.listData.tree[bulletID][BTYPE] = newType;
+      },
+      editBulletModifier: (bulletID, newModifier) => {
+        this.listData.tree[bulletID][BMODIFIER] = newModifier;
+      },
+      editBulletCompleted: (bulletID, isCompleted) => {
+        this.listData.tree[bulletID][BCOMPLETED] = isCompleted;
       },
       nestCurrBullet: (bulletID, newParentID, forward) => {
         let index = -1;
@@ -161,11 +166,14 @@ class BulletList extends HTMLElement {
       while (traversalStack.length > 0) {
         const currID = traversalStack.pop();
         const currBullet = document.createElement('custom-bullet');
+        
         currBullet.setValue(bulletsTree[currID][VALUE], true);
         currBullet.setGetNextID(this.nextIDCallback);
         currBullet.setUniqueID(currID);
         currBullet.setUpdateCallbacks(this.updateCallbacks);
         currBullet.setBulletType(bulletsTree[currID][BTYPE]);
+        currBullet.setBulletModifier(bulletsTree[currID][BMODIFIER]);
+        currBullet.setCompleted(bulletsTree[currID][BCOMPLETED]);
 
         if (this.listData.parents[currID] === null) {
           currBullet.setNestDepthRem(this.state.nestLimit);
