@@ -1,3 +1,5 @@
+import { bulletTypes, bulletModifiers } from './bulletTypes.js'
+
 class Bullet extends HTMLElement {
   constructor() {
     super();
@@ -10,21 +12,26 @@ class Bullet extends HTMLElement {
     this.state = {
       value: (this.getAttribute('value') === null) ? '' : this.getAttribute('value'),
       nestDepthRem: 1,
+      completed: false,
+      type: 'none',
+      modifier: 'none',
     };
 
     const template = document.createElement('template');
     template.innerHTML = `
             <style>
-
+                * {
+                    font-family: 'Nunito', sans-serif;
+                }
                 .box-bullet {
                   display: flex;
                 }
 
-                input {
+                input[type=text] {
                     border: 1px solid transparent;
                     background: inherit;
                     font-size: 1.5rem;
-                    width: 50%;
+                    width: 70%;
                 }
                 
                 div custom-bullet {
@@ -40,6 +47,7 @@ class Bullet extends HTMLElement {
                   justify-content: center;
                   align-items: center;
                   font-size: 1.25rem;
+                  align-self: center;
                 }
 
                 .type:hover {
@@ -64,8 +72,8 @@ class Bullet extends HTMLElement {
             </style>
             <div class="bullet">
                 <div class="box-bullet"> 
-                  <div class="type"></div>
-                  <input type="text" value="${this.state.value}"></input>
+                  <div class="type">${bulletTypes[this.state.type]}</div>
+                  <input type="text" value="${this.state.value}" placeholder="Add thoughts here"></input>
                 </div>
                 <div class="nested"></div>
             </div>
@@ -74,14 +82,13 @@ class Bullet extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    const inputElement = this.shadowRoot.querySelector('input');
 
     let typeCount = 0;
-    const typeList = ['', '&bull;', '&ndash;', '&#9702;', '&#11088;'];
+    const typeList = ['none', 'task', 'note', 'event', 'theme'];
     const type = this.shadowRoot.querySelector('.type');
     type.addEventListener('click', () => {
-      type.innerHTML = typeList[(++typeCount)%typeList.length];
-    })
+      this.editBulletType(typeList[(++typeCount)%typeList.length]);
+    });
 
     const keysToWatch = [ // Keys used in keyboard shortcuts must be added here
       'Tab',
@@ -89,12 +96,11 @@ class Bullet extends HTMLElement {
       'Backspace',
       'Shift',
       'Control',
-      's',
-      'c',
-      'v',
-      'i',
-      'p',
-      'o',
+      's', // save
+      'c', // complete & uncomplete toggle (strikethrough, remove strikethrough)
+      'i', // inspiration (italics)
+      'p', // priority (bold)
+      'o', // regular font style
     ];
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
@@ -102,6 +108,8 @@ class Bullet extends HTMLElement {
       }
     };
 
+    const inputElement = this.shadowRoot.querySelector('input');
+  
     // use up/down arrows to traverse bullet, keyboard shortcuts for type/modifier
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
@@ -120,16 +128,13 @@ class Bullet extends HTMLElement {
         e.preventDefault();
         this.updateCallbacks.saveData();
       } else if (this.keysPressed.Control && this.keysPressed.c) {
-        this.strike();
-      } else if (this.keysPressed.Control && this.keysPressed.v) {
-        e.preventDefault();
-        this.unstrike();
+        this.strikeToggle();
       } else if (this.keysPressed.Control && this.keysPressed.o) {
-        this.modifier(0);
+        this.modifier('none');
       } else if (this.keysPressed.Control && this.keysPressed.p) {
-        this.modifier(1);
+        this.modifier('priority');
       } else if (this.keysPressed.Control && this.keysPressed.i) {
-        this.modifier(2)
+        this.modifier('inspiration')
       }
     };
     inputElement.onkeyup = (e) => {
@@ -137,7 +142,6 @@ class Bullet extends HTMLElement {
       this.editContent(e.target.value);
     };
   }
-
 
   // Setters
   setUpdateCallbacks(updateCallbacks) {
@@ -147,6 +151,17 @@ class Bullet extends HTMLElement {
   setValue(value, updateDOM = false) {
     this.state.value = value;
     if (updateDOM) this.shadowRoot.querySelector('input').value = this.state.value;
+  }
+
+  setBulletType(type) {
+    this.state.type = type;
+    const bulletTypeContainer = this.shadowRoot.querySelector('.type');
+    bulletTypeContainer.innerHTML = bulletTypes[this.state.type];
+  }
+
+  setBulletModifier(modifier) {
+    this.state.modifier = modifier;
+    this.modifier(modifier);
   }
 
   setNestDepthRem(nestDepthRem) {
@@ -207,6 +222,10 @@ class Bullet extends HTMLElement {
   }
 
   // Event Handlers
+  editBulletType(newType){
+    this.setBulletType(newType);
+    this.updateCallbacks.editBulletType(this.uniqueID, this.state.type);
+  }
   editContent(newValue) {
     this.setValue(newValue);
     this.updateCallbacks.editContent(this.uniqueID, this.state.value);
@@ -252,9 +271,34 @@ class Bullet extends HTMLElement {
   }
 
   deleteBullet() {
-    this.updateCallbacks.deleteBullet(this.uniqueID);
-    this.remove();
+    const allowDelete = this.updateCallbacks.deleteBullet(this.uniqueID);
+    if (allowDelete) this.remove();
+    else console.log('Only bullet remaining. Delete not allowed');
   }
+
+  strikeToggle() {
+    const inputElement = this.shadowRoot.querySelector('input');
+    const currStrikeState = inputElement.style.getPropertyValue('text-decoration');
+    switch (currStrikeState) {
+      case 'line-through':
+        inputElement.style.setProperty('text-decoration', 'none');
+        break;
+      case '':
+      case 'none':
+        inputElement.style.setProperty('text-decoration', 'line-through');
+        break;
+      default:
+        break;
+    }
+  }
+  
+  modifier(style) {
+    const inputElement = this.shadowRoot.querySelector('input');
+    Object.assign(inputElement.style, bulletModifiers[style])
+  }
+
+
+  
 }
 
 customElements.define('custom-bullet', Bullet);
