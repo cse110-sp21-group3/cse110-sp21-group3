@@ -45,6 +45,9 @@ class BulletList extends HTMLElement {
         this.listData.parents[newBullet.uniqueID] = parentID; // Save in parents
       },
       deleteBullet: (bulletID) => {
+        if (Object.keys(this.listData.tree).length === 1) { // Only bullet remaining
+          return false; // Deletion not allowed
+        }
         delete this.listData.tree[bulletID];
         let index = -1;
 
@@ -57,12 +60,13 @@ class BulletList extends HTMLElement {
 
         delete this.listData.bulletElements[bulletID];
         delete this.listData.parents[bulletID];
+        return true;
       },
       editContent: (bulletID, newValue) => {
         this.listData.tree[bulletID][VALUE] = newValue;
       },
       nestCurrBullet: (bulletID, newParentID, forward) => {
-        //TODO: Maintain a storage for order of bullets on the first level
+        // TODO: Maintain a storage for order of bullets on the first level
         let index = -1;
         if (forward) {
           this.listData.tree[newParentID][CHILDREN].push(bulletID);

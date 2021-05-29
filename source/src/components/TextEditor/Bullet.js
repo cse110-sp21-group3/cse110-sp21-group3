@@ -27,7 +27,7 @@ class Bullet extends HTMLElement {
 
             </style>
             <li class="bullet">
-                <input type="text" value="${this.state.value}"></input>
+                <input type="text" value="${this.state.value}" placeholder="Add text here"></input>
                 <div class="nested"></div>
             </li>
         `;
@@ -188,8 +188,8 @@ class Bullet extends HTMLElement {
   }
 
   deleteBullet() {
-    this.updateCallbacks.deleteBullet(this.uniqueID);
-    this.remove();
+    const allowDelete = this.updateCallbacks.deleteBullet(this.uniqueID);
+    if (allowDelete) this.remove();
   }
 }
 
