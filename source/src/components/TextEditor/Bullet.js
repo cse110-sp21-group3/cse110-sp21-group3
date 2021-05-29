@@ -15,27 +15,73 @@ class Bullet extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = `
             <style>
+
+                .box-bullet {
+                  display: flex;
+                }
+
                 input {
-                    border: none;
+                    border: 1px solid transparent;
                     background: inherit;
+                    font-size: 1.5rem;
+                    width: 50%;
                 }
                 
-                li custom-bullet {
+                div custom-bullet {
                     position: relative;
                     left: 2rem;
                 }
 
+                .type {
+                  border: 1px solid transparent;
+                  height: 1.5rem;
+                  width: 1.5rem;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  font-size: 1.25rem;
+                }
+
+                .type:hover {
+                  border: 1px solid grey;
+                  cursor: pointer;
+                }
+
+                .modifier {
+                  border: 1px solid transparent;
+                  height: 1rem;
+                  width: 1rem;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                }
+
+                .modifier:hover {
+                  border: 1px solid grey;
+                  cursor: pointer;
+                }
+
             </style>
-            <li class="bullet">
-                <input type="text" value="${this.state.value}"></input>
+            <div class="bullet">
+                <div class="box-bullet"> 
+                  <div class="type"></div>
+                  <input type="text" value="${this.state.value}"></input>
+                </div>
                 <div class="nested"></div>
-            </li>
+            </div>
         `;
 
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     const inputElement = this.shadowRoot.querySelector('input');
+
+    let typeCount = 0;
+    const typeList = ['', '&bull;', '&ndash;', '&#9702;', '&#11088;'];
+    const type = this.shadowRoot.querySelector('.type');
+    type.addEventListener('click', () => {
+      type.innerHTML = typeList[(++typeCount)%typeList.length];
+    })
 
     const keysToWatch = [ // Keys used in keyboard shortcuts must be added here
       'Tab',
@@ -44,6 +90,11 @@ class Bullet extends HTMLElement {
       'Shift',
       'Control',
       's',
+      'c',
+      'v',
+      'i',
+      'p',
+      'o',
     ];
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
@@ -51,6 +102,7 @@ class Bullet extends HTMLElement {
       }
     };
 
+    // use up/down arrows to traverse bullet, keyboard shortcuts for type/modifier
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
       if (this.keysPressed.Tab) {
@@ -67,6 +119,17 @@ class Bullet extends HTMLElement {
       } else if (this.keysPressed.Control && this.keysPressed.s) {
         e.preventDefault();
         this.updateCallbacks.saveData();
+      } else if (this.keysPressed.Control && this.keysPressed.c) {
+        this.strike();
+      } else if (this.keysPressed.Control && this.keysPressed.v) {
+        e.preventDefault();
+        this.unstrike();
+      } else if (this.keysPressed.Control && this.keysPressed.o) {
+        this.modifier(0);
+      } else if (this.keysPressed.Control && this.keysPressed.p) {
+        this.modifier(1);
+      } else if (this.keysPressed.Control && this.keysPressed.i) {
+        this.modifier(2)
       }
     };
     inputElement.onkeyup = (e) => {
@@ -74,6 +137,35 @@ class Bullet extends HTMLElement {
       this.editContent(e.target.value);
     };
   }
+
+  strike() {
+    const inputElement = this.shadowRoot.querySelector('input');
+    inputElement.style.setProperty('text-decoration', 'line-through');
+  }
+  unstrike() {
+    const inputElement = this.shadowRoot.querySelector('input');
+    inputElement.style.setProperty('text-decoration', 'none');
+  }
+
+  modifier(val) {
+    const inputElement = this.shadowRoot.querySelector('input');
+    const modifierStyles = [
+      {
+        'font-style': 'normal',
+        'font-weight': 'normal',
+      },
+      {
+        'font-style': 'normal',
+        'font-weight': 'bold',
+      },
+      {
+        'font-style': 'italic',
+        'font-weight': 'normal',
+      }
+    ];
+    Object.assign(inputElement.style, modifierStyles[(val)%modifierStyles.length])
+  }
+
 
   // Setters
   setUpdateCallbacks(updateCallbacks) {
