@@ -58,7 +58,6 @@ class Bullet extends HTMLElement {
         this.nestCurrBullet();
       } else if (this.keysPressed.Backspace) {
         if (this.getValue() === '') this.deleteBullet();
-        // TODO: Consider case when user tries to remove the top most bullet
       } else if (this.keysPressed.Shift && this.keysPressed.Enter) {
         this.exitSingleNesting(e);
       } else if (this.keysPressed.Enter) {

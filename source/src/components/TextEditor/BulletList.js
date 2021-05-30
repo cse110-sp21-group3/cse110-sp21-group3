@@ -5,7 +5,7 @@
  */
 const CHILDREN = 1;
 const VALUE = 0; // Keys for accessing data according to current format
-
+const TOP_LEVEL_ORDER_ID = 0;
 class BulletList extends HTMLElement {
   constructor() {
     super();
@@ -21,6 +21,7 @@ class BulletList extends HTMLElement {
       bulletElements: {},
       tree: {},
       parents: {},
+      topLevelOrder: [],
     };
 
     // Callbacks for Bullet Editing
@@ -35,27 +36,32 @@ class BulletList extends HTMLElement {
         this.listData.tree[newBullet.uniqueID] = [newBullet.getValue(), []]; // Save in tree (value)
         const parentID = this.listData.parents[sourceID];
 
-        if (parentID !== null) {
-          const sourceIndex = this.listData.tree[parentID][CHILDREN].indexOf(sourceID);
-          this.listData.tree[parentID][CHILDREN].splice(
-            sourceIndex + 1, 0, newBullet.uniqueID,
-          ); // Save in tree (structure)
-        }
+        let sibblingsOrder = [];
+        if (parentID === null) sibblingsOrder = this.listData.tree[TOP_LEVEL_ORDER_ID];
+        else sibblingsOrder = this.listData.tree[parentID][CHILDREN];
+
+        const sourceIndex = sibblingsOrder.indexOf(sourceID);
+        sibblingsOrder.splice(sourceIndex + 1, 0, newBullet.uniqueID); // Save in tree (structure)
+
         this.listData.bulletElements[newBullet.uniqueID] = newBullet; // Save in bulletElements
         this.listData.parents[newBullet.uniqueID] = parentID; // Save in parents
       },
       deleteBullet: (bulletID) => {
-        if (Object.keys(this.listData.tree).length === 1) { // Only bullet remaining
-          return false; // Deletion not allowed
+        if (
+          (bulletID in this.listData.tree[TOP_LEVEL_ORDER_ID])
+          && (this.listData.tree[TOP_LEVEL_ORDER_ID] <= 2)
+        ) {
+          return false; // Only bullet remaining so deletion not allowed
         }
         delete this.listData.tree[bulletID];
-        let index = -1;
 
-        if (this.listData.parents[bulletID] !== null) {
-          index = this.listData.tree[this.listData.parents[bulletID]][CHILDREN].indexOf(bulletID);
-        }
-        if (index !== -1) {
-          this.listData.tree[this.listData.parents[bulletID]][CHILDREN].splice(index, 1);
+        const parentID = this.listData.parents[bulletID];
+        let sibblingsOrder = [];
+        if (parentID === null) sibblingsOrder = this.listData.tree[TOP_LEVEL_ORDER_ID];
+        else sibblingsOrder = this.listData.tree[parentID][CHILDREN];
+        const bulletIndex = sibblingsOrder.indexOf(bulletID);
+        if (bulletIndex !== -1) {
+          sibblingsOrder.splice(bulletIndex, 1);
         }
 
         delete this.listData.bulletElements[bulletID];
@@ -66,23 +72,26 @@ class BulletList extends HTMLElement {
         this.listData.tree[bulletID][VALUE] = newValue;
       },
       nestCurrBullet: (bulletID, newParentID, forward) => {
-        // TODO: Maintain a storage for order of bullets on the first level
-        let index = -1;
+        const oldParentID = this.listData.parents[bulletID];
+        // Remove from parent
+        let sibblingsOrder;
+        if (oldParentID === null) sibblingsOrder = this.listData.tree[TOP_LEVEL_ORDER_ID];
+        else sibblingsOrder = this.listData.tree[oldParentID][CHILDREN];
+        const index = sibblingsOrder.indexOf(bulletID);
+        if (index !== -1) sibblingsOrder.splice(index, 1);
+
+        // Add to new parent
         if (forward) {
           this.listData.tree[newParentID][CHILDREN].push(bulletID);
-        } else if (newParentID !== null) {
-          const oldParentID = this.listData.parents[bulletID];
-          if (oldParentID === null) return; // Bullet is already at lowest nesting level
-          const oldParentIndex = this.listData.tree[newParentID][CHILDREN].indexOf(oldParentID);
-          this.listData.tree[newParentID][CHILDREN].splice(oldParentIndex + 1, 0, bulletID);
-        }
-        if (this.listData.parents[bulletID] !== null) { // Remove from the parent in tree structure
-          index = this.listData.tree[this.listData.parents[bulletID]][CHILDREN].indexOf(bulletID);
-        }
-        if (index !== -1) {
-          this.listData.tree[this.listData.parents[bulletID]][CHILDREN].splice(index, 1);
+        } else {
+          let newSibblingsOrder;
+          if (newParentID === null) newSibblingsOrder = this.listData.tree[TOP_LEVEL_ORDER_ID];
+          else newSibblingsOrder = this.listData.tree[newParentID][CHILDREN];
+          const oldParentIndex = newSibblingsOrder.indexOf(oldParentID);
+          newSibblingsOrder.splice(oldParentIndex + 1, 0, bulletID);
         }
 
+        // Update ID - parent map
         this.listData.parents[bulletID] = newParentID;
       },
     };
@@ -144,7 +153,8 @@ class BulletList extends HTMLElement {
 
     this.listData.tree = bulletsTree;
     this.setNextID(Math.max(...Object.keys(bulletsTree)) + 1);
-    Object.keys(bulletsTree).forEach((bulletIDStr) => {
+    const toplevelBullets = bulletsTree[0];
+    toplevelBullets.forEach((bulletIDStr) => {
       const bulletID = parseInt(bulletIDStr, 10);
       if (bulletID in this.listData.bulletElements) return; // Element is already created
 
@@ -161,6 +171,7 @@ class BulletList extends HTMLElement {
 
         if (this.listData.parents[currID] === null) {
           currBullet.setNestDepthRem(this.state.nestLimit);
+          container.appendChild(currBullet);
         } else {
           this.listData.bulletElements[this.listData.parents[currID]].nestBulletInside(currBullet);
         }
@@ -172,7 +183,6 @@ class BulletList extends HTMLElement {
           traversalStack.push(childID);
         });
       }
-      container.appendChild(this.listData.bulletElements[bulletID]);
     });
   }
 }
