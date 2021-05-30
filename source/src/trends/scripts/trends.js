@@ -95,7 +95,6 @@ noBtn.addEventListener('click', () => {
  * Delete habit
  */
 function deleteHabit(tracker) {
-  console.log('delete');
   // provide warning of deletion
   openForm(deleteForm);
 
