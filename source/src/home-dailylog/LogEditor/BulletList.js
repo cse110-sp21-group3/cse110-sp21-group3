@@ -51,7 +51,14 @@ class BulletList extends HTMLElement {
       deleteBullet: (bulletID) => {
         if (Object.keys(this.listData.tree).length === 1) { // Only bullet remaining
           return false; // Deletion not allowed
+        } 
+
+        const keys = Object.keys(this.listData.tree).map(Number);
+        const firstChildrenCount = this.listData.tree[keys[0]][4].length;
+        if (keys[0] === bulletID && firstChildrenCount !== 0) {
+          return false;
         }
+
         delete this.listData.tree[bulletID];
         let index = -1;
 
