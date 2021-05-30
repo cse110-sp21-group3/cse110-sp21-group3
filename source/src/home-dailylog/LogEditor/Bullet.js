@@ -1,4 +1,4 @@
-import { bulletTypes, bulletModifiers } from './bulletTypes.js'
+import { bulletTypes, bulletModifiers } from './bulletTypes.js';
 
 class Bullet extends HTMLElement {
   constructor() {
@@ -82,12 +82,12 @@ class Bullet extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-
     let typeCount = 0;
     const typeList = ['none', 'task', 'note', 'event', 'theme'];
     const type = this.shadowRoot.querySelector('.type');
     type.addEventListener('click', () => {
-      this.editBulletType(typeList[(++typeCount)%typeList.length]);
+      typeCount += 1;
+      this.editBulletType(typeList[typeCount % typeList.length]);
     });
 
     const keysToWatch = [ // Keys used in keyboard shortcuts must be added here
@@ -109,7 +109,7 @@ class Bullet extends HTMLElement {
     };
 
     const inputElement = this.shadowRoot.querySelector('input');
-  
+
     // use up/down arrows to traverse bullet, keyboard shortcuts for type/modifier
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
@@ -133,7 +133,7 @@ class Bullet extends HTMLElement {
       } else if (this.keysPressed.Control && this.keysPressed.p) {
         this.editBulletModifier('priority');
       } else if (this.keysPressed.Control && this.keysPressed.i) {
-        this.editBulletModifier('inspiration')
+        this.editBulletModifier('inspiration');
       }
     };
     inputElement.onkeyup = (e) => {
@@ -161,7 +161,7 @@ class Bullet extends HTMLElement {
   setBulletModifier(modifier) {
     this.state.modifier = modifier;
     const inputElement = this.shadowRoot.querySelector('input');
-    Object.assign(inputElement.style, bulletModifiers[modifier])
+    Object.assign(inputElement.style, bulletModifiers[modifier]);
   }
 
   setCompleted(isComplete) {
@@ -231,18 +231,21 @@ class Bullet extends HTMLElement {
   }
 
   // Event Handlers
-  editBulletCompleted(isCompleted){
+  editBulletCompleted(isCompleted) {
     this.setCompleted(isCompleted);
     this.updateCallbacks.editBulletCompleted(this.uniqueID, this.state.completed);
   }
-  editBulletType(newType){
+
+  editBulletType(newType) {
     this.setBulletType(newType);
     this.updateCallbacks.editBulletType(this.uniqueID, this.state.type);
   }
-  editBulletModifier(newModifier){
+
+  editBulletModifier(newModifier) {
     this.setBulletModifier(newModifier);
     this.updateCallbacks.editBulletModifier(this.uniqueID, this.state.modifier);
   }
+
   editContent(newValue) {
     this.setValue(newValue);
     this.updateCallbacks.editContent(this.uniqueID, this.state.value);
@@ -292,7 +295,6 @@ class Bullet extends HTMLElement {
     if (allowDelete) this.remove();
     else console.log('Only bullet remaining. Delete not allowed');
   }
-  
 }
 
 customElements.define('custom-bullet', Bullet);

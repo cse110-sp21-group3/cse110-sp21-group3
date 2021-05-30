@@ -80,8 +80,9 @@ class Bullet extends HTMLElement {
     const typeList = ['', '&bull;', '&ndash;', '&#9702;', '&#11088;'];
     const type = this.shadowRoot.querySelector('.type');
     type.addEventListener('click', () => {
-      type.innerHTML = typeList[(++typeCount)%typeList.length];
-    })
+      typeCount += 1;
+      type.innerHTML = typeList[typeCount % typeList.length];
+    });
 
     const keysToWatch = [ // Keys used in keyboard shortcuts must be added here
       'Tab',
@@ -129,7 +130,7 @@ class Bullet extends HTMLElement {
       } else if (this.keysPressed.Control && this.keysPressed.p) {
         this.modifier(1);
       } else if (this.keysPressed.Control && this.keysPressed.i) {
-        this.modifier(2)
+        this.modifier(2);
       }
     };
     inputElement.onkeyup = (e) => {
@@ -137,7 +138,6 @@ class Bullet extends HTMLElement {
       this.editContent(e.target.value);
     };
   }
-
 
   // Setters
   setUpdateCallbacks(updateCallbacks) {

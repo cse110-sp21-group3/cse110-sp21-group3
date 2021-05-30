@@ -6,10 +6,10 @@
 const VALUE = 0;
 const BCOMPLETED = 1;
 const BTYPE = 2;
-const BMODIFIER = 3
+const BMODIFIER = 3;
 const CHILDREN = 4;
 
- // Keys for accessing data according to current format
+// Keys for accessing data according to current format
 
 class BulletList extends HTMLElement {
   constructor() {
@@ -51,7 +51,7 @@ class BulletList extends HTMLElement {
       deleteBullet: (bulletID) => {
         if (Object.keys(this.listData.tree).length === 1) { // Only bullet remaining
           return false; // Deletion not allowed
-        } 
+        }
 
         const keys = Object.keys(this.listData.tree).map(Number);
         const firstChildrenCount = this.listData.tree[keys[0]][4].length;
@@ -173,7 +173,7 @@ class BulletList extends HTMLElement {
       while (traversalStack.length > 0) {
         const currID = traversalStack.pop();
         const currBullet = document.createElement('custom-bullet');
-        
+
         currBullet.setValue(bulletsTree[currID][VALUE], true);
         currBullet.setGetNextID(this.nextIDCallback);
         currBullet.setUniqueID(currID);
