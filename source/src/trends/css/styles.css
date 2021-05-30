@@ -183,3 +183,34 @@ tracker-elem {
   display: flex;
   justify-content: space-around;
 }
+
+#delete-form-modal {
+  background-color: #efefef;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  border-radius: 20px;
+}
+
+#yes {
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+#yes:hover {
+  background-color: #a4a4a4;
+  color: white;
+  cursor: pointer;
+}
+
+#no {
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+#no:hover {
+  background-color: #a4a4a4;
+  color: white;
+  cursor: pointer;
+}
