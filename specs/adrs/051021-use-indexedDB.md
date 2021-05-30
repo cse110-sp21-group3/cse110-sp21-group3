@@ -1,6 +1,6 @@
 # [Data Storage Method]
 
-* Status: Accepted  <!-- optional -->
+* Status: Superseded by [ADR-05-25-21-dexie-storage](./052521-dexie-storage.md)  <!-- optional -->
 * Deciders: All Team <!-- optional -->
 * Date: 05-10-2021 <!-- optional -->
 

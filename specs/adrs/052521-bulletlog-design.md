@@ -1,6 +1,6 @@
 # [Template, Design, and Implementation of Daily Log Bullet Logging]
 
-* Status: Accepted  <!-- optional -->
+* Status: Superseded by [05-30-21-updated-bulletlog](05-30-21-updated-bulletlog.md)  <!-- optional -->
 * Deciders: All Team <!-- optional -->
 * Date: 05-24-2021 <!-- optional -->
 
