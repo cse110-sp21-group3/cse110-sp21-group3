@@ -1,4 +1,3 @@
-import sampleData from '../sampleData.js'
 const key = 'dailyLogSampleData';
 
 
