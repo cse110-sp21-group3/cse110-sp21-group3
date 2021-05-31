@@ -67,8 +67,8 @@ class BulletList extends HTMLElement {
       },
       deleteBullet: (bulletID) => {
         if (
-          (bulletID in this.listData.tree[TOP_LEVEL_ORDER_ID])
-          && (this.listData.tree[TOP_LEVEL_ORDER_ID] <= 2)
+          this.listData.tree[TOP_LEVEL_ORDER_ID].includes(bulletID)
+          && (this.listData.tree[TOP_LEVEL_ORDER_ID].length <= 1)
         ) {
           return false; // Only bullet remaining so deletion not allowed
         }
