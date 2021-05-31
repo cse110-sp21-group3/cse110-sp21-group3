@@ -6,6 +6,7 @@ class Bullet extends HTMLElement {
     this.uniqueID = 0;
     this.getNextID = () => console.error('Bullet.getNextID is not setup');
     this.updateCallbacks = {};
+    this.getAdjacentBullet = () => console.error('Bullet.getAdjacentBullet is not set');
 
     this.state = {
       value: (this.getAttribute('value') === null) ? '' : this.getAttribute('value'),
@@ -44,6 +45,8 @@ class Bullet extends HTMLElement {
       'Shift',
       'Control',
       's',
+      'ArrowUp',
+      'ArrowDown',
     ];
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
@@ -66,6 +69,12 @@ class Bullet extends HTMLElement {
       } else if (this.keysPressed.Control && this.keysPressed.s) {
         e.preventDefault();
         this.updateCallbacks.saveData();
+      } else if (this.keysPressed.ArrowUp) {
+        const nextBullet = this.getAdjacentBullet(this.uniqueID, true);
+        if (nextBullet !== null) this.transferFocusTo(nextBullet);
+      } else if (this.keysPressed.ArrowDown) {
+        const nextBullet = this.getAdjacentBullet(this.uniqueID, false);
+        if (nextBullet !== null) this.transferFocusTo(nextBullet);
       }
     };
     inputElement.onkeyup = (e) => {
@@ -75,6 +84,10 @@ class Bullet extends HTMLElement {
   }
 
   // Setters
+  setGetAdjacentBullet(getAdjacentBullet) {
+    this.getAdjacentBullet = getAdjacentBullet;
+  }
+
   setUpdateCallbacks(updateCallbacks) {
     this.updateCallbacks = updateCallbacks;
   }
@@ -161,6 +174,8 @@ class Bullet extends HTMLElement {
     newBullet.setGetNextID(this.getNextID);
     newBullet.setUniqueID();
     newBullet.setUpdateCallbacks(this.updateCallbacks);
+    newBullet.setGetAdjacentBullet(this.getAdjacentBullet);
+
     this.updateCallbacks.createBullet(this.uniqueID, newBullet);
 
     newBullet.setNestDepthRem(this.getNestDepthRem());

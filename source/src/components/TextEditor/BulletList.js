@@ -29,6 +29,25 @@ class BulletList extends HTMLElement {
       this.state.nextID += 1;
       return this.state.nextID - 1;
     };
+
+    this.getAdjacentBullet = (bulletID, directionUp) => {
+      const parentID = this.listData.parents[bulletID];
+      let sibblingBullets; let
+        nextBulletID;
+      if (parentID === null) sibblingBullets = this.listData.tree[TOP_LEVEL_ORDER_ID];
+      else sibblingBullets = this.listData.tree[parentID][CHILDREN];
+
+      const currBulletIndex = sibblingBullets.indexOf(bulletID);
+
+      if (directionUp) {
+        if (currBulletIndex === 0) nextBulletID = this.listData.parents[bulletID];
+        else nextBulletID = this.findLastBulletInside(sibblingBullets[currBulletIndex - 1]);
+      } else {
+        nextBulletID = this.findNextBulletDown(bulletID);
+      }
+      if (nextBulletID === null) return null;
+      return this.listData.bulletElements[nextBulletID];
+    };
     this.updateCallbacks = {
       saveData: () => console.error('Bullet.saveDataCallback is not setup'), // This callback needs to be provided by the user through `setSaveData()`
       createBullet: (sourceID, newBullet) => {
@@ -168,6 +187,7 @@ class BulletList extends HTMLElement {
         currBullet.setGetNextID(this.nextIDCallback);
         currBullet.setUniqueID(currID);
         currBullet.setUpdateCallbacks(this.updateCallbacks);
+        currBullet.setGetAdjacentBullet(this.getAdjacentBullet);
 
         if (this.listData.parents[currID] === null) {
           currBullet.setNestDepthRem(this.state.nestLimit);
@@ -184,6 +204,42 @@ class BulletList extends HTMLElement {
         });
       }
     });
+  }
+
+  /**
+   * Returns the last bullet nested inside `bulletID`
+   * @param {*} bulletID
+   */
+  findLastBulletInside(bulletID) {
+    const numChildrens = this.listData.tree[bulletID][CHILDREN].length;
+    if (numChildrens === 0) return bulletID;
+    return this.findLastBulletInside(this.listData.tree[bulletID][CHILDREN][numChildrens - 1]);
+  }
+
+  /**
+   * Returns the next bullet in the downward direction
+   * @param {*} bulletID
+   * @param {Boolean} allowChildren
+   */
+  findNextBulletDown(bulletID, allowChildren = true) {
+    if (bulletID === null) return null;
+    if (allowChildren) {
+      const children = this.listData.tree[bulletID][CHILDREN];
+      if (children.length > 0) return children[0]; // Return its first children
+    }
+
+    const parentID = this.listData.parents[bulletID];
+    let sibblingBullets;
+
+    if (parentID === null) sibblingBullets = this.listData.tree[TOP_LEVEL_ORDER_ID];
+    else sibblingBullets = this.listData.tree[parentID][CHILDREN];
+    const currBulletIndex = sibblingBullets.indexOf(bulletID);
+
+    if (currBulletIndex < sibblingBullets.length - 1) {
+      return sibblingBullets[currBulletIndex + 1];
+    } // Return next bullet in current nested level
+
+    return this.findNextBulletDown(parentID, false);
   }
 }
 
