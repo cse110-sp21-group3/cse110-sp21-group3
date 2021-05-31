@@ -30,28 +30,39 @@ refreshDate.addEventListener('click', () => {
 });
 
 function getSavedBullets() {
-  // If nothing is stored, this is loaded : [content, completed, type, modifier]
-  const initialSetup = { 1: ['', false, 'none', 'none', []] };
-
+  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
+  const initialSetup = { 0: [1], 1: ['', false, 'none', 'none', []] };
   let listDataTree = localStorage.getItem(key);
   if (listDataTree === null) {
     listDataTree = initialSetup;
   } else {
     listDataTree = JSON.parse(listDataTree);
   }
-  const setSaveCallback = (data) => {
-    localStorage.setItem(key, JSON.stringify(data));
-  };
-  const list = document.querySelector('bullet-list');
-  list.setValue(listDataTree);
-  list.setSaveDataCallback(setSaveCallback);
+  return listDataTree;
 }
 
 /**
  * DOM Content Loaded
  */
 document.addEventListener('DOMContentLoaded', () => {
-  getSavedBullets();
+  const listDataTree = getSavedBullets();
+
+  const list = document.querySelector('bullet-list');
+  list.initialiseList({
+    saveDataCallback: (data) => {
+      localStorage.setItem(key, JSON.stringify(data));
+    },
+    nestLimit: 2,
+    bulletTree: listDataTree,
+    storageIndex: {
+      value: 0,
+      completed: 1,
+      type: 2,
+      modifier: 3,
+      children: 4,
+    },
+    elementName: 'daily-log-bullet',
+  });
   addCurrentDate();
   storeCurrentDate();
 });
