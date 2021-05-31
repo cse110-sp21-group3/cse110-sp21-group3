@@ -21,8 +21,8 @@ class DailyHabit extends HTMLElement {
 
             #habit-circle {
               border-radius: 100%;
-              height: 1.5rem;
-              width: 1.5rem;
+              height: 2.5rem;
+              width: 2.5rem;
               background-color: #dbdbdb;
             }
         </style>
