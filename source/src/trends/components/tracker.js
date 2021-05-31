@@ -12,8 +12,14 @@ class Tracker extends HTMLElement {
                 height: 100%;
             }
 
+            .delete-div {
+              display: flex;
+              flex-direction: row;
+              justify-content: flex-end;
+              width: 100%;
+            }
+
             .delete-tracker {
-                float: right;
                 color: #aaa;
                 font-size: 28px;
                 font-weight: bold;
@@ -35,22 +41,37 @@ class Tracker extends HTMLElement {
                 margin: 1rem;
             }
 
+            .habit-header {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+            }
+
+            #habit-color {
+              border-radius: 100%;
+              height: 1.5rem;
+              width: 1.5rem;
+            }
+
             #habit-grid {
-                display: grid;
-                grid-template-rows: repeat(5, minmax(0, 1fr));
-                grid-template-columns: repeat(7, minmax(0, 1fr));
-                column-gap: 1rem;
-                row-gap: 1rem;
-                padding: 1rem;
-                flex-grow: 1;
-                background-color: white;
-                border-radius: 1.5rem;
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              width: 100%;
+              background-color: white;
+              border-radius: 1.5rem;
             }
         </style>
         <!-- Template -->
-        <span class="delete-tracker">&times;</span>
+        <div class="delete-div">
+          <span class="delete-tracker">&times;</span>
+        </div>
         <div class="habit">
-            <h1 id="title">habit</h1>
+            <div class="habit-header">
+              <h1 id="title">habit</h1>
+              <div id="habit-color"></div>
+            </div>
             <div id="habit-grid"></div>
         </div>`;
     this.attachShadow({ mode: 'open' });
@@ -78,6 +99,8 @@ class Tracker extends HTMLElement {
   }
 
   set color(color) {
+    const habitColor = this.shadowRoot.querySelector('#habit-color');
+    habitColor.style.backgroundColor = color;
     this.setAttribute('color', color);
   }
 

@@ -4,8 +4,15 @@
   font-family: 'Nunito', sans-serif;
 }
 
+:root {
+  --main-bg: rgba(229, 229, 229, 1);
+  --light-bg: #f9f9f9;
+  --light-text: rgb(166, 169, 173);
+  --dark-text: black;
+}
+
 body {
-  background-color: #efefef;
+  background-color: var(--light-bg);
 }
 
 .header {
@@ -13,7 +20,7 @@ body {
   top: 0;
   width: 100%;
   z-index: 1;
-  background-color: #efefef;
+  background-color: var(--light-bg);
 }
 
 .heading {
@@ -53,10 +60,12 @@ body {
 #bar {
   width: 100vw;
   height: 2rem;
-  background-color: #64a6bd;
+  background-color: var(--main-bg);
 }
 
 #tracker-body {
+  display: flex;
+  flex-wrap: wrap;
   overflow-y: scroll;
 }
 
@@ -84,6 +93,7 @@ body {
 
 #add:hover {
   background-color: #8f8f8f;
+  cursor: pointer;
 }
 
 #add p {
@@ -163,5 +173,44 @@ body {
 }
 
 tracker-elem {
+  width: 30%;
+  height: 50%;
+  margin: 1rem;
+}
+
+#button-group {
+  width: 100%;
   display: flex;
+  justify-content: space-around;
+}
+
+#delete-form-modal {
+  background-color: #efefef;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  border-radius: 20px;
+}
+
+#yes {
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+#yes:hover {
+  background-color: #a4a4a4;
+  color: white;
+  cursor: pointer;
+}
+
+#no {
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+#no:hover {
+  background-color: #a4a4a4;
+  color: white;
+  cursor: pointer;
 }

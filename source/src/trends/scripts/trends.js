@@ -1,7 +1,19 @@
+import colorThemes from '../../colorThemes.js';
+import { colorStyleKey } from '../../storageKeys.js';
+
+let selectedColorStyle = localStorage.getItem(colorStyleKey);
+if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+
+// Set Display CSS Styles
+const root = document.documentElement;
+root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
+
 /**
  * Get current month and number of days of the month
  */
 const DATE = new Date();
+const calendarDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 function getMonthName(date) {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   return monthNames[date.getMonth()];
@@ -17,83 +29,17 @@ function getMonthDaysLeap(date) {
   return days[date.getMonth()];
 }
 
+function getFirstDay(date) {
+  const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  return firstDay.getDay();
+}
+
 const currYear = DATE.getFullYear();
 let numDays;
 if (currYear % 4 === 0) {
   numDays = getMonthDaysLeap(DATE);
 } else {
   numDays = getMonthDays(DATE);
-}
-
-let numHabits = 0;
-
-/**
- * Delete habit
- */
-function deleteHabit(tracker, gridDiv, grid) {
-  // remove from DOM
-  gridDiv.removeChild(tracker);
-  numHabits -= 1;
-  if (numHabits % 6 === 0) {
-    const trackerBody = document.getElementById('tracker-body');
-    trackerBody.removeChild(grid);
-  }
-
-  // remove from storage
-}
-
-/**
- * template testing
- */
-document.addEventListener('DOMContentLoaded', () => {
-  const headerTitle = document.getElementById('header-title');
-  const title = `trends: ${getMonthName(DATE)}`;
-  headerTitle.innerText = title;
-  const trackerBody = document.getElementById('tracker-body');
-  // TODO: pull from storage the habits of the particular month
-  // TODO: create a new grid for every 6 habits using grid.js
-  const grid = document.createElement('grid-elem');
-  grid.num = 1;
-  const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
-  // TODO: create a tracker for each habit using tracker.js
-  const tracker = document.createElement('tracker-elem');
-  tracker.habit = 'water';
-  tracker.color = '#599fe0';
-  const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
-  const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  for (let i = 1; i <= numDays; i += 1) {
-    const habitCircle = document.createElement('div');
-    const id = `circle${i}`;
-    habitCircle.id = id;
-    habitCircle.style.borderRadius = '100%';
-    habitCircle.style.border = 'none';
-    // TODO: if the habit for this day is completed, fill in with color, otherwise make it #dbdbdb
-    habitCircle.style.backgroundColor = tracker.color;
-    habitCircle.style.width = '100%';
-    habitCircle.style.height = '100%';
-    habitGrid.appendChild(habitCircle);
-  }
-  gridDiv.append(tracker);
-  deleteHabitBtn.addEventListener('click', () => {
-    deleteHabit(tracker, gridDiv, grid);
-  });
-  trackerBody.appendChild(grid);
-  numHabits += 1;
-});
-
-/**
- * Menu
- */
-const flyoutMenu = document.querySelector('navbar-elem').shadowRoot.querySelector('#nav');
-
-function showMenu() {
-  flyoutMenu.classList.add('show');
-}
-
-function hideMenu(e) {
-  flyoutMenu.classList.remove('show');
-  e.stopPropagation();
-  document.body.style.overflow = 'auto';
 }
 
 /**
@@ -111,24 +57,17 @@ function closeForm(form) {
   f.querySelector('#colorpicker').value = '#0000ff';
 }
 
-/**
- * Hamburger menu button
- */
-const menuButton = document.querySelector('.menu');
-menuButton.addEventListener('click', showMenu, false);
-
-/**
-* Close menu button
-*/
-const navSpan = document.querySelector('navbar-elem').shadowRoot.querySelector('.close-nav');
-navSpan.addEventListener('click', hideMenu, false);
+function closeDeleteForm(form) {
+  const f = form;
+  f.style.display = 'none';
+}
 
 /**
  * Add new habit button
  */
 const addForm = document.querySelector('#addForm');
 
-const addClose = addForm.querySelector('.close-form');
+const addClose = addForm.querySelector('#add-close-form');
 addClose.addEventListener('click', () => {
   closeForm(addForm);
 });
@@ -138,6 +77,40 @@ add.addEventListener('click', () => {
   openForm(addForm);
 });
 
+const deleteForm = document.getElementById('delete-form');
+
+const deleteClose = deleteForm.querySelector('#delete-close-form');
+deleteClose.addEventListener('click', () => {
+  closeForm(deleteForm);
+});
+
+const yesBtn = document.querySelector('#yes');
+
+const noBtn = document.querySelector('#no');
+noBtn.addEventListener('click', () => {
+  closeDeleteForm(deleteForm);
+});
+
+/**
+ * Delete habit
+ */
+function deleteHabit(tracker) {
+  // provide warning of deletion
+  openForm(deleteForm);
+
+  yesBtn.addEventListener('click', () => {
+    // remove from DOM
+    const trackerBody = document.getElementById('tracker-body');
+    trackerBody.removeChild(tracker);
+
+    // remove from storage
+    const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
+    localStorage.removeItem(habitKey);
+
+    closeDeleteForm(deleteForm);
+  });
+}
+
 /**
  * Create habit tracker for particular habit and store color of habit
  */
@@ -145,40 +118,45 @@ function addHabit(habit, color) {
   const tracker = document.createElement('tracker-elem');
   tracker.habit = habit;
   tracker.color = color;
-  // TODO: show delete button when hovering over element
+  // show delete button when hovering over element
   const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
   const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
-  for (let i = 1; i <= numDays; i += 1) {
+  for (let i = 0; i < 7; i += 1) {
+    const day = document.createElement('p');
+    day.innerText = calendarDays[i];
+    day.style.width = '10%';
+    day.style.margin = '0.5rem';
+    habitGrid.appendChild(day);
+  }
+  const firstDay = getFirstDay(DATE);
+  // create filler circles
+  for (let i = 0; i < firstDay; i += 1) {
     const habitCircle = document.createElement('div');
-    const id = `circle${i}`;
+    habitCircle.style.borderRadius = '100%';
+    habitCircle.style.border = 'none';
+    habitCircle.style.backgroundColor = 'white';
+    habitCircle.style.width = '10%';
+    habitCircle.style.paddingBottom = '1.5rem';
+    habitCircle.style.margin = '0.5rem';
+    habitGrid.appendChild(habitCircle);
+  }
+  for (let i = 0; i < numDays; i += 1) {
+    const habitCircle = document.createElement('div');
+    const id = `circle${i + 1}`;
     habitCircle.id = id;
     habitCircle.style.borderRadius = '100%';
     habitCircle.style.border = 'none';
-    habitCircle.style.backgroundColor = '#DBDBDB';
+    habitCircle.style.backgroundColor = '#dbdbdb';
+    habitCircle.style.width = '10%';
+    habitCircle.style.paddingBottom = '10%';
+    habitCircle.style.margin = '0.5rem';
     habitGrid.appendChild(habitCircle);
   }
-  // If number of habits % 6 === 0, then make new grid and append tracker to new grid
-  // otherwise, just append tracker to last grid
-  const gridList = document.getElementsByTagName('grid-elem');
   const trackerBody = document.getElementById('tracker-body');
-  if (numHabits % 6 === 0) {
-    const grid = document.createElement('grid-elem');
-    grid.num = gridList.length + 1;
-    const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
-    gridDiv.append(tracker);
-    deleteHabitBtn.addEventListener('click', () => {
-      deleteHabit(tracker, gridDiv, grid);
-    });
-    trackerBody.appendChild(grid);
-  } else {
-    const grid = gridList[gridList.length - 1];
-    const gridDiv = grid.shadowRoot.querySelector('.habit-grid');
-    gridDiv.append(tracker);
-    deleteHabitBtn.addEventListener('click', () => {
-      deleteHabit(tracker, gridDiv, grid);
-    });
-  }
-  numHabits += 1;
+  trackerBody.appendChild(tracker);
+  deleteHabitBtn.addEventListener('click', () => {
+    deleteHabit(tracker);
+  });
 }
 
 /*
@@ -191,8 +169,79 @@ submitAdd.onclick = () => {
 
   if (habit !== '') {
     addHabit(habit, color);
+    const habitArray = Array(numDays).fill(false);
+    const habitStorage = {
+      habit, color, days: [...habitArray],
+    };
+    const habitKey = `${getMonthName(DATE)}${habit}`;
+    localStorage.setItem(habitKey, JSON.stringify(habitStorage));
     closeForm(addForm);
   } else {
     alert('Please fill in habit field');
   }
 };
+
+/**
+ * template testing
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  const headerTitle = document.getElementById('header-title');
+  const title = `trends: ${getMonthName(DATE)}`;
+  headerTitle.innerText = title;
+  const trackerBody = document.getElementById('tracker-body');
+  // pull from storage the habits of the particular month
+  const habitKeys = Object.keys(localStorage);
+  habitKeys.sort();
+  habitKeys.forEach((k) => {
+    if (k.startsWith(`${getMonthName(DATE)}`)) { // if the key is not storing the DAY k!="theme" || k!="colorStyle" || k!="journalName" || k!="replaced_stats"
+      const habitEntry = JSON.parse(localStorage.getItem(k));
+      // create a tracker for each habit using tracker.js
+      const tracker = document.createElement('tracker-elem');
+      tracker.habit = habitEntry.habit;
+      tracker.color = habitEntry.color;
+      const days = [...habitEntry.days];
+      const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
+      const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+      for (let i = 0; i < 7; i += 1) {
+        const day = document.createElement('p');
+        day.innerText = calendarDays[i];
+        day.style.width = '10%';
+        day.style.margin = '0.5rem';
+        habitGrid.appendChild(day);
+      }
+      const firstDay = getFirstDay(DATE);
+      // create filler circles
+      for (let i = 0; i < firstDay; i += 1) {
+        const habitCircle = document.createElement('div');
+        habitCircle.style.borderRadius = '100%';
+        habitCircle.style.border = 'none';
+        habitCircle.style.backgroundColor = 'white';
+        habitCircle.style.width = '10%';
+        habitCircle.style.paddingBottom = '1.5rem';
+        habitCircle.style.margin = '0.5rem';
+        habitGrid.appendChild(habitCircle);
+      }
+      for (let i = 0; i < days.length; i += 1) {
+        const habitCircle = document.createElement('div');
+        const id = `circle${i + 1}`;
+        habitCircle.id = id;
+        habitCircle.style.borderRadius = '100%';
+        habitCircle.style.border = 'none';
+        // if the habit for this day is completed, fill in with color, otherwise make it #dbdbdb
+        if (days[i] === true) {
+          habitCircle.style.backgroundColor = tracker.color;
+        } else {
+          habitCircle.style.backgroundColor = '#dbdbdb';
+        }
+        habitCircle.style.width = '10%';
+        habitCircle.style.paddingBottom = '10%';
+        habitCircle.style.margin = '0.5rem';
+        habitGrid.appendChild(habitCircle);
+      }
+      trackerBody.append(tracker);
+      deleteHabitBtn.addEventListener('click', () => {
+        deleteHabit(tracker);
+      });
+    }
+  });
+});
