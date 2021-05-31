@@ -62,18 +62,14 @@ function getHabits() {
   return habitList;
 }
 
-function getDaysArray(habitKey) {
-  const habitEntry = localStorage.getItem(habitKey);
-  return JSON.parse(habitEntry).days;
-}
-
-function toggleHabit(habitCircle, habitElem) {
+function toggleHabit(habit) {
   const DATE = new Date();
   const today = DATE.getDate() - 1;
-  const { habit, color } = habitElem;
   const habitKey = `${getMonthName(DATE)}${habit}`;
-  const days = getDaysArray(habitKey);
-  const circle = habitCircle;
+  const habitEntry = localStorage.getItem(habitKey);
+  const { color, days } = JSON.parse(habitEntry);
+  const habitElem = document.getElementById(habit);
+  const circle = habitElem.shadowRoot.querySelector('#habit-circle');
   if (days[today] === false) {
     days[today] = true;
     circle.style.backgroundColor = color;
@@ -129,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       habitCircle.style.backgroundColor = habitElem.color;
     }
     habitCircle.addEventListener('click', () => {
-      toggleHabit(habitCircle, habitElem);
+      toggleHabit(habitElem.habit);
     });
     habitBody.appendChild(habitElem);
   });

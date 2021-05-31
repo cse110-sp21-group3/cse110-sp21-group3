@@ -25,6 +25,10 @@ class DailyHabit extends HTMLElement {
               width: 2.5rem;
               background-color: #dbdbdb;
             }
+
+            #habit-circle:hover {
+              cursor: pointer;
+            }
         </style>
         <!-- Template -->
         <div class="daily-habit">
@@ -46,8 +50,7 @@ class DailyHabit extends HTMLElement {
     // Set title of grid and id of div to habit
     const title = this.shadowRoot.querySelector('#title');
     title.innerHTML = habit;
-    const grid = this.shadowRoot.querySelector('.daily-habit');
-    grid.id = habit;
+    this.id = habit;
     this.setAttribute('habit', habit);
   }
 
