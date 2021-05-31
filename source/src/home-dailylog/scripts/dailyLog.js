@@ -74,7 +74,6 @@ function toggleHabit(habitCircle, habitElem) {
   const habitKey = `${getMonthName(DATE)}${habit}`;
   const days = getDaysArray(habitKey);
   const circle = habitCircle;
-  console.log(habit);
   if (days[today] === false) {
     days[today] = true;
     circle.style.backgroundColor = color;
