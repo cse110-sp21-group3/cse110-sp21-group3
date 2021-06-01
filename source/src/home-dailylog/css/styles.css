@@ -17,6 +17,11 @@
   --light-white: #efefef;
 }
 
+a {
+  text-decoration: none;
+  color: var(--dark-text);
+}
+
 body {
   background-color: var(--light-bg);
 }
@@ -163,4 +168,8 @@ body {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.habits-form {
+  overflow: scroll;
 }

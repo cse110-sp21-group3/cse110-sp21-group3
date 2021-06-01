@@ -15,14 +15,14 @@ class DailyHabit extends HTMLElement {
             }
 
             #title {
-                font-size: 3xl;
+                font-size: x-large;
                 margin: 1rem;
             }
 
             #habit-circle {
               border-radius: 100%;
-              height: 2.5rem;
-              width: 2.5rem;
+              min-height: 2.5rem;
+              min-width: 2.5rem;
               background-color: #dbdbdb;
             }
 
