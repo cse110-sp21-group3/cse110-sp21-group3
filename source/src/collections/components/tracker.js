@@ -32,12 +32,15 @@ class Tracker extends HTMLElement {
             }
 
             #collection-grid {
-                display: grid;
-                column-gap: 1rem;
-                row-gap: 1rem;
-                flex-grow: 1;
-                background-color: white;
-                border-radius: 1.5rem;
+              display: grid;
+              grid-template-rows: repeat(5, minmax(0, 1fr));
+              grid-template-columns: repeat(7, minmax(0, 1fr));
+              column-gap: 1rem;
+              row-gap: 1rem;
+              padding: 1rem;
+              flex-grow: 1;
+              background-color: white;
+              border-radius: 1.5rem;
             }
         </style>
         <!-- Template -->
