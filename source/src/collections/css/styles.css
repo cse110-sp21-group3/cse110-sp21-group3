@@ -252,3 +252,10 @@ tracker-elem {
     --tw-text-opacity: 1;
     color: rgba(239, 68, 68, var(--tw-text-opacity));
 }
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+}
