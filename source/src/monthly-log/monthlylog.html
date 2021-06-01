@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="./monthlylog.css">
+  </head>
+
+  <script src="../components/Navbar/navbar.js" type="module"></script>
+  <script src="../components/Menu/menu.js" type="module"></script>
+
+  
+  <body>
+        <navbar-elem></navbar-elem>
+
+        <header>
+            <div class="top-header">
+                <div class="menu"><img src="../menu-icon.png"></div>
+                <h1 id="header-title">Monthly Log</h1>
+                <div></div>
+            </div>
+        </header>    
+
+
+        <main>
+            <div id="log-container">
+                <div class="events-container"></div>
+                <div class="tasks-container">
+                    <div class="subtitle">Tasks</div>
+                    <div class="task-wrapper"><bullet-list id="task-editor"></bullet-list></div>
+                </div>
+            </div>
+        </main>
+
+    
+        <!-- Runner script -->
+        <script src="scripts/monthlylog.js" type="module"></script>
+
+        <!-- Import EventWrapper -->
+        <script src='components/EventWrapper.js'></script>
+
+        <!-- Import TextEditor(s) -->
+        <script src="../components/TextEditor/Bullet/SimpleBullet.js" type="module"></script>
+        <script src="../components/TextEditor/BulletList.js" type="module"></script>
+        <script src="../components/TextEditor/Bullet/TaskBullet.js" type="module"></script>
+    
+        <!-- Resources -->
+        <script src="../colorThemes.js" type="module"></script>
+    </body>
+
+</html>

@@ -5,6 +5,7 @@ export default class Bullet extends HTMLElement {
     this.elementName = elementName;
     this.keysPressed = {};
 
+    this.bulletConfigs = {};
     this.bulletStyle = ''; // This is default style
     this.uniqueID = 0;
     this.getNextID = () => console.error('Bullet.getNextID is not setup');
@@ -103,6 +104,7 @@ export default class Bullet extends HTMLElement {
       getNextID: this.getNextID,
       getAdjacentBullet: this.getAdjacentBullet,
       bulletStyle: this.bulletStyle,
+      bulletConfigs: this.bulletConfigs,
     });
 
     this.updateCallbacks.createBullet(this.uniqueID, newBullet);

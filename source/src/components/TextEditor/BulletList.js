@@ -10,7 +10,7 @@ class BulletList extends HTMLElement {
     this.innerHTML = '<div class="bullet-list"></div>';
     this.elementName = '';
     this.storageIndex = {};
-
+    this.bulletConfigs = {};
     this.state = {
       value: [],
       nestLimit: 2,
@@ -134,6 +134,7 @@ class BulletList extends HTMLElement {
     this.state.nestLimit = listAttributes.nestLimit;
     this.storageIndex = listAttributes.storageIndex;
     this.elementName = listAttributes.elementName;
+    if ('bulletConfigs' in listAttributes) this.bulletConfigs = listAttributes.bulletConfigs; // Configs to pass to new Bullet
     this.setValue(listAttributes.bulletTree);
   }
 
@@ -185,6 +186,7 @@ class BulletList extends HTMLElement {
           textContent: bulletsTree[currID][this.storageIndex.value],
           storageIndex: this.storageIndex,
           data: this.listData.tree[currID],
+          bulletConfigs: this.bulletConfigs,
         });
 
         if (this.listData.parents[currID] === null) {
