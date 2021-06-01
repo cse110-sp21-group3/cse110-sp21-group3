@@ -1,5 +1,5 @@
 import colorThemes from '../../colorThemes.js';
-import { colorStyleKey } from '../../storageKeys.js';
+import { colorStyleKey, habitsKey } from '../../storageKeys.js';
 
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
 if (selectedColorStyle === 'null') selectedColorStyle = 'default';
@@ -61,8 +61,7 @@ function getHabits() {
   const currMonth = getMonthName(DATE);
   const habitList = [];
   // pull from storage the habits of the particular month
-  const habitKeys = Object.keys(localStorage);
-  habitKeys.sort();
+  const habitKeys = JSON.parse(localStorage.getItem(habitsKey));
   habitKeys.forEach((k) => {
     if (k.startsWith(currMonth)) {
       const habitEntry = JSON.parse(localStorage.getItem(k));

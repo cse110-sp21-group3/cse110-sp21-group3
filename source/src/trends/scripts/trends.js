@@ -1,5 +1,5 @@
 import colorThemes from '../../colorThemes.js';
-import { colorStyleKey } from '../../storageKeys.js';
+import { colorStyleKey, habitsKey } from '../../storageKeys.js';
 
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
 if (selectedColorStyle === 'null') selectedColorStyle = 'default';
@@ -105,7 +105,9 @@ function deleteHabit(tracker) {
     trackerBody.removeChild(tracker);
 
     // remove from storage
+    let habits = JSON.parse(localStorage.getItem(habitsKey));
     const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
+    habits = habits.filter(item => item !== habitKey);
     localStorage.removeItem(habitKey);
 
     closeDeleteForm(deleteForm);
@@ -175,6 +177,9 @@ submitAdd.onclick = () => {
       habit, color, days: [...habitArray],
     };
     const habitKey = `${getMonthName(DATE)}${habit}`;
+    let habits = JSON.parse(localStorage.getItem(habitsKey));
+    habits.push(habitKey);
+    localStorage.setItem(habitsKey, JSON.stringify(habits));
     localStorage.setItem(habitKey, JSON.stringify(habitStorage));
     closeForm(addForm);
   } else {
@@ -182,6 +187,8 @@ submitAdd.onclick = () => {
     error.style.visibility = 'visible';
   }
 };
+
+
 
 /**
  * template testing
@@ -192,12 +199,12 @@ document.addEventListener('DOMContentLoaded', () => {
   headerTitle.innerText = title;
   const trackerBody = document.getElementById('tracker-body');
   // pull from storage the habits of the particular month
-  const habitKeys = Object.keys(localStorage);
-  habitKeys.sort();
+  const habitKeys = JSON.parse(localStorage.getItem(habitsKey));
   habitKeys.forEach((k) => {
-    if (k.startsWith(`${getMonthName(DATE)}`)) { // if the key is not storing the DAY k!="theme" || k!="colorStyle" || k!="journalName" || k!="replaced_stats"
-      const habitEntry = JSON.parse(localStorage.getItem(k));
+    // perhaps we should clear the storage after every new month?
+    if (k.startsWith(`${getMonthName(DATE)}`)) {
       // create a tracker for each habit using tracker.js
+      const habitEntry = JSON.parse(localStorage.getItem(k));
       const tracker = document.createElement('tracker-elem');
       tracker.habit = habitEntry.habit;
       tracker.color = habitEntry.color;
