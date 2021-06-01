@@ -23,5 +23,5 @@ submitBtn.addEventListener('click', () => {
   let theme = null;
   if (themeInput.value) theme = themeInput.value;
   localStorage.setItem(themeKey, theme);
-  // TODO: Link to next page TBD
+  window.location.href = '../home-dailylog/home.html';
 });
