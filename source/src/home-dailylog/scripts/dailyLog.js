@@ -1,4 +1,15 @@
+import colorThemes from '../../colorThemes.js';
+import { colorStyleKey } from '../../storageKeys.js';
+
+let selectedColorStyle = localStorage.getItem(colorStyleKey);
+if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+
 const key = 'dailyLogSampleData';
+
+// Set Display CSS Styles
+const root = document.documentElement;
+root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
 function addCurrentDate() {
   // add current date to title

@@ -10,7 +10,6 @@
   --light-text: rgb(166, 169, 173);
   --dark-text: black;
   --white: #fff;
-  --light-blue: #64a6bd;
   --menu-color: #eee4e1;
   --menu-hover: #ccb9b3;
   --black: #000;
@@ -58,7 +57,7 @@ body {
   text-align: center;
   width: 100vw;
   color: var(--white);
-  background-color: var(--light-blue);
+  background-color: var(--main-bg);
 }
 
 .menu {
