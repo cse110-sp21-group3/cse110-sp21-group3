@@ -4,6 +4,12 @@ class Tracker extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = `
         <style>
+            :host {
+              width: 30%;
+              height: 50%;
+              margin: 1rem;
+            }
+
             .habit {
                 display: flex;
                 flex-direction: column;
