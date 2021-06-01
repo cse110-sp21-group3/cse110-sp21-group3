@@ -110,7 +110,7 @@ class DailyLogBullet extends BaseBullet {
     });
 
     this.bulletConfigs = bulletAttributes.bulletConfigs;
-    if ('bulletStyle' in this.bulletConfigs){
+    if ('bulletStyle' in this.bulletConfigs) {
       const styleTag = this.shadowRoot.querySelector('style');
       styleTag.innerHTML = this.bulletConfigs.bulletStyle;
     }

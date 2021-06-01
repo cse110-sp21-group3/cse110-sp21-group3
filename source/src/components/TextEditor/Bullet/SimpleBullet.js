@@ -69,7 +69,7 @@ class SimpleBullet extends BaseBullet {
 
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);
-    let data = null; 
+    let data = null;
     let storageIndex;
     if ('data' in bulletAttributes) {
       data = bulletAttributes.data;
@@ -79,7 +79,7 @@ class SimpleBullet extends BaseBullet {
       (data === null) ? defaultParameters[bulletParameters.value] : data[storageIndex.value],
     );
     this.bulletConfigs = bulletAttributes.bulletConfigs;
-    if ('bulletStyle' in this.bulletConfigs){
+    if ('bulletStyle' in this.bulletConfigs) {
       const styleTag = this.shadowRoot.querySelector('style');
       styleTag.innerHTML = this.bulletConfigs.bulletStyle;
     }

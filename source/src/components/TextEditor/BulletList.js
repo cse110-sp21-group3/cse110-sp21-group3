@@ -7,7 +7,6 @@ const TOP_LEVEL_ORDER_ID = 0;
 class BulletList extends HTMLElement {
   constructor() {
     super();
-    this.innerHTML = '<div class="bullet-list"></div>';
     this.elementName = '';
     this.storageIndex = {};
     this.bulletConfigs = {};
@@ -135,6 +134,8 @@ class BulletList extends HTMLElement {
     this.storageIndex = listAttributes.storageIndex;
     this.elementName = listAttributes.elementName;
     if ('bulletConfigs' in listAttributes) this.bulletConfigs = listAttributes.bulletConfigs; // Configs to pass to new Bullet
+
+    this.innerHTML = '<div class="bullet-list"></div>';
     this.setValue(listAttributes.bulletTree);
   }
 
