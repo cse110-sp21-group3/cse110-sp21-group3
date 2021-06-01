@@ -1,8 +1,8 @@
 {
 	"extends": "stylelint-config-standard",
 	"rules": {
-		"selector-type-no-unknown": {
-			"ignore": ["tracker-elem"]
-		}
+		"selector-type-no-unknown": [true, {
+			"ignore": ["custom-elements"]
+		}]
 	}
 }
