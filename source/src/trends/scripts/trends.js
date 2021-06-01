@@ -50,7 +50,7 @@ function openForm(form) {
   f.style.display = 'block';
 }
 
-function closeForm(form) {
+function closeAddForm(form) {
   const f = form;
   f.style.display = 'none';
   f.querySelector('#habit').value = '';
@@ -58,7 +58,7 @@ function closeForm(form) {
   f.querySelector('#error').style.visibility = 'hidden';
 }
 
-function closeDeleteForm(form) {
+function closeForm(form) {
   const f = form;
   f.style.display = 'none';
 }
@@ -70,7 +70,7 @@ const addForm = document.querySelector('#addForm');
 
 const addClose = addForm.querySelector('#add-close-form');
 addClose.addEventListener('click', () => {
-  closeForm(addForm);
+  closeAddForm(addForm);
 });
 
 const add = document.getElementById('add');
@@ -78,6 +78,9 @@ add.addEventListener('click', () => {
   openForm(addForm);
 });
 
+/**
+ * Delete habit button
+ */
 const deleteForm = document.getElementById('delete-form');
 
 const deleteClose = deleteForm.querySelector('#delete-close-form');
@@ -89,8 +92,38 @@ const yesBtn = document.querySelector('#yes');
 
 const noBtn = document.querySelector('#no');
 noBtn.addEventListener('click', () => {
-  closeDeleteForm(deleteForm);
+  closeForm(deleteForm);
 });
+
+/**
+ * Edit color button
+ */
+const editForm = document.getElementById('edit-form');
+
+const editClose = editForm.querySelector('#edit-close-form');
+editClose.addEventListener('click', () => {
+  closeForm(editForm);
+});
+
+function openEditForm(color) {
+  const colorPicker = editForm.querySelector('#colorpicker');
+  colorPicker.value = color;
+
+  editForm.style.display = 'block';
+}
+
+const submitEditBtn = editForm.querySelector('#submitEditForm');
+
+function submitEdit(habitKey, tracker) {
+  const { habit, days } = tracker;
+  const color = editForm.querySelector('#colorpicker').value;
+  const habitStorage = {
+    habit, color, days,
+  };
+  localStorage.setItem(habitKey, JSON.stringify(habitStorage));
+  closeForm(editForm);
+  window.location.reload();
+}
 
 /**
  * Delete habit
@@ -107,10 +140,11 @@ function deleteHabit(tracker) {
     // remove from storage
     let habits = JSON.parse(localStorage.getItem(habitsKey));
     const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
-    habits = habits.filter(item => item !== habitKey);
+    habits = habits.filter((item) => item !== habitKey);
     localStorage.removeItem(habitKey);
+    localStorage.setItem(habitsKey, JSON.stringify(habits));
 
-    closeDeleteForm(deleteForm);
+    closeForm(deleteForm);
   });
 }
 
@@ -177,7 +211,7 @@ submitAdd.onclick = () => {
       habit, color, days: [...habitArray],
     };
     const habitKey = `${getMonthName(DATE)}${habit}`;
-    let habits = JSON.parse(localStorage.getItem(habitsKey));
+    const habits = JSON.parse(localStorage.getItem(habitsKey));
     habits.push(habitKey);
     localStorage.setItem(habitsKey, JSON.stringify(habits));
     localStorage.setItem(habitKey, JSON.stringify(habitStorage));
@@ -188,7 +222,15 @@ submitAdd.onclick = () => {
   }
 };
 
+function editColor(habitKey) {
+  const tracker = JSON.parse(localStorage.getItem(habitKey));
 
+  openEditForm(tracker.color);
+
+  submitEditBtn.addEventListener('click', () => {
+    submitEdit(habitKey, tracker);
+  });
+}
 
 /**
  * template testing
@@ -211,6 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const days = [...habitEntry.days];
       const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
       const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+      const colorCircle = tracker.shadowRoot.querySelector('#habit-color');
       for (let i = 0; i < 7; i += 1) {
         const day = document.createElement('p');
         day.innerText = calendarDays[i];
@@ -250,6 +293,9 @@ document.addEventListener('DOMContentLoaded', () => {
       trackerBody.append(tracker);
       deleteHabitBtn.addEventListener('click', () => {
         deleteHabit(tracker);
+      });
+      colorCircle.addEventListener('click', () => {
+        editColor(k);
       });
     }
   });

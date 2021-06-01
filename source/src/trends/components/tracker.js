@@ -58,6 +58,7 @@ class Tracker extends HTMLElement {
               border-radius: 100%;
               height: 1.5rem;
               width: 1.5rem;
+              cursor: pointer;
             }
 
             #habit-grid {

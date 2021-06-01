@@ -213,3 +213,23 @@ body {
   color: red;
   visibility: hidden;
 }
+
+#edit-form-modal {
+  background-color: #efefef;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  border-radius: 20px;
+}
+
+#submitEditForm {
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+#submitEditForm:hover {
+  background-color: #a4a4a4;
+  color: white;
+  cursor: pointer;
+}
