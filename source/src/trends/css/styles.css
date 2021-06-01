@@ -208,3 +208,8 @@ body {
   color: white;
   cursor: pointer;
 }
+
+#error {
+  color: red;
+  visibility: hidden;
+}

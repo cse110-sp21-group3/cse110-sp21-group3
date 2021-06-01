@@ -55,6 +55,7 @@ function closeForm(form) {
   f.style.display = 'none';
   f.querySelector('#habit').value = '';
   f.querySelector('#colorpicker').value = '#0000ff';
+  f.querySelector('#error').style.visibility = 'hidden';
 }
 
 function closeDeleteForm(form) {
@@ -177,7 +178,8 @@ submitAdd.onclick = () => {
     localStorage.setItem(habitKey, JSON.stringify(habitStorage));
     closeForm(addForm);
   } else {
-    alert('Please fill in habit field');
+    const error = document.getElementById('error');
+    error.style.visibility = 'visible';
   }
 };
 
