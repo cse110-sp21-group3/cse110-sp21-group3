@@ -32,12 +32,27 @@ let numCollections = 0;
  */
 function deleteCollection(tracker, gridDiv, grid) {
   // remove from DOM
-  gridDiv.removeChild(tracker);
-  numCollections -= 1;
-  if (numCollections % 6 === 0) {
-    const trackerBody = document.getElementById('tracker-body');
-    trackerBody.removeChild(grid);
-  }
+  showDeleteBox();
+
+  const yes = document.getElementById("yes");
+  yes.addEventListener("click", () => {
+    gridDiv.removeChild(tracker);
+    numCollections -= 1;
+    if (numCollections % 6 === 0) {
+      const trackerBody = document.getElementById('tracker-body');
+      trackerBody.removeChild(grid);
+    }
+    document.getElementsByClassName("close-form")[2].click();
+  });
+
+  const no = document.getElementById("no");
+  no.addEventListener("click", () => {
+    document.getElementsByClassName("close-form")[2].click();
+  });
+
+
+
+  
 
   // remove from storage
 }
@@ -225,7 +240,20 @@ function textBox() {
   modal.style.display = "block";
 }
 
-var closeText = document.getElementsByClassName("close")[0];
+var closeText = document.getElementsByClassName("close-form")[1];
 closeText.onclick = function() {
   modal.style.display = "none";
+}
+
+/*
+** Modal Delete Collection Box
+*/
+var modalD = document.getElementById("delete-collection");
+function showDeleteBox() {
+  modalD.style.display = "block";
+}
+
+var closeText = document.getElementsByClassName("close-form")[2];
+closeText.onclick = function() {
+  modalD.style.display = "none";
 }
