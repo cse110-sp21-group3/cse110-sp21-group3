@@ -12,7 +12,7 @@ const bulletParameters = {
 
 const defaultParameters = {
   value: '',
-  type: 'none',
+  type: 'task',
   modifier: 'none',
   completed: false,
 };
@@ -131,7 +131,7 @@ class DailyLogBullet extends BaseBullet {
       this.editContent(bulletParameters.value, e.target.value);
     };
 
-    let typeCount = 0;
+    let typeCount = 1;
     const typeList = ['none', 'task', 'note', 'event', 'theme'];
     const type = this.shadowRoot.querySelector('.type');
     type.addEventListener('click', () => {

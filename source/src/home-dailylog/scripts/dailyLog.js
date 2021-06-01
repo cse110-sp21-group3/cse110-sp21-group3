@@ -25,13 +25,12 @@ refreshDate.addEventListener('click', () => {
   if (storedDay === 0 || currDay !== storedDay) {
     // TODO: store all existing bullets to display on past daily logs
     // TODO clear daily log
-    // clearDailyLog();
   }
 });
 
 function getSavedBullets() {
   // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
-  const initialSetup = { 0: [1], 1: ['', false, 'none', 'none', []] };
+  const initialSetup = { 0: [1], 1: ['', false, 'task', 'none', []] };
   let listDataTree = localStorage.getItem(key);
   if (listDataTree === null) {
     listDataTree = initialSetup;
