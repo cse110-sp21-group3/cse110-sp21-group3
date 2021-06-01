@@ -30,3 +30,10 @@
     - Consoldiate navbar and indexedDB
     - Add testing
     - Speed up pace (finish sprint on Sunday)
+- Timeline for tasks
+    - Daily Log & Habits: June 1
+    - NavBar: June 1
+    - Collections: June 2
+    - IndexedDB: June 3
+    - Monthly Log: June 3
+    - Testing: June 6
