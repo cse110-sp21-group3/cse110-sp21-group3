@@ -74,7 +74,7 @@ class Navbar extends HTMLElement {
           <p>daily log</p>
         </div>
         <div class="nav-component">
-          <p>monthly log</p>
+          <p><a href="../monthly-log/monthlylog.html">monthly log</a></p>
         </div>
         <div class="nav-component">
           <p>collections</p>
@@ -83,6 +83,7 @@ class Navbar extends HTMLElement {
           <p>settings</p>
         </div>
       </div>`;
+      // TODO: Remove monthly log link before merge
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
