@@ -111,19 +111,23 @@ add.addEventListener('click', () => {
 // delete habit form
 const deleteForm = document.getElementById('delete-form');
 
+function closeDeleteForm() {
+  deleteForm.style.display = 'none';
+  addForm.querySelector('#habit').value = '';
+  addForm.querySelector('#colorpicker').value = '#0000ff';
+  addForm.querySelector('#error').style.visibility = 'hidden';
+}
+
 // close delete form button
 const deleteClose = deleteForm.querySelector('#delete-close-form');
 deleteClose.addEventListener('click', () => {
-  closeForm(deleteForm);
+  closeDeleteForm();
 });
-
-// yes button of delete form
-const yesBtn = document.querySelector('#yes');
 
 // no button of delete form
 const noBtn = document.querySelector('#no');
 noBtn.addEventListener('click', () => {
-  closeForm(deleteForm);
+  closeDeleteForm();
 });
 
 // edit habit color form
@@ -161,28 +165,53 @@ function submitEdit(habitKey, tracker) {
   window.location.reload();
 }
 
+function openDeleteForm(habit) {
+  const deleteQuestion = deleteForm.querySelector('#delete-question');
+  deleteQuestion.innerText = `Delete ${habit}?`;
+  deleteForm.style.display = 'block';
+}
+
+const yesBtn = document.querySelector('#yes');
+
+function closeDeleteFormYes(habit) {
+  // yes button of delete form
+  yesBtn.removeEventListener('click', function remove() {
+    return removeHabit(habit);
+  });
+
+  closeDeleteForm();
+}
+
+function removeHabit(habit) {
+  // remove from DOM
+  const tracker = document.getElementById(habit);
+  console.log(habit);
+  console.log(tracker);
+  tracker.remove();
+
+  // remove from storage
+  let habits = JSON.parse(localStorage.getItem(habitsKey));
+  const habitKey = `${getMonthName(DATE)}${habit}`;
+  habits = habits.filter((item) => item !== habitKey);
+  localStorage.removeItem(habitKey);
+  localStorage.setItem(habitsKey, JSON.stringify(habits));
+
+  // closeDeleteFormYes(habit);
+  closeDeleteForm();
+}
+
 /**
  * Delete current habit
  * @param {*} tracker html element of tracker to be deleted
  */
-function deleteHabit(tracker) {
-  // provide warning of deletion
-  openForm(deleteForm);
-
-  yesBtn.addEventListener('click', () => {
-    // remove from DOM
-    const trackerBody = document.getElementById('tracker-body');
-    trackerBody.removeChild(tracker);
-
-    // remove from storage
-    let habits = JSON.parse(localStorage.getItem(habitsKey));
-    const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
-    habits = habits.filter((item) => item !== habitKey);
-    localStorage.removeItem(habitKey);
-    localStorage.setItem(habitsKey, JSON.stringify(habits));
-
-    closeForm(deleteForm);
-  });
+function deleteHabit(habit) {
+  // // provide warning of deletion
+  // openDeleteForm(habit);
+  // // yes button of delete form
+  // yesBtn.addEventListener('click', function remove() {
+  //   return removeHabit(habit);
+  // });
+  removeHabit(habit);
 }
 
 /**
@@ -263,7 +292,7 @@ function addHabit(habit, color) {
   trackerBody.appendChild(tracker);
   // delete habit button
   deleteHabitBtn.addEventListener('click', () => {
-    deleteHabit(tracker);
+    deleteHabit(habit);
   });
   const habitArray = Array(numDays).fill(false);
   const habitStorage = {
@@ -293,7 +322,7 @@ submitAdd.onclick = () => {
     habits.push(habitKey);
     localStorage.setItem(habitsKey, JSON.stringify(habits));
     localStorage.setItem(habitKey, JSON.stringify(habitStorage));
-    closeForm(addForm);
+    closeAddForm();
   } else {
     const error = document.getElementById('error');
     error.style.visibility = 'visible';
@@ -344,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       trackerBody.append(tracker);
       deleteHabitBtn.addEventListener('click', () => {
-        deleteHabit(tracker);
+        deleteHabit(tracker.habit);
       });
       colorCircle.addEventListener('click', () => {
         editColor(habitEntry);

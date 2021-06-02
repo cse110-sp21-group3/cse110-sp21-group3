@@ -11,7 +11,6 @@
   <script src="../components/Menu/menu.js" type="module"></script>
   <script src="./scripts/trends.js" type="module"></script>
   <script src="./components/tracker.js" type="module"></script>
-  <script src="./components/grid.js" type="module"></script>
   <body>
     <navbar-elem></navbar-elem>
     <div class="header">
@@ -49,7 +48,7 @@
       <!-- Modal content -->
       <div id="delete-form-modal" class="modal-content">
         <span class="close-form" id="delete-close-form">&times;</span>
-          <p>Delete this habit?</p>
+          <p id="delete-question"></p>
           <div id="button-group">
             <button type="button" id="yes">Yes</button>
             <button type="button" id="no">No</button>

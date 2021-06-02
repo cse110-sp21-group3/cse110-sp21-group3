@@ -97,8 +97,9 @@ class Tracker extends HTMLElement {
     // Set title of grid and id of div to habit
     const title = this.shadowRoot.querySelector('#title');
     title.innerHTML = habit;
-    const grid = this.shadowRoot.querySelector('.habit');
-    grid.id = habit;
+    const deleteHabit = this.shadowRoot.querySelector('.delete-tracker');
+    deleteHabit.id = `delete-${habit}`;
+    this.id = habit;
     this.setAttribute('habit', habit);
   }
 
