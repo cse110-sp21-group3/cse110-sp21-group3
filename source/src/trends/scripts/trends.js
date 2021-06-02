@@ -1,6 +1,7 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey, habitsKey } from '../../storageKeys.js';
 
+// set color of website to the theme color
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
 if (selectedColorStyle === 'null') selectedColorStyle = 'default';
 
@@ -13,27 +14,49 @@ root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
  * Get current month and number of days of the month
  */
 const DATE = new Date();
+// calendar days of the month for habit tracker calendar
 const calendarDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+/**
+ * Get the name of the current month
+ * @param {*} date date object with the current day
+ * @returns name of current month
+ */
 function getMonthName(date) {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   return monthNames[date.getMonth()];
 }
 
+/**
+ * Get the days of the month
+ * @param {*} date date object with the current day
+ * @returns number of days in the month on a normal year
+ */
 function getMonthDays(date) {
   const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return days[date.getMonth()];
 }
 
+/**
+ * Get the days of the month on a leap year
+ * @param {*} date date object with the current day
+ * @returns number of days in the month on a leap year
+ */
 function getMonthDaysLeap(date) {
   const days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return days[date.getMonth()];
 }
 
+/**
+ * Gets the first day of the month to pad the calendar accordingly
+ * @param {*} date date object with the current day
+ * @returns day of the first date of the month
+ */
 function getFirstDay(date) {
   const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
   return firstDay.getDay();
 }
 
+// Get number of days in the current month
 const currYear = DATE.getFullYear();
 let numDays;
 if (currYear % 4 === 0) {
@@ -43,68 +66,79 @@ if (currYear % 4 === 0) {
 }
 
 /**
- * Open and close a modal/form
+ * Open the form modal
+ * @param {*} form form modal to be opened
  */
 function openForm(form) {
   const f = form;
   f.style.display = 'block';
 }
 
-function closeAddForm(form) {
-  const f = form;
-  f.style.display = 'none';
-  f.querySelector('#habit').value = '';
-  f.querySelector('#colorpicker').value = '#0000ff';
-  f.querySelector('#error').style.visibility = 'hidden';
+/**
+ * Close the form that adds a habit
+ */
+function closeAddForm() {
+  addForm.style.display = 'none';
+  addForm.querySelector('#habit').value = '';
+  addForm.querySelector('#colorpicker').value = '#0000ff';
+  addForm.querySelector('#error').style.visibility = 'hidden';
 }
 
+/**
+ * Close the form modal
+ * @param {*} form form modal to be closed
+ */
 function closeForm(form) {
   const f = form;
   f.style.display = 'none';
 }
 
-/**
- * Add new habit button
- */
+// add habit form
 const addForm = document.querySelector('#addForm');
 
+// close add form button
 const addClose = addForm.querySelector('#add-close-form');
 addClose.addEventListener('click', () => {
   closeAddForm(addForm);
 });
 
+// add habit button
 const add = document.getElementById('add');
 add.addEventListener('click', () => {
   openForm(addForm);
 });
 
-/**
- * Delete habit button
- */
+// delete habit form
 const deleteForm = document.getElementById('delete-form');
 
+// close delete form button
 const deleteClose = deleteForm.querySelector('#delete-close-form');
 deleteClose.addEventListener('click', () => {
   closeForm(deleteForm);
 });
 
+// yes button of delete form
 const yesBtn = document.querySelector('#yes');
 
+// no button of delete form
 const noBtn = document.querySelector('#no');
 noBtn.addEventListener('click', () => {
   closeForm(deleteForm);
 });
 
-/**
- * Edit color button
- */
+// edit habit color form
 const editForm = document.getElementById('edit-form');
 
+// close edit form button
 const editClose = editForm.querySelector('#edit-close-form');
 editClose.addEventListener('click', () => {
   closeForm(editForm);
 });
 
+/**
+ * Opens the edit form with value of color set to current habit color
+ * @param {*} color current color of habit
+ */
 function openEditForm(color) {
   const colorPicker = editForm.querySelector('#colorpicker');
   colorPicker.value = color;
@@ -112,8 +146,10 @@ function openEditForm(color) {
   editForm.style.display = 'block';
 }
 
+// submit edit form button
 const submitEditBtn = editForm.querySelector('#submitEditForm');
 
+// submit new color to storage and reload window
 function submitEdit(habitKey, tracker) {
   const { habit, days } = tracker;
   const color = editForm.querySelector('#colorpicker').value;
@@ -126,7 +162,8 @@ function submitEdit(habitKey, tracker) {
 }
 
 /**
- * Delete habit
+ * Delete current habit
+ * @param {*} tracker html element of tracker to be deleted
  */
 function deleteHabit(tracker) {
   // provide warning of deletion
@@ -149,15 +186,19 @@ function deleteHabit(tracker) {
 }
 
 /**
- * Create habit tracker for particular habit and store color of habit
+ * Add habit to DOM
+ * @param {*} habit name of habit to be added
+ * @param {*} color color of habit to be added
  */
 function addHabit(habit, color) {
+  // create new tracker element web component
   const tracker = document.createElement('tracker-elem');
   tracker.habit = habit;
   tracker.color = color;
-  // show delete button when hovering over element
   const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
   const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
+  const colorCircle = tracker.shadowRoot.querySelector('#habit-color');
+  // fill first row of calendar with calendar days
   for (let i = 0; i < 7; i += 1) {
     const day = document.createElement('p');
     day.innerText = calendarDays[i];
@@ -177,6 +218,7 @@ function addHabit(habit, color) {
     habitCircle.style.margin = '0.5rem';
     habitGrid.appendChild(habitCircle);
   }
+  // create circles that indicate each day of month
   for (let i = 0; i < numDays; i += 1) {
     const habitCircle = document.createElement('div');
     const id = `circle${i + 1}`;
@@ -191,19 +233,23 @@ function addHabit(habit, color) {
   }
   const trackerBody = document.getElementById('tracker-body');
   trackerBody.appendChild(tracker);
+  // delete habit button
   deleteHabitBtn.addEventListener('click', () => {
     deleteHabit(tracker);
   });
+  colorCircle.addEventListener('click', () => {
+    editColor(k);
+  });
 }
 
-/*
-** Submit Add Habit
-*/
+// submit add habit button
 const submitAdd = addForm.querySelector('.submit #submitForm');
 submitAdd.onclick = () => {
   const habit = addForm.querySelector('#habit').value;
   const color = addForm.querySelector('#colorpicker').value;
 
+  // if they provided a habit, add habit to DOM and storage
+  // otherwise, show error message
   if (habit !== '') {
     addHabit(habit, color);
     const habitArray = Array(numDays).fill(false);
@@ -222,6 +268,10 @@ submitAdd.onclick = () => {
   }
 };
 
+/**
+ * Edit color of current habit
+ * @param {*} habitKey key of habit to be edited
+ */
 function editColor(habitKey) {
   const tracker = JSON.parse(localStorage.getItem(habitKey));
 
@@ -233,7 +283,7 @@ function editColor(habitKey) {
 }
 
 /**
- * template testing
+ * When loading the website, add all of the habits in the storage to the DOM
  */
 document.addEventListener('DOMContentLoaded', () => {
   const headerTitle = document.getElementById('header-title');
@@ -243,7 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // pull from storage the habits of the particular month
   const habitKeys = JSON.parse(localStorage.getItem(habitsKey));
   habitKeys.forEach((k) => {
-    // perhaps we should clear the storage after every new month?
     if (k.startsWith(`${getMonthName(DATE)}`)) {
       // create a tracker for each habit using tracker.js
       const habitEntry = JSON.parse(localStorage.getItem(k));
@@ -254,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
       const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
       const colorCircle = tracker.shadowRoot.querySelector('#habit-color');
+      // fill first row of calendar with calendar days
       for (let i = 0; i < 7; i += 1) {
         const day = document.createElement('p');
         day.innerText = calendarDays[i];
@@ -273,6 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
         habitCircle.style.margin = '0.5rem';
         habitGrid.appendChild(habitCircle);
       }
+      // create circles that indicate each day of month
       for (let i = 0; i < days.length; i += 1) {
         const habitCircle = document.createElement('div');
         const id = `circle${i + 1}`;
