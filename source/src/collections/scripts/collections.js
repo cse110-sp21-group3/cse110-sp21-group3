@@ -38,12 +38,12 @@ function deleteCollection(tracker) {
   yes.addEventListener("click", () => {
     const trackerBody = document.getElementById('tracker-body');
     trackerBody.removeChild(tracker);
-    document.getElementsByClassName("close-form")[2].click();
+    document.getElementsByClassName("close-form")[1].click();
   });
 
   const no = document.getElementById("no");
   no.addEventListener("click", () => {
-    document.getElementsByClassName("close-form")[2].click();
+    document.getElementsByClassName("close-form")[1].click();
   });
 
   // remove from storage
@@ -137,8 +137,31 @@ function addCollection(collection) {
 
   const wbox = tracker.shadowRoot.querySelector("#collection-grid");
   wbox.addEventListener("click", () => {
-    document.querySelector(".textBox-title").innerHTML = collection;
-    textBox();
+    tracker.shadowRoot.querySelector(".textBox-title").innerHTML = collection;
+    tracker.shadowRoot.querySelector("#modalText").style.display = "block";
+    const listDataTree = getSavedBullets();
+
+    const list = tracker.shadowRoot.querySelector('bullet-list');
+    list.initialiseList({
+      saveDataCallback: (data) => {
+        localStorage.setItem(key, JSON.stringify(data));
+      },
+      nestLimit: 2,
+      bulletTree: listDataTree,
+      storageIndex: {
+        value: 0,
+        completed: 1,
+        type: 2,
+        modifier: 3,
+        children: 4,
+      },
+      elementName: 'simple-bullet',
+    });
+  });
+
+  const closeText = tracker.shadowRoot.querySelector(".close-form");
+  closeText.addEventListener("click", () => {
+    tracker.shadowRoot.querySelector("#modalText").style.display = "none";
   });
 
   trackerBody.append(tracker);
@@ -172,7 +195,7 @@ function textBox() {
   modal.style.display = "block";
 }
 
-var closeText = document.getElementsByClassName("close-form")[1];
+var closeText = document.getElementsByClassName("close-form")[0];
 closeText.onclick = function() {
   modal.style.display = "none";
 }
@@ -185,7 +208,7 @@ function showDeleteBox() {
   modalD.style.display = "block";
 }
 
-var closeText = document.getElementsByClassName("close-form")[2];
+var closeText = document.getElementsByClassName("close-form")[1];
 closeText.onclick = function() {
   modalD.style.display = "none";
 }
@@ -204,10 +227,13 @@ function getSavedBullets() {
   return listDataTree;
 }
 
+function bulletSetup() {
+
+}
 /**
  * DOM Content Loaded
  */
- document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const listDataTree = getSavedBullets();
 
   const list = document.querySelector('bullet-list');
