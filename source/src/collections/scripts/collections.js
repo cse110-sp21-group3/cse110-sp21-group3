@@ -138,7 +138,7 @@ function addCollection(collection) {
   const wbox = tracker.shadowRoot.querySelector("#collection-grid");
   wbox.addEventListener("click", () => {
     tracker.shadowRoot.querySelector(".textBox-title").innerHTML = collection;
-    tracker.shadowRoot.querySelector("#modalText").style.display = "block";
+    tracker.shadowRoot.querySelector("#modalText").style.display = "block";     // Show BulletList Modal
     const listDataTree = getSavedBullets();
 
     const list = tracker.shadowRoot.querySelector('bullet-list');
@@ -159,6 +159,7 @@ function addCollection(collection) {
     });
   });
 
+  // Close BulletList Modal
   const closeText = tracker.shadowRoot.querySelector(".close-form");
   closeText.addEventListener("click", () => {
     tracker.shadowRoot.querySelector("#modalText").style.display = "none";
@@ -188,19 +189,6 @@ submitAdd.onclick = () => {
 };
 
 /*
-** Modal Text Box
-*/
-var modal = document.getElementById("modalText");
-function textBox() {
-  modal.style.display = "block";
-}
-
-var closeText = document.getElementsByClassName("close-form")[0];
-closeText.onclick = function() {
-  modal.style.display = "none";
-}
-
-/*
 ** Modal Delete Collection Box
 */
 var modalD = document.getElementById("delete-collection");
@@ -213,7 +201,10 @@ closeText.onclick = function() {
   modalD.style.display = "none";
 }
 
-const key = 'dailyLogSampleData';
+/*
+** Bulleting work
+*/
+const key = 'collectionSampleData';
 
 function getSavedBullets() {
   // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
@@ -227,9 +218,6 @@ function getSavedBullets() {
   return listDataTree;
 }
 
-function bulletSetup() {
-
-}
 /**
  * DOM Content Loaded
  */
