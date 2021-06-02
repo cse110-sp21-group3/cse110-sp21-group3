@@ -124,11 +124,16 @@ class DailyLogBullet extends BaseBullet {
         this.keysPressed[key] = state;
       }
     };
-    inputElement.onkeydown = (e) => this.inputKeyboardListener(e, watchKeys);
-    inputElement.onkeyup = (e) => {
-      watchKeys(e.key, false);
 
-      this.editContent(bulletParameters.value, e.target.value);
+    inputElement.onkeydown = (e) => {
+      watchKeys(e.key, true);
+      let matched = this.baseKeydownListener(e);
+      if (!matched) matched = this.keyDownListener();
+    };
+    inputElement.onkeyup = (e) => {
+      const matched = this.baseKeyupListener();
+      if (!matched) this.editContent(bulletParameters.value, e.target.value);
+      watchKeys(e.key, false);
     };
 
     let typeCount = 1;
@@ -148,8 +153,8 @@ class DailyLogBullet extends BaseBullet {
    */
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);
-    let data = null; let
-      storageIndex;
+    let data = null;
+    let storageIndex;
     if ('data' in bulletAttributes) {
       data = bulletAttributes.data;
       storageIndex = bulletAttributes.storageIndex;
@@ -210,22 +215,9 @@ class DailyLogBullet extends BaseBullet {
     this.updateCallbacks.editContent(parameter, this.uniqueID, this.state[parameter]);
   }
 
-  inputKeyboardListener(e, watchKeys) {
-    watchKeys(e.key, true);
-    if (this.keysPressed.Tab) {
-      e.preventDefault();
-      this.nestCurrBullet();
-    } else if (this.keysPressed.Backspace) {
-      if (this.getValue() === '') this.deleteBullet();
-    } else if (this.keysPressed.Shift && this.keysPressed.Enter) {
-      this.exitSingleNesting(e);
-    } else if (this.keysPressed.Enter) {
-      if (this.state.value === '') return;
-      this.createBullet();
-    } else if (this.keysPressed.Control && this.keysPressed.s) {
-      e.preventDefault();
-      this.updateCallbacks.saveData();
-    } else if (this.keysPressed.Control && this.keysPressed.c) {
+  // Additional keyboard listeners
+  keyDownListener() {
+    if (this.keysPressed.Control && this.keysPressed.c) {
       this.editContent(bulletParameters.completed, !this.state.completed);
     } else if (this.keysPressed.Control && this.keysPressed.o) {
       this.editContent(bulletParameters.modifier, 'none');
@@ -233,13 +225,8 @@ class DailyLogBullet extends BaseBullet {
       this.editContent(bulletParameters.modifier, 'priority');
     } else if (this.keysPressed.Control && this.keysPressed.i) {
       this.editContent(bulletParameters.modifier, 'inspiration');
-    } else if (this.keysPressed.ArrowUp) {
-      const nextBullet = this.getAdjacentBullet(this.uniqueID, true);
-      if (nextBullet !== null) this.transferFocusTo(nextBullet);
-    } else if (this.keysPressed.ArrowDown) {
-      const nextBullet = this.getAdjacentBullet(this.uniqueID, false);
-      if (nextBullet !== null) this.transferFocusTo(nextBullet);
-    }
+    } else return false;
+    return true;
   }
 }
 

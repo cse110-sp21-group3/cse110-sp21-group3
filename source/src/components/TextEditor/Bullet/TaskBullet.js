@@ -81,11 +81,15 @@ class TaskBullet extends BaseBullet {
         this.keysPressed[key] = state;
       }
     };
-    inputElement.onkeydown = (e) => this.inputKeyboardListener(e, watchKeys);
+    inputElement.onkeydown = (e) => {
+      watchKeys(e.key, true);
+      let matched = this.baseKeydownListener(e);
+      if (!matched) matched = this.keyDownListener();
+    };
     inputElement.onkeyup = (e) => {
+      const matched = this.baseKeyupListener();
+      if (!matched) this.editContent(bulletParameters.value, e.target.value);
       watchKeys(e.key, false);
-
-      this.editContent(bulletParameters.value, e.target.value);
     };
   }
 
@@ -150,30 +154,12 @@ class TaskBullet extends BaseBullet {
     this.updateCallbacks.editContent(parameter, this.uniqueID, this.state[parameter]);
   }
 
-  inputKeyboardListener(e, watchKeys) {
-    watchKeys(e.key, true);
-    if (this.keysPressed.Tab) {
-      e.preventDefault();
-      this.nestCurrBullet();
-    } else if (this.keysPressed.Backspace) {
-      if (this.getValue() === '') this.deleteBullet();
-    } else if (this.keysPressed.Shift && this.keysPressed.Enter) {
-      this.exitSingleNesting(e);
-    } else if (this.keysPressed.Enter) {
-      if (this.state.value === '') return;
-      this.createBullet();
-    } else if (this.keysPressed.Control && this.keysPressed.s) {
-      e.preventDefault();
-      this.updateCallbacks.saveData();
-    } else if (this.keysPressed.Control && this.keysPressed.c) {
+  // Additional Keyboard Listeners
+  keyDownListener() {
+    if (this.keysPressed.Control && this.keysPressed.c) {
       this.editContent(bulletParameters.completed, !this.state.completed);
-    } else if (this.keysPressed.ArrowUp) {
-      const nextBullet = this.getAdjacentBullet(this.uniqueID, true);
-      if (nextBullet !== null) this.transferFocusTo(nextBullet);
-    } else if (this.keysPressed.ArrowDown) {
-      const nextBullet = this.getAdjacentBullet(this.uniqueID, false);
-      if (nextBullet !== null) this.transferFocusTo(nextBullet);
-    }
+    } else return false;
+    return true;
   }
 }
 

@@ -85,7 +85,6 @@ export default class Bullet extends HTMLElement {
   focus() {
     const inputField = this.shadowRoot.querySelector('input');
     inputField.focus();
-    inputField.select();
   }
 
   nestCurrBullet() {
@@ -138,7 +137,45 @@ export default class Bullet extends HTMLElement {
   }
 
   deleteBullet() {
+    const prevBullet = this.getAdjacentBullet(this.uniqueID, true);
     const allowDelete = this.updateCallbacks.deleteBullet(this.uniqueID);
-    if (allowDelete) this.remove();
+    if (allowDelete) {
+      this.transferFocusTo(prevBullet);
+      this.remove();
+    }
+  }
+
+  // Keyboard Listeners
+  baseKeydownListener(e) {
+    if (this.keysPressed.Tab) {
+      e.preventDefault();
+      this.nestCurrBullet();
+    } else if (this.keysPressed.Shift && this.keysPressed.Enter) {
+      this.exitSingleNesting(e);
+    } else if (this.keysPressed.Control && this.keysPressed.s) {
+      e.preventDefault();
+      this.updateCallbacks.saveData();
+    } else if (this.keysPressed.ArrowUp) {
+      const nextBullet = this.getAdjacentBullet(this.uniqueID, true);
+      if (nextBullet !== null) this.transferFocusTo(nextBullet);
+    } else if (this.keysPressed.ArrowDown) {
+      const nextBullet = this.getAdjacentBullet(this.uniqueID, false);
+      if (nextBullet !== null) this.transferFocusTo(nextBullet);
+    } else {
+      return false;
+    }
+    return true;
+  }
+
+  baseKeyupListener() {
+    if (this.keysPressed.Enter) {
+      if (this.state.value === '') return true;
+      this.createBullet();
+    } else if (this.keysPressed.Backspace && this.getValue() === '') {
+      this.deleteBullet();
+    } else {
+      return false;
+    }
+    return true;
   }
 }
