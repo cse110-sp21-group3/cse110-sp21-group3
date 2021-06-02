@@ -30,7 +30,7 @@ let numCollections = 0;
 /**
  * Delete collection
  */
-function deleteCollection(tracker, gridDiv, grid) {
+function deleteCollection(tracker) {
   // remove from DOM
   showDeleteBox();
 
@@ -43,18 +43,19 @@ function deleteCollection(tracker, gridDiv, grid) {
       trackerBody.removeChild(grid);
     }
     document.getElementsByClassName("close-form")[2].click();
+
+    const trackerBody = document.getElementById('tracker-body');
+    trackerBody.removeChild(tracker);
+    document.getElementsByClassName("close-form")[1].click();
   });
 
   const no = document.getElementById("no");
   no.addEventListener("click", () => {
-    document.getElementsByClassName("close-form")[2].click();
+    document.getElementsByClassName("close-form")[1].click();
   });
 
-
-
-  
-
   // remove from storage
+
 }
 
 /**
@@ -69,19 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
   tracker.collection = 'Groceries';
   // tracker.color = '#599fe0';
   const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  // const collectionGrid = tracker.shadowRoot.querySelector('#collection-grid');
-  // for (let i = 1; i <= numDays; i += 1) {
-  //   const collectionCircle = document.createElement('div');
-  //   const id = `circle${i}`;
-  //   collectionCircle.id = id;
-  //   collectionCircle.style.borderRadius = '100%';
-  //   collectionCircle.style.border = 'none';
-  //   // TODO: if the collection for this day is completed, fill in with color, otherwise make it #dbdbdb
-  //   collectionCircle.style.backgroundColor = tracker.color;
-  //   collectionCircle.style.width = '100%';
-  //   collectionCircle.style.height = '100%';
-  //   collectionGrid.appendChild(collectionCircle);
-  // }
   deleteCollectionBtn.addEventListener('click', () => {
     deleteCollection(tracker);
   });
@@ -116,7 +104,6 @@ function closeForm(form) {
   const f = form;
   f.style.display = 'none';
   f.querySelector('#collection').value = '';
-  // f.querySelector('#colorpicker').value = '#0000ff';
 }
 
 /**
@@ -150,57 +137,46 @@ add.addEventListener('click', () => {
  * Create collection tracker for particular collection and store color of collection
  */
 function addCollection(collection) {
-  const tracker = document.createElement('tracker-elem');
+  const tracker = document.createElement('collection-elem');
   tracker.collection = collection;
-  // tracker.color = color;
   // TODO: show delete button when hovering over element
   const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  // const collectionGrid = tracker.shadowRoot.querySelector('#collection-grid');
-  // for (let i = 1; i <= numDays; i += 1) {
-  //   const collectionCircle = document.createElement('div');
-  //   const id = `circle${i}`;
-  //   collectionCircle.id = id;
-  //   collectionCircle.style.borderRadius = '100%';
-  //   collectionCircle.style.border = 'none';
-  //   collectionCircle.style.backgroundColor = '#DBDBDB';
-  //   collectionGrid.appendChild(collectionCircle);
-  // }
-  // If number of collections % 6 === 0, then make new grid and append tracker to new grid
-  // otherwise, just append tracker to last grid
-  const gridList = document.getElementsByTagName('grid-elem');
   const trackerBody = document.getElementById('tracker-body');
-  if (numCollections % 6 === 0) {
-    const grid = document.createElement('grid-elem');
-    grid.num = gridList.length + 1;
-    const gridDiv = grid.shadowRoot.querySelector('.collection-grid');
 
-    const wbox = tracker.shadowRoot.querySelector("#collection-grid");
-    wbox.addEventListener("click", () => {
-      document.querySelector(".textBox-title").innerHTML = collection;
-      textBox();
-    });
+  const wbox = tracker.shadowRoot.querySelector("#collection-grid");
+  wbox.addEventListener("click", () => {
+    tracker.shadowRoot.querySelector(".textBox-title").innerHTML = collection;
+    tracker.shadowRoot.querySelector("#modalText").style.display = "block";     // Show BulletList Modal
+    const listDataTree = getSavedBullets();
 
-    gridDiv.append(tracker);
-    deleteCollectionBtn.addEventListener('click', () => {
-      deleteCollection(tracker, gridDiv, grid);
+    const list = tracker.shadowRoot.querySelector('bullet-list');
+    list.initialiseList({
+      saveDataCallback: (data) => {
+        localStorage.setItem(key, JSON.stringify(data));
+      },
+      nestLimit: 2,
+      bulletTree: listDataTree,
+      storageIndex: {
+        value: 0,
+        completed: 1,
+        type: 2,
+        modifier: 3,
+        children: 4,
+      },
+      elementName: 'simple-bullet',
     });
-    trackerBody.appendChild(grid);
-  } else {
-    const grid = gridList[gridList.length - 1];
-    const gridDiv = grid.shadowRoot.querySelector('.collection-grid');
+  });
 
-    const wbox = tracker.shadowRoot.querySelector("#collection-grid");
-    wbox.addEventListener("click", () => {
-      document.querySelector(".textBox-title").innerHTML = collection;
-      textBox();
-    });
+  // Close BulletList Modal
+  const closeText = tracker.shadowRoot.querySelector(".close-form");
+  closeText.addEventListener("click", () => {
+    tracker.shadowRoot.querySelector("#modalText").style.display = "none";
+  });
 
-    gridDiv.append(tracker);
-    deleteCollectionBtn.addEventListener('click', () => {
-      deleteCollection(tracker, gridDiv, grid);
-    });
-  }
-  numCollections += 1;
+  trackerBody.append(tracker);
+  deleteCollectionBtn.addEventListener('click', () => {
+    deleteCollection(tracker);
+  });
 }
 
 /*
@@ -209,8 +185,7 @@ function addCollection(collection) {
 const submitAdd = addForm.querySelector('.submit #submitForm');
 submitAdd.onclick = () => {
   const collection = addForm.querySelector('#collection').value;
-  // const color = addForm.querySelector('#colorpicker').value;
-  let e = document.getElementById("error");
+  const e = document.getElementById("error");
 
   if (collection == null || collection.trim() === "") {
     e.innerHTML = "Please enter a valid name.";
@@ -219,27 +194,7 @@ submitAdd.onclick = () => {
       addCollection(collection);
       closeForm(addForm);
   }
-
-  // if (collection !== '') {
-  //   addCollection(collection);
-  //   closeForm(addForm);
-  // } else {
-  //   alert('Please fill in collection field');
-  // }
 };
-
-/*
-** Modal Text Box
-*/
-var modal = document.getElementById("modalText");
-function textBox() {
-  modal.style.display = "block";
-}
-
-var closeText = document.getElementsByClassName("close-form")[1];
-closeText.onclick = function() {
-  modal.style.display = "none";
-}
 
 /*
 ** Modal Delete Collection Box
@@ -249,7 +204,48 @@ function showDeleteBox() {
   modalD.style.display = "block";
 }
 
-var closeText = document.getElementsByClassName("close-form")[2];
+var closeText = document.getElementsByClassName("close-form")[1];
 closeText.onclick = function() {
   modalD.style.display = "none";
 }
+
+/*
+** Bulleting work
+*/
+const key = 'collectionSampleData';
+
+function getSavedBullets() {
+  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
+  const initialSetup = { 0: [1], 1: ['', false, 'task', 'none', []] };
+  let listDataTree = localStorage.getItem(key);
+  if (listDataTree === null) {
+    listDataTree = initialSetup;
+  } else {
+    listDataTree = JSON.parse(listDataTree);
+  }
+  return listDataTree;
+}
+
+/**
+ * DOM Content Loaded
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  const listDataTree = getSavedBullets();
+
+  const list = document.querySelector('bullet-list');
+  list.initialiseList({
+    saveDataCallback: (data) => {
+      localStorage.setItem(key, JSON.stringify(data));
+    },
+    nestLimit: 2,
+    bulletTree: listDataTree,
+    storageIndex: {
+      value: 0,
+      completed: 1,
+      type: 2,
+      modifier: 3,
+      children: 4,
+    },
+    elementName: 'simple-bullet',
+  });
+});

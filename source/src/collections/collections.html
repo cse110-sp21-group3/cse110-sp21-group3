@@ -9,11 +9,15 @@
 	</head>
   <script src="./scripts/collections.js" type="module"></script>
   <script src="./components/collection.js" type="module"></script>
+
+  <script src="../components/TextEditor/Bullet/SimpleBullet.js" type="module"></script>
+  <script src="../components/TextEditor/BulletList.js" type="module"></script>
+
     <body>
         <div id="nav">
             <span class="close-nav">&times;</span>
             <div class="nav-component">
-            	<p>home</p>
+            	  <p>home</p>
             </div>
             <div class="nav-component">
               	<p>statistics</p>
@@ -48,49 +52,39 @@
           </div>
 			    <div id="bar"></div>
         </div>
+        
         <!-- Turn each 2 x 3 grid into its own component -->
         <div id="tracker-body"></div>
         <div id="addForm" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
             	<span class="close-form">&times;</span>
-				<form>
-					<input type="text" id="collection" placeholder="Add new collection here..." maxlength="60">
-					<br>
-					<p id="error" class="e-text"></p>
-					<div class="submit">
-						<button type="button" id="submitForm">Submit</button>
-					</div>
-				</form>
+              <form>
+                <input type="text" id="collection" placeholder="Add new collection here..." maxlength="60">
+                <br>
+                <p id="error" class="e-text"></p>
+                <div class="submit">
+                  <button type="button" id="submitForm">Submit</button>
+                </div>
+              </form>
             </div>
         </div>
 
-        <!-- The Text Editor Modal -->
-        <div id="modalText" class="modalText">
+        <!-- Delete Collection Warning -->
+        <div id="delete-collection" class="modalText">
 
-			<!-- Modal Text content -->
-			<div class="modalText-content">
-				<span class="close-form">&times;</span>
-				<h1 class="textBox-title">collection_name</h1>
-			</div>
+          <!-- Modal Warning Content -->
+          <div class="modalText-content">
+              <span class="close-form">&times;</span>
+              <h1 class="textBox-title">Delete this collection?</h1>
+              <div id="button-group" class="button-group">
+                  <button type="button" id="yes">Yes</button>
+                  <button type="button" id="no">No</button>
+              </div>
+          </div>
 
         </div>
-
-		<!-- Delete Collection Warning -->
-		<div id="delete-collection" class="modalText">
-
-			<!-- Modal Warning Content -->
-			<div class="modalText-content">
-			  	<span class="close-form">&times;</span>
-				<h1 class="textBox-title">Delete this collection?</h1>
-				<div id="button-group" class="button-group">
-					<button type="button" id="yes">Yes</button>
-				  	<button type="button" id="no">No</button>
-				</div>
-			</div>
-
-		</div>
-</body>
+    </body>
 
 <template>
     <div id="collection">
