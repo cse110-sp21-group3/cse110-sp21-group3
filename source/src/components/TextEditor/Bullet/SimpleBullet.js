@@ -17,9 +17,11 @@ class SimpleBullet extends BaseBullet {
     };
     this.state[bulletParameters.value] = (this.getAttribute('value') === null) ? '' : this.getAttribute('value');
     this.bulletStyle = `
-            input {
+            input[type=text] {
                 border: none;
                 background: inherit;
+                width: 100%;
+                height: 1.8rem;
             }
             
             li ${this.elementName} {
@@ -32,7 +34,7 @@ class SimpleBullet extends BaseBullet {
     template.innerHTML = `
                 <style>${this.bulletStyle}</style>
                 <li class="bullet">
-                    <input type="text" value="${this.state.value}" placeholder="Add text here"></input>
+                    <input type="text" value="${this.state.value}" placeholder=""></input>
                     <div class="nested"></div>
                 </li>
             `;
@@ -58,17 +60,21 @@ class SimpleBullet extends BaseBullet {
       }
     };
 
-    inputElement.onkeydown = (e) => this.inputKeyboardListener(e, watchKeys);
+    inputElement.onkeydown = (e) => {
+      watchKeys(e.key, true);
+      this.baseKeydownListener(e);
+    };
     inputElement.onkeyup = (e) => {
+      const matched = this.baseKeyupListener();
+      if (!matched) this.editContent(bulletParameters.value, e.target.value);
       watchKeys(e.key, false);
-      this.editContent(bulletParameters.value, e.target.value);
     };
   }
 
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);
-    let data = null; let
-      storageIndex;
+    let data = null;
+    let storageIndex;
     if ('data' in bulletAttributes) {
       data = bulletAttributes.data;
       storageIndex = bulletAttributes.storageIndex;
@@ -76,6 +82,11 @@ class SimpleBullet extends BaseBullet {
     this.setValue(
       (data === null) ? defaultParameters[bulletParameters.value] : data[storageIndex.value],
     );
+    this.bulletConfigs = bulletAttributes.bulletConfigs;
+    if ('bulletStyle' in this.bulletConfigs) {
+      const styleTag = this.shadowRoot.querySelector('style');
+      styleTag.innerHTML = this.bulletConfigs.bulletStyle;
+    }
   }
 
   serialize() {
@@ -99,30 +110,6 @@ class SimpleBullet extends BaseBullet {
         break;
     }
     this.updateCallbacks.editContent(parameter, this.uniqueID, this.state.value);
-  }
-
-  inputKeyboardListener(e, watchKeys) {
-    watchKeys(e.key, true);
-    if (this.keysPressed.Tab) {
-      e.preventDefault();
-      this.nestCurrBullet();
-    } else if (this.keysPressed.Backspace) {
-      if (this.getValue() === '') this.deleteBullet();
-    } else if (this.keysPressed.Shift && this.keysPressed.Enter) {
-      this.exitSingleNesting(e);
-    } else if (this.keysPressed.Enter) {
-      if (this.getValue() === '') return;
-      this.createBullet();
-    } else if (this.keysPressed.Control && this.keysPressed.s) {
-      e.preventDefault();
-      this.updateCallbacks.saveData();
-    } else if (this.keysPressed.ArrowUp) {
-      const nextBullet = this.getAdjacentBullet(this.uniqueID, true);
-      if (nextBullet !== null) this.transferFocusTo(nextBullet);
-    } else if (this.keysPressed.ArrowDown) {
-      const nextBullet = this.getAdjacentBullet(this.uniqueID, false);
-      if (nextBullet !== null) this.transferFocusTo(nextBullet);
-    }
   }
 }
 
