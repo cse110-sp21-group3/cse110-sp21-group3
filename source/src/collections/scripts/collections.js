@@ -47,7 +47,7 @@ function deleteCollection(tracker) {
   });
 
   // remove from storage
-  
+
 }
 
 /**
@@ -189,3 +189,41 @@ var closeText = document.getElementsByClassName("close-form")[2];
 closeText.onclick = function() {
   modalD.style.display = "none";
 }
+
+const key = 'dailyLogSampleData';
+
+function getSavedBullets() {
+  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
+  const initialSetup = { 0: [1], 1: ['', false, 'task', 'none', []] };
+  let listDataTree = localStorage.getItem(key);
+  if (listDataTree === null) {
+    listDataTree = initialSetup;
+  } else {
+    listDataTree = JSON.parse(listDataTree);
+  }
+  return listDataTree;
+}
+
+/**
+ * DOM Content Loaded
+ */
+ document.addEventListener('DOMContentLoaded', () => {
+  const listDataTree = getSavedBullets();
+
+  const list = document.querySelector('bullet-list');
+  list.initialiseList({
+    saveDataCallback: (data) => {
+      localStorage.setItem(key, JSON.stringify(data));
+    },
+    nestLimit: 2,
+    bulletTree: listDataTree,
+    storageIndex: {
+      value: 0,
+      completed: 1,
+      type: 2,
+      modifier: 3,
+      children: 4,
+    },
+    elementName: 'simple-bullet',
+  });
+});
