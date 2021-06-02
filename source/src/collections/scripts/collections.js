@@ -30,18 +30,14 @@ let numCollections = 0;
 /**
  * Delete collection
  */
-function deleteCollection(tracker, gridDiv, grid) {
+function deleteCollection(tracker) {
   // remove from DOM
   showDeleteBox();
 
   const yes = document.getElementById("yes");
   yes.addEventListener("click", () => {
-    gridDiv.removeChild(tracker);
-    numCollections -= 1;
-    if (numCollections % 6 === 0) {
-      const trackerBody = document.getElementById('tracker-body');
-      trackerBody.removeChild(grid);
-    }
+    const trackerBody = document.getElementById('tracker-body');
+    trackerBody.removeChild(tracker);
     document.getElementsByClassName("close-form")[2].click();
   });
 
@@ -150,7 +146,7 @@ add.addEventListener('click', () => {
  * Create collection tracker for particular collection and store color of collection
  */
 function addCollection(collection) {
-  const tracker = document.createElement('tracker-elem');
+  const tracker = document.createElement('collection-elem');
   tracker.collection = collection;
   // tracker.color = color;
   // TODO: show delete button when hovering over element
@@ -167,40 +163,18 @@ function addCollection(collection) {
   // }
   // If number of collections % 6 === 0, then make new grid and append tracker to new grid
   // otherwise, just append tracker to last grid
-  const gridList = document.getElementsByTagName('grid-elem');
   const trackerBody = document.getElementById('tracker-body');
-  if (numCollections % 6 === 0) {
-    const grid = document.createElement('grid-elem');
-    grid.num = gridList.length + 1;
-    const gridDiv = grid.shadowRoot.querySelector('.collection-grid');
 
-    const wbox = tracker.shadowRoot.querySelector("#collection-grid");
-    wbox.addEventListener("click", () => {
-      document.querySelector(".textBox-title").innerHTML = collection;
-      textBox();
-    });
+  const wbox = tracker.shadowRoot.querySelector("#collection-grid");
+  wbox.addEventListener("click", () => {
+    document.querySelector(".textBox-title").innerHTML = collection;
+    textBox();
+  });
 
-    gridDiv.append(tracker);
-    deleteCollectionBtn.addEventListener('click', () => {
-      deleteCollection(tracker, gridDiv, grid);
-    });
-    trackerBody.appendChild(grid);
-  } else {
-    const grid = gridList[gridList.length - 1];
-    const gridDiv = grid.shadowRoot.querySelector('.collection-grid');
-
-    const wbox = tracker.shadowRoot.querySelector("#collection-grid");
-    wbox.addEventListener("click", () => {
-      document.querySelector(".textBox-title").innerHTML = collection;
-      textBox();
-    });
-
-    gridDiv.append(tracker);
-    deleteCollectionBtn.addEventListener('click', () => {
-      deleteCollection(tracker, gridDiv, grid);
-    });
-  }
-  numCollections += 1;
+  trackerBody.append(tracker);
+  deleteCollectionBtn.addEventListener('click', () => {
+    deleteCollection(tracker);
+  });
 }
 
 /*
