@@ -46,11 +46,11 @@ class EventWrapper extends HTMLElement {
     this.render();
   }
 
-  getStorageKey(){
+  getStorageKey() {
     return this.storageKey;
   }
 
-  getBulletTree(){
+  getBulletTree() {
     return this.shadowRoot.querySelector('bullet-list').getBulletTree();
   }
 

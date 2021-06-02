@@ -14,22 +14,21 @@ function clearContainerNode(containerNode) {
   }
 }
 
-function saveEvents(){
+function saveEvents() {
   const eventsContainer = document.querySelector('.events-container');
   const eventWrappers = eventsContainer.querySelectorAll('event-wrapper');
   eventWrappers.forEach((eventWrapper) => {
-    console.log(eventWrapper.getStorageKey());
     localStorage.setItem(
       eventWrapper.getStorageKey(),
-      JSON.stringify(eventWrapper.getBulletTree())
-    )
-  })
+      JSON.stringify(eventWrapper.getBulletTree()),
+    );
+  });
 }
 
 /**
- * 
- * @param {Date} date 
- * @param {Object} data 
+ *
+ * @param {Date} date
+ * @param {Object} data
  */
 function saveTasks(date, data) {
   localStorage.setItem(getMonthlyLogUID('task', date.getMonth()), JSON.stringify(data));
