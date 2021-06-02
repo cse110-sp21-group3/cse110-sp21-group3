@@ -1,4 +1,4 @@
-const key = 'dailyLogSampleData';
+const key = 'dailyLogData';
 
 function addCurrentDate() {
   // add current date to title
@@ -40,6 +40,11 @@ function getSavedBullets() {
   return listDataTree;
 }
 
+function getTitle() {
+  const title = document.querySelector('#header-title');
+  title.innerHTML = localStorage.getItem('journalName');
+}
+
 /**
  * DOM Content Loaded
  */
@@ -64,4 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   addCurrentDate();
   storeCurrentDate();
+  getTitle();
+});
+
+const clearBtn = document.querySelector('.test');
+clearBtn.addEventListener('click', () => {
+
 });

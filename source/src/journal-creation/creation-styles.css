@@ -111,11 +111,10 @@ Journal Picker Styling
 **/
 #journals-container {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
-  align-content: space-between;
   width: 100%;
-  height: 15rem;
+  height: auto;
   padding: 1rem 0;
   text-align: center;
   background: #fff;
@@ -133,7 +132,7 @@ Journal Picker Styling
 /* Name Journal Styling */
 
 #name-input {
-  width: 17rem;
+  width: 10rem;
   height: 3.5rem;
   margin: 2.5rem auto;
   padding: 1rem;
@@ -153,6 +152,14 @@ Journal Picker Styling
 
 .center-container {
   text-align: center;
+  position: absolute;
+  z-index: 1;
+  margin-top: -4rem;
+}
+.naming-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button.submit {
