@@ -13,6 +13,7 @@ class EventWrapper extends HTMLElement {
                 border-radius: 1.25rem;
                 padding: 1rem;
                 margin: 0.5rem 0rem;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             }
             .event-editor-wrapper > .day-num {
                 margin-right: 0.7rem;

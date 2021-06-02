@@ -117,7 +117,7 @@ export default class Bullet extends HTMLElement {
 
   exitSingleNesting(e) {
     const parentBullet = e.target.getRootNode().host.getParentBullet();
-    if (parentBullet === undefined) {
+    if ((parentBullet === undefined) || (parentBullet.tagName !== this.elementName.toUpperCase())) {
       console.log('No levels of nesting found');
       return;
     }

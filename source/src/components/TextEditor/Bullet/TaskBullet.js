@@ -15,7 +15,7 @@ const defaultParameters = {
 /**
  * Bullet Class for Daily Log Page Bullet
  */
-class DailyLogBullet extends BaseBullet {
+class TaskBullet extends BaseBullet {
   constructor() {
     super();
     this.elementName = elementName;
@@ -177,4 +177,4 @@ class DailyLogBullet extends BaseBullet {
   }
 }
 
-customElements.define(elementName, DailyLogBullet);
+customElements.define(elementName, TaskBullet);

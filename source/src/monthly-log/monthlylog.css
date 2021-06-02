@@ -93,12 +93,13 @@ body {
 
 .task-wrapper {
   /* Max height deduced according to task-container */
-  max-height: calc(93vh - 4rem - 4rem);
+  max-height: calc(88vh - 10rem);
   overflow: scroll;
   height: 100%;
   background-color: var(--light-bg);
   border-radius: 1.25rem;
   padding: 1rem;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 #task-editor div.bullet-list {

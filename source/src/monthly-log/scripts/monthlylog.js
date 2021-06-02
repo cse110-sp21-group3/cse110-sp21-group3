@@ -4,21 +4,20 @@ import updateLogs from './setupEditors.js';
 
 // Set Display CSS Styles
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
-if (selectedColorStyle === 'null') selectedColorStyle = 'default';
-
+if (selectedColorStyle === null) selectedColorStyle = 'default';
 const root = document.documentElement;
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
 
 let currDate = new Date();
 
 const monthInput = document.querySelector('input.month-input');
-monthInput.valueAsDate = currDate;
+monthInput.value = `${currDate.getFullYear()}-${(`0${currDate.getMonth() + 1}`).slice(-2)}`;
 
 monthInput.onchange = () => {
-  currDate = monthInput.valueAsDate;
-
-  // Because input field returns 0 for day which points to the previous month
-  currDate.setDate(currDate.getDate() + 1);
+  const [year, month] = monthInput.value.split('-');
+  currDate.setDate(1); // Set to first day of the month
+  currDate.setMonth(month - 1); // -1 because input field marks January as 1
+  currDate.setFullYear(year);
 
   updateLogs(currDate);
 };
