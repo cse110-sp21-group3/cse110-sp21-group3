@@ -139,6 +139,9 @@ class BulletList extends HTMLElement {
     this.setValue(listAttributes.bulletTree);
   }
 
+  getBulletTree(){
+    return this.listData.tree;
+  }
   /**
    * Sets the nextID. User should not be setting this unless overriding the automatic
    * method is causing troubles. By default, nextID is set by parsing the existing IDs

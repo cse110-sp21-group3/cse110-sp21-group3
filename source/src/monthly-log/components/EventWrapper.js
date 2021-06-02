@@ -3,6 +3,7 @@ import { getMonthlyLogUID } from '../../storageKeys.js';
 class EventWrapper extends HTMLElement {
   constructor() {
     super();
+    this.storageKey = null;
     this.props = {};
     this.state = {};
     this.elementStyle = `
@@ -34,18 +35,29 @@ class EventWrapper extends HTMLElement {
      * @param {*} wrapperAttributes
      * @param {number} wrapperAttributes.dayNum
      * @param {Date} wrapperAttributes.dateForMonth
+     * @param {function} wrapperAttributes.saveDataCallback
      */
   initialise(wrapperAttributes) {
     this.props.dateForMonth = wrapperAttributes.dateForMonth;
     this.props.dayNum = wrapperAttributes.dayNum;
+    this.props.saveDataCallback = wrapperAttributes.saveDataCallback;
+
+    this.storageKey = getMonthlyLogUID('event', this.props.dateForMonth.getMonth(), this.props.dayNum);
     this.render();
+  }
+
+  getStorageKey(){
+    return this.storageKey;
+  }
+
+  getBulletTree(){
+    return this.shadowRoot.querySelector('bullet-list').getBulletTree();
   }
 
   render() {
     const emptyData = { 0: [1], 1: ['', []] };
-    const storageKey = getMonthlyLogUID('event', this.props.dateForMonth.getMonth(), this.props.dayNum);
 
-    const dataTree = localStorage.getItem(storageKey);
+    const dataTree = localStorage.getItem(this.storageKey);
     if (dataTree === null) this.state.dataTree = emptyData;
     else this.state.dataTree = JSON.parse(dataTree);
 
@@ -65,9 +77,7 @@ class EventWrapper extends HTMLElement {
     // Initialise bullet-list
     const list = this.shadowRoot.querySelector('bullet-list.event-editor');
     list.initialiseList({
-      saveDataCallback: (data) => {
-        localStorage.setItem(storageKey, JSON.stringify(data));
-      },
+      saveDataCallback: this.props.saveDataCallback,
       nestLimit: 0,
       bulletTree: this.state.dataTree,
       storageIndex: {

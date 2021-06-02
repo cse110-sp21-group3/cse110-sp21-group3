@@ -14,6 +14,26 @@ function clearContainerNode(containerNode) {
   }
 }
 
+function saveEvents(){
+  const eventsContainer = document.querySelector('.events-container');
+  const eventWrappers = eventsContainer.querySelectorAll('event-wrapper');
+  eventWrappers.forEach((eventWrapper) => {
+    console.log(eventWrapper.getStorageKey());
+    localStorage.setItem(
+      eventWrapper.getStorageKey(),
+      JSON.stringify(eventWrapper.getBulletTree())
+    )
+  })
+}
+
+/**
+ * 
+ * @param {Date} date 
+ * @param {Object} data 
+ */
+function saveTasks(date, data) {
+  localStorage.setItem(getMonthlyLogUID('task', date.getMonth()), JSON.stringify(data));
+}
 /**
  * Populates the event editors according to number of days in date.month
  * @param {*} emptyData
@@ -30,6 +50,10 @@ function populateEventWrappers(date) {
     eventWrapper.initialise({
       dateForMonth: date,
       dayNum: day,
+      saveDataCallback: () => {
+        saveEvents();
+        saveTasks(date, document.querySelector('.task-wrapper bullet-list').getBulletTree());
+      },
     });
   }
 }
@@ -56,7 +80,8 @@ function setTaskEditor(date) {
 
   taskList.initialiseList({
     saveDataCallback: (data) => {
-      localStorage.setItem(storageKey, JSON.stringify(data));
+      saveTasks(date, data);
+      saveEvents();
     },
     nestLimit: 1,
     bulletTree: dataTree,
