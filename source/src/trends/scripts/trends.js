@@ -108,28 +108,6 @@ add.addEventListener('click', () => {
   openForm(addForm);
 });
 
-// delete habit form
-const deleteForm = document.getElementById('delete-form');
-
-function closeDeleteForm() {
-  deleteForm.style.display = 'none';
-  addForm.querySelector('#habit').value = '';
-  addForm.querySelector('#colorpicker').value = '#0000ff';
-  addForm.querySelector('#error').style.visibility = 'hidden';
-}
-
-// close delete form button
-const deleteClose = deleteForm.querySelector('#delete-close-form');
-deleteClose.addEventListener('click', () => {
-  closeDeleteForm();
-});
-
-// no button of delete form
-const noBtn = document.querySelector('#no');
-noBtn.addEventListener('click', () => {
-  closeDeleteForm();
-});
-
 // edit habit color form
 const editForm = document.getElementById('edit-form');
 
@@ -165,28 +143,13 @@ function submitEdit(habitKey, tracker) {
   window.location.reload();
 }
 
-function openDeleteForm(habit) {
-  const deleteQuestion = deleteForm.querySelector('#delete-question');
-  deleteQuestion.innerText = `Delete ${habit}?`;
-  deleteForm.style.display = 'block';
-}
-
-const yesBtn = document.querySelector('#yes');
-
-function closeDeleteFormYes(habit) {
-  // yes button of delete form
-  yesBtn.removeEventListener('click', function remove() {
-    return removeHabit(habit);
-  });
-
-  closeDeleteForm();
-}
-
+/**
+ * Deletes the habit tracker of the specified habit
+ * @param {*} habit habit to be deleted
+ */
 function removeHabit(habit) {
   // remove from DOM
   const tracker = document.getElementById(habit);
-  console.log(habit);
-  console.log(tracker);
   tracker.remove();
 
   // remove from storage
@@ -195,9 +158,6 @@ function removeHabit(habit) {
   habits = habits.filter((item) => item !== habitKey);
   localStorage.removeItem(habitKey);
   localStorage.setItem(habitsKey, JSON.stringify(habits));
-
-  // closeDeleteFormYes(habit);
-  closeDeleteForm();
 }
 
 /**
@@ -205,12 +165,6 @@ function removeHabit(habit) {
  * @param {*} tracker html element of tracker to be deleted
  */
 function deleteHabit(habit) {
-  // // provide warning of deletion
-  // openDeleteForm(habit);
-  // // yes button of delete form
-  // yesBtn.addEventListener('click', function remove() {
-  //   return removeHabit(habit);
-  // });
   removeHabit(habit);
 }
 
