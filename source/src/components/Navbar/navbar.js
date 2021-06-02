@@ -83,7 +83,6 @@ class Navbar extends HTMLElement {
           <p>settings</p>
         </div>
       </div>`;
-    // TODO: Remove monthly log link before merge
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
