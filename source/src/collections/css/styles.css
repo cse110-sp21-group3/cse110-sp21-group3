@@ -261,3 +261,19 @@ tracker-elem {
     align-items: center;
     gap: 5rem;
 }
+
+.modalText-content bullet-list div.bullet-list {
+    height: 32rem;
+    background: var(--white);
+    padding: 1rem;
+    border: 2px solid var(--white);
+    box-sizing: border-box;
+    box-shadow: 0 4px 4px var(--shadow);
+    border-radius: 2.5rem;
+    overflow: scroll;
+}
+
+.saveButton {
+    justify-content: center;
+    align-items: center;
+}
