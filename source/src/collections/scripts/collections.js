@@ -64,11 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const trackerBody = document.getElementById('tracker-body');
   // TODO: pull from storage the collections of the particular month
   // TODO: create a new grid for every 6 collections using grid.js
-  const grid = document.createElement('grid-elem');
-  grid.num = 1;
-  const gridDiv = grid.shadowRoot.querySelector('.collection-grid');
   // TODO: create a tracker for each collection using tracker.js
-  const tracker = document.createElement('tracker-elem');
+  const tracker = document.createElement('collection-elem');
   tracker.collection = 'Groceries';
   // tracker.color = '#599fe0';
   const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
@@ -85,11 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
   //   collectionCircle.style.height = '100%';
   //   collectionGrid.appendChild(collectionCircle);
   // }
-  gridDiv.append(tracker);
   deleteCollectionBtn.addEventListener('click', () => {
-    deleteCollection(tracker, gridDiv, grid);
+    deleteCollection(tracker);
   });
-  trackerBody.appendChild(grid);
+  trackerBody.appendChild(tracker);
   numCollections += 1;
 });
 

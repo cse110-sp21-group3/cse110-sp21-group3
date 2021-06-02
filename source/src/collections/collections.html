@@ -7,6 +7,8 @@
 		<title>Collections</title>
 		<link rel="stylesheet" href="./css/styles.css">
 	</head>
+  <script src="./scripts/collections.js" type="module"></script>
+  <script src="./components/collection.js" type="module"></script>
     <body>
         <div id="nav">
             <span class="close-nav">&times;</span>
@@ -33,18 +35,18 @@
             </div>
         </div>
         <div class="header">
-			<div class="heading">
-				<div class="menu">
-					<img src="menu-icon.png">
-				</div>
-				<h1 id="header-title">Collections</h1>
-				<div id="add-div">
-					<div id="add">
-						<p>+</p>
-					</div>
-				</div>
-			</div>
-			<div id="bar"></div>
+          <div class="heading">
+            <div class="menu">
+              <img src="menu-icon.png">
+            </div>
+            <h1 id="header-title">Collections</h1>
+            <div id="add-div">
+              <div id="add">
+                <p>+</p>
+              </div>
+            </div>
+          </div>
+			    <div id="bar"></div>
         </div>
         <!-- Turn each 2 x 3 grid into its own component -->
         <div id="tracker-body"></div>
@@ -100,9 +102,5 @@
 <template>
     <div class="circle"></div>
 </template>
-
-<script src="./scripts/collections.js" type="module"></script>
-<script src="./components/tracker.js" type="module"></script>
-<script src="./components/grid.js" type="module"></script>
 
 </html>

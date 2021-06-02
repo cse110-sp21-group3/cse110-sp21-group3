@@ -112,7 +112,9 @@ cursor: pointer;
 }
 
 #tracker-body {
-    overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
 }
 
 #add-div {
