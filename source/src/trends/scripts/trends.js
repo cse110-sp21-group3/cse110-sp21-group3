@@ -75,16 +75,6 @@ function openForm(form) {
 }
 
 /**
- * Close the form that adds a habit
- */
-function closeAddForm() {
-  addForm.style.display = 'none';
-  addForm.querySelector('#habit').value = '';
-  addForm.querySelector('#colorpicker').value = '#0000ff';
-  addForm.querySelector('#error').style.visibility = 'hidden';
-}
-
-/**
  * Close the form modal
  * @param {*} form form modal to be closed
  */
@@ -95,6 +85,16 @@ function closeForm(form) {
 
 // add habit form
 const addForm = document.querySelector('#addForm');
+
+/**
+ * Close the form that adds a habit
+ */
+function closeAddForm() {
+  addForm.style.display = 'none';
+  addForm.querySelector('#habit').value = '';
+  addForm.querySelector('#colorpicker').value = '#0000ff';
+  addForm.querySelector('#error').style.visibility = 'hidden';
+}
 
 // close add form button
 const addClose = addForm.querySelector('#add-close-form');
@@ -186,6 +186,51 @@ function deleteHabit(tracker) {
 }
 
 /**
+ * Edit color of current habit
+ * @param {*} tracker entry in local storage of current habit
+ */
+function editColor(tracker) {
+  openEditForm(tracker.color);
+
+  const habitKey = `${getMonthName(DATE)}${tracker.habit}`;
+  submitEditBtn.addEventListener('click', () => {
+    submitEdit(habitKey, tracker);
+  });
+}
+
+/**
+ * Add days of the week to the calendar
+ * @param {*} habitGrid calendar grid to add days to
+ */
+function addCalendarDays(habitGrid) {
+  for (let i = 0; i < 7; i += 1) {
+    const day = document.createElement('p');
+    day.innerText = calendarDays[i];
+    day.style.width = '10%';
+    day.style.margin = '0.5rem';
+    habitGrid.appendChild(day);
+  }
+}
+
+/**
+ * Add filler circles to pad calendar so that first circle of the month is on correct day
+ * @param {*} habitGrid calendar grid to add days to
+ */
+function addFillerCircles(habitGrid) {
+  const firstDay = getFirstDay(DATE);
+  for (let i = 0; i < firstDay; i += 1) {
+    const habitCircle = document.createElement('div');
+    habitCircle.style.borderRadius = '100%';
+    habitCircle.style.border = 'none';
+    habitCircle.style.backgroundColor = 'white';
+    habitCircle.style.width = '10%';
+    habitCircle.style.paddingBottom = '1.5rem';
+    habitCircle.style.margin = '0.5rem';
+    habitGrid.appendChild(habitCircle);
+  }
+}
+
+/**
  * Add habit to DOM
  * @param {*} habit name of habit to be added
  * @param {*} color color of habit to be added
@@ -199,25 +244,8 @@ function addHabit(habit, color) {
   const habitGrid = tracker.shadowRoot.querySelector('#habit-grid');
   const colorCircle = tracker.shadowRoot.querySelector('#habit-color');
   // fill first row of calendar with calendar days
-  for (let i = 0; i < 7; i += 1) {
-    const day = document.createElement('p');
-    day.innerText = calendarDays[i];
-    day.style.width = '10%';
-    day.style.margin = '0.5rem';
-    habitGrid.appendChild(day);
-  }
-  const firstDay = getFirstDay(DATE);
-  // create filler circles
-  for (let i = 0; i < firstDay; i += 1) {
-    const habitCircle = document.createElement('div');
-    habitCircle.style.borderRadius = '100%';
-    habitCircle.style.border = 'none';
-    habitCircle.style.backgroundColor = 'white';
-    habitCircle.style.width = '10%';
-    habitCircle.style.paddingBottom = '1.5rem';
-    habitCircle.style.margin = '0.5rem';
-    habitGrid.appendChild(habitCircle);
-  }
+  addCalendarDays(habitGrid);
+  addFillerCircles(habitGrid);
   // create circles that indicate each day of month
   for (let i = 0; i < numDays; i += 1) {
     const habitCircle = document.createElement('div');
@@ -237,8 +265,12 @@ function addHabit(habit, color) {
   deleteHabitBtn.addEventListener('click', () => {
     deleteHabit(tracker);
   });
+  const habitArray = Array(numDays).fill(false);
+  const habitStorage = {
+    habit, color, days: [...habitArray],
+  };
   colorCircle.addEventListener('click', () => {
-    editColor(k);
+    editColor(habitStorage);
   });
 }
 
@@ -269,20 +301,6 @@ submitAdd.onclick = () => {
 };
 
 /**
- * Edit color of current habit
- * @param {*} habitKey key of habit to be edited
- */
-function editColor(habitKey) {
-  const tracker = JSON.parse(localStorage.getItem(habitKey));
-
-  openEditForm(tracker.color);
-
-  submitEditBtn.addEventListener('click', () => {
-    submitEdit(habitKey, tracker);
-  });
-}
-
-/**
  * When loading the website, add all of the habits in the storage to the DOM
  */
 document.addEventListener('DOMContentLoaded', () => {
@@ -304,25 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const deleteHabitBtn = tracker.shadowRoot.querySelector('.delete-tracker');
       const colorCircle = tracker.shadowRoot.querySelector('#habit-color');
       // fill first row of calendar with calendar days
-      for (let i = 0; i < 7; i += 1) {
-        const day = document.createElement('p');
-        day.innerText = calendarDays[i];
-        day.style.width = '10%';
-        day.style.margin = '0.5rem';
-        habitGrid.appendChild(day);
-      }
-      const firstDay = getFirstDay(DATE);
-      // create filler circles
-      for (let i = 0; i < firstDay; i += 1) {
-        const habitCircle = document.createElement('div');
-        habitCircle.style.borderRadius = '100%';
-        habitCircle.style.border = 'none';
-        habitCircle.style.backgroundColor = 'white';
-        habitCircle.style.width = '10%';
-        habitCircle.style.paddingBottom = '1.5rem';
-        habitCircle.style.margin = '0.5rem';
-        habitGrid.appendChild(habitCircle);
-      }
+      addCalendarDays(habitGrid);
+      addFillerCircles(habitGrid);
       // create circles that indicate each day of month
       for (let i = 0; i < days.length; i += 1) {
         const habitCircle = document.createElement('div');
@@ -346,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteHabit(tracker);
       });
       colorCircle.addEventListener('click', () => {
-        editColor(k);
+        editColor(habitEntry);
       });
     }
   });
