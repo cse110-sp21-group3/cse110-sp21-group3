@@ -104,3 +104,9 @@ body {
 #task-editor div.bullet-list {
   background-color: inherit;
 }
+
+.month-input {
+  border: none;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
