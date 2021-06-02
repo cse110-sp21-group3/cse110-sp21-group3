@@ -23,8 +23,7 @@ refreshDate.addEventListener('click', () => {
   // if there is no date stored or the date stored is different from the current day,
   // this means that we are in a new day, so clear the daily log
   if (storedDay === 0 || currDay !== storedDay) {
-    // TODO: store all existing bullets to display on past daily logs
-    // TODO clear daily log
+    archiveData();
   }
 });
 
@@ -72,7 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
   getTitle();
 });
 
+// TODO REMOVE
 const clearBtn = document.querySelector('.test');
 clearBtn.addEventListener('click', () => {
 
 });
+
+function archiveData() {
+  // add data from 'dailyLogData' to 'dailyLogArchive' (store existing bullets)
+  // clear 'dailyLogData' (clear current days log)
+}

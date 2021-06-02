@@ -10,7 +10,7 @@ const root = document.documentElement;
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
 
 function saveDailyLog() {
-    const data = JSON.parse(localStorage.getItem('dailyLogData'));
+    const data = JSON.parse(localStorage.getItem('dailyLogData')); //dailyLogArchive
     
     const bullets = (Object.values(data));
     bullets.shift();
