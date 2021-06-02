@@ -38,7 +38,7 @@ function deleteCollection(tracker, gridDiv, grid) {
   yes.addEventListener("click", () => {
     gridDiv.removeChild(tracker);
     numCollections -= 1;
-    if (numCollections % 6 === 0) {
+    if (numCollections % 1000 === 0) {
       const trackerBody = document.getElementById('tracker-body');
       trackerBody.removeChild(grid);
     }
