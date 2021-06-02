@@ -51,6 +51,44 @@ class Collection extends HTMLElement {
           background-color: white;
           border-radius: 1.5rem;
         }
+        .modalText {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Sit on top */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        
+        .modalText-content {
+            background-color: #efefef;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+        
+        .textBox-title {
+            text-align: center;
+        }
+
+        .close-form {
+          color: #aaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+          
+        .close-form:hover,
+        .close-form:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
         </style>
         <!-- Template -->
         <div class="delete-div">
@@ -59,6 +97,16 @@ class Collection extends HTMLElement {
         <div class="collection">
             <h1 id="title">collection</h1>
             <div id="collection-grid"></div>
+        </div>
+
+        <div id="modalText" class="modalText">
+
+          <div class="modalText-content">
+            <span class="close-form">&times;</span>
+            <h1 class="textBox-title">collection_name</h1>
+            <bullet-list></bullet-list>
+          </div>
+
         </div>`;
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
