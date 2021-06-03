@@ -11,7 +11,6 @@
   <script src="../components/Menu/menu.js" type="module"></script>
   <script src="./scripts/trends.js" type="module"></script>
   <script src="./components/tracker.js" type="module"></script>
-  <script src="./components/grid.js" type="module"></script>
   <body>
     <navbar-elem></navbar-elem>
     <div class="header">
@@ -37,6 +36,8 @@
           <input type="text" id="habit" placeholder="Add habit here..." maxlength="60">
           <br>
           <input type="color" id="colorpicker" value="#0000ff">
+          <br>
+          <p id="error">Please fill in habit field</p>
           <div class="submit">
             <button type="button" id="submitForm">Submit</button>
           </div>
@@ -47,10 +48,21 @@
       <!-- Modal content -->
       <div id="delete-form-modal" class="modal-content">
         <span class="close-form" id="delete-close-form">&times;</span>
-          <p>Delete this habit?</p>
+          <p id="delete-question"></p>
           <div id="button-group">
             <button type="button" id="yes">Yes</button>
             <button type="button" id="no">No</button>
+          </div>
+      </div>
+    </div>
+    <div id="edit-form" class="modal">
+      <!-- Modal content -->
+      <div id="edit-form-modal" class="modal-content">
+        <span class="close-form" id="edit-close-form">&times;</span>
+          <p>Pick a color</p>
+          <input type="color" id="colorpicker" value="#0000ff">
+          <div class="submit">
+            <button type="button" id="submitEditForm">Submit</button>
           </div>
       </div>
     </div>

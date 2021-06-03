@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css?family=Manrope");
 
 * {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 :root {
@@ -172,12 +172,6 @@ body {
   cursor: pointer;
 }
 
-tracker-elem {
-  width: 30%;
-  height: 50%;
-  margin: 1rem;
-}
-
 #button-group {
   width: 100%;
   display: flex;
@@ -210,6 +204,31 @@ tracker-elem {
 }
 
 #no:hover {
+  background-color: #a4a4a4;
+  color: white;
+  cursor: pointer;
+}
+
+#error {
+  color: red;
+  visibility: hidden;
+}
+
+#edit-form-modal {
+  background-color: #efefef;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  border-radius: 20px;
+}
+
+#submitEditForm {
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+#submitEditForm:hover {
   background-color: #a4a4a4;
   color: white;
   cursor: pointer;
