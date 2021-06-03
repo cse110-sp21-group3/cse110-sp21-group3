@@ -1,5 +1,5 @@
 import colorThemes from '../../colorThemes.js';
-import { colorStyleKey, createdJournalKey } from '../../storageKeys.js';
+import { colorStyleKey } from '../../storageKeys.js';
 
 const journalContainer = document.querySelector('#journals-container');
 
@@ -21,9 +21,3 @@ Object.keys(colorThemes).forEach((colorTheme) => {
   journalContainer.appendChild(journalDisplayContainer);
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  const createdJournal = localStorage.getItem(createdJournalKey);
-  if (createdJournal) {
-    window.location.href = '../home-dailylog/home.html';
-  }
-})

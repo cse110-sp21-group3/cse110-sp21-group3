@@ -4,11 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5; URL=journal-creation/journal-picker.html">
+    <link rel="stylesheet" href="./styles.css">
     <title>BuJo - Group 3</title>
 </head>
 <body>
-    <p>If you are not redirected in five seconds, <a href='./home-dailylog/home.html'>click here.</a></p>
-    <!-- TODO: Restore this page to redirect to journal picker -->
+
+
+    <div class="intro">
+        <p class="welcome">Welcome!</p>
+        <div class="name">
+            <p>Task Overflow's <br>Bullet Journal Web App</p>
+            <img class="icon" src="../../admin/branding/taskoverflow-icon.png">
+        </div>
+    </div>
+
+    <div class="onboarding-container">
+        <div class="onboarding-center">
+            <h1>Here's a quick tutorial to help you get started!</h1>
+            <!--Temporary video, replace with created tutorial video-->
+            <iframe src="https://www.youtube.com/embed/NVGuFdX5guE" title="YouTube video player" frameborder="0" allowfullscreen id="onboarding"></iframe>
+            <p>If you cannot access the video above, please follow <a href= "https://www.youtube.com/watch?v=NVGuFdX5guE" target="_blank"><u>this</u></a> link.</p>
+        </div>
+    </div>
+
+    <button id="finish-onboarding" class="submit">Ready to Continue?</button>
+
+    <script src="./index.js" type="module"></script>
 </body>
+
 </html>

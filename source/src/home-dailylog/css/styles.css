@@ -57,7 +57,8 @@ body {
   letter-spacing: 0;
   text-align: center;
   width: 100vw;
-  color: var(--white);
+  color: var(--dark-text);
+  font-weight: bold;
   background-color: var(--light-blue);
 }
 
