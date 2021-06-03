@@ -5,6 +5,19 @@ function getDaysInMonth(month, year) {
 }
 
 /**
+ * Gets the first day of the month to pad the calendar accordingly
+ * @param {*} date date object with the current day
+ * @returns day of the first date of the month
+ */
+ function getFirstDay(month, year) {
+  const firstDay = new Date(year, month, 1);
+  return firstDay.getDay();
+}
+
+// calendar days of the month for habit tracker calendar
+const calendarDays = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
+
+/**
  *
  * @param {*} containerNode
  */
@@ -44,9 +57,11 @@ function populateEventWrappers(date) {
 
   const numDays = getDaysInMonth(date.getMonth(), date.getFullYear());
   for (let day = 1; day <= numDays; day += 1) {
+    const currDay = calendarDays[(day + 1) % 7];
     const eventWrapper = document.createElement('event-wrapper');
     eventsContainer.appendChild(eventWrapper);
     eventWrapper.initialise({
+      dayOfWeek: currDay,
       dateForMonth: date,
       dayNum: day,
       saveDataCallback: () => {
