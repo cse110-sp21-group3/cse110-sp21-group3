@@ -8,6 +8,11 @@ if (selectedColorStyle === null) selectedColorStyle = 'default';
 const root = document.documentElement;
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
 
+function archiveData() {
+  // add data from 'dailyLogData' to 'dailyLogArchive' (store existing bullets)
+  // clear 'dailyLogData' (clear current days log)
+}
+
 function addCurrentDate() {
   // add current date to title
   const titleDate = document.querySelector('.date');
@@ -85,7 +90,3 @@ clearBtn.addEventListener('click', () => {
 
 });
 
-function archiveData() {
-  // add data from 'dailyLogData' to 'dailyLogArchive' (store existing bullets)
-  // clear 'dailyLogData' (clear current days log)
-}
