@@ -17,11 +17,6 @@ function archiveData() {
   // clear 'dailyLogData' (clear current days log)
 }
 
-// Set Display CSS Styles
-const root = document.documentElement;
-root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
-root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
-
 function addCurrentDate() {
   // add current date to title
   const titleDate = document.querySelector('.date');
