@@ -136,12 +136,6 @@ const menuButton = document.querySelector('.menu');
 menuButton.addEventListener('click', showMenu, false);
 
 /**
-* Close menu button
-*/
-const navSpan = document.querySelector('.close-nav');
-navSpan.addEventListener('click', hideMenu, false);
-
-/**
  * Add new collection button
  */
 const addForm = document.querySelector('#addForm');
