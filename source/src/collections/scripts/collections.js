@@ -36,14 +36,6 @@ function deleteCollection(tracker) {
 
   const yes = document.getElementById("yes");
   yes.addEventListener("click", () => {
-    gridDiv.removeChild(tracker);
-    numCollections -= 1;
-    if (numCollections % 1000 === 0) {
-      const trackerBody = document.getElementById('tracker-body');
-      trackerBody.removeChild(grid);
-    }
-    document.getElementsByClassName("close-form")[2].click();
-
     const trackerBody = document.getElementById('tracker-body');
     trackerBody.removeChild(tracker);
     document.getElementsByClassName("close-form")[1].click();
@@ -154,16 +146,16 @@ function addCollection(collection) {
       saveDataCallback: (data) => {
         localStorage.setItem(key, JSON.stringify(data));
       },
-      nestLimit: 2,
+      nestLimit: 1,
       bulletTree: listDataTree,
       storageIndex: {
         value: 0,
+        children: 2,
         completed: 1,
-        type: 2,
-        modifier: 3,
-        children: 4,
       },
-      elementName: 'simple-bullet',
+      elementName: 'task-bullet',
+      bulletConfigs: {
+      },
     });
   });
 
@@ -216,7 +208,7 @@ const key = 'collectionSampleData';
 
 function getSavedBullets() {
   // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
-  const initialSetup = { 0: [1], 1: ['', false, 'task', 'none', []] };
+  const initialSetup = { 0: [1], 1: ['', false, []] };
   let listDataTree = localStorage.getItem(key);
   if (listDataTree === null) {
     listDataTree = initialSetup;
@@ -231,21 +223,20 @@ function getSavedBullets() {
  */
 document.addEventListener('DOMContentLoaded', () => {
   const listDataTree = getSavedBullets();
-
   const list = document.querySelector('bullet-list');
   list.initialiseList({
     saveDataCallback: (data) => {
       localStorage.setItem(key, JSON.stringify(data));
     },
-    nestLimit: 2,
+    nestLimit: 1,
     bulletTree: listDataTree,
     storageIndex: {
       value: 0,
+      children: 2,
       completed: 1,
-      type: 2,
-      modifier: 3,
-      children: 4,
     },
-    elementName: 'simple-bullet',
+    elementName: 'task-bullet',
+    bulletConfigs: {
+    },
   });
 });
