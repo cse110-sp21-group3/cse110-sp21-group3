@@ -1,4 +1,15 @@
+import colorThemes from '../../colorThemes.js';
+import { colorStyleKey, habitsKey } from '../../storageKeys.js';
+
+let selectedColorStyle = localStorage.getItem(colorStyleKey);
+if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+
 const key = 'dailyLogSampleData';
+
+// Set Display CSS Styles
+const root = document.documentElement;
+root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
 function addCurrentDate() {
   // add current date to title
@@ -40,6 +51,49 @@ function getSavedBullets() {
   return listDataTree;
 }
 
+function getMonthName(date) {
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  return monthNames[date.getMonth()];
+}
+
+function getHabits() {
+  const DATE = new Date();
+  const currMonth = getMonthName(DATE);
+  const habitList = [];
+  // pull from storage the habits of the particular month
+  const habitKeys = JSON.parse(localStorage.getItem(habitsKey));
+  habitKeys.forEach((k) => {
+    if (k.startsWith(currMonth)) {
+      const habitEntry = JSON.parse(localStorage.getItem(k));
+      habitList.push(habitEntry);
+    }
+  });
+  return habitList;
+}
+
+function toggleHabit(habit) {
+  const DATE = new Date();
+  const today = DATE.getDate() - 1;
+  const habitKey = `${getMonthName(DATE)}${habit}`;
+  const habitEntry = localStorage.getItem(habitKey);
+  const { color, days } = JSON.parse(habitEntry);
+  const habitElem = document.getElementById(habit);
+  const circle = habitElem.shadowRoot.querySelector('#habit-circle');
+  if (days[today] === false) {
+    days[today] = true;
+    circle.style.backgroundColor = color;
+  } else {
+    days[today] = false;
+    circle.style.backgroundColor = '#dbdbdb';
+  }
+
+  // update storage
+  const habitStorage = {
+    habit, color, days: [...days],
+  };
+  localStorage.setItem(habitKey, JSON.stringify(habitStorage));
+}
+
 /**
  * DOM Content Loaded
  */
@@ -64,4 +118,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   addCurrentDate();
   storeCurrentDate();
+
+  const DATE = new Date();
+  const habitBody = document.querySelector('.habits-form');
+
+  const habitList = getHabits();
+  habitList.forEach((habitEntry) => {
+    const habitElem = document.createElement('daily-habit');
+    habitElem.habit = habitEntry.habit;
+    habitElem.color = habitEntry.color;
+    const days = [...habitEntry.days];
+    const today = DATE.getDate() - 1;
+    const habitCircle = habitElem.shadowRoot.querySelector('#habit-circle');
+    if (days[today] === true) {
+      habitCircle.style.backgroundColor = habitElem.color;
+    }
+    habitCircle.addEventListener('click', () => {
+      toggleHabit(habitElem.habit);
+    });
+    habitBody.appendChild(habitElem);
+  });
 });
