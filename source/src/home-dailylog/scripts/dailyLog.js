@@ -1,15 +1,21 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey, habitsKey } from '../../storageKeys.js';
 
+const key = 'dailyLogData';
+
+// set color of website to the theme color
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
 if (selectedColorStyle === 'null') selectedColorStyle = 'default';
-
-const key = 'dailyLogSampleData';
 
 // Set Display CSS Styles
 const root = document.documentElement;
 root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
+
+function archiveData() {
+  // add data from 'dailyLogData' to 'dailyLogArchive' (store existing bullets)
+  // clear 'dailyLogData' (clear current days log)
+}
 
 function addCurrentDate() {
   // add current date to title
@@ -34,8 +40,7 @@ refreshDate.addEventListener('click', () => {
   // if there is no date stored or the date stored is different from the current day,
   // this means that we are in a new day, so clear the daily log
   if (storedDay === 0 || currDay !== storedDay) {
-    // TODO: store all existing bullets to display on past daily logs
-    // TODO clear daily log
+    archiveData();
   }
 });
 
@@ -49,6 +54,18 @@ function getSavedBullets() {
     listDataTree = JSON.parse(listDataTree);
   }
   return listDataTree;
+}
+
+function getTitle() {
+  const title = document.querySelector('#header-title');
+  title.innerHTML = localStorage.getItem('journalName');
+}
+
+function getTheme() {
+  const themeQuestion = document.querySelector('.question');
+  const theme = localStorage.getItem('theme');
+  const text = `Please add what you did related to ${theme} as a theme bullet`;
+  themeQuestion.innerHTML = text;
 }
 
 function getMonthName(date) {
@@ -118,6 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   addCurrentDate();
   storeCurrentDate();
+  getTitle();
+  getTheme();
 
   const DATE = new Date();
   const habitBody = document.querySelector('.habits-form');
