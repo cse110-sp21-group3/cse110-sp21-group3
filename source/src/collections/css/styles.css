@@ -1,18 +1,25 @@
-@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css?family=Manrope");
 
 * {
-    font-family: 'Nunito', sans-serif;
+  font-family: 'Manrope', sans-serif;
+}
+
+:root {
+  --main-bg: rgba(229, 229, 229, 1);
+  --light-bg: #f9f9f9;
+  --light-text: rgb(166, 169, 173);
+  --dark-text: black;
 }
 
 body {
-    background-color: #efefef;
+    background-color: var(--light-bg);
 }
 .header {
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1;
-    background-color: #efefef;
+    background-color: var(--light-bg);
 }
 
 .heading {
@@ -108,7 +115,7 @@ cursor: pointer;
 #bar {
     width: 100vw;
     height: 2rem;
-    background-color: #64A6BD;
+    background-color: var(--main-bg);
 }
 
 #tracker-body {

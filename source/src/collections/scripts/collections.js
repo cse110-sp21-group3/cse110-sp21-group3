@@ -1,4 +1,14 @@
-import { collectionsKey } from '../../storageKeys.js';
+import colorThemes from '../../colorThemes.js';
+import { colorStyleKey, collectionsKey } from '../../storageKeys.js';
+
+// set color of website to the theme color
+let selectedColorStyle = localStorage.getItem(colorStyleKey);
+if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+
+// Set Display CSS Styles
+const root = document.documentElement;
+root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
 /**
  * Create collection tracker for particular collection
