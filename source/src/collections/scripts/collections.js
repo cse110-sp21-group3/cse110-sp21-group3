@@ -1,6 +1,69 @@
 import { collectionsKey } from '../../storageKeys.js';
 
 /**
+ * Create collection tracker for particular collection
+ */
+ function addCollection(collection) {
+  const tracker = document.createElement('collection-elem');
+  tracker.collection = collection;
+  // TODO: show delete button when hovering over element
+  const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+  const trackerBody = document.getElementById('tracker-body');
+
+  const wbox = tracker.shadowRoot.querySelector('#collection-grid');
+  wbox.addEventListener('click', () => {
+    tracker.shadowRoot.querySelector('.textBox-title').innerHTML = collection;
+    tracker.shadowRoot.querySelector('#modalText').style.display = 'block'; // Show BulletList Modal
+
+    const key = collection;
+    const listDataTree = getSavedBullets(key);
+
+    const list = tracker.shadowRoot.querySelector('bullet-list');
+    list.initialiseList({
+      saveDataCallback: (data) => {
+        localStorage.setItem(key, JSON.stringify(data));
+      },
+      nestLimit: 1,
+      bulletTree: listDataTree,
+      storageIndex: {
+        value: 0,
+        children: 2,
+        completed: 1,
+      },
+      elementName: 'task-bullet',
+      bulletConfigs: {
+      },
+    });
+  });
+
+  // Close BulletList Modal
+  const closeText = tracker.shadowRoot.querySelector('.close-form');
+  closeText.addEventListener('click', () => {
+    tracker.shadowRoot.querySelector('#modalText').style.display = 'none';
+  });
+
+  trackerBody.append(tracker);
+  deleteCollectionBtn.addEventListener('click', () => {
+    deleteCollection(tracker, collection);
+  });
+}
+
+/*
+** Bulleting work
+*/
+function getSavedBullets(k) {
+  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
+  const initialSetup = { 0: [1], 1: ['', false, []] };
+  let listDataTree = localStorage.getItem(k);
+  if (listDataTree === null) {
+    listDataTree = initialSetup;
+  } else {
+    listDataTree = JSON.parse(listDataTree);
+  }
+  return listDataTree;
+}
+
+/**
  * Delete collection
  */
 function deleteCollection(tracker, k) {
@@ -84,53 +147,7 @@ add.addEventListener('click', () => {
   openForm(addForm);
 });
 
-/**
- * Create collection tracker for particular collection
- */
-function addCollection(collection) {
-  const tracker = document.createElement('collection-elem');
-  tracker.collection = collection;
-  // TODO: show delete button when hovering over element
-  const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  const trackerBody = document.getElementById('tracker-body');
 
-  const wbox = tracker.shadowRoot.querySelector('#collection-grid');
-  wbox.addEventListener('click', () => {
-    tracker.shadowRoot.querySelector('.textBox-title').innerHTML = collection;
-    tracker.shadowRoot.querySelector('#modalText').style.display = 'block'; // Show BulletList Modal
-
-    const key = collection;
-    const listDataTree = getSavedBullets(key);
-
-    const list = tracker.shadowRoot.querySelector('bullet-list');
-    list.initialiseList({
-      saveDataCallback: (data) => {
-        localStorage.setItem(key, JSON.stringify(data));
-      },
-      nestLimit: 1,
-      bulletTree: listDataTree,
-      storageIndex: {
-        value: 0,
-        children: 2,
-        completed: 1,
-      },
-      elementName: 'task-bullet',
-      bulletConfigs: {
-      },
-    });
-  });
-
-  // Close BulletList Modal
-  const closeText = tracker.shadowRoot.querySelector('.close-form');
-  closeText.addEventListener('click', () => {
-    tracker.shadowRoot.querySelector('#modalText').style.display = 'none';
-  });
-
-  trackerBody.append(tracker);
-  deleteCollectionBtn.addEventListener('click', () => {
-    deleteCollection(tracker, collection);
-  });
-}
 
 /*
 ** Submit Add Collection
@@ -156,18 +173,3 @@ submitAdd.onclick = () => {
     closeForm(addForm);
   }
 };
-
-/*
-** Bulleting work
-*/
-function getSavedBullets(k) {
-  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
-  const initialSetup = { 0: [1], 1: ['', false, []] };
-  let listDataTree = localStorage.getItem(k);
-  if (listDataTree === null) {
-    listDataTree = initialSetup;
-  } else {
-    listDataTree = JSON.parse(listDataTree);
-  }
-  return listDataTree;
-}
