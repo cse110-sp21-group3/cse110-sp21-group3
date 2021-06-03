@@ -1,6 +1,13 @@
 import { themeKey } from '../../storageKeys.js';
+import database from '../../dist/depBundle.js';
 
 const themeSuggestions = ['Health', 'Finance', 'Cooking', 'Academics']; // Suggested Themes
+
+database.habits.add({
+  name: 'Go To Gym',
+}).then(() => {
+  console.log('Habit added!');
+});
 
 // Add Theme Suggestions
 const themeInput = document.getElementById('theme-input');
