@@ -1,49 +1,17 @@
-/**
- * Get current month and number of days of the month
- */
-const DATE = new Date();
-function getMonthName(date) {
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return monthNames[date.getMonth()];
-}
-
-function getMonthDays(date) {
-  const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  return days[date.getMonth()];
-}
-
-function getMonthDaysLeap(date) {
-  const days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  return days[date.getMonth()];
-}
-
-const currYear = DATE.getFullYear();
-let numDays;
-if (currYear % 4 === 0) {
-  numDays = getMonthDaysLeap(DATE);
-} else {
-  numDays = getMonthDays(DATE);
-}
+import { collectionsKey } from '../../storageKeys.js';
 
 /**
  * Delete collection
  */
 function deleteCollection(tracker, k) {
   // remove from DOM
-  showDeleteBox();
-
-  const yes = document.getElementById("yes");
-  yes.addEventListener("click", () => {
-    const trackerBody = document.getElementById('tracker-body');
-    trackerBody.removeChild(tracker);
-    document.getElementsByClassName("close-form")[1].click();
-    localStorage.removeItem(k);
-  });
-
-  const no = document.getElementById("no");
-  no.addEventListener("click", () => {
-    document.getElementsByClassName("close-form")[1].click();
-  });
+  const trackerBody = document.getElementById('tracker-body');
+  trackerBody.removeChild(tracker);
+  document.getElementsByClassName('close-form')[1].click();
+  let collections = JSON.parse(localStorage.getItem(collectionsKey));
+  collections = collections.filter((item) => item !== k);
+  localStorage.setItem(collectionsKey, JSON.stringify(collections));
+  localStorage.removeItem(k);
 }
 
 /**
@@ -62,9 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // });
   // trackerBody.appendChild(tracker);
   // numCollections += 1;
-  for(var i = 0, len = localStorage.length; i < len; i++ ) {
-    addCollection(localStorage.key(i));
+  let collections = JSON.parse(localStorage.getItem(collectionsKey));
+  if (collections === null) {
+    collections = [];
   }
+  // for each loop on list
+  collections.forEach((k) => {
+    addCollection(k);
+  });
 });
 
 /**
@@ -116,6 +89,7 @@ const addForm = document.querySelector('#addForm');
 const addClose = addForm.querySelector('.close-form');
 addClose.addEventListener('click', () => {
   closeForm(addForm);
+  document.getElementById('error').innerHTML = '';
 });
 
 const add = document.getElementById('add');
@@ -133,10 +107,10 @@ function addCollection(collection) {
   const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
   const trackerBody = document.getElementById('tracker-body');
 
-  const wbox = tracker.shadowRoot.querySelector("#collection-grid");
-  wbox.addEventListener("click", () => {
-    tracker.shadowRoot.querySelector(".textBox-title").innerHTML = collection;
-    tracker.shadowRoot.querySelector("#modalText").style.display = "block";     // Show BulletList Modal
+  const wbox = tracker.shadowRoot.querySelector('#collection-grid');
+  wbox.addEventListener('click', () => {
+    tracker.shadowRoot.querySelector('.textBox-title').innerHTML = collection;
+    tracker.shadowRoot.querySelector('#modalText').style.display = 'block'; // Show BulletList Modal
 
     const key = collection;
     const listDataTree = getSavedBullets(key);
@@ -158,13 +132,13 @@ function addCollection(collection) {
       bulletConfigs: {
       },
     });
-    console.log("here");
+    console.log('here');
   });
 
   // Close BulletList Modal
-  const closeText = tracker.shadowRoot.querySelector(".close-form");
-  closeText.addEventListener("click", () => {
-    tracker.shadowRoot.querySelector("#modalText").style.display = "none";
+  const closeText = tracker.shadowRoot.querySelector('.close-form');
+  closeText.addEventListener('click', () => {
+    tracker.shadowRoot.querySelector('#modalText').style.display = 'none';
   });
 
   trackerBody.append(tracker);
@@ -179,29 +153,37 @@ function addCollection(collection) {
 const submitAdd = addForm.querySelector('.submit #submitForm');
 submitAdd.onclick = () => {
   const collection = addForm.querySelector('#collection').value;
-  const e = document.getElementById("error");
+  const e = document.getElementById('error');
+  let collections = JSON.parse(localStorage.getItem(collectionsKey));
+  if (collections === null) {
+    collections = [];
+  }
 
-  if (collection == null || collection.trim() === "") {
-    e.innerHTML = "Please enter a valid name.";
+  if (collection == null || collection.trim() === '') {
+    e.innerHTML = 'Please enter a valid name.';
+  } else if (collections.includes(collection)) {
+    e.innerHTML = 'That collection already exists.';
   } else {
-      e.innerHTML = "";
-      addCollection(collection);
-      closeForm(addForm);
+    collections.push(collection);
+    localStorage.setItem(collectionsKey, JSON.stringify(collections));
+    e.innerHTML = '';
+    addCollection(collection);
+    closeForm(addForm);
   }
 };
 
 /*
 ** Modal Delete Collection Box
 */
-var modalD = document.getElementById("delete-collection");
+const modalD = document.getElementById('delete-collection');
 function showDeleteBox() {
-  modalD.style.display = "block";
+  modalD.style.display = 'block';
 }
 
-var closeText = document.getElementsByClassName("close-form")[1];
-closeText.onclick = function() {
-  modalD.style.display = "none";
-}
+const closeText = document.getElementsByClassName('close-form')[1];
+closeText.onclick = function () {
+  modalD.style.display = 'none';
+};
 
 /*
 ** Bulleting work
