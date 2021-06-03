@@ -64,7 +64,7 @@ function getTitle() {
 function getTheme() {
   const themeQuestion = document.querySelector('.question');
   const theme = localStorage.getItem('theme');
-  const text = `Please add what you did related to ${theme} as a theme bullet `
+  const text = `Please add what you did related to ${theme} as a theme bullet`;
   themeQuestion.innerHTML = text;
 }
 
