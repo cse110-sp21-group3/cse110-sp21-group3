@@ -1,4 +1,4 @@
-import { themeKey } from '../../storageKeys.js';
+import { themeKey, createdJournalKey } from '../../storageKeys.js';
 
 const themeSuggestions = ['Health', 'Finance', 'Cooking', 'Academics']; // Suggested Themes
 
@@ -23,5 +23,6 @@ submitBtn.addEventListener('click', () => {
   let theme = null;
   if (themeInput.value) theme = themeInput.value;
   localStorage.setItem(themeKey, theme);
+  localStorage.setItem(createdJournalKey, 'true');
   window.location.href = '../home-dailylog/home.html';
 });

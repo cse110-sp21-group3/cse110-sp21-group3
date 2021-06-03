@@ -56,12 +56,12 @@ body {
 .question {
   font-size: 24px;
   font-style: normal;
-  font-weight: 400;
   line-height: 33px;
   letter-spacing: 0;
   text-align: center;
   width: 100vw;
-  color: var(--white);
+  color: var(--dark-text);
+  font-weight: bold;
   background-color: var(--main-bg);
 }
 
