@@ -109,10 +109,11 @@ body {
 
 .month-input {
   border: none;
-  padding: 0.5rem;
+  padding: 1rem;
   border-radius: 0.5rem;
   font-size: large;
-  margin: 1rem;
+  margin: 0.5rem;
+  color: #919191;
 }
 
 #events {
