@@ -83,10 +83,3 @@ document.addEventListener('DOMContentLoaded', () => {
   storeCurrentDate();
   getTitle();
 });
-
-// TODO REMOVE
-const clearBtn = document.querySelector('.test');
-clearBtn.addEventListener('click', () => {
-
-});
-
