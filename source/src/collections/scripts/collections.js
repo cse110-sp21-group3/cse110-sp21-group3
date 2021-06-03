@@ -109,12 +109,6 @@ function showMenu() {
   flyoutMenu.classList.add('show');
 }
 
-function hideMenu(e) {
-  flyoutMenu.classList.remove('show');
-  e.stopPropagation();
-  document.body.style.overflow = 'auto';
-}
-
 /**
  * Open and close a modal/form
  */
