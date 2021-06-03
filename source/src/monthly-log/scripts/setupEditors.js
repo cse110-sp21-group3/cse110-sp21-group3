@@ -9,7 +9,7 @@ function getDaysInMonth(month, year) {
  * @param {*} date date object with the current day
  * @returns day of the first date of the month
  */
- function getFirstDay(month, year) {
+function getFirstDay(month, year) {
   const firstDay = new Date(year, month, 1);
   return firstDay.getDay();
 }
