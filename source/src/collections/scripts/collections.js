@@ -137,14 +137,14 @@ function addCollection(collection) {
 */
 const submitAdd = addForm.querySelector('.submit #submitForm');
 submitAdd.onclick = () => {
-  const collection = addForm.querySelector('#collection').value;
+  const collection = addForm.querySelector('#collection').value.trim();
   const e = document.getElementById('error');
   let collections = JSON.parse(localStorage.getItem(collectionsKey));
   if (collections === null) {
     collections = [];
   }
 
-  if (collection == null || collection.trim() === '') {
+  if (collection == null || collection === '') {
     e.innerHTML = 'Please enter a valid name.';
   } else if (collections.includes(collection)) {
     e.innerHTML = 'That collection already exists.';
