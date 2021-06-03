@@ -124,7 +124,7 @@ body {
   box-sizing: border-box;
   box-shadow: 0 4px 4px var(--shadow);
   border-radius: 2.5rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .habits {
@@ -149,7 +149,7 @@ body {
   box-sizing: border-box;
   box-shadow: 0 4px 4px var(--shadow);
   border-radius: 2.5rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 /* tooltip on hover */
