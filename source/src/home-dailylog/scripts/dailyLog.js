@@ -3,11 +3,14 @@ import { colorStyleKey } from '../../storageKeys.js';
 
 const key = 'dailyLogData';
 
-// Set Display CSS Styles
+// set color of website to the theme color
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
-if (selectedColorStyle === null) selectedColorStyle = 'default';
+if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+
+// Set Display CSS Styles
 const root = document.documentElement;
-root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
+root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
 function archiveData() {
   // add data from 'dailyLogData' to 'dailyLogArchive' (store existing bullets)
@@ -58,6 +61,13 @@ function getTitle() {
   title.innerHTML = localStorage.getItem('journalName');
 }
 
+function getTheme() {
+  const themeQuestion = document.querySelector('.question');
+  const theme = localStorage.getItem('theme');
+  const text = `Please add what you did related to ${theme} as a theme bullet `
+  themeQuestion.innerHTML = text;
+}
+
 /**
  * DOM Content Loaded
  */
@@ -83,4 +93,5 @@ document.addEventListener('DOMContentLoaded', () => {
   addCurrentDate();
   storeCurrentDate();
   getTitle();
+  getTheme();
 });

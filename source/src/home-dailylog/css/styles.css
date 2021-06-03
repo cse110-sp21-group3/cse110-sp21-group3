@@ -19,7 +19,7 @@
 }
 
 body {
-  background-color: var(--main-bg);
+  background-color: var(--light-bg);
 }
 
 .header {
@@ -58,7 +58,7 @@ body {
   width: 100vw;
   color: var(--dark-text);
   font-weight: bold;
-  background-color: var(--light-blue);
+  background-color: var(--main-bg);
 }
 
 .menu {
