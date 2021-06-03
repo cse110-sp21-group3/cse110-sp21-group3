@@ -18,18 +18,6 @@ function deleteCollection(tracker, k) {
  * template testing
  */
 document.addEventListener('DOMContentLoaded', () => {
-  // const trackerBody = document.getElementById('tracker-body');
-  // // TODO: pull from storage the collections of the particular month
-  // // TODO: create a new grid for every 6 collections using grid.js
-  // // TODO: create a tracker for each collection using tracker.js
-  // const tracker = document.createElement('collection-elem');
-  // tracker.collection = 'Groceries';
-  // const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  // deleteCollectionBtn.addEventListener('click', () => {
-  //   deleteCollection(tracker);
-  // });
-  // trackerBody.appendChild(tracker);
-  // numCollections += 1;
   let collections = JSON.parse(localStorage.getItem(collectionsKey));
   if (collections === null) {
     collections = [];
@@ -114,7 +102,6 @@ function addCollection(collection) {
 
     const key = collection;
     const listDataTree = getSavedBullets(key);
-    console.log(listDataTree);
 
     const list = tracker.shadowRoot.querySelector('bullet-list');
     list.initialiseList({

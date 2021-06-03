@@ -37,12 +37,14 @@ class Collection extends HTMLElement {
             cursor: pointer;
         }
         #title {
-            font-size: 3xl;
             margin: 1rem;
+            text-align: center;
         }
+        
         #collection-grid {
           display: flex;
           flex-wrap: wrap;
+          justify-content: center;
           align-items: center;
           width: 100%;
           flex-grow: 1;
@@ -133,14 +135,6 @@ class Collection extends HTMLElement {
     grid.id = collection;
     this.setAttribute('collection', collection);
   }
-
-  // get color() {
-  //   return this.getAttribute('color');
-  // }
-
-  // set color(color) {
-  //   this.setAttribute('color', color);
-  // }
 
   /**
    * Keyname for storage
