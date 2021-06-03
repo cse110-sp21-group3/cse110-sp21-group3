@@ -3,7 +3,7 @@ import { colorStyleKey, collectionsKey } from '../../storageKeys.js';
 
 // set color of website to the theme color
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
-if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+if (selectedColorStyle === null) selectedColorStyle = 'default';
 
 // Set Display CSS Styles
 const root = document.documentElement;
