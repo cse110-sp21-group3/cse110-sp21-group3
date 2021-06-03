@@ -68,7 +68,7 @@ class Navbar extends HTMLElement {
           <p>home</p>
         </div>
         <div class="nav-component">
-          <p>statistics</p>
+          <p>habits & trends</p>
         </div>
         <div class="nav-component">
           <p>daily log</p>
