@@ -1,6 +1,4 @@
-import { themeKey } from '../../storageKeys.js';
-import { createdJournalKey } from '../../storageKeys.js';
-
+import { themeKey, createdJournalKey } from '../../storageKeys.js';
 
 const themeSuggestions = ['Health', 'Finance', 'Cooking', 'Academics']; // Suggested Themes
 

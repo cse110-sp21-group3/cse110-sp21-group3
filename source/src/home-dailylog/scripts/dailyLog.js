@@ -1,5 +1,6 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey } from '../../storageKeys.js';
+
 const key = 'dailyLogData';
 
 // Set Display CSS Styles

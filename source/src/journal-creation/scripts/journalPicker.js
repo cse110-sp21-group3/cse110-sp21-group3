@@ -20,4 +20,3 @@ Object.keys(colorThemes).forEach((colorTheme) => {
 
   journalContainer.appendChild(journalDisplayContainer);
 });
-
