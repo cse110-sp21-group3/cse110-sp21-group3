@@ -293,7 +293,7 @@ submitAdd.onclick = () => {
  */
 document.addEventListener('DOMContentLoaded', () => {
   const headerTitle = document.getElementById('header-title');
-  const title = `trends: ${getMonthName(DATE)}`;
+  const title = `Trends: ${getMonthName(DATE)}`;
   headerTitle.innerText = title;
   const trackerBody = document.getElementById('tracker-body');
   // pull from storage the habits of the particular month
