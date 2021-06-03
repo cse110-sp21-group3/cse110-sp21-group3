@@ -1,6 +1,13 @@
 export const themeKey = 'theme'; // Stores the theme in local storage
 export const colorStyleKey = 'colorStyle';
 export const journalNameKey = 'journalName';
+export const collectionsKey = 'collections';
+
+export const habitsKey = 'habits';
+const habits = JSON.parse(localStorage.getItem(habitsKey));
+if (habits === null) {
+  localStorage.setItem(habitsKey, JSON.stringify([]));
+}
 
 /**
  * Return UID keys for monthly logs

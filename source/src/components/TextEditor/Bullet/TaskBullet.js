@@ -33,7 +33,7 @@ class TaskBullet extends BaseBullet {
 
     this.bulletStyle = `
         * {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Manrope', sans-serif;
         }
         
         input[type=text] {

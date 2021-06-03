@@ -37,12 +37,14 @@ class Collection extends HTMLElement {
             cursor: pointer;
         }
         #title {
-            font-size: 3xl;
             margin: 1rem;
+            text-align: center;
         }
+        
         #collection-grid {
           display: flex;
           flex-wrap: wrap;
+          justify-content: center;
           align-items: center;
           width: 100%;
           flex-grow: 1;
@@ -76,6 +78,10 @@ class Collection extends HTMLElement {
             text-align: center;
         }
 
+        .save {
+            text-align: center;
+        }
+
         .close-form {
           color: #aaa;
           float: right;
@@ -95,8 +101,9 @@ class Collection extends HTMLElement {
           <span class="delete-tracker">&times;</span>
         </div>
         <div class="collection">
-            <h1 id="title">collection</h1>
-            <div id="collection-grid"></div>
+            <div id="collection-grid">
+                <h1 id="title">collection</h1>
+            </div>
         </div>
 
         <div id="modalText" class="modalText">
@@ -104,6 +111,7 @@ class Collection extends HTMLElement {
           <div class="modalText-content">
             <span class="close-form">&times;</span>
             <h1 class="textBox-title">collection_name</h1>
+            <p class="save">Press ctrl+s to save!<p>
             <bullet-list></bullet-list>
           </div>
 
@@ -127,14 +135,6 @@ class Collection extends HTMLElement {
     grid.id = collection;
     this.setAttribute('collection', collection);
   }
-
-  // get color() {
-  //   return this.getAttribute('color');
-  // }
-
-  // set color(color) {
-  //   this.setAttribute('color', color);
-  // }
 
   /**
    * Keyname for storage

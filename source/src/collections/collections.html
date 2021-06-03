@@ -13,31 +13,13 @@
   <script src="../components/TextEditor/Bullet/TaskBullet.js" type="module"></script>
   <script src="../components/TextEditor/BulletList.js" type="module"></script>
 
+  <script src="../components/Navbar/navbar.js" type="module"></script>
+  <script src="../components/Menu/menu.js" type="module"></script>
+
     <body>
-        <div id="nav">
-            <span class="close-nav">&times;</span>
-            <div class="nav-component">
-            	  <p>home</p>
-            </div>
-            <div class="nav-component">
-              	<p>statistics</p>
-            </div>
-            <div class="nav-component">
-              	<p>daily log</p>
-            </div>
-            <div class="nav-component">
-              	<p>weekly log</p>
-            </div>
-            <div class="nav-component">
-              	<p>monthly log</p>
-            </div>
-            <div class="nav-component">
-              	<p>collections</p>
-            </div>
-            <div class="nav-component">
-              	<p>settings</p>
-            </div>
-        </div>
+        <span class="close-nav">&times;</span>
+        <navbar-elem></navbar-elem>
+        
         <div class="header">
           <div class="heading">
             <div class="menu">
@@ -53,10 +35,10 @@
 			    <div id="bar"></div>
         </div>
         
-        <!-- Turn each 2 x 3 grid into its own component -->
+        <!-- Sets up grid to display collections -->
         <div id="tracker-body"></div>
         <div id="addForm" class="modal">
-            <!-- Modal content -->
+            <!-- Modal content to create a new collection-->
             <div class="modal-content">
             	<span class="close-form">&times;</span>
               <form>
@@ -70,20 +52,6 @@
             </div>
         </div>
 
-        <!-- Delete Collection Warning -->
-        <div id="delete-collection" class="modalText">
-
-          <!-- Modal Warning Content -->
-          <div class="modalText-content">
-              <span class="close-form">&times;</span>
-              <h1 class="textBox-title">Delete this collection?</h1>
-              <div id="button-group" class="button-group">
-                  <button type="button" id="yes">Yes</button>
-                  <button type="button" id="no">No</button>
-              </div>
-          </div>
-
-        </div>
     </body>
 
 <template>
@@ -91,10 +59,6 @@
         <h1 class="title">Collection</h1>
         <div class="collection-grid"></div>
     </div>
-</template>
-
-<template>
-    <div class="circle"></div>
 </template>
 
 </html>

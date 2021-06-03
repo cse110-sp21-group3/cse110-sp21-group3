@@ -1,72 +1,93 @@
+import { collectionsKey } from '../../storageKeys.js';
+
 /**
- * Get current month and number of days of the month
+ * Create collection tracker for particular collection
  */
-const DATE = new Date();
-function getMonthName(date) {
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return monthNames[date.getMonth()];
+function addCollection(collection) {
+  const tracker = document.createElement('collection-elem');
+  tracker.collection = collection;
+  // TODO: show delete button when hovering over element
+  const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+  const trackerBody = document.getElementById('tracker-body');
+
+  const wbox = tracker.shadowRoot.querySelector('#collection-grid');
+  wbox.addEventListener('click', () => {
+    tracker.shadowRoot.querySelector('.textBox-title').innerHTML = collection;
+    tracker.shadowRoot.querySelector('#modalText').style.display = 'block'; // Show BulletList Modal
+
+    const key = collection;
+    const listDataTree = getSavedBullets(key);
+
+    const list = tracker.shadowRoot.querySelector('bullet-list');
+    list.initialiseList({
+      saveDataCallback: (data) => {
+        localStorage.setItem(key, JSON.stringify(data));
+      },
+      nestLimit: 1,
+      bulletTree: listDataTree,
+      storageIndex: {
+        value: 0,
+        children: 2,
+        completed: 1,
+      },
+      elementName: 'task-bullet',
+      bulletConfigs: {
+      },
+    });
+  });
+
+  // Close BulletList Modal
+  const closeText = tracker.shadowRoot.querySelector('.close-form');
+  closeText.addEventListener('click', () => {
+    tracker.shadowRoot.querySelector('#modalText').style.display = 'none';
+  });
+
+  trackerBody.append(tracker);
+  deleteCollectionBtn.addEventListener('click', () => {
+    deleteCollection(tracker, collection);
+  });
 }
 
-function getMonthDays(date) {
-  const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  return days[date.getMonth()];
+/*
+** Bulleting work
+*/
+function getSavedBullets(k) {
+  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
+  const initialSetup = { 0: [1], 1: ['', false, []] };
+  let listDataTree = localStorage.getItem(k);
+  if (listDataTree === null) {
+    listDataTree = initialSetup;
+  } else {
+    listDataTree = JSON.parse(listDataTree);
+  }
+  return listDataTree;
 }
-
-function getMonthDaysLeap(date) {
-  const days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  return days[date.getMonth()];
-}
-
-const currYear = DATE.getFullYear();
-let numDays;
-if (currYear % 4 === 0) {
-  numDays = getMonthDaysLeap(DATE);
-} else {
-  numDays = getMonthDays(DATE);
-}
-
-let numCollections = 0;
 
 /**
  * Delete collection
  */
-function deleteCollection(tracker) {
+function deleteCollection(tracker, k) {
   // remove from DOM
-  showDeleteBox();
-
-  const yes = document.getElementById("yes");
-  yes.addEventListener("click", () => {
-    const trackerBody = document.getElementById('tracker-body');
-    trackerBody.removeChild(tracker);
-    document.getElementsByClassName("close-form")[1].click();
-  });
-
-  const no = document.getElementById("no");
-  no.addEventListener("click", () => {
-    document.getElementsByClassName("close-form")[1].click();
-  });
-
-  // remove from storage
-
+  const trackerBody = document.getElementById('tracker-body');
+  trackerBody.removeChild(tracker);
+  let collections = JSON.parse(localStorage.getItem(collectionsKey));
+  collections = collections.filter((item) => item !== k);
+  localStorage.setItem(collectionsKey, JSON.stringify(collections));
+  localStorage.removeItem(k);
 }
 
 /**
  * template testing
  */
 document.addEventListener('DOMContentLoaded', () => {
-  const trackerBody = document.getElementById('tracker-body');
-  // TODO: pull from storage the collections of the particular month
-  // TODO: create a new grid for every 6 collections using grid.js
-  // TODO: create a tracker for each collection using tracker.js
-  const tracker = document.createElement('collection-elem');
-  tracker.collection = 'Groceries';
-  // tracker.color = '#599fe0';
-  const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  deleteCollectionBtn.addEventListener('click', () => {
-    deleteCollection(tracker);
+  let collections = JSON.parse(localStorage.getItem(collectionsKey));
+  if (collections === null) {
+    collections = [];
+  }
+  // for each loop on list
+  collections.forEach((k) => {
+    addCollection(k);
   });
-  trackerBody.appendChild(tracker);
-  numCollections += 1;
 });
 
 /**
@@ -118,6 +139,7 @@ const addForm = document.querySelector('#addForm');
 const addClose = addForm.querySelector('.close-form');
 addClose.addEventListener('click', () => {
   closeForm(addForm);
+  document.getElementById('error').innerHTML = '';
 });
 
 const add = document.getElementById('add');
@@ -125,118 +147,29 @@ add.addEventListener('click', () => {
   openForm(addForm);
 });
 
-/**
- * Create collection tracker for particular collection and store color of collection
- */
-function addCollection(collection) {
-  const tracker = document.createElement('collection-elem');
-  tracker.collection = collection;
-  // TODO: show delete button when hovering over element
-  const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  const trackerBody = document.getElementById('tracker-body');
 
-  const wbox = tracker.shadowRoot.querySelector("#collection-grid");
-  wbox.addEventListener("click", () => {
-    tracker.shadowRoot.querySelector(".textBox-title").innerHTML = collection;
-    tracker.shadowRoot.querySelector("#modalText").style.display = "block";     // Show BulletList Modal
-    const listDataTree = getSavedBullets();
-
-    const list = tracker.shadowRoot.querySelector('bullet-list');
-    list.initialiseList({
-      saveDataCallback: (data) => {
-        localStorage.setItem(key, JSON.stringify(data));
-      },
-      nestLimit: 1,
-      bulletTree: listDataTree,
-      storageIndex: {
-        value: 0,
-        children: 2,
-        completed: 1,
-      },
-      elementName: 'task-bullet',
-      bulletConfigs: {
-      },
-    });
-  });
-
-  // Close BulletList Modal
-  const closeText = tracker.shadowRoot.querySelector(".close-form");
-  closeText.addEventListener("click", () => {
-    tracker.shadowRoot.querySelector("#modalText").style.display = "none";
-  });
-
-  trackerBody.append(tracker);
-  deleteCollectionBtn.addEventListener('click', () => {
-    deleteCollection(tracker);
-  });
-}
 
 /*
 ** Submit Add Collection
 */
 const submitAdd = addForm.querySelector('.submit #submitForm');
 submitAdd.onclick = () => {
-  const collection = addForm.querySelector('#collection').value;
-  const e = document.getElementById("error");
+  const collection = addForm.querySelector('#collection').value.trim();
+  const e = document.getElementById('error');
+  let collections = JSON.parse(localStorage.getItem(collectionsKey));
+  if (collections === null) {
+    collections = [];
+  }
 
-  if (collection == null || collection.trim() === "") {
-    e.innerHTML = "Please enter a valid name.";
+  if (collection == null || collection === '') {
+    e.innerHTML = 'Please enter a valid name.';
+  } else if (collections.includes(collection)) {
+    e.innerHTML = 'That collection already exists.';
   } else {
-      e.innerHTML = "";
-      addCollection(collection);
-      closeForm(addForm);
+    collections.push(collection);
+    localStorage.setItem(collectionsKey, JSON.stringify(collections));
+    e.innerHTML = '';
+    addCollection(collection);
+    closeForm(addForm);
   }
 };
-
-/*
-** Modal Delete Collection Box
-*/
-var modalD = document.getElementById("delete-collection");
-function showDeleteBox() {
-  modalD.style.display = "block";
-}
-
-var closeText = document.getElementsByClassName("close-form")[1];
-closeText.onclick = function() {
-  modalD.style.display = "none";
-}
-
-/*
-** Bulleting work
-*/
-const key = 'collectionSampleData';
-
-function getSavedBullets() {
-  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
-  const initialSetup = { 0: [1], 1: ['', false, []] };
-  let listDataTree = localStorage.getItem(key);
-  if (listDataTree === null) {
-    listDataTree = initialSetup;
-  } else {
-    listDataTree = JSON.parse(listDataTree);
-  }
-  return listDataTree;
-}
-
-/**
- * DOM Content Loaded
- */
-document.addEventListener('DOMContentLoaded', () => {
-  const listDataTree = getSavedBullets();
-  const list = document.querySelector('bullet-list');
-  list.initialiseList({
-    saveDataCallback: (data) => {
-      localStorage.setItem(key, JSON.stringify(data));
-    },
-    nestLimit: 1,
-    bulletTree: listDataTree,
-    storageIndex: {
-      value: 0,
-      children: 2,
-      completed: 1,
-    },
-    elementName: 'task-bullet',
-    bulletConfigs: {
-    },
-  });
-});
