@@ -56,8 +56,9 @@ function populateEventWrappers(date) {
   clearContainerNode(eventsContainer);
 
   const numDays = getDaysInMonth(date.getMonth(), date.getFullYear());
+  let currDate = getFirstDay(date.getMonth(), date.getFullYear());
   for (let day = 1; day <= numDays; day += 1) {
-    const currDay = calendarDays[(day + 1) % 7];
+    const currDay = calendarDays[currDate % 7];
     const eventWrapper = document.createElement('event-wrapper');
     eventsContainer.appendChild(eventWrapper);
     eventWrapper.initialise({
@@ -69,6 +70,7 @@ function populateEventWrappers(date) {
         saveTasks(date, document.querySelector('.task-wrapper bullet-list').getBulletTree());
       },
     });
+    currDate += 1;
   }
 }
 
