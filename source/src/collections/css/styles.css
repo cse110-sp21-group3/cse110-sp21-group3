@@ -223,57 +223,7 @@ tracker-elem {
     display: flex;
 }
 
-/* The Text Editor Modal (background) */
-.modalText {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modalText-content {
-    background-color: #efefef;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
-
-.textBox-title {
-    text-align: center;
-}
-
 .e-text {
     --tw-text-opacity: 1;
     color: rgba(239, 68, 68, var(--tw-text-opacity));
-}
-
-.button-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5rem;
-}
-
-.modalText-content bullet-list div.bullet-list {
-    height: 32rem;
-    background: var(--white);
-    padding: 1rem;
-    border: 2px solid var(--white);
-    box-sizing: border-box;
-    box-shadow: 0 4px 4px var(--shadow);
-    border-radius: 2.5rem;
-    overflow: scroll;
-}
-
-.saveButton {
-    justify-content: center;
-    align-items: center;
 }

@@ -7,7 +7,6 @@ function deleteCollection(tracker, k) {
   // remove from DOM
   const trackerBody = document.getElementById('tracker-body');
   trackerBody.removeChild(tracker);
-  document.getElementsByClassName('close-form')[1].click();
   let collections = JSON.parse(localStorage.getItem(collectionsKey));
   collections = collections.filter((item) => item !== k);
   localStorage.setItem(collectionsKey, JSON.stringify(collections));
@@ -119,7 +118,6 @@ function addCollection(collection) {
       bulletConfigs: {
       },
     });
-    console.log('here');
   });
 
   // Close BulletList Modal
@@ -157,19 +155,6 @@ submitAdd.onclick = () => {
     addCollection(collection);
     closeForm(addForm);
   }
-};
-
-/*
-** Modal Delete Collection Box
-*/
-const modalD = document.getElementById('delete-collection');
-function showDeleteBox() {
-  modalD.style.display = 'block';
-}
-
-const closeText = document.getElementsByClassName('close-form')[1];
-closeText.onclick = function () {
-  modalD.style.display = 'none';
 };
 
 /*
