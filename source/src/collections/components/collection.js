@@ -76,6 +76,10 @@ class Collection extends HTMLElement {
             text-align: center;
         }
 
+        .save {
+            text-align: center;
+        }
+
         .close-form {
           color: #aaa;
           float: right;
@@ -105,6 +109,7 @@ class Collection extends HTMLElement {
           <div class="modalText-content">
             <span class="close-form">&times;</span>
             <h1 class="textBox-title">collection_name</h1>
+            <p class="save">Press ctrl+s to save!<p>
             <bullet-list></bullet-list>
           </div>
 
