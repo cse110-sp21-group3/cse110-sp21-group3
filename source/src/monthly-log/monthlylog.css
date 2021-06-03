@@ -67,7 +67,7 @@ body {
   flex-direction: column;
   align-items: center;
   max-height: inherit;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .events-container > event-wrapper {
@@ -94,7 +94,7 @@ body {
 .task-wrapper {
   /* Max height deduced according to task-container */
   max-height: calc(88vh - 10rem);
-  overflow: scroll;
+  overflow: auto;
   height: 100%;
   background-color: var(--light-bg);
   border-radius: 1.25rem;
