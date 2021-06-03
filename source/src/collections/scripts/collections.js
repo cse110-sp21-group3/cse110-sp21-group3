@@ -10,6 +10,34 @@ const root = document.documentElement;
 root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
+/*
+** Bulleting work
+*/
+function getSavedBullets(k) {
+  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
+  const initialSetup = { 0: [1], 1: ['', false, []] };
+  let listDataTree = localStorage.getItem(k);
+  if (listDataTree === null) {
+    listDataTree = initialSetup;
+  } else {
+    listDataTree = JSON.parse(listDataTree);
+  }
+  return listDataTree;
+}
+
+/**
+ * Delete collection
+ */
+function deleteCollection(tracker, k) {
+  // remove from DOM
+  const trackerBody = document.getElementById('tracker-body');
+  trackerBody.removeChild(tracker);
+  let collections = JSON.parse(localStorage.getItem(collectionsKey));
+  collections = collections.filter((item) => item !== k);
+  localStorage.setItem(collectionsKey, JSON.stringify(collections));
+  localStorage.removeItem(k);
+}
+
 /**
  * Create collection tracker for particular collection
  */
@@ -56,34 +84,6 @@ function addCollection(collection) {
   deleteCollectionBtn.addEventListener('click', () => {
     deleteCollection(tracker, collection);
   });
-}
-
-/*
-** Bulleting work
-*/
-function getSavedBullets(k) {
-  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
-  const initialSetup = { 0: [1], 1: ['', false, []] };
-  let listDataTree = localStorage.getItem(k);
-  if (listDataTree === null) {
-    listDataTree = initialSetup;
-  } else {
-    listDataTree = JSON.parse(listDataTree);
-  }
-  return listDataTree;
-}
-
-/**
- * Delete collection
- */
-function deleteCollection(tracker, k) {
-  // remove from DOM
-  const trackerBody = document.getElementById('tracker-body');
-  trackerBody.removeChild(tracker);
-  let collections = JSON.parse(localStorage.getItem(collectionsKey));
-  collections = collections.filter((item) => item !== k);
-  localStorage.setItem(collectionsKey, JSON.stringify(collections));
-  localStorage.removeItem(k);
 }
 
 /**
@@ -156,8 +156,6 @@ const add = document.getElementById('add');
 add.addEventListener('click', () => {
   openForm(addForm);
 });
-
-
 
 /*
 ** Submit Add Collection
