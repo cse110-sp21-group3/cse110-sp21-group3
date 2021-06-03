@@ -262,24 +262,29 @@ const submitAdd = addForm.querySelector('.submit #submitForm');
 submitAdd.onclick = () => {
   const habit = addForm.querySelector('#habit').value;
   const color = addForm.querySelector('#colorpicker').value;
+  const habits = JSON.parse(localStorage.getItem(habitsKey));
+  const habitKey = `${getMonthName(DATE)}${habit}`;
 
-  // if they provided a habit, add habit to DOM and storage
+  // if they provided a new habit, add habit to DOM and storage
   // otherwise, show error message
-  if (habit !== '') {
+  if (habit === '') {
+    const error = document.getElementById('error');
+    error.style.visibility = 'visible';
+    error.innerText = 'Please fill in habit field';
+  } else if (habits.includes(habitKey)) {
+    const error = document.getElementById('error');
+    error.style.visibility = 'visible';
+    error.innerText = 'That habit already exists';
+  } else {
     addHabit(habit, color);
     const habitArray = Array(numDays).fill(false);
     const habitStorage = {
       habit, color, days: [...habitArray],
     };
-    const habitKey = `${getMonthName(DATE)}${habit}`;
-    const habits = JSON.parse(localStorage.getItem(habitsKey));
     habits.push(habitKey);
     localStorage.setItem(habitsKey, JSON.stringify(habits));
     localStorage.setItem(habitKey, JSON.stringify(habitStorage));
     closeAddForm();
-  } else {
-    const error = document.getElementById('error');
-    error.style.visibility = 'visible';
   }
 };
 

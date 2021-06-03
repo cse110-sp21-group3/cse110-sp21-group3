@@ -66,7 +66,10 @@ body {
 #tracker-body {
   display: flex;
   flex-wrap: wrap;
-  overflow-y: scroll;
+  overflow-y: auto;
+  background-color: var(--light-bg);
+  margin: 0;
+  height: 100%;
 }
 
 #add-div {
