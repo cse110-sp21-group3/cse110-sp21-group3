@@ -40,7 +40,7 @@ class DailyLogBullet extends BaseBullet {
 
     this.bulletStyle = `
         * {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Manrope', sans-serif;
         }
         .box-bullet {
         display: flex;

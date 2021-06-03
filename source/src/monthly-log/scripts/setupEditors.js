@@ -94,7 +94,7 @@ function setTaskEditor(date) {
       bulletStyle: `
                 input[type=text] {
                     font-size: 1.5rem;
-                    font-family: 'Nunito', sans-serif;
+                    font-family: 'Manrope', sans-serif;
                     color: #4F4F4F;
 
                     border: none;
