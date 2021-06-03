@@ -31,4 +31,4 @@
 4. If indexedDB does not pan out, is local storage bad?
 5. Do we need service workers? (offline functionality)
 6. Is it a problem if we have alerts and dialogues?
-7. * What happens if we didn't code a lot but contributed other ways
+7. What happens if we didn't code a lot but contributed other ways
