@@ -85,7 +85,7 @@ add.addEventListener('click', () => {
 });
 
 /**
- * Create collection tracker for particular collection and store color of collection
+ * Create collection tracker for particular collection
  */
 function addCollection(collection) {
   const tracker = document.createElement('collection-elem');
