@@ -94,6 +94,13 @@ function toggleHabit(habit) {
   localStorage.setItem(habitKey, JSON.stringify(habitStorage));
 }
 
+function handleFiles() {
+  console.log(this.files); // gets list of files
+}
+
+const addMedia = document.getElementById('add-media');
+addMedia.addEventListener('change', handleFiles);
+
 /**
  * DOM Content Loaded
  */
