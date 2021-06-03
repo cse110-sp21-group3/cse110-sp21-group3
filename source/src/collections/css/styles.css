@@ -12,15 +12,15 @@
 }
 
 body {
-    background-color: var(--light-bg);
+  background-color: var(--light-bg);
 }
 
 .header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-    background-color: var(--light-bg);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: var(--light-bg);
 }
 
 .heading {
@@ -39,11 +39,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #EEE4E1;
+  background-color: #eee4e1;
   height: 4rem;
   width: 4rem;
   border-radius: 1rem;
-  transition: transform .3s cubic-bezier(0, .52, 0, 1);
+  transition: transform 0.3s cubic-bezier(0, 0.52, 0, 1);
   margin: 1rem;
 }
 
@@ -53,19 +53,19 @@ body {
 }
 
 .menu:hover {
-  background-color: #CCB9B3;
+  background-color: #ccb9b3;
 }
 
 #nav {
   position: fixed;
   width: 25vw;
   height: 100vh;
-  background-color: #EEE4E1;
+  background-color: #eee4e1;
   transform: translate3d(-100vw, 0, 0);
   transition: 1s;
   z-index: 1000;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   overflow: scroll;
   text-align: center;
   display: flex;
@@ -74,7 +74,7 @@ body {
 }
 
 .nav-component {
-  border-bottom: 1px solid #9A9A9A;
+  border-bottom: 1px solid #9a9a9a;
 }
 
 .nav-component > p {
@@ -82,7 +82,7 @@ body {
   font-weight: 600;
   font-size: 29px;
   line-height: 49px;
-  color: #000000;
+  color: #000;
 }
 
 .nav-component > p:hover {
@@ -90,8 +90,8 @@ body {
 }
 
 #nav.show {
-  transform: translate3d(0vw, 0, 0);
-  transition: .3s;
+  transform: translate3d(0, 0, 0);
+  transition: 0.3s;
 }
 
 /* The Close Button */
@@ -103,7 +103,7 @@ body {
   font-size: 28px;
   font-weight: bold;
 }
-  
+
 .close-nav:hover,
 .close-nav:focus {
   color: black;
@@ -112,9 +112,9 @@ body {
 }
 
 #bar {
-    width: 100vw;
-    height: 2rem;
-    background-color: var(--main-bg);
+  width: 100vw;
+  height: 2rem;
+  background-color: var(--main-bg);
 }
 
 #tracker-body {
@@ -165,11 +165,11 @@ body {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
-  
-  /* Modal Content/Box */
+
+/* Modal Content/Box */
 .modal-content {
   background-color: #efefef;
   margin: 15% auto; /* 15% from the top and centered */
@@ -201,7 +201,7 @@ body {
   font-size: 28px;
   font-weight: bold;
 }
-  
+
 .close-form:hover,
 .close-form:focus {
   color: black;
@@ -220,7 +220,7 @@ body {
 }
 
 #submitForm:hover {
-  background-color: #A4A4A4;
+  background-color: #a4a4a4;
   color: white;
   cursor: pointer;
 }
@@ -231,5 +231,6 @@ tracker-elem {
 
 .e-text {
   --tw-text-opacity: 1;
+
   color: rgba(239, 68, 68, var(--tw-text-opacity));
 }
