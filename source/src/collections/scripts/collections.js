@@ -3,7 +3,7 @@ import { collectionsKey } from '../../storageKeys.js';
 /**
  * Create collection tracker for particular collection
  */
- function addCollection(collection) {
+function addCollection(collection) {
   const tracker = document.createElement('collection-elem');
   tracker.collection = collection;
   // TODO: show delete button when hovering over element
