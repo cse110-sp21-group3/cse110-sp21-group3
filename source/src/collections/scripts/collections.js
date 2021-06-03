@@ -25,12 +25,10 @@ if (currYear % 4 === 0) {
   numDays = getMonthDays(DATE);
 }
 
-let numCollections = 0;
-
 /**
  * Delete collection
  */
-function deleteCollection(tracker) {
+function deleteCollection(tracker, k) {
   // remove from DOM
   showDeleteBox();
 
@@ -39,34 +37,34 @@ function deleteCollection(tracker) {
     const trackerBody = document.getElementById('tracker-body');
     trackerBody.removeChild(tracker);
     document.getElementsByClassName("close-form")[1].click();
+    localStorage.removeItem(k);
   });
 
   const no = document.getElementById("no");
   no.addEventListener("click", () => {
     document.getElementsByClassName("close-form")[1].click();
   });
-
-  // remove from storage
-
 }
 
 /**
  * template testing
  */
 document.addEventListener('DOMContentLoaded', () => {
-  const trackerBody = document.getElementById('tracker-body');
-  // TODO: pull from storage the collections of the particular month
-  // TODO: create a new grid for every 6 collections using grid.js
-  // TODO: create a tracker for each collection using tracker.js
-  const tracker = document.createElement('collection-elem');
-  tracker.collection = 'Groceries';
-  // tracker.color = '#599fe0';
-  const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  deleteCollectionBtn.addEventListener('click', () => {
-    deleteCollection(tracker);
-  });
-  trackerBody.appendChild(tracker);
-  numCollections += 1;
+  // const trackerBody = document.getElementById('tracker-body');
+  // // TODO: pull from storage the collections of the particular month
+  // // TODO: create a new grid for every 6 collections using grid.js
+  // // TODO: create a tracker for each collection using tracker.js
+  // const tracker = document.createElement('collection-elem');
+  // tracker.collection = 'Groceries';
+  // const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
+  // deleteCollectionBtn.addEventListener('click', () => {
+  //   deleteCollection(tracker);
+  // });
+  // trackerBody.appendChild(tracker);
+  // numCollections += 1;
+  for(var i = 0, len = localStorage.length; i < len; i++ ) {
+    addCollection(localStorage.key(i));
+  }
 });
 
 /**
@@ -139,7 +137,10 @@ function addCollection(collection) {
   wbox.addEventListener("click", () => {
     tracker.shadowRoot.querySelector(".textBox-title").innerHTML = collection;
     tracker.shadowRoot.querySelector("#modalText").style.display = "block";     // Show BulletList Modal
-    const listDataTree = getSavedBullets();
+
+    const key = collection;
+    const listDataTree = getSavedBullets(key);
+    console.log(listDataTree);
 
     const list = tracker.shadowRoot.querySelector('bullet-list');
     list.initialiseList({
@@ -157,6 +158,7 @@ function addCollection(collection) {
       bulletConfigs: {
       },
     });
+    console.log("here");
   });
 
   // Close BulletList Modal
@@ -167,7 +169,7 @@ function addCollection(collection) {
 
   trackerBody.append(tracker);
   deleteCollectionBtn.addEventListener('click', () => {
-    deleteCollection(tracker);
+    deleteCollection(tracker, collection);
   });
 }
 
@@ -204,12 +206,10 @@ closeText.onclick = function() {
 /*
 ** Bulleting work
 */
-const key = 'collectionSampleData';
-
-function getSavedBullets() {
+function getSavedBullets(k) {
   // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
   const initialSetup = { 0: [1], 1: ['', false, []] };
-  let listDataTree = localStorage.getItem(key);
+  let listDataTree = localStorage.getItem(k);
   if (listDataTree === null) {
     listDataTree = initialSetup;
   } else {
@@ -217,26 +217,3 @@ function getSavedBullets() {
   }
   return listDataTree;
 }
-
-/**
- * DOM Content Loaded
- */
-document.addEventListener('DOMContentLoaded', () => {
-  const listDataTree = getSavedBullets();
-  const list = document.querySelector('bullet-list');
-  list.initialiseList({
-    saveDataCallback: (data) => {
-      localStorage.setItem(key, JSON.stringify(data));
-    },
-    nestLimit: 1,
-    bulletTree: listDataTree,
-    storageIndex: {
-      value: 0,
-      children: 2,
-      completed: 1,
-    },
-    elementName: 'task-bullet',
-    bulletConfigs: {
-    },
-  });
-});

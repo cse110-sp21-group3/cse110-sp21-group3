@@ -95,8 +95,9 @@ class Collection extends HTMLElement {
           <span class="delete-tracker">&times;</span>
         </div>
         <div class="collection">
-            <h1 id="title">collection</h1>
-            <div id="collection-grid"></div>
+            <div id="collection-grid">
+                <h1 id="title">collection</h1>
+            </div>
         </div>
 
         <div id="modalText" class="modalText">
