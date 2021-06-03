@@ -117,7 +117,7 @@ body {
 }
 
 .daily-log bullet-list div.bullet-list {
-  height: 32rem;
+  height: 30rem;
   background: var(--white);
   padding: 1rem;
   border: 2px solid var(--white);
@@ -143,7 +143,7 @@ body {
 }
 
 .habits-form {
-  height: 32rem;
+  height: 30rem;
   background: var(--white);
   border: 2px solid var(--white);
   box-sizing: border-box;
@@ -169,4 +169,8 @@ body {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+.media {
+  margin: 1rem;
 }
