@@ -60,27 +60,32 @@ class Navbar extends HTMLElement {
           text-decoration: none;
           cursor: pointer;
         }
+
+        .nav-component a{
+          text-decoration: none;
+          color: black;
+        }
       </style>
       <!-- Template -->
       <div id="nav">
         <span class="close-nav">&times;</span>
         <div class="nav-component">
-          <p>home</p>
+          <p><a href="../home-dailylog/home.html">home</a></p>
         </div>
         <div class="nav-component">
-          <p>habits & trends</p>
+          <p><a href="../trends/trends.html">habits & trends</a></p>
         </div>
         <div class="nav-component">
-          <p>past logs</p>
+          <p><a>past logs</a></p>
         </div>
         <div class="nav-component">
-          <p>monthly log</p>
+          <p><a href="../monthly-log/monthlylog.html">monthly log</a></p>
         </div>
         <div class="nav-component">
-          <p>collections</p>
+          <p><a href="../collections/collections.html">collections</a></p>
         </div>
         <div class="nav-component">
-          <p>settings</p>
+          <p><a href="../settings/settings.html">settings</a></p>
         </div>
       </div>`;
     this.attachShadow({ mode: 'open' });
