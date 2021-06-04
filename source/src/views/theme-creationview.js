@@ -5,11 +5,11 @@ export default class themecreation extends abstractview{
     constructor(a) {
         super(a);
     }
-    async getScripts() {
+    getScripts() {
         let sourcelist = ["../src/journal-creation/scripts/themeCreation.js"];
         return sourcelist;
     }
-    async getHead() {
+    getHead() {
         return `
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +18,7 @@ export default class themecreation extends abstractview{
         <link rel="stylesheet" href="../src/journal-creation/creation-styles.css">
         `
     }
-    async getBody () {
+    getBody () {
         return `
         <div class = "dropdown"> 
         <span id="theme-onboarding"><u>What is the Theme System?</u></span>

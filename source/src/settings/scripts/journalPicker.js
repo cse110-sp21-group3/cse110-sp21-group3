@@ -4,14 +4,14 @@ import { colorStyleKey } from '../../storageKeys.js';
 
 let oldbodyid = document.body.id;
 const callback = function (mutations) {
-  console.log("setting page is detecting something");
-  //console.log(mutations.length);
+  
+  
   
   mutations.forEach(function (mutation) {
     if (document.body.id == 'settings-body') {
       
       oldbodyid = document.body.id;
-      console.log("setttings page script reload");
+      
       setup();
     }
   });  

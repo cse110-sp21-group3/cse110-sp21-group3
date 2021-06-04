@@ -2,10 +2,34 @@ import colorThemes from '../../colorThemes.js';
 import { colorStyleKey } from '../../storageKeys.js';
 import updateLogs from './setupEditors.js';
 
-// Set Display CSS Styles
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
 if (selectedColorStyle === null) selectedColorStyle = 'default';
-const root = document.documentElement;
+let root = document.documentElement;
+root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
+
+setTimeout(() => {  setup()}, 30);
+let oldbodyid = document.body.id;
+const callback = function (mutations) {
+  
+  mutations.forEach(function (mutation) {
+    if (document.body.id == 'monthly-log-body') {
+      
+      oldbodyid = document.body.id;
+      console.log("monthly page script reload");
+      setup();
+    }
+    oldbodyid = document.body.id;
+});  
+};
+const observer = new MutationObserver(callback);
+const config = { attributes: true };
+observer.observe(document.body, config);
+
+function setup() {
+// Set Display CSS Styles
+selectedColorStyle = localStorage.getItem(colorStyleKey);
+if (selectedColorStyle === null) selectedColorStyle = 'default';
+root = document.documentElement;
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
 
 let currDate = new Date();
@@ -23,7 +47,7 @@ monthInput.onchange = () => {
 };
 
 // Set event editors
-document.addEventListener('DOMContentLoaded', () => {
+
   currDate = new Date(); // Reset date to current date
   updateLogs(currDate);
-});
+}

@@ -4,6 +4,8 @@ import NameJournal from './views/name-journalview.js';
 import ThemeCreation from './views/theme-creationview.js';
 import Trends from './views/trendview.js';
 import Home from './views/dailylogview.js';
+import Collections from './views/collectionsview.js';
+import MonthlyLog from './views/monthly-logviews.js';
 const body = document.body;
 
 export const router = {};
@@ -31,6 +33,12 @@ router.setState = async (state, statePopped) => {
         case 'home':
             current_view = new Home();
             break;
+        case 'monthly-log':
+            current_view = new MonthlyLog();
+            break;
+        case 'collections':
+            current_view = new Collections();
+            break;
         default:
             current_view = new Home();
         }
@@ -39,7 +47,7 @@ router.setState = async (state, statePopped) => {
         //this adds the html 
         document.body.innerHTML = await current_view.getBody();
         //this adds the scripts
-        let sourceList = await current_view.getScripts();
+        let sourceList =  await current_view.getScripts();
         sourceList.forEach(source => {
             let sources = document.createElement("script");
                 sources.classList.add = "forthispage";
@@ -71,6 +79,12 @@ export function pushToHistory(state) {
             break;
         case 'trends':
             history.pushState({ page: `trends` }, '', `./#trends`);
+            break;
+        case 'monthly-log':
+            history.pushState({ page: `home` }, '', `./#monthly-log`);
+            break;
+        case 'collections':
+            history.pushState({ page: `collections` }, '', `./#collections`);
             break;
         case 'home':
             history.pushState({ page: `home` }, '', `./`);

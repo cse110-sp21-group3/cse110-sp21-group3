@@ -1,7 +1,8 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey } from '../../storageKeys.js';
 import { router } from '../../router.js';
-const journalContainer = document.querySelector('#journals-container');
+setTimeout(() => {  
+  const journalContainer = document.querySelector('#journals-container');
 
 Object.keys(colorThemes).forEach((colorTheme) => {
   const journalDisplayContainer = document.createElement('div');
@@ -20,4 +21,5 @@ Object.keys(colorThemes).forEach((colorTheme) => {
   journalDisplayContainer.appendChild(styleDiscriptor);
 
   journalContainer.appendChild(journalDisplayContainer);
-});
+});}, 30);
+

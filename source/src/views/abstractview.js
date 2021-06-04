@@ -2,14 +2,14 @@ export default class {
     constructor(params) {
         this.params = params;
     }
-    async getScripts() {
+    getScripts() {
         return "";
     }
     
-    async getHead() {
+    getHead() {
         return "";
     }
-    async getBody() {
+    getBody() {
         return "";
     }
 }

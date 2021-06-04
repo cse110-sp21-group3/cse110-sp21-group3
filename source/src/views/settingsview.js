@@ -5,7 +5,7 @@ export default class extends abstractview{
     constructor(a) {
         super(a);
     }
-    async getHead() {
+    getHead() {
         return `
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@ export default class extends abstractview{
         
         `
     }
-    async getScripts() {
+    getScripts() {
         let sourcelist = ["../src/journal-creation/components/JournalIcon.js",
             "../src/settings/scripts/journalPicker.js",
             "../src/colorThemes.js",
@@ -23,7 +23,7 @@ export default class extends abstractview{
             "../src/components/Menu/menu.js"]
         return sourcelist;
     }
-    async getBody () {
+    getBody () {
         return `
         <navbar-elem></navbar-elem>
         <div class="header">

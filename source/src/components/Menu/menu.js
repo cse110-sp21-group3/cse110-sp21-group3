@@ -56,40 +56,39 @@ function setup() {
   navSpan.addEventListener('click', hideMenu, false);
   const buttonsA = document.querySelector('navbar-elem').shadowRoot.querySelectorAll(".nav-component")
   Array.from(buttonsA).forEach(navto => {
-  let loc = navto.getElementsByTagName("p")[0].innerHTML;
+    let loc = navto.getElementsByTagName("p")[0].innerHTML;
+    //console.log(loc);
     switch(loc) {
+      
       case 'home':
         navto.addEventListener('click', () => {
-          //console.log(loc);
+          
           router.setState('home');
         });
         break;  
       case 'statistics':
         navto.addEventListener('click', () => {
-          
           router.setState('trends');
         });
         break;  
       case 'monthly log':
         navto.addEventListener('click', () => {
-          console.log(loc);
           router.setState('monthly-log');
         });
         break;  
       case 'collections':
         navto.addEventListener('click', () => {
           console.log(loc);
-          router.setState('settings');
+          router.setState('collections');
         });
         break;  
       case 'settings':
         navto.addEventListener('click', () => {
-          console.log(loc);
           router.setState('settings');
         });
         break;  
     }
-  
+
   });
 }
 
