@@ -4,10 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="5; URL=/journal-creation/journal-picker.html">
-    <title>BuJo - Group 3</title>
+    <link rel="stylesheet" href="./settings/css/styles.css">
 </head>
+<script src="./src/journal-creation/components/JournalIcon.js" type="module"></script>
+  <script src="./settings/scripts/journalPicker.js" type="module"></script>
+  <script src="./colorThemes.js" type="module"></script>
+  <script src="./settings/scripts/settings.js" type="module"></script>
+  <script src="./components/Navbar/navbar.js" type="module"></script>
+  <script src="./components/Menu/menu.js" type="module"></script>
 <body>
-    <p>If you are not redirected in five seconds, <a href="">click here.</a></p>
+    <navbar-elem></navbar-elem>
+    <div>
+        <div class="header">
+            
+            <div class="heading">
+              <div class="menu">
+                  <img src="./menu-icon.png">
+              </div>
+              <h1 id="header-title">settings</h1>
+              <div></div>
+            </div>
+          </div>
+          <div id="journal-name">
+              <p id="journal-name-title">Journal Name</p>
+              <span id="journal-name-edit" contenteditable></span>
+          </div>
+          <div id="journal-color">
+              <p id="journal-color-title">Journal Color</p>
+              <div id="journals-container"></div>
+          </div>
+          <div id="journal-theme">
+              <p id="journal-theme-title">Journal Theme</p>
+              <span id="journal-theme-edit" contenteditable></span>
+          </div>
+          <button id="save">Save</button>
+
+
+
+    </div>
+   
 </body>
 </html>

@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
+:root {
+  --main-bg: rgba(229, 229, 229, 1);
+  --light-bg: #f9f9f9;
+  --light-text: rgb(166, 169, 173);
+  --dark-text: black;
+  --white: #fff;
+  --light-blue: #64a6bd;
+  --menu-color: #eee4e1;
+  --menu-hover: #ccb9b3;
+  --black: #000;
+  --shadow: rgba(0, 0, 0, 0.25);
+  --light-white: #efefef;
+}
+
+body {
+  background-color: var(--light-bg);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: var(--light-bg);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#header-title {
+  font-size: 3rem;
+  text-align: center;
+  margin: 1rem;
+  align-self: flex-end;
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.question {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 33px;
+  letter-spacing: 0;
+  text-align: center;
+  width: 100vw;
+  color: var(--white);
+  background-color: var(--light-blue);
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--menu-color);
+  height: 4rem;
+  width: 4rem;
+  border-radius: 1rem;
+  transition: transform 0.3s cubic-bezier(0, 0.52, 0, 1);
+  margin: 1rem;
+}
+
+.menu > img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.menu:hover {
+  background-color: var(--menu-hover);
+  cursor: pointer;
+}
+
+.log-body {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+}
+
+.daily-log {
+  text-align: center;
+  position: relative;
+  width: 60%;
+  height: 100%;
+}
+
+.daily-log-title {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.daily-log-title > p {
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  color: var(--black);
+}
+
+.daily-log bullet-list div.bullet-list {
+  height: 32rem;
+  background: var(--white);
+  padding: 1rem;
+  border: 2px solid var(--white);
+  box-sizing: border-box;
+  box-shadow: 0 4px 4px var(--shadow);
+  border-radius: 2.5rem;
+  overflow: scroll;
+}
+
+.habits {
+  text-align: center;
+  width: 20%;
+  height: 100%;
+}
+
+.habits > p {
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  color: var(--black);
+}
+
+.habits-form {
+  height: 32rem;
+  background: var(--white);
+  border: 2px solid var(--white);
+  box-sizing: border-box;
+  box-shadow: 0 4px 4px var(--shadow);
+  border-radius: 2.5rem;
+}
+
+/* tooltip on hover */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 20rem;
+  background-color: var(--black);
+  color: var(--white);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

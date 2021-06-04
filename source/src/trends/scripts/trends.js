@@ -62,34 +62,7 @@ function closeDeleteForm(form) {
   f.style.display = 'none';
 }
 
-/**
- * Add new habit button
- */
-const addForm = document.querySelector('#addForm');
 
-const addClose = addForm.querySelector('#add-close-form');
-addClose.addEventListener('click', () => {
-  closeForm(addForm);
-});
-
-const add = document.getElementById('add');
-add.addEventListener('click', () => {
-  openForm(addForm);
-});
-
-const deleteForm = document.getElementById('delete-form');
-
-const deleteClose = deleteForm.querySelector('#delete-close-form');
-deleteClose.addEventListener('click', () => {
-  closeForm(deleteForm);
-});
-
-const yesBtn = document.querySelector('#yes');
-
-const noBtn = document.querySelector('#no');
-noBtn.addEventListener('click', () => {
-  closeDeleteForm(deleteForm);
-});
 
 /**
  * Delete habit
@@ -158,33 +131,94 @@ function addHabit(habit, color) {
     deleteHabit(tracker);
   });
 }
-
-/*
-** Submit Add Habit
-*/
-const submitAdd = addForm.querySelector('.submit #submitForm');
-submitAdd.onclick = () => {
-  const habit = addForm.querySelector('#habit').value;
-  const color = addForm.querySelector('#colorpicker').value;
-
-  if (habit !== '') {
-    addHabit(habit, color);
-    const habitArray = Array(numDays).fill(false);
-    const habitStorage = {
-      habit, color, days: [...habitArray],
-    };
-    const habitKey = `${getMonthName(DATE)}${habit}`;
-    localStorage.setItem(habitKey, JSON.stringify(habitStorage));
-    closeForm(addForm);
-  } else {
-    alert('Please fill in habit field');
-  }
-};
-
+console.log("hello trends.js is run");
 /**
  * template testing
  */
-document.addEventListener('DOMContentLoaded', () => {
+ console.log(document.readyState);
+ document.onreadystatechange = function() {
+  if (document.readyState === 'complete') {
+    setup()
+  }
+}
+//document.addEventListener('DOMContentLoaded',setup());
+
+let oldbodyid = document.body.id;
+const callback = function (mutations) {
+  
+  mutations.forEach(function (mutation) {
+    console.log("a mutation");
+    if (document.body.id == "trends-body"&& oldbodyid != "trends-body") {
+      console.log('trends mutation');
+      oldbodyid = document.body.id;
+      setup();
+    }
+});  
+};
+const observer = new MutationObserver(callback);
+const config = { attributes: true };
+
+observer.observe(document.body, config);
+
+function setup () {
+    /*
+    ** Submit Add Habit
+    */
+    const submitAdd = addForm.querySelector('.submit #submitForm');
+    submitAdd.onclick = () => {
+    const habit = addForm.querySelector('#habit').value;
+    const color = addForm.querySelector('#colorpicker').value;
+
+    if (habit !== '') {
+      addHabit(habit, color);
+      const habitArray = Array(numDays).fill(false);
+      const habitStorage = {
+        habit, color, days: [...habitArray],
+      };
+      const habitKey = `${getMonthName(DATE)}${habit}`;
+      localStorage.setItem(habitKey, JSON.stringify(habitStorage));
+      closeForm(addForm);
+    } else {
+      alert('Please fill in habit field');
+    }
+    };
+    /**
+   * Add new habit button
+   */
+  const addForm = document.querySelector('#addForm');
+
+  const addClose = addForm.querySelector('#add-close-form');
+  addClose.addEventListener('click', () => {
+    closeForm(addForm);
+  });
+
+  const add = document.getElementById('add');
+  add.addEventListener('click', () => {
+    openForm(addForm);
+  });
+
+  const deleteForm = document.getElementById('delete-form');
+
+  const deleteClose = deleteForm.querySelector('#delete-close-form');
+  deleteClose.addEventListener('click', () => {
+    closeForm(deleteForm);
+  });
+
+  const yesBtn = document.querySelector('#yes');
+
+  const noBtn = document.querySelector('#no');
+  noBtn.addEventListener('click', () => {
+    closeDeleteForm(deleteForm);
+  });
+
+  let selectedColorStyle = localStorage.getItem(colorStyleKey);
+  if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+
+  // Set Display CSS Styles
+  const root = document.documentElement;
+  root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+  root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
+
   const headerTitle = document.getElementById('header-title');
   const title = `trends: ${getMonthName(DATE)}`;
   headerTitle.innerText = title;
@@ -244,4 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
-});
+}
+
+setup();

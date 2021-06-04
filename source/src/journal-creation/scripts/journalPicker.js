@@ -1,6 +1,6 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey } from '../../storageKeys.js';
-
+import { router } from '../../router.js';
 const journalContainer = document.querySelector('#journals-container');
 
 Object.keys(colorThemes).forEach((colorTheme) => {
@@ -9,7 +9,8 @@ Object.keys(colorThemes).forEach((colorTheme) => {
   journalElement.styleName = colorTheme;
   journalElement.addEventListener('click', () => {
     localStorage.setItem(colorStyleKey, colorTheme);
-    window.location.href = './name-journal.html';
+    router.setState("name-journal");
+    
   });
 
   const styleDiscriptor = document.createElement('p');
