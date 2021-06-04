@@ -11,10 +11,16 @@
   --dark-text: black;
 }
 
+html {
+  height: 100%;
+}
+
 body {
-  background-color: var(--main-bg);
-  padding-left: 1rem;
-  padding-right: 1rem;
+  background-color: var(--light-bg);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
@@ -22,7 +28,7 @@ body {
   top: 0;
   width: 100%;
   z-index: 1;
-  background-color: var(--main-bg);
+  background-color: var(--light-bg);
 }
 
 .heading {
@@ -31,10 +37,12 @@ body {
   align-items: center;
 }
 
-#header-title {
+#title {
   font-size: xx-large;
   text-align: center;
   margin: 1rem;
+  border: none;
+  background-color: var(--light-bg);
 }
 
 .menu {
@@ -57,4 +65,20 @@ body {
 .menu:hover {
   background-color: #ccb9b3;
   cursor: pointer;
+}
+
+#bar {
+  width: 100vw;
+  height: 2rem;
+  background-color: var(--main-bg);
+}
+
+.past-dailylogs-container {
+  background-color: white;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 1.5rem;
+  height: 100%;
+  width: 80%;
+  margin: 1rem;
+  padding: 1rem;
 }
