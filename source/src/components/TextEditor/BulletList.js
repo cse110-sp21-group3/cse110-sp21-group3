@@ -175,7 +175,6 @@ class BulletList extends HTMLElement {
     const toplevelBullets = bulletsTree[0];
     toplevelBullets.forEach((bulletIDStr) => {
       const bulletID = parseInt(bulletIDStr, 10);
-      if (bulletID in this.listData.bulletElements) return; // Element is already created
 
       this.listData.parents[bulletID] = null;
       const traversalStack = [bulletID];

@@ -43,9 +43,6 @@ class TaskBullet extends BaseBullet {
             width: 70%;
         }
         
-        li {
-          list-style-type: none;
-        }
         li ${this.elementName} {
             position: relative;
             left: 2rem;
