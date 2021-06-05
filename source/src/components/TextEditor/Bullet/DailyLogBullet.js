@@ -135,8 +135,6 @@ class DailyLogBullet extends BaseBullet {
       if (!matched) this.editContent(bulletParameters.value, e.target.value);
       watchKeys(e.key, false);
     };
-
-    
   }
 
   /**
@@ -162,7 +160,7 @@ class DailyLogBullet extends BaseBullet {
     let typeCount = 1;
     const typeList = ['none', 'task', 'note', 'event', 'theme'];
     const type = this.shadowRoot.querySelector('.type');
-    if (!this.readOnly){
+    if (!this.readOnly) {
       type.addEventListener('click', () => {
         typeCount += 1;
         this.editContent(bulletParameters.type, typeList[typeCount % typeList.length]);
