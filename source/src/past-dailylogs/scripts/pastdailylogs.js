@@ -47,7 +47,7 @@ const dayInput = document.getElementById('date-input');
 const currDate = new Date();
 dayInput.value = `${currDate.getFullYear()}-${(`0${currDate.getMonth() + 1}`).slice(-2)}-${(`0${currDate.getDate()}`).slice(-2)}`;
 const dayLabel = document.getElementById('date-input-label');
-dayLabel.innerText = calendarDays[currDate.getDay()];
+dayLabel.innerText = `${calendarDays[currDate.getDay()]}`;
 
 dayInput.onchange = () => {
   const [year, month, date] = dayInput.value.split('-');
