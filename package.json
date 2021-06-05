@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack",
     "test": "jest",
-    "lint": "eslint --ext js source/src/ && stylelint '**/*.css'",
-    "lint:fix": "eslint --ext js source/src/ --fix && stylelint '**/*.css' --fix"
+    "lint": "eslint --ext js source/src/ __tests__/ && stylelint '**/*.css'",
+    "lint:fix": "eslint --ext js source/src/ __tests__/ --fix && stylelint '**/*.css' --fix"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   "homepage": "https://github.com/cse110-sp21-group3/cse110-sp21-group3#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.14.4",
-    "eslint": "^7.26.0",
+    "eslint": "^7.28.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.23.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
@@ -36,7 +36,8 @@
   },
   "dependencies": {
     "babel-jest": "^27.0.2",
-    "dexie": "^3.0.3"
+    "dexie": "^3.0.3",
+    "eslint-plugin-jest": "^24.3.6"
   },
   "jest": {
     "transform": {

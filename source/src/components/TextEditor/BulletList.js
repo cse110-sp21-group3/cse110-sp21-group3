@@ -145,11 +145,12 @@ class BulletList extends HTMLElement {
 
   /**
    * Added for testing
-   * @returns map between IDs and their dom element 
+   * @returns map between IDs and their dom element
    */
-  getBulletElements(){
+  getBulletElements() {
     return this.listData.bulletElements;
   }
+
   /**
    * Sets the nextID. User should not be setting this unless overriding the automatic
    * method is causing troubles. By default, nextID is set by parsing the existing IDs
