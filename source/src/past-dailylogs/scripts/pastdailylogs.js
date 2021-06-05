@@ -52,8 +52,5 @@ dayInput.onchange = () => {
     currDate.setDate(date); // Set to first day of the month
     currDate.setMonth(month-1); // -1 because input field marks January as 1
     currDate.setFullYear(year);
-
-    console.log(currDate);
-
     updateLogView(getDailyLogUID(currDate));
 };
