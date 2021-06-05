@@ -45,13 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const dayInput = document.getElementById('date-input');
 const currDate = new Date();
-dayInput.value = `${currDate.getFullYear()}-${(`0${currDate.getMonth()}`).slice(-2)}-${(`0${currDate.getDate()}`).slice(-2)}`;
+dayInput.value = `${currDate.getFullYear()}-${(`0${currDate.getMonth()+1}`).slice(-2)}-${(`0${currDate.getDate()}`).slice(-2)}`;
 
 dayInput.onchange = () => {
     const [year, month, date] = dayInput.value.split('-');
     currDate.setDate(date); // Set to first day of the month
-    currDate.setMonth(month); // -1 because input field marks January as 1
+    currDate.setMonth(month-1); // -1 because input field marks January as 1
     currDate.setFullYear(year);
+
+    console.log(currDate);
 
     updateLogView(getDailyLogUID(currDate));
 };
