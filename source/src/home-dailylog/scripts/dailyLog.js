@@ -1,9 +1,7 @@
 import colorThemes from '../../colorThemes.js';
-import { colorStyleKey, habitsKey } from '../../storageKeys.js';
-
-import { getDailyLogUID, journalNameKey, themeKey } from '../../storageKeys.js';
-
-const key = 'dailyLogData';
+import {
+  colorStyleKey, habitsKey, getDailyLogUID, journalNameKey, themeKey,
+} from '../../storageKeys.js';
 
 // set color of website to the theme color
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
@@ -137,8 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     elementName: 'daily-log-bullet',
   });
-  addCurrentDate(); //TODO: Check if we really need these functions
-  storeCurrentDate(); //TODO: Check if we really need these functions
+  addCurrentDate(); // TODO: Check if we really need these functions
+  storeCurrentDate(); // TODO: Check if we really need these functions
   getTitle();
   getTheme();
 

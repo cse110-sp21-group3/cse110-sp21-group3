@@ -40,9 +40,8 @@ export function getMonthlyLogUID(itemType, month, day = null) {
 
 /**
  * Returns the UID for daily logs for `date`
- * @param {Date} date 
+ * @param {Date} date
  */
-export function getDailyLogUID(date){
-  const prefix = 'DL';
+export function getDailyLogUID(date) {
   return `DL${date.getUTCMonth()}-${date.getUTCDate()}-${date.getUTCFullYear()}`;
 }
