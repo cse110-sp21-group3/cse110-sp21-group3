@@ -6,6 +6,8 @@ import { getDailyLogUID } from '../../storageKeys.js';
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
 if (selectedColorStyle === 'null') selectedColorStyle = 'default';
 
+const calendarDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesdsay', 'Thursday', 'Friday', 'Saturday'];
+
 // Set Display CSS Styles
 const root = document.documentElement;
 root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
@@ -46,11 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
 const dayInput = document.getElementById('date-input');
 const currDate = new Date();
 dayInput.value = `${currDate.getFullYear()}-${(`0${currDate.getMonth()+1}`).slice(-2)}-${(`0${currDate.getDate()}`).slice(-2)}`;
+const dayLabel = document.getElementById('date-input-label');
+dayLabel.innerText = calendarDays[currDate.getDay()];
 
 dayInput.onchange = () => {
     const [year, month, date] = dayInput.value.split('-');
     currDate.setDate(date); // Set to first day of the month
     currDate.setMonth(month-1); // -1 because input field marks January as 1
     currDate.setFullYear(year);
+    dayLabel.innerText = calendarDays[currDate.getDay()];
     updateLogView(getDailyLogUID(currDate));
 };

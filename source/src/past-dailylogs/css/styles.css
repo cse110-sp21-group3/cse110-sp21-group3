@@ -92,6 +92,17 @@ body {
   cursor: pointer;
 }
 
+.title {
+  display: flex;
+  align-items: center;
+}
+
+#date-input-label {
+  font-size: xx-large;
+  text-align: center;
+  margin: 1rem;
+}
+
 #bar {
   width: 100vw;
   height: 2rem;
