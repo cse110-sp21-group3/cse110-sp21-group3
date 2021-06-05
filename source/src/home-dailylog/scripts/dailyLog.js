@@ -1,11 +1,13 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey, habitsKey } from '../../storageKeys.js';
 
+import { getDailyLogUID, journalNameKey, themeKey } from '../../storageKeys.js';
+
 const key = 'dailyLogData';
 
 // set color of website to the theme color
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
-if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+if (selectedColorStyle === null) selectedColorStyle = 'default';
 
 // Set Display CSS Styles
 const root = document.documentElement;
@@ -44,10 +46,10 @@ refreshDate.addEventListener('click', () => {
   }
 });
 
-function getSavedBullets() {
+function getSavedBullets(storageKey) {
   // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
   const initialSetup = { 0: [1], 1: ['', false, 'task', 'none', []] };
-  let listDataTree = localStorage.getItem(key);
+  let listDataTree = localStorage.getItem(storageKey);
   if (listDataTree === null) {
     listDataTree = initialSetup;
   } else {
@@ -58,12 +60,12 @@ function getSavedBullets() {
 
 function getTitle() {
   const title = document.querySelector('#header-title');
-  title.innerHTML = localStorage.getItem('journalName');
+  title.innerHTML = localStorage.getItem(journalNameKey);
 }
 
 function getTheme() {
   const themeQuestion = document.querySelector('.question');
-  const theme = localStorage.getItem('theme');
+  const theme = localStorage.getItem(themeKey);
   const text = `Please add what you did related to ${theme} as a theme bullet`;
   themeQuestion.innerHTML = text;
 }
@@ -115,12 +117,14 @@ function toggleHabit(habit) {
  * DOM Content Loaded
  */
 document.addEventListener('DOMContentLoaded', () => {
-  const listDataTree = getSavedBullets();
+  const currDate = new Date();
+  const storageKey = getDailyLogUID(currDate);
+  const listDataTree = getSavedBullets(storageKey);
 
   const list = document.querySelector('bullet-list');
   list.initialiseList({
     saveDataCallback: (data) => {
-      localStorage.setItem(key, JSON.stringify(data));
+      localStorage.setItem(storageKey, JSON.stringify(data));
     },
     nestLimit: 2,
     bulletTree: listDataTree,
@@ -133,8 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     elementName: 'daily-log-bullet',
   });
-  addCurrentDate();
-  storeCurrentDate();
+  addCurrentDate(); //TODO: Check if we really need these functions
+  storeCurrentDate(); //TODO: Check if we really need these functions
   getTitle();
   getTheme();
 

@@ -20,17 +20,17 @@
                 <div class="menu"><img src="../menu-icon.png"></div>
                 <h1 id="header-title">Monthly Log</h1>
                 <div>
-                    <input type="month" class="month-input"/>
-                </div>
-
-                
+                </div>   
             </div>
         </header>    
 
 
         <main>
             <div id="log-container">
-                <div class="events-container"></div>
+                <div id="events">
+                  <input type="month" class="month-input"/>
+                  <div class="events-container"></div>
+                </div>
                 <div class="tasks-container">
                     <div class="subtitle">Tasks</div>
                     <div class="task-wrapper"></div>
@@ -46,7 +46,6 @@
         <script src='components/EventWrapper.js' type="module"></script>
 
         <!-- Import TextEditor(s) -->
-        <script src="../components/TextEditor/Bullet/SimpleBullet.js" type="module"></script>
         <script src="../components/TextEditor/BulletList.js" type="module"></script>
         <script src="../components/TextEditor/Bullet/TaskBullet.js" type="module"></script>
     

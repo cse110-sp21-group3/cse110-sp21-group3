@@ -43,9 +43,6 @@ class TaskBullet extends BaseBullet {
             width: 70%;
         }
         
-        li {
-          list-style-type: none;
-        }
         li ${this.elementName} {
             position: relative;
             left: 2rem;
@@ -98,6 +95,7 @@ class TaskBullet extends BaseBullet {
    * @param {*} bulletAttributes
    * @param {Object} [ storageIndex ]
    * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
+   * @param {Object} [ bulletAttributes.bulletConfigs ]
    */
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);

@@ -136,13 +136,7 @@ class DailyLogBullet extends BaseBullet {
       watchKeys(e.key, false);
     };
 
-    let typeCount = 1;
-    const typeList = ['none', 'task', 'note', 'event', 'theme'];
-    const type = this.shadowRoot.querySelector('.type');
-    type.addEventListener('click', () => {
-      typeCount += 1;
-      this.editContent(bulletParameters.type, typeList[typeCount % typeList.length]);
-    });
+    
   }
 
   /**
@@ -164,6 +158,19 @@ class DailyLogBullet extends BaseBullet {
       this.state[key] = defaultParameters[key];
       this.parameterSetMap[key]((data === null) ? defaultParameters[key] : data[storageIndex[key]]);
     });
+
+    let typeCount = 1;
+    const typeList = ['none', 'task', 'note', 'event', 'theme'];
+    const type = this.shadowRoot.querySelector('.type');
+    if (!this.readOnly){
+      type.addEventListener('click', () => {
+        typeCount += 1;
+        this.editContent(bulletParameters.type, typeList[typeCount % typeList.length]);
+      });
+    } else {
+      const inputText = this.shadowRoot.querySelector('input[type=text]');
+      inputText.setAttribute('placeholder', 'No text here');
+    }
   }
 
   /**

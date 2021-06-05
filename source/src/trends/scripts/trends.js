@@ -3,7 +3,7 @@ import { colorStyleKey, habitsKey } from '../../storageKeys.js';
 
 // set color of website to the theme color
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
-if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+if (selectedColorStyle === null) selectedColorStyle = 'default';
 
 // Set Display CSS Styles
 const root = document.documentElement;
@@ -293,7 +293,7 @@ submitAdd.onclick = () => {
  */
 document.addEventListener('DOMContentLoaded', () => {
   const headerTitle = document.getElementById('header-title');
-  const title = `trends: ${getMonthName(DATE)}`;
+  const title = `Trends: ${getMonthName(DATE)}`;
   headerTitle.innerText = title;
   const trackerBody = document.getElementById('tracker-body');
   // pull from storage the habits of the particular month
