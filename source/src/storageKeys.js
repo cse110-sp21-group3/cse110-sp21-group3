@@ -18,6 +18,7 @@ if (habits === null) {
  * @returns
  */
 export function getMonthlyLogUID(itemType, month, day = null) {
+  // TODO: Add year parameter otherwise two months from different years have the same UID
   const prefix = 'ML';
   const typeID = {
     event: 'ev',
@@ -35,4 +36,13 @@ export function getMonthlyLogUID(itemType, month, day = null) {
       break;
   }
   return uid;
+}
+
+/**
+ * Returns the UID for daily logs for `date`
+ * @param {Date} date 
+ */
+export function getDailyLogUID(date){
+  const prefix = 'DL';
+  return `DL${date.getUTCMonth()}-${date.getUTCDate()}-${date.getUTCFullYear()}`;
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="./css/styles.css">
+  </head>
+  
+  <body>
+        <div class="header">
+            <navbar-elem></navbar-elem>
+            <div class="heading">
+            <div class="menu">
+                <img src="../menu-icon.png">
+            </div>
+            <input type="date" id="date-input" class="pl-title">
+            <div></div>
+            </div>
+            <div id="bar"></div>
+        </div>
+
+        <div class="past-dailylogs-container"><bullet-list></bullet-list</div>
+
+        <!-- Import TextEditor(s) -->
+        <script src="../components/TextEditor/BulletList.js" type="module"></script>
+        <script src="../components/TextEditor/Bullet/DailyLogBullet.js" type="module"></script>
+        <script src="../components/Navbar/navbar.js" type="module"></script>
+        <script src="../components/Menu/menu.js" type="module"></script>
+        
+        <script src="scripts/pastdailylogs.js" type="module"></script>
+    </body>
+
+</html>

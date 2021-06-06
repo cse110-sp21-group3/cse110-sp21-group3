@@ -76,7 +76,7 @@ class Navbar extends HTMLElement {
           <p><a href="../trends/trends.html">habits & trends</a></p>
         </div>
         <div class="nav-component">
-          <p><a>past logs</a></p>
+          <p><a href="../past-dailylogs/past-daily-logs.html">past logs</a></p>
         </div>
         <div class="nav-component">
           <p><a href="../monthly-log/monthlylog.html">monthly log</a></p>
