@@ -11,6 +11,13 @@ const root = document.documentElement;
 root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
+/**
+ * Returns date in yyyy-mm-dd
+ * @param {Date} date
+ */
+function getFormattedDate(date) {
+  return `${date.getFullYear()}-${(`0${date.getMonth() + 1}`).slice(-2)}-${(`0${date.getDate()}`).slice(-2)}`;
+}
 function updateLogView(storageKey) {
   let bulletTree = { 0: [1], 1: ['No Logs Present', false, 'none', 'none', []] };
 
@@ -37,20 +44,28 @@ function updateLogView(storageKey) {
     },
   });
 }
+
+const dayInput = document.getElementById('date-input');
+
+const logDate = new Date();
+logDate.setDate(logDate.getDate() - 1); // Set to yesterday
+dayInput.setAttribute('max', getFormattedDate(logDate)); // Restrict selecting future dates
+
+dayInput.value = getFormattedDate(logDate);
+const dayLabel = document.getElementById('date-input-label');
+dayLabel.innerText = `${calendarDays[logDate.getDay()]}`;
+
 document.addEventListener('DOMContentLoaded', () => {
-  const currDate = new Date();
-  const storageKey = getDailyLogUID(currDate);
+  const yesterdayDate = new Date();
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1); // Set to yesterday
+
+  const storageKey = getDailyLogUID(yesterdayDate);
   updateLogView(storageKey);
 });
 
-const dayInput = document.getElementById('date-input');
-const currDate = new Date();
-dayInput.value = `${currDate.getFullYear()}-${(`0${currDate.getMonth() + 1}`).slice(-2)}-${(`0${currDate.getDate()}`).slice(-2)}`;
-const dayLabel = document.getElementById('date-input-label');
-dayLabel.innerText = `${calendarDays[currDate.getDay()]}`;
-
 dayInput.onchange = () => {
   const [year, month, date] = dayInput.value.split('-');
+  const currDate = new Date();
   currDate.setDate(date); // Set to first day of the month
   currDate.setMonth(month - 1); // -1 because input field marks January as 1
   currDate.setFullYear(year);
