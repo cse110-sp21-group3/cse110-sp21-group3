@@ -10,8 +10,13 @@ Any other tests must be added in `__tests__/`
 
 
 ## Using Linter
-To run linter locally, use the following command:
+Before pushing your commits to remote, it is recommended that you run linters locally so as to avoid faliling pipeline. 
+To check for linting errors, use the command: 
 ```
-npm run lint /path/to/file
+npm run lint
 ```
-Note: Run this command from the root of the repo
+
+You can fix minute errors automatically by using:
+```
+npm run lint:fix
+```
