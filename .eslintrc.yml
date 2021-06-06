@@ -3,8 +3,14 @@ extends:
 
 env:
   browser: true # Added for eslint to allow using DOM objects
+  jest/globals: true
+
 
 rules:
   import/extensions:
     - error
     - js: ignorePackages # Enabling the use of `.js` in import statements
+  
+
+plugins:
+- jest
