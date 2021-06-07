@@ -2,6 +2,7 @@ class Collection extends HTMLElement {
   constructor() {
     super();
     const template = document.createElement('template');
+    this.collectionName = '';
     template.innerHTML = `
         <style>
         :host {
@@ -112,7 +113,6 @@ class Collection extends HTMLElement {
             <span class="close-form">&times;</span>
             <h1 class="textBox-title">collection_name</h1>
             <p class="save">Press ctrl+s to save!<p>
-            <bullet-list></bullet-list>
           </div>
 
         </div>`;
@@ -120,6 +120,43 @@ class Collection extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
+  getSavedBullets() {
+    // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
+    const initialSetup = { 0: [1], 1: ['', false, []] };
+    let listDataTree = localStorage.getItem(this.collectionName);
+    if (listDataTree === null) {
+      listDataTree = initialSetup;
+    } else {
+      listDataTree = JSON.parse(listDataTree);
+    }
+    return listDataTree;
+  }
+
+  openCollection(){
+    let listDataTree = this.getSavedBullets();
+    this.shadowRoot.querySelector('.textBox-title').innerHTML = this.collectionName;
+    this.shadowRoot.querySelector('#modalText').style.display = 'block';
+
+    const bulletList = document.createElement('bullet-list');
+    bulletList.initialiseList({
+      saveDataCallback: (data) => {
+        localStorage.setItem(this.collectionName, JSON.stringify(data));
+      },
+      nestLimit: 1,
+      bulletTree: listDataTree,
+      storageIndex: {
+        value: 0,
+        children: 2,
+        completed: 1,
+      },
+      elementName: 'task-bullet',
+    });
+    this.shadowRoot.querySelector('.modalText-content').appendChild(bulletList);
+  }
+  closeCollection(){
+    this.shadowRoot.querySelector('bullet-list').remove();
+    this.shadowRoot.querySelector('#modalText').style.display = 'none';
+  }
   /**
    * Collection name
    */
@@ -129,6 +166,7 @@ class Collection extends HTMLElement {
 
   set collection(collection) {
     // Set title of grid and id of div to collection
+    this.collectionName = collection;
     const title = this.shadowRoot.querySelector('#title');
     title.innerHTML = collection;
     const grid = this.shadowRoot.querySelector('.collection');

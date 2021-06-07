@@ -10,21 +10,6 @@ const root = document.documentElement;
 root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
-/*
-** Bulleting work
-*/
-function getSavedBullets(k) {
-  // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
-  const initialSetup = { 0: [1], 1: ['', false, []] };
-  let listDataTree = localStorage.getItem(k);
-  if (listDataTree === null) {
-    listDataTree = initialSetup;
-  } else {
-    listDataTree = JSON.parse(listDataTree);
-  }
-  return listDataTree;
-}
-
 /**
  * Delete collection
  */
@@ -42,47 +27,22 @@ function deleteCollection(tracker, k) {
  * Create collection tracker for particular collection
  */
 function addCollection(collection) {
-  const tracker = document.createElement('collection-elem');
-  tracker.collection = collection;
+  const collectionElem = document.createElement('collection-elem');
+  collectionElem.collection = collection;
   // TODO: show delete button when hovering over element
-  const deleteCollectionBtn = tracker.shadowRoot.querySelector('.delete-tracker');
-  const trackerBody = document.getElementById('tracker-body');
+  const deleteCollectionBtn = collectionElem.shadowRoot.querySelector('.delete-tracker');
 
-  const wbox = tracker.shadowRoot.querySelector('#collection-grid');
-  wbox.addEventListener('click', () => {
-    tracker.shadowRoot.querySelector('.textBox-title').innerHTML = collection;
-    tracker.shadowRoot.querySelector('#modalText').style.display = 'block'; // Show BulletList Modal
-
-    const key = collection;
-    const listDataTree = getSavedBullets(key);
-
-    const list = tracker.shadowRoot.querySelector('bullet-list');
-    list.initialiseList({
-      saveDataCallback: (data) => {
-        localStorage.setItem(key, JSON.stringify(data));
-      },
-      nestLimit: 1,
-      bulletTree: listDataTree,
-      storageIndex: {
-        value: 0,
-        children: 2,
-        completed: 1,
-      },
-      elementName: 'task-bullet',
-      bulletConfigs: {
-      },
-    });
-  });
+  const wbox = collectionElem.shadowRoot.querySelector('#collection-grid');
+  wbox.addEventListener('click', () => collectionElem.openCollection());
 
   // Close BulletList Modal
-  const closeText = tracker.shadowRoot.querySelector('.close-form');
-  closeText.addEventListener('click', () => {
-    tracker.shadowRoot.querySelector('#modalText').style.display = 'none';
-  });
+  const closeText = collectionElem.shadowRoot.querySelector('.close-form');
+  closeText.addEventListener('click', () => collectionElem.closeCollection());
 
-  trackerBody.append(tracker);
+  const collectionBody = document.getElementById('tracker-body');
+  collectionBody.append(collectionElem);
   deleteCollectionBtn.addEventListener('click', () => {
-    deleteCollection(tracker, collection);
+    deleteCollection(collectionElem, collection);
   });
 }
 
