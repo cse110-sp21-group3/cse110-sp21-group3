@@ -60,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
 /**
  * Open and close a modal/form
  */

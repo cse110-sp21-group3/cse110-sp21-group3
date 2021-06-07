@@ -142,7 +142,7 @@ class BulletList extends HTMLElement {
         listAttributes.saveDataCallback(this.listData.tree);
         this.state.unsaved = false;
       }
-    }
+    };
     this.state.nestLimit = listAttributes.nestLimit;
     this.storageIndex = listAttributes.storageIndex;
     this.elementName = listAttributes.elementName;
@@ -153,16 +153,16 @@ class BulletList extends HTMLElement {
 
     window.onbeforeunload = () => {
       this.updateCallbacks.saveData();
-    }
+    };
   }
 
-  connectedCallback(){    
+  connectedCallback() {
     this.autoSaveHandler = setInterval(() => {
       this.updateCallbacks.saveData();
-    }, autoSaveInterval)
+    }, autoSaveInterval);
   }
 
-  disconnectedCallback(){
+  disconnectedCallback() {
     clearInterval(this.autoSaveHandler);
   }
 

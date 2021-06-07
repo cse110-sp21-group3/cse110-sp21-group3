@@ -132,8 +132,8 @@ class Collection extends HTMLElement {
     return listDataTree;
   }
 
-  openCollection(){
-    let listDataTree = this.getSavedBullets();
+  openCollection() {
+    const listDataTree = this.getSavedBullets();
     this.shadowRoot.querySelector('.textBox-title').innerHTML = this.collectionName;
     this.shadowRoot.querySelector('#modalText').style.display = 'block';
 
@@ -153,10 +153,12 @@ class Collection extends HTMLElement {
     });
     this.shadowRoot.querySelector('.modalText-content').appendChild(bulletList);
   }
-  closeCollection(){
+
+  closeCollection() {
     this.shadowRoot.querySelector('bullet-list').remove();
     this.shadowRoot.querySelector('#modalText').style.display = 'none';
   }
+
   /**
    * Collection name
    */
