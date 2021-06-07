@@ -60,14 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-/**
- * Menu
- */
-const flyoutMenu = document.querySelector('#nav');
-
-function showMenu() {
-  flyoutMenu.classList.add('show');
-}
 
 /**
  * Open and close a modal/form
@@ -82,12 +74,6 @@ function closeForm(form) {
   f.style.display = 'none';
   f.querySelector('#collection').value = '';
 }
-
-/**
- * Hamburger menu button
- */
-const menuButton = document.querySelector('.menu');
-menuButton.addEventListener('click', showMenu, false);
 
 /**
  * Add new collection button
