@@ -12,11 +12,6 @@ const root = document.documentElement;
 root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
-function archiveData() {
-  // add data from 'dailyLogData' to 'dailyLogArchive' (store existing bullets)
-  // clear 'dailyLogData' (clear current days log)
-}
-
 function addCurrentDate() {
   // add current date to title
   const titleDate = document.querySelector('.date');
@@ -24,25 +19,6 @@ function addCurrentDate() {
   const currentDate = DATE.toLocaleString().split(',')[0];
   titleDate.innerHTML = currentDate;
 }
-
-function storeCurrentDate() {
-  const DATE = new Date();
-  const day = DATE.getDate();
-  localStorage.setItem('DAY', day);
-}
-
-const refreshDate = document.querySelector('.refresh-date');
-refreshDate.addEventListener('click', () => {
-  const DATE = new Date();
-  const currDay = DATE.getDate();
-  const storedDay = Number(localStorage.getItem('DAY'));
-
-  // if there is no date stored or the date stored is different from the current day,
-  // this means that we are in a new day, so clear the daily log
-  if (storedDay === 0 || currDay !== storedDay) {
-    archiveData();
-  }
-});
 
 function getSavedBullets(storageKey) {
   // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
@@ -135,8 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     elementName: 'daily-log-bullet',
   });
-  addCurrentDate(); // TODO: Check if we really need these functions
-  storeCurrentDate(); // TODO: Check if we really need these functions
+  addCurrentDate();
   getTitle();
   getTheme();
 
