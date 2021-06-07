@@ -26,7 +26,7 @@ self.addEventListener('fetch', (event) => {
       }
 
       return fetch(event.request).then((res) => {
-                if (!res || res.status !== 200 || res.type !== 'basic'){
+        if (!res || res.status !== 200 || res.type !== 'basic'){
                     return res;
                 }
 
