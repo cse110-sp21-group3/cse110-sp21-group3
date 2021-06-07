@@ -1,7 +1,7 @@
 var CACHE_NAME = 'bujo-cache';
 var URLS_TO_CACHE = [
     '/',
-    'https://theme-bujo.netlify.app',
+  'https://theme-bujo.netlify.app',
 ];
 
 self.addEventListener('install', (event) => {
