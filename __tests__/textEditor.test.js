@@ -49,14 +49,14 @@ describe('Basic tests for TextEditor', () => {
     const lastBulletID = bList.findLastBulletInside(1);
     expect(lastBulletID).toBe(1);
   });
-  test('Bullet Nesting', () => {
+  test('Test Bullet Nesting', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData.elementName);
     topLevelBullets[1].nestCurrBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject({
       0: [1], 1: ['sample', [2]], 2: ['sample2', [3]], 3: ['sample3', []],
     });
   });
-  test('Bullet Creation', () => {
+  test('Test Bullet Creation', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData.elementName);
     topLevelBullets[0].createBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject({
@@ -67,7 +67,7 @@ describe('Basic tests for TextEditor', () => {
       4: ['', []],
     });
   });
-  test('Bullet Editing', () => {
+  test('Test Bullet Editing', () => {
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
     const expectedValue = 'expected Sample';
     bulletElements[4].editContent('value', expectedValue);
@@ -81,7 +81,7 @@ describe('Basic tests for TextEditor', () => {
       },
     );
   });
-  test('Bullet Deletion', () => {
+  test('Test Bullet Deletion', () => {
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
     bulletElements[4].deleteBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
@@ -128,7 +128,7 @@ describe('Tests for Bullet Dataset2', () => {
     expect(topLevelBullets).toHaveLength(3);
   });
 
-  test('Bullet Nesting for dataset 2', () => {
+  test('Test Bullet Nesting', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData2.elementName);
     topLevelBullets[1].nestCurrBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
@@ -163,7 +163,7 @@ describe('Tests for Bullet Dataset2', () => {
         3: ['test3', []],
     });
   });
-  test('Bullet Creation', () => {
+  test('Test Bullet Creation', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData.elementName);
     topLevelBullets[0].createBullet();
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
@@ -233,7 +233,6 @@ describe('Tests for Bullet Dataset3', () => {
   test('Test Deletion of Bullet with Nested Elements', () => {
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
     bulletElements[2].deleteBullet();
-    console.log(document.querySelector('bullet-list').getBulletTree());
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
         0: [1,6], 
@@ -252,7 +251,6 @@ describe('Tests for Bullet Dataset3', () => {
   test('Test Bullet Creation into Nest', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData3.elementName);
     topLevelBullets[0].createBullet();
-    console.log(document.querySelector('bullet-list').getBulletTree());
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
     const expectedValue = 'New Bullet';
     bulletElements[7].editContent('value', expectedValue);
@@ -262,7 +260,43 @@ describe('Tests for Bullet Dataset3', () => {
         1: ['a', []], 
         7: ['New Bullet', []],
         6: ['f', []],
-        
+    });
+  });
+  test('Test Bullet Nesting for first bullet', () => {
+    const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData3.elementName);
+    topLevelBullets[1].nestCurrBullet();
+    expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
+      {
+        0: [1, 6], 
+        1: ['a', [7]], 
+        7: ['New Bullet', []],
+        6: ['f', []],
+    });
+  });
+  test('Test deleting first bullet with nested elements', () => {
+    const bulletElements = document.querySelector('bullet-list').getBulletElements();
+    bulletElements[7].deleteBullet();
+    expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
+      {
+        0: [1, 6], 
+        1: ['a', []], 
+        6: ['f', []],
+    });
+  });
+  test('Test nesting elements with null parent', () => {
+    const bulletElements = document.querySelector('bullet-list').getBulletElements();
+    const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData3.elementName);
+    topLevelBullets[0].createBullet();
+    const expectedValue = 'e';
+    bulletElements[8].editContent('value', expectedValue);
+    topLevelBullets[1].nestCurrBullet();
+    bulletElements[8].editContent('value', '');
+    expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
+      {
+        0: [1, 8], 
+        1: ['a', []], 
+        8: ['', [6]],
+        6: ['f', []],
     });
   });
 });
