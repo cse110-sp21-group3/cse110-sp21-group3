@@ -137,7 +137,7 @@ describe('Tests for Bullet Dataset2', () => {
         1: ['test', [2]], 
         2: ['test2', []], 
         3: ['test3', []],
-    });
+      });
   });
   test('Test Double Nesting of bullet', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData2.elementName);
