@@ -22,6 +22,12 @@ observer.observe(document.body, config);
 
 
 function setup() {
+  let header = document.querySelector('.header_content');
+  
+  let bodyd = document.body.getElementsByTagName('main')[0];
+  bodyd.style.display = "none";
+  
+  header.style.display = "none";
   let selectedColorStyle = localStorage.getItem(colorStyleKey);
   if (selectedColorStyle === 'null') selectedColorStyle = 'default';
 
@@ -48,5 +54,9 @@ function setup() {
 
     journalContainer.appendChild(journalDisplayContainer);
   });
+  
+  bodyd.style.display = "block";
+  
+  header.style.display = "block";
 }
 setup();

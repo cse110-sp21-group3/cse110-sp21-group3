@@ -14,12 +14,19 @@ export default class collectionsview extends abstractview{
         "../src/components/Menu/menu.js"];
         return sourcelist;
     }
+    getStyles() {
+      let sourcelist = ["../src/settings/css/styles.css"]; 
+        return sourcelist;
+    }
     getHead() {
         return `
-        <meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Collections</title>
+        <h1 id="header-title">Collections</h1>
+            <div id="add-div">
+              <div id="add">
+                <p>+</p>
+              </div>
+            </div>
+			  <div id="bar"></div>
 		<link rel="stylesheet" href="../src/collections/css/styles.css">
         `
     }

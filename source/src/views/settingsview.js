@@ -7,13 +7,15 @@ export default class extends abstractview{
     }
     getHead() {
         return `
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../src/settings/css/styles.css">
+        
+        <h1 id="header-title">settings</h1>
         
         `
     }
+    getStyles() {
+        let sourcelist = ["../src/settings/css/styles.css"]; 
+          return sourcelist;
+      }
     getScripts() {
         let sourcelist = ["../src/journal-creation/components/JournalIcon.js",
             "../src/settings/scripts/journalPicker.js",
@@ -25,17 +27,7 @@ export default class extends abstractview{
     }
     getBody () {
         return `
-        <navbar-elem></navbar-elem>
-        <div class="header">
-            
-            <div class="heading">
-              <div class="menu">
-                  <img src="../src/menu-icon.png">
-              </div>
-              <h1 id="header-title">settings</h1>
-              <div></div>
-            </div>
-          </div>
+        
           <div id="journal-name">
               <p id="journal-name-title">Journal Name</p>
               <span id="journal-name-edit" contenteditable></span>

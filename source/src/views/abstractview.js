@@ -5,7 +5,9 @@ export default class {
     getScripts() {
         return "";
     }
-    
+    getStyles() {
+        return "";
+    }
     getHead() {
         return "";
     }

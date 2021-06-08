@@ -11,7 +11,7 @@ export default class trendview extends abstractview{
         "../src/trends/scripts/trends.js",
         "../src/trends/components/tracker.js",
         "../src/trends/components/grid.js"];
-        
+       
         return sourcelist;
     }
     getHead() {
@@ -20,11 +20,12 @@ export default class trendview extends abstractview{
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Trends</title>
-        <link rel="stylesheet" href="../src/trends/css/styles.css">
+        <link rel="stylesheet" href="../src/trends/css/styles.css"></link>
         `
     }
     getBody () {
         return `
+        
         <navbar-elem></navbar-elem>
     <div class="header">
       <div class="heading">

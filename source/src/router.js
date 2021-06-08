@@ -1,61 +1,124 @@
 import Settings from './views/settingsview.js';
-import JournalPicker from './views/journal-pickerview.js';
-import NameJournal from './views/name-journalview.js';
-import ThemeCreation from './views/theme-creationview.js';
 import Trends from './views/trendview.js';
 import Home from './views/dailylogview.js';
 import Collections from './views/collectionsview.js';
 import MonthlyLog from './views/monthly-logviews.js';
-const body = document.body;
+const body = document.body.getElementsByTagName('main')[0];
 
+const header = document.querySelector('.header_content');
+const header_title = document.body.getElementByID('.header-title');
+console.log(header);
 export const router = {};
 //set the state 
-router.setState = async (state, statePopped) => {
+router.setState =  async (state, statePopped) => {
+    console.log(document.body.id == state + '-body');
+    if(document.body.id == state + '-body') {
+        return;
+    }
+    body.style.display = "none";
+    header.style.display = "none";
+    //header_title.style.display = "none";
+    
     document.body.id = "";
     let current_view;
-    let sourcelist;
+    let title;
     switch (state) {
         case 'settings':
             current_view = new Settings();
-            break;
-        case 'journal-picker':
-            current_view = new JournalPicker();
-            break;
-        case "name-journal":
-            current_view = new NameJournal();
-            break;
-        case 'theme-creation':           
-            current_view = new ThemeCreation();
-            break;
+            title = "Settings";
+            header_title.innerHTML = "Settings";
+            break;      
         case 'trends':
             current_view = new Trends();
+            title = 'Trends';
             break;
         case 'home':
             current_view = new Home();
+            title = 'home';
             break;
         case 'monthly-log':
             current_view = new MonthlyLog();
+            title = 'Monthly Log';
             break;
         case 'collections':
             current_view = new Collections();
+            title = 'Collection';
             break;
         default:
             current_view = new Home();
+            title = 'Home';
         }
         //this adds the css and other stuff for the head
-        document.head.innerHTML = await current_view.getHead();
+     
+        
+        
+        let styleList =   await current_view.getStyles();
+        let newCSS;
+        styleList.forEach(source => {
+            let sources = document.createElement("link");
+                //sources.classList.add = "dummy"
+                sources.setAttribute("rel", "stylesheet");
+                sources.setAttribute("href", source);
+                sources.setAttribute("temp_keep", "true");
+                newCSS = sources;
+                document.head.appendChild(sources);
+        });
+        
+
+        let removed =  document.head.getElementsByTagName("link");
+        console.log(removed);
+        if (removed) {
+            Array.from(removed).forEach(remove => {
+                if (!(remove.getAttribute("keep") == "true" || remove.getAttribute("temp_keep") == "true")) {
+                    document.head.removeChild(remove);
+                }
+                
+            });
+            Array.from(removed).forEach(remove => {
+                if (remove.getAttribute("temp_keep") == "true") {
+                    remove.setAttribute("temp_keep", "false");
+                }
+                
+            });
+        }
+        removed =  document.body.getElementsByTagName("script");
+        console.log(removed);
+        if (removed) {
+            Array.from(removed).forEach(remove => {
+                console.log(remove);
+                if (remove.getAttribute("keep") != "true") {
+                    document.body.removeChild(remove);
+                }
+                
+            });
+            
+        }
+        
+        let Updated = false;
+        while (!Updated) {
+            console.log(newCSS);
+            console.log(document.head.getElementsByTagName("link")[1]);
+            console.log((newCSS=== document.head.getElementsByTagName("link")[1]));
+            if (newCSS== document.head.getElementsByTagName("link")[1]) {
+                console.log("plz run now");
+                Updated= true;
+            }
+        }
         //this adds the html 
-        document.body.innerHTML = await current_view.getBody();
+        body.innerHTML =  await current_view.getBody();
+        header.innerHTML = await current_view.getHead();
+        console.log(body);
         //this adds the scripts
         let sourceList =  await current_view.getScripts();
         sourceList.forEach(source => {
             let sources = document.createElement("script");
-                sources.classList.add = "forthispage";
+                sources.setAttribute("keep", "false");
                 sources.setAttribute("src", source);
                 sources.setAttribute("type", "module");
+                sources.classList.add = "forthispage";
                 document.body.appendChild(sources);
         });
-
+        
         //for event listners
         document.body.id = state + '-body';
 
@@ -65,6 +128,7 @@ router.setState = async (state, statePopped) => {
             pushToHistory(state);
             }
         }
+        
       
 }
 /**
@@ -93,4 +157,4 @@ export function pushToHistory(state) {
             history.pushState({}, '', './');
     }
     return history;
-  }
+}

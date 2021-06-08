@@ -10,7 +10,7 @@ const callback = function (mutations) {
 
   
   mutations.forEach(function (mutation) {
-    if (document.body.id == 'settings-body') {
+    if (document.body.id == 'settings-body' && oldbodyid != 'settings-body') {
       
       oldbodyid = document.body.id;
       
@@ -24,6 +24,13 @@ observer.observe(document.body, config);
 
 //document.addEventListener('DOMContentLoaded',setup());
 function setup() {
+  let header = document.querySelector('.header_content');
+  
+  let bodyd = document.body.getElementsByTagName('main')[0];
+  bodyd.style.display = "none";
+  
+  header.style.display = "none";
+
   journalNameEdit = document.getElementById('journal-name-edit');
   journalThemeEdit = document.getElementById('journal-theme-edit');
   saveBtn = document.getElementById('save')
@@ -42,6 +49,10 @@ function setup() {
   saveBtn.addEventListener('click', () => {
     saveInputs();
   });
+
+  bodyd.style.display = "block";
+  
+  header.style.display = "block";
 }
 
 

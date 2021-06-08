@@ -103,7 +103,12 @@ function toggleHabit(habit) {
  * DOM Content Loaded
  */
 function setup() {
-
+  let header = document.querySelector('.header_content');
+  
+  let bodyd = document.body.getElementsByTagName('main')[0];
+  bodyd.style.display = "none";
+  
+  header.style.display = "none";
   root = document.documentElement;
   root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
   root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
@@ -164,13 +169,27 @@ function setup() {
     });
     habitBody.appendChild(habitElem);
   });
+
+  bodyd.style.display = "block";
+  header.style.display = "block";
+  
+      
 }
-setTimeout(() => {  setup()}, 30);
-let oldbodyid = document.body.id;
+
+let firstTime = false;
+while (!firstTime) {
+  if(document.querySelector(".tooltiptext") != null) {
+    setup();
+    firstTime = true;
+  }
+}
+let oldbodyid = 'home-body';
 const callback = function (mutations) {
   
   mutations.forEach(function (mutation) {
-    if (document.body.id == 'home-body') {
+    console.log(oldbodyid);
+    console.log(document.body.id);
+    if (document.body.id == 'home-body'&&oldbodyid != 'home-body') {
       
       oldbodyid = document.body.id;
       console.log("home page script reload");
