@@ -3,27 +3,27 @@ const URLS_TO_CACHE = [
   'https://deploy-preview-55--theme-bujo.netlify.app/',
 ];
 
-self.addEventListener('install', (event) => {
+window.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Opened cache');
+      //console.log('Opened cache');
       return cache.addAll(URLS_TO_CACHE);
     }),
   );
 });
 
-self.addEventListener('activate', (event) => {
+window.addEventListener('activate', (event) => {
   event.waitUntil(clients.claim());
 });
 
-self.addEventListener('fetch', (event) => {
+window.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((res) => {
       if (res) {
         return res;
       }
 
-      return fetch(event.request).then((res) => {
+      return fetch(event.request).then(() => {
         if (!res || res.status !== 200 || res.type !== 'basic') {
           return res;
         }
