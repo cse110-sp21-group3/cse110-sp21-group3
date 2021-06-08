@@ -230,7 +230,7 @@ describe('Tests for Bullet Dataset3', () => {
     const lastBulletID = bList.findLastBulletInside(2);
     expect(lastBulletID).toBe(5);
   });
-  test('Test Deletion of Bullet with Nested Elements', () => {
+  test('Test deletion of Bullet with Nested Elements', () => {
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
     bulletElements[2].deleteBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
@@ -247,7 +247,7 @@ describe('Tests for Bullet Dataset3', () => {
     const nextnextBulletID = bList.findNextBulletDown(6);
     expect(nextnextBulletID).toBe(null);
   });
-  test('Test Bullet Creation into Nest', () => {
+  test('Test bullet Creation into Nest', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData3.elementName);
     topLevelBullets[0].createBullet();
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
