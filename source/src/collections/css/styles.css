@@ -148,6 +148,7 @@ body {
 
 #add:hover {
   background-color: #8f8f8f;
+  cursor: pointer;
 }
 
 #add p {
