@@ -6,7 +6,7 @@ const URLS_TO_CACHE = [
 window.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      //console.log('Opened cache');
+      // console.log('Opened cache');
       return cache.addAll(URLS_TO_CACHE);
     }),
   );
@@ -23,18 +23,18 @@ window.addEventListener('fetch', (event) => {
         return res;
       }
 
-      return fetch(event.request).then((res) => {
-        if (!res || res.status !== 200 || res.type !== 'basic') {
-          return res;
+      return fetch(event.request).then((response) => {
+        if (!response || response.status !== 200 || response.type !== 'basic') {
+          return response;
         }
 
-        const responseToCache = res.clone();
+        const responseToCache = response.clone();
 
         caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, responseToCache);
         });
 
-        return res;
+        return response;
       });
     }),
   );
