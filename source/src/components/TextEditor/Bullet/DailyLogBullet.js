@@ -114,8 +114,8 @@ class DailyLogBullet extends BaseBullet {
       's', // save
       'c', // complete & uncomplete toggle (strikethrough, remove strikethrough)
       'i', // inspiration (italics)
-      'p', // priority (bold)
-      'o', // regular font style
+      'b', // priority (bold)
+      'r', // regular font style
       'ArrowUp',
       'ArrowDown',
     ];
@@ -224,9 +224,9 @@ class DailyLogBullet extends BaseBullet {
   keyDownListener() {
     if (this.keysPressed.Control && this.keysPressed.c) {
       this.editContent(bulletParameters.completed, !this.state.completed);
-    } else if (this.keysPressed.Control && this.keysPressed.o) {
+    } else if (this.keysPressed.Control && this.keysPressed.r) {
       this.editContent(bulletParameters.modifier, 'none');
-    } else if (this.keysPressed.Control && this.keysPressed.p) {
+    } else if (this.keysPressed.Control && this.keysPressed.b) {
       this.editContent(bulletParameters.modifier, 'priority');
     } else if (this.keysPressed.Control && this.keysPressed.i) {
       this.editContent(bulletParameters.modifier, 'inspiration');

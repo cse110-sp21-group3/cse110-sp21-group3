@@ -153,12 +153,13 @@ export default class Bullet extends HTMLElement {
 
   // Keyboard Listeners
   baseKeydownListener(e) {
-    if (!this.readOnly && this.keysPressed.Tab) {
+    if (!this.readOnly && this.keysPressed.Shift && this.keysPressed.Tab) {
+      e.preventDefault();
+      this.exitSingleNesting(e);
+    } else if (!this.readOnly && this.keysPressed.Tab) {
       e.preventDefault();
       this.nestCurrBullet();
-    } else if (!this.readOnly && this.keysPressed.Shift && this.keysPressed.Enter) {
-      this.exitSingleNesting(e);
-    } else if (!this.readOnly && this.keysPressed.Control && this.keysPressed.s) {
+    } else if (this.keysPressed.Control && this.keysPressed.s) {
       e.preventDefault();
       this.updateCallbacks.saveData();
     } else if (this.keysPressed.ArrowUp) {
