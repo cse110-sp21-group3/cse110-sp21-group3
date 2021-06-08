@@ -170,3 +170,8 @@ body {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.saving {
+  margin-top: 0.5rem;
+  font-size: x-small;
+}

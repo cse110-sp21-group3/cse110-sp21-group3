@@ -235,3 +235,8 @@ tracker-elem {
 
   color: rgba(239, 68, 68, var(--tw-text-opacity));
 }
+
+.saving {
+  font-size: x-small;
+  text-align: center;
+}

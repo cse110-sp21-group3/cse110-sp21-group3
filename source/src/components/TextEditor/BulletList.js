@@ -66,6 +66,9 @@ class BulletList extends HTMLElement {
         const sourceIndex = sibblingsOrder.indexOf(sourceID);
         sibblingsOrder.splice(sourceIndex + 1, 0, newBullet.uniqueID); // Save in tree (structure)
         this.state.unsaved = true;
+        
+        const saving = document.querySelector('.saving');
+        saving.innerHTML = 'All Changes Saved';
 
         this.listData.bulletElements[newBullet.uniqueID] = newBullet; // Save in bulletElements
         this.listData.parents[newBullet.uniqueID] = parentID; // Save in parents
@@ -92,15 +95,23 @@ class BulletList extends HTMLElement {
 
         delete this.listData.bulletElements[bulletID];
         delete this.listData.parents[bulletID];
+
+        const saving = document.querySelector('.saving');
+        saving.innerHTML = 'All Changes Saved';
+
         return true;
       },
       editContent: (parameter, bulletID, newValue) => {
         this.state.unsaved = true;
         this.listData.tree[bulletID][this.storageIndex[parameter]] = newValue;
+        const saving = document.querySelector('.saving');
+        saving.innerHTML = 'Saving...';
       },
       nestCurrBullet: (bulletID, newParentID, forward) => {
         this.state.unsaved = true;
         const oldParentID = this.listData.parents[bulletID];
+        const saving = document.querySelector('.saving');
+        saving.innerHTML = 'Saving...';
         // Remove from parent
         let sibblingsOrder;
         if (oldParentID === null) sibblingsOrder = this.listData.tree[TOP_LEVEL_ORDER_ID];
@@ -141,6 +152,8 @@ class BulletList extends HTMLElement {
       if (this.state.unsaved) {
         listAttributes.saveDataCallback(this.listData.tree);
         this.state.unsaved = false;
+        const saving = document.querySelector('.saving');
+        saving.innerHTML = 'All Changes Saved';
       }
     };
     this.state.nestLimit = listAttributes.nestLimit;
