@@ -139,7 +139,7 @@ export default class Bullet extends HTMLElement {
     }
 
     this.updateCallbacks.nestCurrBullet(this.uniqueID, grandParentID, false);
-    this.transferFocusTo(this);
+    this.focus(); // Reset focus
   }
 
   deleteBullet() {
