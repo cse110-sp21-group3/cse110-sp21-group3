@@ -11,14 +11,14 @@ const bulletData = {
 const bulletData2 = {
   elementName: 'simple-bullet',
   tree: {
-    0: [1, 2, 3], 1: ['test', []],2: ['test2', []], 3: ['test3', []],
+    0: [1, 2, 3], 1: ['test', []], 2: ['test2', []], 3: ['test3', []],
   },
   nestLimit: 2,
 };
 const bulletData3 = {
   elementName: 'simple-bullet',
   tree: {
-    0: [1, 2, 6], 1: ['a', []],2: ['b', [3]], 3: ['c', [4]], 4: ['d', [5]], 5: ['e', []], 6: ['f', []],
+    0: [1, 2, 6], 1: ['a', []], 2: ['b', [3]], 3: ['c', [4]], 4: ['d', [5]], 5: ['e', []], 6: ['f', []],
   },
   nestLimit: 3,
 };
@@ -118,7 +118,6 @@ describe('Tests for Bullet Dataset2', () => {
       },
       elementName: bulletData2.elementName,
     });
-    
   });
   afterAll(() => {
     document.querySelector('bullet-list').remove();
@@ -133,22 +132,24 @@ describe('Tests for Bullet Dataset2', () => {
     topLevelBullets[1].nestCurrBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1, 3], 
-        1: ['test', [2]], 
-        2: ['test2', []], 
+        0: [1, 3],
+        1: ['test', [2]],
+        2: ['test2', []],
         3: ['test3', []],
-    });
+      },
+    );
   });
   test('Test Double Nesting of bullet', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData2.elementName);
     topLevelBullets[1].nestCurrBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1], 
-        1: ['test', [2,3]], 
-        2: ['test2', []], 
+        0: [1],
+        1: ['test', [2, 3]],
+        2: ['test2', []],
         3: ['test3', []],
-    });
+      },
+    );
   });
   test('Test Nested Bullet Editing', () => {
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
@@ -156,11 +157,12 @@ describe('Tests for Bullet Dataset2', () => {
     bulletElements[2].editContent('value', expectedValue);
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1], 
-        1: ['test', [2,3]], 
-        2: ['Edited Bullet', []], 
+        0: [1],
+        1: ['test', [2, 3]],
+        2: ['Edited Bullet', []],
         3: ['test3', []],
-    });
+      },
+    );
   });
   test('Test Bullet Creation', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData.elementName);
@@ -170,23 +172,25 @@ describe('Tests for Bullet Dataset2', () => {
     bulletElements[4].editContent('value', expectedValue);
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1,4], 
-        1: ['test', [2,3]], 
-        2: ['Edited Bullet', []], 
+        0: [1, 4],
+        1: ['test', [2, 3]],
+        2: ['Edited Bullet', []],
         3: ['test3', []],
         4: ['Bullet 4', []],
-    });
+      },
+    );
   });
   test('Test Nested Bullet Deletion', () => {
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
     bulletElements[3].deleteBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1,4], 
-        1: ['test', [2]], 
-        2: ['Edited Bullet', []], 
+        0: [1, 4],
+        1: ['test', [2]],
+        2: ['Edited Bullet', []],
         4: ['Bullet 4', []],
-    });
+      },
+    );
   });
   test('Test finding last bullet inside nest', () => {
     const bList = document.querySelector('bullet-list');
@@ -215,7 +219,6 @@ describe('Tests for Bullet Dataset3', () => {
       },
       elementName: bulletData3.elementName,
     });
-    
   });
   afterAll(() => {
     document.querySelector('bullet-list').remove();
@@ -235,10 +238,11 @@ describe('Tests for Bullet Dataset3', () => {
     bulletElements[2].deleteBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1,6], 
-        1: ['a', []], 
+        0: [1, 6],
+        1: ['a', []],
         6: ['f', []],
-    });
+      },
+    );
   });
   test('Test finding next bullet down', () => {
     const bList = document.querySelector('bullet-list');
@@ -255,32 +259,35 @@ describe('Tests for Bullet Dataset3', () => {
     bulletElements[7].editContent('value', expectedValue);
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1,7, 6], 
-        1: ['a', []], 
+        0: [1, 7, 6],
+        1: ['a', []],
         7: ['New Bullet', []],
         6: ['f', []],
-    });
+      },
+    );
   });
   test('Test Bullet Nesting for first bullet', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData3.elementName);
     topLevelBullets[1].nestCurrBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1, 6], 
-        1: ['a', [7]], 
+        0: [1, 6],
+        1: ['a', [7]],
         7: ['New Bullet', []],
         6: ['f', []],
-    });
+      },
+    );
   });
   test('Test deleting first bullet with nested elements', () => {
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
     bulletElements[7].deleteBullet();
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1, 6], 
-        1: ['a', []], 
+        0: [1, 6],
+        1: ['a', []],
         6: ['f', []],
-    });
+      },
+    );
   });
   test('Test nesting elements with null parent', () => {
     const bulletElements = document.querySelector('bullet-list').getBulletElements();
@@ -292,10 +299,11 @@ describe('Tests for Bullet Dataset3', () => {
     bulletElements[8].editContent('value', '');
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1, 8], 
-        1: ['a', []], 
+        0: [1, 8],
+        1: ['a', []],
         8: ['', [6]],
         6: ['f', []],
-    });
+      },
+    );
   });
 });
