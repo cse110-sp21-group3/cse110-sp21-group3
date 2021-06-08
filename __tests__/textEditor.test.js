@@ -123,11 +123,11 @@ describe('Tests for Bullet Dataset2', () => {
   afterAll(() => {
     document.querySelector('bullet-list').remove();
   });
+
   test('Test number of top level bullets', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData2.elementName);
     expect(topLevelBullets).toHaveLength(3);
   });
-
   test('Test Bullet Nesting', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData2.elementName);
     topLevelBullets[1].nestCurrBullet();
@@ -139,7 +139,6 @@ describe('Tests for Bullet Dataset2', () => {
         3: ['test3', []],
     });
   });
-
   test('Test Double Nesting of bullet', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData2.elementName);
     topLevelBullets[1].nestCurrBullet();
@@ -221,6 +220,7 @@ describe('Tests for Bullet Dataset3', () => {
   afterAll(() => {
     document.querySelector('bullet-list').remove();
   });
+
   test('Test number of top level bullets', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData3.elementName);
     expect(topLevelBullets).toHaveLength(3);
@@ -247,7 +247,6 @@ describe('Tests for Bullet Dataset3', () => {
     const nextnextBulletID = bList.findNextBulletDown(6);
     expect(nextnextBulletID).toBe(null);
   });
-  
   test('Test Bullet Creation into Nest', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData3.elementName);
     topLevelBullets[0].createBullet();
