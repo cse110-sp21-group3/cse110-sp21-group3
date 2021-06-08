@@ -112,7 +112,7 @@ class DailyLogBullet extends BaseBullet {
       'Shift',
       'Control',
       's', // save
-      'c', // complete & uncomplete toggle (strikethrough, remove strikethrough)
+      'k', // complete & uncomplete toggle (strikethrough, remove strikethrough)
       'i', // inspiration (italics)
       'b', // priority (bold)
       'r', // regular font style
@@ -222,7 +222,7 @@ class DailyLogBullet extends BaseBullet {
 
   // Additional keyboard listeners
   keyDownListener() {
-    if (this.keysPressed.Control && this.keysPressed.c) {
+    if (this.keysPressed.Control && this.keysPressed.k) {
       this.editContent(bulletParameters.completed, !this.state.completed);
     } else if (this.keysPressed.Control && this.keysPressed.r) {
       this.editContent(bulletParameters.modifier, 'none');

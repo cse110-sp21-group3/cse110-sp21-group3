@@ -69,7 +69,7 @@ class TaskBullet extends BaseBullet {
       'Shift',
       'Control',
       's', // save
-      'c', // complete & uncomplete toggle (strikethrough, remove strikethrough)
+      'k', // complete & uncomplete toggle (strikethrough, remove strikethrough)
       'ArrowUp',
       'ArrowDown',
     ];
@@ -154,7 +154,7 @@ class TaskBullet extends BaseBullet {
 
   // Additional Keyboard Listeners
   keyDownListener() {
-    if (this.keysPressed.Control && this.keysPressed.c) {
+    if (this.keysPressed.Control && this.keysPressed.k) {
       this.editContent(bulletParameters.completed, !this.state.completed);
     } else return false;
     return true;
