@@ -143,10 +143,11 @@ export default class Bullet extends HTMLElement {
   }
 
   deleteBullet() {
-    const prevBullet = this.getAdjacentBullet(this.uniqueID, true);
+    let nextFocusBullet = this.getAdjacentBullet(this.uniqueID, true);
+    if (nextFocusBullet === null) nextFocusBullet = this.getAdjacentBullet(this.uniqueID, false);
     const allowDelete = this.updateCallbacks.deleteBullet(this.uniqueID);
     if (allowDelete) {
-      this.transferFocusTo(prevBullet);
+      if (nextFocusBullet !== null) this.transferFocusTo(nextFocusBullet);
       this.remove();
     }
   }

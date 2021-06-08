@@ -125,13 +125,15 @@ class DailyLogBullet extends BaseBullet {
       }
     };
 
+    let matched = false;
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
-      let matched = this.baseKeydownListener(e);
+      matched = false;
+      if (!matched) matched = this.baseKeydownListener(e);
       if (!matched) matched = this.keyDownListener();
     };
     inputElement.onkeyup = (e) => {
-      const matched = this.baseKeyupListener();
+      if (!matched) matched = this.baseKeyupListener();
       if (!matched) this.editContent(bulletParameters.value, e.target.value);
       watchKeys(e.key, false);
     };

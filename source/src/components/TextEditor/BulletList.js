@@ -4,6 +4,7 @@
  * (with nested) as they are edited
  */
 const TOP_LEVEL_ORDER_ID = 0;
+const autoSaveInterval = 1000; // in ms
 class BulletList extends HTMLElement {
   constructor() {
     super();
@@ -14,6 +15,7 @@ class BulletList extends HTMLElement {
       value: [],
       nestLimit: 2,
       nextID: 1,
+      unsaved: false,
     };
 
     this.listData = {
@@ -52,6 +54,7 @@ class BulletList extends HTMLElement {
       createBullet: (sourceID, newBullet) => {
         // Assumption: A bullet can be created only in the same nest level as the `sourceID`
         // Save in tree
+        this.state.unsaved = true;
         this.listData.tree[newBullet.uniqueID] = newBullet.serialize(); // Children is left as empty
 
         const parentID = this.listData.parents[sourceID];
@@ -62,6 +65,10 @@ class BulletList extends HTMLElement {
 
         const sourceIndex = sibblingsOrder.indexOf(sourceID);
         sibblingsOrder.splice(sourceIndex + 1, 0, newBullet.uniqueID); // Save in tree (structure)
+        this.state.unsaved = true;
+
+        const saving = document.querySelector('.saving');
+        if (saving) { saving.innerHTML = 'Saving...'; }
 
         this.listData.bulletElements[newBullet.uniqueID] = newBullet; // Save in bulletElements
         this.listData.parents[newBullet.uniqueID] = parentID; // Save in parents
@@ -73,6 +80,7 @@ class BulletList extends HTMLElement {
         ) {
           return false; // Only bullet remaining so deletion not allowed
         }
+        this.state.unsaved = true;
         delete this.listData.tree[bulletID];
 
         const parentID = this.listData.parents[bulletID];
@@ -81,18 +89,26 @@ class BulletList extends HTMLElement {
         else sibblingsOrder = this.listData.tree[parentID][this.storageIndex.children];
         const bulletIndex = sibblingsOrder.indexOf(bulletID);
         if (bulletIndex !== -1) {
+          this.state.unsaved = true;
           sibblingsOrder.splice(bulletIndex, 1);
         }
 
         delete this.listData.bulletElements[bulletID];
         delete this.listData.parents[bulletID];
+
         return true;
       },
       editContent: (parameter, bulletID, newValue) => {
+        this.state.unsaved = true;
         this.listData.tree[bulletID][this.storageIndex[parameter]] = newValue;
+        const saving = document.querySelector('.saving');
+        if (saving) { saving.innerHTML = 'Saving...'; }
       },
       nestCurrBullet: (bulletID, newParentID, forward) => {
+        this.state.unsaved = true;
         const oldParentID = this.listData.parents[bulletID];
+        const saving = document.querySelector('.saving');
+        if (saving) { saving.innerHTML = 'Saving...'; }
         // Remove from parent
         let sibblingsOrder;
         if (oldParentID === null) sibblingsOrder = this.listData.tree[TOP_LEVEL_ORDER_ID];
@@ -129,7 +145,14 @@ class BulletList extends HTMLElement {
    * @param {Object} [listAttributes.bulletStyle] - CSS Styling for Bullet
    */
   initialiseList(listAttributes) {
-    this.updateCallbacks.saveData = () => listAttributes.saveDataCallback(this.listData.tree);
+    this.updateCallbacks.saveData = () => {
+      if (this.state.unsaved) {
+        listAttributes.saveDataCallback(this.listData.tree);
+        this.state.unsaved = false;
+        const saving = document.querySelector('.saving');
+        if (saving) { saving.innerHTML = '&nbsp;'; }
+      }
+    };
     this.state.nestLimit = listAttributes.nestLimit;
     this.storageIndex = listAttributes.storageIndex;
     this.elementName = listAttributes.elementName;
@@ -137,6 +160,20 @@ class BulletList extends HTMLElement {
 
     this.innerHTML = '<div class="bullet-list"></div>';
     this.setValue(listAttributes.bulletTree);
+
+    window.onbeforeunload = () => {
+      this.updateCallbacks.saveData();
+    };
+  }
+
+  connectedCallback() {
+    this.autoSaveHandler = setInterval(() => {
+      this.updateCallbacks.saveData();
+    }, autoSaveInterval);
+  }
+
+  disconnectedCallback() {
+    clearInterval(this.autoSaveHandler);
   }
 
   getBulletTree() {
