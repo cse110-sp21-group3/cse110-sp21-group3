@@ -221,6 +221,7 @@ class BulletList extends HTMLElement {
   /**
    * Returns the last bullet nested inside `bulletID`
    * @param {*} bulletID
+   * @returns {*} bulletID
    */
   findLastBulletInside(bulletID) {
     const numChildrens = this.listData.tree[bulletID][this.storageIndex.children].length;
@@ -234,6 +235,7 @@ class BulletList extends HTMLElement {
    * Returns the next bullet in the downward direction
    * @param {*} bulletID
    * @param {Boolean} allowChildren
+   * @returns {*} bulletID
    */
   findNextBulletDown(bulletID, allowChildren = true) {
     if (bulletID === null) return null;
