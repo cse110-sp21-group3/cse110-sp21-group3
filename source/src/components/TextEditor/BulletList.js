@@ -66,9 +66,6 @@ class BulletList extends HTMLElement {
         const sourceIndex = sibblingsOrder.indexOf(sourceID);
         sibblingsOrder.splice(sourceIndex + 1, 0, newBullet.uniqueID); // Save in tree (structure)
         this.state.unsaved = true;
-        
-        const saving = document.querySelector('.saving');
-        saving.innerHTML = 'All Changes Saved';
 
         this.listData.bulletElements[newBullet.uniqueID] = newBullet; // Save in bulletElements
         this.listData.parents[newBullet.uniqueID] = parentID; // Save in parents
@@ -95,9 +92,6 @@ class BulletList extends HTMLElement {
 
         delete this.listData.bulletElements[bulletID];
         delete this.listData.parents[bulletID];
-
-        const saving = document.querySelector('.saving');
-        saving.innerHTML = 'All Changes Saved';
 
         return true;
       },
@@ -154,6 +148,7 @@ class BulletList extends HTMLElement {
         this.state.unsaved = false;
         const saving = document.querySelector('.saving');
         saving.innerHTML = 'All Changes Saved';
+        saving.innerHTML = '&nbsp;';
       }
     };
     this.state.nestLimit = listAttributes.nestLimit;
