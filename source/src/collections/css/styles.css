@@ -54,6 +54,7 @@ body {
 
 .menu:hover {
   background-color: #ccb9b3;
+  cursor: pointer;
 }
 
 #nav {
