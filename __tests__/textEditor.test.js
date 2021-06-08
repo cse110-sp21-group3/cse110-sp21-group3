@@ -170,7 +170,7 @@ describe('Tests for Bullet Dataset2', () => {
     bulletElements[4].editContent('value', expectedValue);
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-        0: [1,4], 
+        0: [1,4],
         1: ['test', [2,3]], 
         2: ['Edited Bullet', []], 
         3: ['test3', []],
