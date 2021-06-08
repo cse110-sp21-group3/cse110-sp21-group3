@@ -136,12 +136,8 @@ describe('Tests for Bullet Dataset2', () => {
         1: ['test', [2]],
         2: ['test2', []],
         3: ['test3', []],
-<<<<<<< HEAD
       },
     );
-=======
-      });
->>>>>>> 6b618cb58ec6b61e6a36638afd3bb4ade8fc2062
   });
   test('Test Double Nesting of bullet', () => {
     const topLevelBullets = document.querySelector('bullet-list').querySelectorAll(bulletData2.elementName);
@@ -176,15 +172,9 @@ describe('Tests for Bullet Dataset2', () => {
     bulletElements[4].editContent('value', expectedValue);
     expect(document.querySelector('bullet-list').getBulletTree()).toMatchObject(
       {
-<<<<<<< HEAD
         0: [1, 4],
         1: ['test', [2, 3]],
         2: ['Edited Bullet', []],
-=======
-        0: [1,4],
-        1: ['test', [2,3]], 
-        2: ['Edited Bullet', []], 
->>>>>>> 6b618cb58ec6b61e6a36638afd3bb4ade8fc2062
         3: ['test3', []],
         4: ['Bullet 4', []],
       },
