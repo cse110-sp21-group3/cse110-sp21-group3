@@ -1,6 +1,6 @@
 # [Use Dexie.js as a wrapper for IndexedDB storage]
 
-* Status: Accepted  <!-- optional -->
+* Status: Superseded by [ADR-060821](./adr-060821-remove-dexie.md)
 * Deciders: All Team <!-- optional -->
 * Date: 05-25-2021 <!-- optional -->
 
