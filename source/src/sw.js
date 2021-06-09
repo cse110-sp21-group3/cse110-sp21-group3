@@ -10,6 +10,7 @@ self.addEventListener('install', (event) => { /* eslint-disable-line no-restrict
 });
 
 self.addEventListener('activate', (event) => { /* eslint-disable-line no-restricted-globals */
+  // eslint-disable-next-line no-undef
   event.waitUntil(clients.claim());
 });
 
