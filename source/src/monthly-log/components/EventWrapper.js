@@ -7,10 +7,15 @@ class EventWrapper extends HTMLElement {
     this.props = {};
     this.state = {};
     this.elementStyle = `
+            .event {
+              display: flex;
+              align-items: center;
+              justify-content: space-evenly;
+            }
             .event-editor-wrapper{
                 flex-grow: 1;
                 display: flex;
-                background-color: var(--light-bg);
+                background-color: #f9f9f9;
                 border-radius: 1.25rem;
                 padding: 1rem;
                 margin: 0.5rem 0rem;
@@ -27,6 +32,14 @@ class EventWrapper extends HTMLElement {
                 color: var(--day-num-color);
                 font-size: 1.8rem;
             }
+
+            .day {
+              color: var(--day-num-color);
+              font-size: 1.3rem;
+              width: 1.5rem;
+              margin-right: 0.5rem;
+              text-align: center;
+            }
         `;
   }
 
@@ -38,6 +51,7 @@ class EventWrapper extends HTMLElement {
      * @param {function} wrapperAttributes.saveDataCallback
      */
   initialise(wrapperAttributes) {
+    this.props.dayOfWeek = wrapperAttributes.dayOfWeek;
     this.props.dateForMonth = wrapperAttributes.dateForMonth;
     this.props.dayNum = wrapperAttributes.dayNum;
     this.props.saveDataCallback = wrapperAttributes.saveDataCallback;
@@ -66,9 +80,12 @@ class EventWrapper extends HTMLElement {
             <style>
                 ${this.elementStyle}
             </style>
-            <div class="event-editor-wrapper">
-                <div class="day-num">${this.props.dayNum}</div>
-                <bullet-list class="event-editor"></bullet-list>
+            <div class="event">
+              <div class="day">${this.props.dayOfWeek}</div>
+              <div class="event-editor-wrapper">
+                  <div class="day-num">${this.props.dayNum}</div>
+                  <bullet-list class="event-editor"></bullet-list>
+              </div>
             </div>
         `;
     this.attachShadow({ mode: 'open' });

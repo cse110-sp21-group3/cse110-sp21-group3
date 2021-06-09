@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css?family=Nunito");
+@import url("https://fonts.googleapis.com/css?family=Manrope");
 
 * {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 :root {
@@ -13,38 +13,6 @@
 
 body {
   background-color: var(--light-bg);
-}
-
-.header {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-  background-color: var(--light-bg);
-}
-
-.heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#header-title {
-  font-size: xx-large;
-  text-align: center;
-  margin: 1rem;
-}
-
-.menu {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #eee4e1;
-  height: 4rem;
-  width: 4rem;
-  border-radius: 1rem;
-  transition: transform 0.3s cubic-bezier(0, 0.52, 0, 1);
-  margin: 1rem;
 }
 
 .menu > img {
@@ -66,13 +34,29 @@ body {
 #tracker-body {
   display: flex;
   flex-wrap: wrap;
-  overflow-y: scroll;
+  overflow-y: auto;
+  background-color: var(--light-bg);
+  margin: 0;
+  height: 100%;
+}
+.header {
+  
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: var(--light-bg);
 }
 
-#add-div {
+.top-header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.add-div {
+  display: none;
   flex-direction: column;
-  text-align: center;
+  text-align: right;
 }
 
 #add-label {
@@ -126,7 +110,7 @@ body {
   border-radius: 20px;
 }
 
-#habit {
+#habit-field {
   border-radius: 1rem;
   width: 90%;
   border: none;
@@ -172,12 +156,6 @@ body {
   cursor: pointer;
 }
 
-tracker-elem {
-  width: 30%;
-  height: 50%;
-  margin: 1rem;
-}
-
 #button-group {
   width: 100%;
   display: flex;
@@ -210,6 +188,31 @@ tracker-elem {
 }
 
 #no:hover {
+  background-color: #a4a4a4;
+  color: white;
+  cursor: pointer;
+}
+
+#error {
+  color: red;
+  visibility: hidden;
+}
+
+#edit-form-modal {
+  background-color: #efefef;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  border-radius: 20px;
+}
+
+#submitEditForm {
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+#submitEditForm:hover {
   background-color: #a4a4a4;
   color: white;
   cursor: pointer;

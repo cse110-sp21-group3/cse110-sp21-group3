@@ -16,6 +16,7 @@ body {
 }
 
 .header {
+  
   position: sticky;
   top: 0;
   width: 100%;
@@ -23,16 +24,15 @@ body {
   background-color: var(--light-bg);
 }
 
-.heading {
+.top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
-#header-title {
-  font-size: xx-large;
-  text-align: center;
-  margin: 1rem;
+.add-div {
+  display: none;
+  flex-direction: column;
+  text-align: right;
 }
 
 .menu {

@@ -38,7 +38,7 @@ class TaskBullet extends BaseBullet {
         
         input[type=text] {
             border: 1px solid transparent;
-            background: inherit;
+            background: #f9f9f9;
             font-size: 1.5rem;
             width: 70%;
         }
@@ -69,7 +69,7 @@ class TaskBullet extends BaseBullet {
       'Shift',
       'Control',
       's', // save
-      'c', // complete & uncomplete toggle (strikethrough, remove strikethrough)
+      'k', // complete & uncomplete toggle (strikethrough, remove strikethrough)
       'ArrowUp',
       'ArrowDown',
     ];
@@ -95,6 +95,7 @@ class TaskBullet extends BaseBullet {
    * @param {*} bulletAttributes
    * @param {Object} [ storageIndex ]
    * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
+   * @param {Object} [ bulletAttributes.bulletConfigs ]
    */
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);
@@ -153,7 +154,7 @@ class TaskBullet extends BaseBullet {
 
   // Additional Keyboard Listeners
   keyDownListener() {
-    if (this.keysPressed.Control && this.keysPressed.c) {
+    if (this.keysPressed.Control && this.keysPressed.k) {
       this.editContent(bulletParameters.completed, !this.state.completed);
     } else return false;
     return true;

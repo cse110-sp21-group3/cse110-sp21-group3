@@ -4,6 +4,12 @@ class Tracker extends HTMLElement {
     const template = document.createElement('template');
     template.innerHTML = `
         <style>
+            :host {
+              width: 30%;
+              height: 50%;
+              margin: 1rem;
+            }
+
             .habit {
                 display: flex;
                 flex-direction: column;
@@ -52,6 +58,7 @@ class Tracker extends HTMLElement {
               border-radius: 100%;
               height: 1.5rem;
               width: 1.5rem;
+              cursor: pointer;
             }
 
             #habit-grid {
@@ -61,6 +68,7 @@ class Tracker extends HTMLElement {
               width: 100%;
               background-color: white;
               border-radius: 1.5rem;
+              box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             }
         </style>
         <!-- Template -->
@@ -89,8 +97,9 @@ class Tracker extends HTMLElement {
     // Set title of grid and id of div to habit
     const title = this.shadowRoot.querySelector('#title');
     title.innerHTML = habit;
-    const grid = this.shadowRoot.querySelector('.habit');
-    grid.id = habit;
+    const deleteHabit = this.shadowRoot.querySelector('.delete-tracker');
+    deleteHabit.id = `delete-${habit}`;
+    this.id = habit;
     this.setAttribute('habit', habit);
   }
 

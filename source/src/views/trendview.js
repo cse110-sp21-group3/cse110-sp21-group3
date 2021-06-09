@@ -16,38 +16,24 @@ export default class trendview extends abstractview{
     }
     getHead() {
         return `
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Trends</title>
-        <link rel="stylesheet" href="../src/trends/css/styles.css"></link>
+        
+        <div id="bar"></div>
         `
+    }
+    getStyles() {
+      let sourcelist = ["../src/trends/css/styles.css"]; 
+        return sourcelist;
     }
     getBody () {
         return `
         
-        <navbar-elem></navbar-elem>
-    <div class="header">
-      <div class="heading">
-        <div class="menu">
-          <img src="../src/menu-icon.png">
-        </div>
-        <h1 id="header-title">trends</h1>
-        <div id="add-div">
-          <div id="add">
-            <p>+</p>
-          </div>
-        </div>
-      </div>
-      <div id="bar"></div>
-    </div>
-    <div id="tracker-body"></div>
+        <div id="tracker-body"></div>
     <div id="addForm" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
         <span class="close-form" id="add-close-form">&times;</span>
         <form>
-          <input type="text" id="habit" placeholder="Add habit here..." maxlength="60">
+          <input type="text" id="habit-field" placeholder="Add habit here..." maxlength="60">
           <br>
           <input type="color" id="colorpicker" value="#0000ff">
           <br>

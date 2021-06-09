@@ -60,6 +60,11 @@ class Navbar extends HTMLElement {
           text-decoration: none;
           cursor: pointer;
         }
+
+        .nav-component a{
+          text-decoration: none;
+          color: black;
+        }
       </style>
       <!-- Template -->
       <div id="nav">
@@ -68,10 +73,10 @@ class Navbar extends HTMLElement {
           <p>home</p>
         </div>
         <div class="nav-component">
-          <p>statistics</p>
+          <p>habits & trends</p>
         </div>
         <div class="nav-component">
-          <p>daily log</p>
+          <p>past logs</p>
         </div>
         <div class="nav-component">
           <p>monthly log</p>

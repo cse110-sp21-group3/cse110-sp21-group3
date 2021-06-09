@@ -4,10 +4,10 @@ import Home from './views/dailylogview.js';
 import Collections from './views/collectionsview.js';
 import MonthlyLog from './views/monthly-logviews.js';
 const body = document.body.getElementsByTagName('main')[0];
-
+const header_title = document.getElementById("header-title");
 const header = document.querySelector('.header_content');
-const header_title = document.body.getElementByID('.header-title');
-console.log(header);
+const header_top = document.querySelector('.header_above_content');
+
 export const router = {};
 //set the state 
 router.setState =  async (state, statePopped) => {
@@ -18,7 +18,7 @@ router.setState =  async (state, statePopped) => {
     body.style.display = "none";
     header.style.display = "none";
     //header_title.style.display = "none";
-    
+    header_top.innerHTML = "";
     document.body.id = "";
     let current_view;
     let title;
@@ -29,7 +29,17 @@ router.setState =  async (state, statePopped) => {
             header_title.innerHTML = "Settings";
             break;      
         case 'trends':
+            title = "trends";
+            header_title.innerHTML = "Trends";
             current_view = new Trends();
+            header_top.innerHTML = `
+            <div id="add-div">
+                <div id="add">
+                    <p>+</p>
+                </div>
+            </div>
+
+          `;
             title = 'Trends';
             break;
         case 'home':
@@ -37,12 +47,22 @@ router.setState =  async (state, statePopped) => {
             title = 'home';
             break;
         case 'monthly-log':
+            header_title.innerHTML = "Monthly Log";
             current_view = new MonthlyLog();
             title = 'Monthly Log';
             break;
         case 'collections':
+            header_title.innerHTML = "Collections";
             current_view = new Collections();
             title = 'Collection';
+            header_top.innerHTML = `
+            <div id="add-div">
+                <div id="add">
+                    <p>+</p>
+                </div>
+            </div>
+
+          `;
             break;
         default:
             current_view = new Home();

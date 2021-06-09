@@ -112,10 +112,10 @@ class DailyLogBullet extends BaseBullet {
       'Shift',
       'Control',
       's', // save
-      'c', // complete & uncomplete toggle (strikethrough, remove strikethrough)
+      'k', // complete & uncomplete toggle (strikethrough, remove strikethrough)
       'i', // inspiration (italics)
-      'p', // priority (bold)
-      'o', // regular font style
+      'b', // priority (bold)
+      'r', // regular font style
       'ArrowUp',
       'ArrowDown',
     ];
@@ -135,14 +135,6 @@ class DailyLogBullet extends BaseBullet {
       if (!matched) this.editContent(bulletParameters.value, e.target.value);
       watchKeys(e.key, false);
     };
-
-    let typeCount = 1;
-    const typeList = ['none', 'task', 'note', 'event', 'theme'];
-    const type = this.shadowRoot.querySelector('.type');
-    type.addEventListener('click', () => {
-      typeCount += 1;
-      this.editContent(bulletParameters.type, typeList[typeCount % typeList.length]);
-    });
   }
 
   /**
@@ -164,6 +156,19 @@ class DailyLogBullet extends BaseBullet {
       this.state[key] = defaultParameters[key];
       this.parameterSetMap[key]((data === null) ? defaultParameters[key] : data[storageIndex[key]]);
     });
+
+    let typeCount = 1;
+    const typeList = ['none', 'task', 'note', 'event', 'theme'];
+    const type = this.shadowRoot.querySelector('.type');
+    if (!this.readOnly) {
+      type.addEventListener('click', () => {
+        typeCount += 1;
+        this.editContent(bulletParameters.type, typeList[typeCount % typeList.length]);
+      });
+    } else {
+      const inputText = this.shadowRoot.querySelector('input[type=text]');
+      inputText.setAttribute('placeholder', 'No text here');
+    }
   }
 
   /**
@@ -217,11 +222,11 @@ class DailyLogBullet extends BaseBullet {
 
   // Additional keyboard listeners
   keyDownListener() {
-    if (this.keysPressed.Control && this.keysPressed.c) {
+    if (this.keysPressed.Control && this.keysPressed.k) {
       this.editContent(bulletParameters.completed, !this.state.completed);
-    } else if (this.keysPressed.Control && this.keysPressed.o) {
+    } else if (this.keysPressed.Control && this.keysPressed.r) {
       this.editContent(bulletParameters.modifier, 'none');
-    } else if (this.keysPressed.Control && this.keysPressed.p) {
+    } else if (this.keysPressed.Control && this.keysPressed.b) {
       this.editContent(bulletParameters.modifier, 'priority');
     } else if (this.keysPressed.Control && this.keysPressed.i) {
       this.editContent(bulletParameters.modifier, 'inspiration');

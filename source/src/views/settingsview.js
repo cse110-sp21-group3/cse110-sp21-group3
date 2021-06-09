@@ -8,7 +8,7 @@ export default class extends abstractview{
     getHead() {
         return `
         
-        <h1 id="header-title">settings</h1>
+        
         
         `
     }
@@ -27,20 +27,20 @@ export default class extends abstractview{
     }
     getBody () {
         return `
-        
-          <div id="journal-name">
-              <p id="journal-name-title">Journal Name</p>
-              <span id="journal-name-edit" contenteditable></span>
-          </div>
-          <div id="journal-color">
-              <p id="journal-color-title">Journal Color</p>
-              <div id="journals-container"></div>
-          </div>
-          <div id="journal-theme">
-              <p id="journal-theme-title">Journal Theme</p>
-              <span id="journal-theme-edit" contenteditable></span>
-          </div>
-          <button id="save">Save</button>
+    
+        <div id="journal-name">
+            <p id="journal-name-title">Journal Name</p>
+            <span id="journal-name-edit" contenteditable></span>
+        </div>
+        <div id="journal-color">
+            <p id="journal-color-title">Journal Color</p>
+            <div id="journals-container"></div>
+        </div>
+        <div id="journal-theme">
+            <p id="journal-theme-title">Journal Theme</p>
+            <span id="journal-theme-edit" contenteditable></span>
+        </div>
+        <button id="save">Save</button>
           
         
         `

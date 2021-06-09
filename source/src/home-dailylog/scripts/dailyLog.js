@@ -1,8 +1,10 @@
 import colorThemes from '../../colorThemes.js';
-import { colorStyleKey, habitsKey } from '../../storageKeys.js';
+import {
+  colorStyleKey, habitsKey, getDailyLogUID, journalNameKey, themeKey,
+} from '../../storageKeys.js';
+const body = document.body.getElementsByTagName('main')[0];
 
-const key = 'dailyLogData';
-
+const header = document.querySelector('.header_content');
 // set color of website to the theme color
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
 if (selectedColorStyle === null) selectedColorStyle = 'default';
@@ -12,11 +14,6 @@ let root = document.documentElement;
 root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
-function archiveData() {
-  // add data from 'dailyLogData' to 'dailyLogArchive' (store existing bullets)
-  // clear 'dailyLogData' (clear current days log)
-}
-
 function addCurrentDate() {
   // add current date to title
   const titleDate = document.querySelector('.date');
@@ -25,17 +22,10 @@ function addCurrentDate() {
   titleDate.innerHTML = currentDate;
 }
 
-function storeCurrentDate() {
-  const DATE = new Date();
-  const day = DATE.getDate();
-  localStorage.setItem('DAY', day);
-}
-
-
-function getSavedBullets() {
+function getSavedBullets(storageKey) {
   // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
   const initialSetup = { 0: [1], 1: ['', false, 'task', 'none', []] };
-  let listDataTree = localStorage.getItem(key);
+  let listDataTree = localStorage.getItem(storageKey);
   if (listDataTree === null) {
     listDataTree = initialSetup;
   } else {
@@ -46,12 +36,12 @@ function getSavedBullets() {
 
 function getTitle() {
   const title = document.querySelector('#header-title');
-  title.innerHTML = localStorage.getItem('journalName');
+  title.innerHTML = localStorage.getItem(journalNameKey);
 }
 
 function getTheme() {
   const themeQuestion = document.querySelector('.question');
-  const theme = localStorage.getItem('theme');
+  const theme = localStorage.getItem(themeKey);
   const text = `Please add what you did related to ${theme} as a theme bullet`;
   themeQuestion.innerHTML = text;
 }
@@ -103,36 +93,25 @@ function toggleHabit(habit) {
  * DOM Content Loaded
  */
 function setup() {
-  let header = document.querySelector('.header_content');
-  
-  let bodyd = document.body.getElementsByTagName('main')[0];
-  bodyd.style.display = "none";
+  body.style.display = "none";
   
   header.style.display = "none";
-  root = document.documentElement;
+    // set color of website to the theme color
+  let selectedColorStyle = localStorage.getItem(colorStyleKey);
+  if (selectedColorStyle === null) selectedColorStyle = 'default';
+
+  // Set Display CSS Styles
+  let root = document.documentElement;
   root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
   root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
-
-  const refreshDate = document.querySelector('.refresh-date');
-  refreshDate.addEventListener('click', () => {
-    const DATE = new Date();
-    const currDay = DATE.getDate();
-    const storedDay = Number(localStorage.getItem('DAY'));
-
-    // if there is no date stored or the date stored is different from the current day,
-    // this means that we are in a new day, so clear the daily log
-    if (storedDay === 0 || currDay !== storedDay) {
-      archiveData();
-    }
-  });
-
-
-  const listDataTree = getSavedBullets();
+  const currDate = new Date();
+  const storageKey = getDailyLogUID(currDate);
+  const listDataTree = getSavedBullets(storageKey);
 
   const list = document.querySelector('bullet-list');
   list.initialiseList({
     saveDataCallback: (data) => {
-      localStorage.setItem(key, JSON.stringify(data));
+      localStorage.setItem(storageKey, JSON.stringify(data));
     },
     nestLimit: 2,
     bulletTree: listDataTree,
@@ -146,13 +125,12 @@ function setup() {
     elementName: 'daily-log-bullet',
   });
   addCurrentDate();
-  storeCurrentDate();
   getTitle();
   getTheme();
 
   const DATE = new Date();
   const habitBody = document.querySelector('.habits-form');
-  console.log(habitBody);
+
   const habitList = getHabits();
   habitList.forEach((habitEntry) => {
     const habitElem = document.createElement('daily-habit');
@@ -170,11 +148,11 @@ function setup() {
     habitBody.appendChild(habitElem);
   });
 
-  bodyd.style.display = "block";
-  header.style.display = "block";
+  body.style.display = "block";
   
-      
+  header.style.display = "block";
 }
+
 
 let firstTime = false;
 while (!firstTime) {
@@ -197,7 +175,7 @@ const callback = function (mutations) {
     }
     oldbodyid = document.body.id;
 });  
-};
+}
 const observer = new MutationObserver(callback);
 const config = { attributes: true };
 observer.observe(document.body, config);

@@ -1,8 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Manrope");
+
 /* Shared Styles */
 * {
   font-family: 'Manrope', sans-serif;
 }
-
 :root {
   --main-bg: rgba(229, 229, 229, 1);
   --light-bg: #f9f9f9;
@@ -11,6 +12,10 @@
   --day-num-color: #909090;
   --menu-color: #eee4e1;
   --menu-hover: #ccb9b3;
+}
+.event-editor-wrapper {
+  background-color: rgba(229, 229, 229, 1);
+  
 }
 
 .menu {
@@ -59,7 +64,7 @@ body {
 
 #log-container > * {
   flex-grow: 1;
-  margin: 1rem 2rem;
+  margin: 1rem 0.75rem;
 }
 
 .events-container {
@@ -68,6 +73,7 @@ body {
   align-items: center;
   max-height: inherit;
   overflow-y: auto;
+  width: 100%;
 }
 
 .events-container > event-wrapper {
@@ -96,18 +102,29 @@ body {
   max-height: calc(88vh - 10rem);
   overflow: auto;
   height: 100%;
-  background-color: var(--light-bg);
+  background-color: #f9f9f9;
   border-radius: 1.25rem;
   padding: 1rem;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-#task-editor div.bullet-list {
+.task-editor div.bullet-list {
   background-color: inherit;
 }
 
 .month-input {
   border: none;
-  padding: 0.25rem;
+  padding: 1rem;
   border-radius: 0.5rem;
+  font-size: large;
+  margin: 0.5rem;
+  color: #919191;
+}
+
+#events {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  overflow-y: auto;
+  align-items: center;
 }

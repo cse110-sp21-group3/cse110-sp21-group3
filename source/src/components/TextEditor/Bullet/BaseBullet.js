@@ -4,6 +4,7 @@ export default class Bullet extends HTMLElement {
     super();
     this.elementName = elementName;
     this.keysPressed = {};
+    this.readOnly = false; // This is set to true if bullet must be read only
 
     this.bulletConfigs = {};
     this.bulletStyle = ''; // This is default style
@@ -21,8 +22,14 @@ export default class Bullet extends HTMLElement {
    * @param {function} bulletAttributes.getAdjacentBullet
    * @param {number} [ bulletAttributes.uniqueID ]
    * @param {string} [ bulletAttributes.bulletStyle ]
+   * @param {Object} [ bulletAttributes.bulletConfigs ]
    */
   initialiseBullet(bulletAttributes) {
+    this.bulletConfigs = bulletAttributes.bulletConfigs;
+    if ('readOnly' in this.bulletConfigs) {
+      this.readOnly = this.bulletConfigs.readOnly;
+      this.shadowRoot.querySelector('input[type=text]').readOnly = this.readOnly;
+    }
     this.updateCallbacks = bulletAttributes.updateCallbacks;
     this.getNextID = bulletAttributes.getNextID;
     this.getAdjacentBullet = bulletAttributes.getAdjacentBullet;
@@ -30,7 +37,6 @@ export default class Bullet extends HTMLElement {
     this.uniqueID = ('uniqueID' in bulletAttributes) ? bulletAttributes.uniqueID : this.getNextID();
 
     this.shadowRoot.querySelector('input').value = this.state.value;
-
     this.shadowRoot.querySelector('style').innerHTML = this.bulletStyle;
   }
 
@@ -133,7 +139,7 @@ export default class Bullet extends HTMLElement {
     }
 
     this.updateCallbacks.nestCurrBullet(this.uniqueID, grandParentID, false);
-    this.transferFocusTo(this);
+    this.focus(); // Reset focus
   }
 
   deleteBullet() {
@@ -147,11 +153,12 @@ export default class Bullet extends HTMLElement {
 
   // Keyboard Listeners
   baseKeydownListener(e) {
-    if (this.keysPressed.Tab) {
+    if (!this.readOnly && this.keysPressed.Shift && this.keysPressed.Tab) {
+      e.preventDefault();
+      this.exitSingleNesting(e);
+    } else if (!this.readOnly && this.keysPressed.Tab) {
       e.preventDefault();
       this.nestCurrBullet();
-    } else if (this.keysPressed.Shift && this.keysPressed.Enter) {
-      this.exitSingleNesting(e);
     } else if (this.keysPressed.Control && this.keysPressed.s) {
       e.preventDefault();
       this.updateCallbacks.saveData();
@@ -168,10 +175,10 @@ export default class Bullet extends HTMLElement {
   }
 
   baseKeyupListener() {
-    if (this.keysPressed.Enter) {
+    if (!this.readOnly && this.keysPressed.Enter) {
       if (this.state.value === '') return true;
       this.createBullet();
-    } else if (this.keysPressed.Backspace && this.getValue() === '') {
+    } else if (!this.readOnly && this.keysPressed.Backspace && this.getValue() === '') {
       this.deleteBullet();
     } else {
       return false;

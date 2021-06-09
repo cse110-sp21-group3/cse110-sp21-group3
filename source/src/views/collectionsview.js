@@ -20,35 +20,15 @@ export default class collectionsview extends abstractview{
     }
     getHead() {
         return `
-        <h1 id="header-title">Collections</h1>
-            <div id="add-div">
-              <div id="add">
-                <p>+</p>
-              </div>
-            </div>
-			  <div id="bar"></div>
-		<link rel="stylesheet" href="../src/collections/css/styles.css">
+        <div id="bar"></div>
         `
+    }
+    getStyles() {
+      let sourcelist = ["../src/collections/css/styles.css"]; 
+        return sourcelist;
     }
     getBody () {
         return `
-        <navbar-elem></navbar-elem>
-        
-        <div class="header">
-          <div class="heading">
-            <div class="menu">
-              <img src="../src/menu-icon.png">
-            </div>
-            <h1 id="header-title">Collections</h1>
-            <div id="add-div">
-              <div id="add">
-                <p>+</p>
-              </div>
-            </div>
-          </div>
-			    <div id="bar"></div>
-        </div>
-        
         <!-- Sets up grid to display collections -->
         <div id="tracker-body"></div>
         <div id="addForm" class="modal">

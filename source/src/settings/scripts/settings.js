@@ -4,37 +4,32 @@ let journalNameEdit = document.getElementById('journal-name-edit');
 let journalThemeEdit = document.getElementById('journal-theme-edit');
 let saveBtn = document.getElementById('save');
 
-document.addEventListener('readystatechange', setup());
-let oldbodyid = document.body.id;
-const callback = function (mutations) {
+function saveInputs() {
+  localStorage.setItem(journalNameKey, journalNameEdit.textContent);
+  localStorage.setItem(themeKey, journalThemeEdit.textContent);
+  saveBtn.style.visibility = 'hidden';
+}
 
-  
-  mutations.forEach(function (mutation) {
-    if (document.body.id == 'settings-body' && oldbodyid != 'settings-body') {
-      
-      oldbodyid = document.body.id;
-      
-      setup();
-    }
-});  
-};
-const observer = new MutationObserver(callback);
-const config = { attributes: true };
-observer.observe(document.body, config);
+function showSave() {
+  saveBtn.style.visibility = 'visible';
+}
+
+journalNameEdit.addEventListener('input', () => {
+  showSave();
+});
+
+journalThemeEdit.addEventListener('input', () => {
+  showSave();
+});
 
 //document.addEventListener('DOMContentLoaded',setup());
 function setup() {
   let header = document.querySelector('.header_content');
-  
   let bodyd = document.body.getElementsByTagName('main')[0];
-  bodyd.style.display = "none";
-  
-  header.style.display = "none";
 
-  journalNameEdit = document.getElementById('journal-name-edit');
-  journalThemeEdit = document.getElementById('journal-theme-edit');
-  saveBtn = document.getElementById('save')
-  
+  let journalNameEdit = document.getElementById('journal-name-edit');
+  let journalThemeEdit = document.getElementById('journal-theme-edit');
+  let saveBtn = document.getElementById('save');
   journalNameEdit.textContent = localStorage.getItem(journalNameKey);
   journalThemeEdit.textContent = localStorage.getItem(themeKey);
 
@@ -51,19 +46,29 @@ function setup() {
   });
 
   bodyd.style.display = "block";
-  
   header.style.display = "block";
 }
-
-
-
-function saveInputs() {
-  localStorage.setItem(journalNameKey, journalNameEdit.textContent);
-  localStorage.setItem(themeKey, journalThemeEdit.textContent);
-  saveBtn.style.visibility = 'hidden';
+let firstTime = false;
+//while (!firstTime) {
+  //if(document.getElementById(".journal-theme") != null) {
+    setup();
+    firstTime = true;
+  //}
+//}
+let oldbodyid = 'settings-body';
+const callback = function (mutations) {
+  
+  mutations.forEach(function (mutation) {
+    console.log(oldbodyid);
+    console.log(document.body.id);
+    if (document.body.id == 'settings-body'&&oldbodyid != 'settings-body') {
+      console.log("settings reload");
+     
+      setup();
+    }
+    oldbodyid = document.body.id;
+});  
 }
-
-function showSave() {
-  saveBtn.style.visibility = 'visible';
-}
-
+const observer = new MutationObserver(callback);
+const config = { attributes: true };
+observer.observe(document.body, config);

@@ -144,6 +144,14 @@ class BulletList extends HTMLElement {
   }
 
   /**
+   * Added for testing
+   * @returns map between IDs and their dom element
+   */
+  getBulletElements() {
+    return this.listData.bulletElements;
+  }
+
+  /**
    * Sets the nextID. User should not be setting this unless overriding the automatic
    * method is causing troubles. By default, nextID is set by parsing the existing IDs
    * when setValue is called.
@@ -213,6 +221,7 @@ class BulletList extends HTMLElement {
   /**
    * Returns the last bullet nested inside `bulletID`
    * @param {*} bulletID
+   * @returns {*} bulletID
    */
   findLastBulletInside(bulletID) {
     const numChildrens = this.listData.tree[bulletID][this.storageIndex.children].length;
@@ -226,6 +235,7 @@ class BulletList extends HTMLElement {
    * Returns the next bullet in the downward direction
    * @param {*} bulletID
    * @param {Boolean} allowChildren
+   * @returns {*} bulletID
    */
   findNextBulletDown(bulletID, allowChildren = true) {
     if (bulletID === null) return null;
