@@ -3,6 +3,11 @@ This is the bullet journal project for CSE 110 Spring 2021 Group 3.
 
 <img src="./source/icons/taskoverflow-icon.png" width="400" height="400">
 
+## Final Project Videos
+
+[Public Version]()   
+[Private Version]()
+
 ## Link to app
 The BuJo is hosted at
 [https://theme-bujo.netlify.app/](https://theme-bujo.netlify.app/ )
@@ -77,7 +82,9 @@ The BuJo is hosted at
 
 ## Testing 
 
+### [Unit Tests](__tests__/textEditor.test.js)
 
-### [Unit Tests]()
+### [E2E Tests](https://github.com/cse110-sp21-group3/cse110-sp21-group3/tree/main/docs/E2Etests)
 
-### [E2E Tests]()
+
+Created unit tests for the text editor component for CRUDing bullets. Weren't able to create tests for the rest of the pages/components, however we did manual E2E tests for each entity during a PR review and in general testing.
