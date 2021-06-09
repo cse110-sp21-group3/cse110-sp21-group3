@@ -1,9 +1,14 @@
 # Task Overflow
 This is the bullet journal project for CSE 110 Spring 2021 Group 3.
 
+<img src="./source/icons/taskoverflow-icon.png" width="400" height="400">
+
 ## Link to app
 The BuJo is hosted at
 [https://theme-bujo.netlify.app/](https://theme-bujo.netlify.app/ )
+
+<img src="./docs/pages/images/home.png" width="800" height="400">
+
 
 ## Team Info
 [team.md](admin/team.md)
@@ -34,6 +39,9 @@ The BuJo is hosted at
 ## Docs
 
 ### [Onboarding](docs/onboarding.md)
+
+### [Pages](https://github.com/cse110-sp21-group3/cse110-sp21-group3/tree/e2e-tests/docs/pages)
+- app page-level breakdown
 
 
 
