@@ -12,7 +12,7 @@ rules:
     - js: ignorePackages # Enabling the use of `.js` in import statements
   
 overrides:
-  - files: ["source/src/sw.js"]
+  - files: ["source/sw.js"]
     rules:
       no-restricted-globals: [0]
 

@@ -20,11 +20,11 @@ Our repo is organised into the following directories:
 3. source/ -> Contains the source code of the application.
 
 #### Dig into the code base
-Our source code is organised into source/public and source/src directories. 
-source/src -> Organised into directories for components and different pages
-   1. components/ -> Contains components shared accross different pages
+Our source code is placed in the `source` directory. It is organised into directories for components and different pages, as follows:
+   1. `components/`: Contains components shared accross different pages
    2. Each page has its own directory, for example files for daily log page is stored in `home-dailylogs/`
-   3. colorThemes.js -> Contains preset color combinations
+   3. `colorThemes.js`: Contains preset color combinations
+   4. `storageKeys.js`: Contains various keys and functions to standardize access to `localStorage`
 
 
 ### Ensure these steps before merging into main
