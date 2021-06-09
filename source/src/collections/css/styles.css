@@ -54,6 +54,7 @@ body {
 
 .menu:hover {
   background-color: #ccb9b3;
+  cursor: pointer;
 }
 
 #nav {
@@ -147,6 +148,7 @@ body {
 
 #add:hover {
   background-color: #8f8f8f;
+  cursor: pointer;
 }
 
 #add p {
@@ -233,4 +235,11 @@ tracker-elem {
   --tw-text-opacity: 1;
 
   color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
+.saving {
+  font-size: x-small;
+  position: absolute;
+  bottom: 0;
+  left: 50vw;
 }

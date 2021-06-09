@@ -125,3 +125,8 @@ body {
   overflow-y: auto;
   align-items: center;
 }
+
+.saving {
+  font-size: x-small;
+  text-align: center;
+}

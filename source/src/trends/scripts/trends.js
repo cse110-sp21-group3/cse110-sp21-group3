@@ -91,7 +91,7 @@ const addForm = document.querySelector('#addForm');
  */
 function closeAddForm() {
   addForm.style.display = 'none';
-  addForm.querySelector('#habit').value = '';
+  addForm.querySelector('#habit-field').value = '';
   addForm.querySelector('#colorpicker').value = '#0000ff';
   addForm.querySelector('#error').style.visibility = 'hidden';
 }
@@ -260,7 +260,7 @@ function addHabit(habit, color) {
 // submit add habit button
 const submitAdd = addForm.querySelector('.submit #submitForm');
 submitAdd.onclick = () => {
-  const habit = addForm.querySelector('#habit').value;
+  const habit = addForm.querySelector('#habit-field').value;
   const color = addForm.querySelector('#colorpicker').value;
   const habits = JSON.parse(localStorage.getItem(habitsKey));
   const habitKey = `${getMonthName(DATE)}${habit}`;

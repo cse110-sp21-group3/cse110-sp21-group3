@@ -23,7 +23,7 @@
     <header>
         <div class="top-header">
             <div class="menu">
-              <img src="../menu-icon.png">
+              <img src="../icons/menu-icon.png">
             </div>
           <h1 id="header-title">Journal Title</h1>
           <div></div>
@@ -38,25 +38,22 @@
             <div class="daily-log-title">
               <p>daily log</p>
               <p class="date"></p>
+              
               <div class="tooltip">
-                <button class="refresh-date">&#x21bb;</button>
-                <span class="tooltiptext">Refresh Current Date</span>
-              </div>
-              <div class="tooltip">
-                <button class="info">?</button>
+                <button class="info">Keyboard Shortcuts</button>
                 <span class="tooltiptext">
                   Keyboard Shortcuts<br>
                   Enter: create new bullet <br>
                   Tab: nest bullet<br>
                   Delete/Backspace: delete bullet<br>
-                  Shift + Enter: exit nesting <br>
+                  Shift + Tab: exit nesting <br>
                   Up Arrow: move 1 bullet up<br>
                   Down Arrow: move 1 bullet down<br>
                   Control + S: save current bullets <br>
-                  Control + C: toggle complete bullet (strike/unstrike)<br>
-                  Control + P: priority bullet (bold)<br>
+                  Control + K: toggle complete bullet (strike/unstrike)<br>
+                  Control + B: priority bullet (bold)<br>
                   Control + I: inspiration bullet (italics) <br>
-                  Control + O: regular style bullet <br>
+                  Control + R: regular style bullet <br>
                   Hover to the left of the bullet, and toggle the bullet type. 
                   Bullet Types: <br>
                   Task: &bull;, Note: &ndash;, Event: &#9702;, Theme: &#11088; <br>
@@ -64,6 +61,7 @@
               </div>
             </div>
             <bullet-list></bullet-list> 
+            <div class="saving"></div>
           </div>
           <div class="habits">
             <p><a href="../trends/trends.html">habits</a></p>
