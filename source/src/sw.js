@@ -3,19 +3,17 @@ const URLS_TO_CACHE = [
   '/',
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', (event) => { /* eslint-disable-line no-restricted-globals */
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(URLS_TO_CACHE);
-    }),
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_TO_CACHE)),
   );
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', (event) => { /* eslint-disable-line no-restricted-globals */
   event.waitUntil(clients.claim());
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) => { /* eslint-disable-line no-restricted-globals */
   event.respondWith(
     caches.match(event.request).then((res) => {
       if (res) {
