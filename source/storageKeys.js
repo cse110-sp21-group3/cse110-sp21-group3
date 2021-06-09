@@ -13,12 +13,10 @@ if (habits === null) {
 /**
  * Return UID keys for monthly logs
  * @param {*} itemType - event or task
- * @param {*} month
- * @param {*} [day = null] - needed for event type
+ * @param {Date} date
  * @returns
  */
-export function getMonthlyLogUID(itemType, month, day = null) {
-  // TODO: Add year parameter otherwise two months from different years have the same UID
+export function getMonthlyLogUID(itemType, date) {
   const prefix = 'ML';
   const typeID = {
     event: 'ev',
@@ -27,10 +25,10 @@ export function getMonthlyLogUID(itemType, month, day = null) {
   let uid;
   switch (itemType) {
     case 'event':
-      uid = `${prefix}${typeID[itemType]}${month}${day}`;
+      uid = `${prefix}${typeID[itemType]}${date.getMonth() + 1}${date.getDate()}${date.getFullYear()}`; // Add 1 to getMonth() as it assumes January as 0
       break;
     case 'task':
-      uid = `${prefix}${typeID[itemType]}${month}`;
+      uid = `${prefix}${typeID[itemType]}${date.getMonth() + 1}${date.getFullYear()}`; // Add 1 to getMonth() as it assumes January as 0
       break;
     default:
       break;
