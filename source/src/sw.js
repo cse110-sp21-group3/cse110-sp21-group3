@@ -3,20 +3,19 @@ const URLS_TO_CACHE = [
   '/',
 ];
 
-window.addEventListener('install', (event) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // console.log('Opened cache');
       return cache.addAll(URLS_TO_CACHE);
     }),
   );
 });
 
-window.addEventListener('activate', (event) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(clients.claim());
 });
 
-window.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((res) => {
       if (res) {
