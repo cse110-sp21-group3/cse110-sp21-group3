@@ -35,7 +35,7 @@ export default {
     main: '#BC8034',
     background: '#FFD6A3',
   },
-  lavendar: {
+  lavender: {
     main: '#EECFF4',
     background: '#FCEEFF',
   },
