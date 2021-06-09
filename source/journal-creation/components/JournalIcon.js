@@ -88,7 +88,7 @@ class JournalIcon extends HTMLElement {
                 
             </style>
             <div class="journal">
-                <div class="white-box"></div>
+                ${(this.state === states.small) ? `<div class="white-box"></div>` : ''}
                 ${backdropDiv}
             </div>
         `;
