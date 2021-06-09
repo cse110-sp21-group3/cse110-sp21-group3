@@ -1,7 +1,7 @@
 # End to End Testing Guide/Procedures
 
 Procedures we used when performing manual end to end tests.
-Notes on E2E tests can be found at [E2Enotes](E2Enotes.md)
+Procedure for E2E tests can be found at [E2Enotes](E2Enotes.md)
 
 ## Setup
 
