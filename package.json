@@ -4,7 +4,6 @@
   "description": "This is the bullet journal project for CSE 110 Spring 2021 Group 3.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
     "test": "jest --coverage",
     "lint": "eslint --ext js source/ __tests__/ && stylelint '**/*.css'",
     "lint:fix": "eslint --ext js source/ __tests__/ --fix && stylelint '**/*.css' --fix"
@@ -30,13 +29,10 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^26.6.3",
     "stylelint": "^13.13.1",
-    "stylelint-config-standard": "^22.0.0",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.0"
+    "stylelint-config-standard": "^22.0.0"
   },
   "dependencies": {
     "babel-jest": "^27.0.2",
-    "dexie": "^3.0.3",
     "eslint-plugin-jest": "^24.3.6"
   },
   "jest": {
