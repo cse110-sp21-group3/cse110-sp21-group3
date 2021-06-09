@@ -6,36 +6,22 @@ export default class monthlylogview extends abstractview{
         super(a);
     }
     getScripts() {
-        let sourcelist = ["../src/monthly-log/scripts/monthlylog.js",
-        '../src/monthly-log/components/EventWrapper.js',
-        "../src/components/TextEditor/Bullet/SimpleBullet.js",
-        "../src/components/TextEditor/BulletList.js",
-        "../src/components/TextEditor/Bullet/TaskBullet.js",
-        "../src/colorThemes.js"];
+        let sourcelist = ["../src/past-dailylogs/scripts/pastdailylogs.js"];
         return sourcelist;
     }
     getHead() {
         return `
-        
+        <div id="bar"></div>
         `
     }
     getStyles() {
-        let sourcelist = ["../src/monthly-log/monthlylog.css"]; 
+        let sourcelist = ["../src/past-dailylogs/css/styles.css"]; 
           return sourcelist;
     }
     getBody () {
         return `
         
-        <div id="log-container">
-            <div id="events">
-                <input type="month" class="month-input"/>
-                <div class="events-container"></div>
-            </div>
-            <div class="tasks-container">
-                <div class="subtitle">Tasks</div>
-                <div class="task-wrapper"></div>
-            </div>
-        </div>
+        
      
         `
     }

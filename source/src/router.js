@@ -3,6 +3,7 @@ import Trends from './views/trendview.js';
 import Home from './views/dailylogview.js';
 import Collections from './views/collectionsview.js';
 import MonthlyLog from './views/monthly-logviews.js';
+import PastLogs from './views/pastdailylogview.js';
 const body = document.body.getElementsByTagName('main')[0];
 const header_title = document.getElementById("header-title");
 const header = document.querySelector('.header_content');
@@ -14,6 +15,9 @@ router.setState =  async (state, statePopped) => {
     console.log(document.body.id == state + '-body');
     if(document.body.id == state + '-body') {
         return;
+    }
+    if(document.body.querySelector(".past-dailylogs-container")) {
+        document.body.removeChild(document.querySelector(".past-dailylogs-container"));
     }
     body.style.display = "none";
     header.style.display = "none";
@@ -37,9 +41,23 @@ router.setState =  async (state, statePopped) => {
                 <div id="add">
                     <p>+</p>
                 </div>
-            </div>
-
-          `;
+            </div>`;
+            title = 'Trends';
+            break;
+        case 'past-logs':
+            title = "past-logs";
+            header_title.innerHTML = "";
+            current_view = new PastLogs();
+            header_top.innerHTML = `
+            <label for="date-input" id="date-input-label"></label>
+            <label for="date-input" id="dash">-</label>
+            <input type="date" id="date-input" class="pl-title">`;
+            //<div class="past-dailylogs-container"><bullet-list></bullet-list</div>
+            const element = document.createElement("div");
+            element.classList.add("past-dailylogs-container");
+            const subElement = document.createElement("bullet-list");
+            element.appendChild(subElement);
+            document.body.appendChild(element);
             title = 'Trends';
             break;
         case 'home':
