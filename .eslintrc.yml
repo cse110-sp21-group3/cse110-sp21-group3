@@ -11,6 +11,10 @@ rules:
     - error
     - js: ignorePackages # Enabling the use of `.js` in import statements
   
+overrides:
+  - files: ["source/src/sw.js"]
+    rules:
+      no-restricted-globals: [0]
 
 plugins:
 - jest
