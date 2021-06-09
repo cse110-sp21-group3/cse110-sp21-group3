@@ -1,12 +1,12 @@
 module.exports = {
   mode: 'production',
-  entry: './source/src/database.js',
+  entry: './source/database.js',
   output: {
     filename: 'depBundle.js',
     library: {
       type: 'module',
     },
-    path: `${__dirname}/source/src/dist`,
+    path: `${__dirname}/source/dist`,
   },
   experiments: {
     outputModule: true,

@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack",
     "test": "jest --coverage",
-    "lint": "eslint --ext js source/src/ __tests__/ && stylelint '**/*.css'",
-    "lint:fix": "eslint --ext js source/src/ __tests__/ --fix && stylelint '**/*.css' --fix"
+    "lint": "eslint --ext js source/ __tests__/ && stylelint '**/*.css'",
+    "lint:fix": "eslint --ext js source/ __tests__/ --fix && stylelint '**/*.css' --fix"
   },
   "repository": {
     "type": "git",
