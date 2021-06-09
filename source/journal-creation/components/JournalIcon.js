@@ -34,8 +34,6 @@ class JournalIcon extends HTMLElement {
   set styleName(styleName) {
     const mainColor = colorThemes[styleName].main;
 
-    let backdropDiv = '<div class="backdrop"></div>';
-    if (this.state === states.small) backdropDiv = '';
     this.shadowRoot.innerHTML = `
             <style>
                 .journal, .backdrop {
@@ -88,8 +86,8 @@ class JournalIcon extends HTMLElement {
                 
             </style>
             <div class="journal">
-                ${(this.state === states.small) ? `<div class="white-box"></div>` : ''}
-                ${backdropDiv}
+                ${(this.state === states.small) ? '<div class="white-box"></div>' : ''}
+                ${(this.state === states.large) ? '<div class="backdrop"></div>' : ''}
             </div>
         `;
   }
