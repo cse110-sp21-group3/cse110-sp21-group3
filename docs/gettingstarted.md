@@ -3,7 +3,12 @@
 To get started with development in frontend, please follow the following basic steps to make your onboarding smoother.
 
 ### Clone our repo
-Once you are added into our github organisation, clone the github repo [here](https://github.com/cse110-sp21-group3/cse110-sp21-group3.git) 
+Once you are added into our github organization, clone the github repo [here](https://github.com/cse110-sp21-group3/cse110-sp21-group3.git) 
+OR run 
+```
+git clone https://github.com/cse110-sp21-group3/cse110-sp21-group3.git
+```
+on the command line in the directory you wish.
 
 ### Install package dependencies
 To install the package dependencies please use the command
