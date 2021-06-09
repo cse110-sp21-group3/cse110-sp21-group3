@@ -1,5 +1,5 @@
-import '../source/src/components/TextEditor/BulletList';
-import '../source/src/components/TextEditor/Bullet/SimpleBullet';
+import '../source/components/TextEditor/BulletList';
+import '../source/components/TextEditor/Bullet/SimpleBullet';
 
 const bulletData = {
   elementName: 'simple-bullet',
