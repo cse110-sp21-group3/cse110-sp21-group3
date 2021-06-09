@@ -94,7 +94,7 @@ add.addEventListener('click', () => {
 ** Submit Add Collection
 */
 const submitAdd = addForm.querySelector('.submit #submitForm');
-submitAdd.onclick = () => {
+submitAdd.onclick = (event) => {
   const collection = addForm.querySelector('#collection').value.trim();
   const e = document.getElementById('error');
   let collections = JSON.parse(localStorage.getItem(collectionsKey));
@@ -104,8 +104,10 @@ submitAdd.onclick = () => {
 
   if (collection == null || collection === '') {
     e.innerHTML = 'Please enter a valid name.';
+    event.preventDefault();
   } else if (collections.includes(collection)) {
     e.innerHTML = 'That collection already exists.';
+    event.preventDefault();
   } else {
     collections.push(collection);
     localStorage.setItem(collectionsKey, JSON.stringify(collections));
