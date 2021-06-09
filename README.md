@@ -5,8 +5,8 @@ This is the bullet journal project for CSE 110 Spring 2021 Group 3.
 
 ## Final Project Videos
 
-[Public Version]()   
-[Private Version]()
+[Public Version]()   TODO   
+[Private Version]() TODO
 
 ## Link to app
 The BuJo is hosted at
@@ -48,6 +48,8 @@ The BuJo is hosted at
 ### [Pages](https://github.com/cse110-sp21-group3/cse110-sp21-group3/tree/e2e-tests/docs/pages)
 - app page-level breakdown
 
+### [JsDocs]() TODO
+- app component-level breakdown
 
 
 ## Source
