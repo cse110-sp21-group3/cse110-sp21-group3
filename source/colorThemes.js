@@ -1,3 +1,8 @@
+/**
+ * The available set of colors for our journal.
+ *
+ * Extend here for more options.
+ */
 export default {
   default: {
     main: '#55BEDF',
