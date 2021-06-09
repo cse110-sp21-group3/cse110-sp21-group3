@@ -259,7 +259,7 @@ function addHabit(habit, color) {
 
 // submit add habit button
 const submitAdd = addForm.querySelector('.submit #submitForm');
-submitAdd.onclick = () => {
+submitAdd.onclick = (event) => {
   const habit = addForm.querySelector('#habit-field').value;
   const color = addForm.querySelector('#colorpicker').value;
   const habits = JSON.parse(localStorage.getItem(habitsKey));
@@ -271,10 +271,12 @@ submitAdd.onclick = () => {
     const error = document.getElementById('error');
     error.style.visibility = 'visible';
     error.innerText = 'Please fill in habit field';
+    event.preventDefault();
   } else if (habits.includes(habitKey)) {
     const error = document.getElementById('error');
     error.style.visibility = 'visible';
     error.innerText = 'That habit already exists';
+    event.preventDefault();
   } else {
     addHabit(habit, color);
     const habitArray = Array(numDays).fill(false);
