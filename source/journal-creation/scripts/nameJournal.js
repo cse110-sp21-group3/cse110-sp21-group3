@@ -8,10 +8,12 @@ if (selectedColorStyle === 'null') selectedColorStyle = 'default';
 const root = document.documentElement;
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
 
+// Set journal mock color
 const journalElement = document.querySelector('journal-icon');
 journalElement.size = 'large';
 journalElement.styleName = selectedColorStyle;
 
+// Set event for submitting name of journal
 const nameInput = document.querySelector('#name-input');
 const nextButton = document.querySelector('#submit-name');
 nextButton.addEventListener('click', () => {
