@@ -70,22 +70,22 @@ class Navbar extends HTMLElement {
       <div id="nav">
         <span class="close-nav">&times;</span>
         <div class="nav-component">
-          <p><a href="../home-dailylog/home.html">home</a></p>
+          <p>home</p>
         </div>
         <div class="nav-component">
-          <p><a href="../trends/trends.html">habits & trends</a></p>
+          <p>habits & trends</p>
         </div>
         <div class="nav-component">
-          <p><a href="../past-dailylogs/past-daily-logs.html">past logs</a></p>
+          <p>past logs</p>
         </div>
         <div class="nav-component">
-          <p><a href="../monthly-log/monthlylog.html">monthly log</a></p>
+          <p>monthly log</p>
         </div>
         <div class="nav-component">
-          <p><a href="../collections/collections.html">collections</a></p>
+          <p>collections</p>
         </div>
         <div class="nav-component">
-          <p><a href="../settings/settings.html">settings</a></p>
+          <p>settings</p>
         </div>
       </div>`;
     this.attachShadow({ mode: 'open' });

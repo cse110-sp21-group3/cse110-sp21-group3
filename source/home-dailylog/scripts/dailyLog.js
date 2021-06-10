@@ -88,9 +88,9 @@ function toggleHabit(habit) {
 }
 
 /**
- * DOM Content Loaded
+ * setting up the document
  */
-document.addEventListener('DOMContentLoaded', () => {
+function setup() {
   const currDate = new Date();
   const storageKey = getDailyLogUID(currDate);
   const listDataTree = getSavedBullets(storageKey);
@@ -134,4 +134,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     habitBody.appendChild(habitElem);
   });
-});
+  document.body.getElementsByTagName('main')[0].style.display = "block";
+  document.querySelector('.header_content').style.display = "block";
+}
+
+let firstTime = false;
+while (!firstTime) {
+  if(document.querySelector(".tooltiptext") != null) {
+    setup();
+    firstTime = true;
+  }
+}
+let oldbodyid = 'home-body';
+const callback = function (mutations) {
+  mutations.forEach(function (mutation) {
+    if (document.body.id == 'home-body'&&oldbodyid != 'home-body') {
+      oldbodyid = document.body.id;
+      setup();
+    }
+    oldbodyid = document.body.id;
+});  
+}
+const observer = new MutationObserver(callback);
+const config = { attributes: true };
+observer.observe(document.body, config);

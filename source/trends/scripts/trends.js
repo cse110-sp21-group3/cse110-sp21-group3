@@ -84,7 +84,7 @@ function closeForm(form) {
 }
 
 // add habit form
-const addForm = document.querySelector('#addForm');
+let addForm = document.querySelector('#addForm');
 
 /**
  * Close the form that adds a habit
@@ -97,22 +97,22 @@ function closeAddForm() {
 }
 
 // close add form button
-const addClose = addForm.querySelector('#add-close-form');
+let addClose = addForm.querySelector('#add-close-form');
 addClose.addEventListener('click', () => {
   closeAddForm(addForm);
 });
 
 // add habit button
-const add = document.getElementById('add');
+let add = document.getElementById('add');
 add.addEventListener('click', () => {
   openForm(addForm);
 });
 
 // edit habit color form
-const editForm = document.getElementById('edit-form');
+let editForm = document.getElementById('edit-form');
 
 // close edit form button
-const editClose = editForm.querySelector('#edit-close-form');
+let editClose = editForm.querySelector('#edit-close-form');
 editClose.addEventListener('click', () => {
   closeForm(editForm);
 });
@@ -129,7 +129,7 @@ function openEditForm(color) {
 }
 
 // submit edit form button
-const submitEditBtn = editForm.querySelector('#submitEditForm');
+let submitEditBtn = editForm.querySelector('#submitEditForm');
 
 // submit new color to storage and reload window
 function submitEdit(habitKey, tracker) {
@@ -257,43 +257,45 @@ function addHabit(habit, color) {
   });
 }
 
-// submit add habit button
-const submitAdd = addForm.querySelector('.submit #submitForm');
-submitAdd.onclick = (event) => {
-  const habit = addForm.querySelector('#habit-field').value;
-  const color = addForm.querySelector('#colorpicker').value;
-  const habits = JSON.parse(localStorage.getItem(habitsKey));
-  const habitKey = `${getMonthName(DATE)}${habit}`;
 
-  // if they provided a new habit, add habit to DOM and storage
-  // otherwise, show error message
-  if (habit === '') {
-    const error = document.getElementById('error');
-    error.style.visibility = 'visible';
-    error.innerText = 'Please fill in habit field';
-    event.preventDefault();
-  } else if (habits.includes(habitKey)) {
-    const error = document.getElementById('error');
-    error.style.visibility = 'visible';
-    error.innerText = 'That habit already exists';
-    event.preventDefault();
-  } else {
-    addHabit(habit, color);
-    const habitArray = Array(numDays).fill(false);
-    const habitStorage = {
-      habit, color, days: [...habitArray],
-    };
-    habits.push(habitKey);
-    localStorage.setItem(habitsKey, JSON.stringify(habits));
-    localStorage.setItem(habitKey, JSON.stringify(habitStorage));
-    closeAddForm();
-  }
-};
+function setup() {
+  // submit add habit button
+  const submitAdd = addForm.querySelector('.submit #submitForm');
+  submitAdd.onclick = (event) => {
+    const habit = addForm.querySelector('#habit-field').value;
+    const color = addForm.querySelector('#colorpicker').value;
+    const habits = JSON.parse(localStorage.getItem(habitsKey));
+    const habitKey = `${getMonthName(DATE)}${habit}`;
 
-/**
- * When loading the website, add all of the habits in the storage to the DOM
- */
-document.addEventListener('DOMContentLoaded', () => {
+    // if they provided a new habit, add habit to DOM and storage
+    // otherwise, show error message
+    if (habit === '') {
+      const error = document.getElementById('error');
+      error.style.visibility = 'visible';
+      error.innerText = 'Please fill in habit field';
+      event.preventDefault();
+    } else if (habits.includes(habitKey)) {
+      const error = document.getElementById('error');
+      error.style.visibility = 'visible';
+      error.innerText = 'That habit already exists';
+      event.preventDefault();
+    } else {
+      addHabit(habit, color);
+      const habitArray = Array(numDays).fill(false);
+      const habitStorage = {
+        habit, color, days: [...habitArray],
+      };
+      habits.push(habitKey);
+      localStorage.setItem(habitsKey, JSON.stringify(habits));
+      localStorage.setItem(habitKey, JSON.stringify(habitStorage));
+      closeAddForm();
+    }
+  };
+
+  /**
+   * When loading the website, add all of the habits in the storage to the DOM
+   */
+  
   const headerTitle = document.getElementById('header-title');
   const title = `Trends: ${getMonthName(DATE)}`;
   headerTitle.innerText = title;
@@ -341,4 +343,31 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
-});
+
+  root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+  root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
+
+  document.body.getElementsByTagName('main')[0].style.display = "block";
+  document.querySelector('.header_content').style.display = "block";
+}
+
+let firstTime = false;
+while (!firstTime) {
+  if(document.getElementById("tracker-body") != null) {
+    setup();
+    firstTime = true;
+  }
+}
+let oldbodyid = document.body.id;
+const callback = function (mutations) {
+  mutations.forEach(function (mutation) {
+    if (document.body.id == 'trends-body'&&oldbodyid != 'trends-body') {
+      oldbodyid = document.body.id;
+      setup();
+    }
+    oldbodyid = document.body.id;
+});  
+};
+const observer = new MutationObserver(callback);
+const config = { attributes: true };
+observer.observe(document.body, config);

@@ -46,19 +46,6 @@ function addCollection(collection) {
   });
 }
 
-/**
- * template testing
- */
-document.addEventListener('DOMContentLoaded', () => {
-  let collections = JSON.parse(localStorage.getItem(collectionsKey));
-  if (collections === null) {
-    collections = [];
-  }
-  // for each loop on list
-  collections.forEach((k) => {
-    addCollection(k);
-  });
-});
 
 /**
  * Open and close a modal/form
@@ -74,45 +61,92 @@ function closeForm(form) {
   f.querySelector('#collection').value = '';
 }
 
-/**
+
+
+function setup() {
+  /**
  * Add new collection button
  */
-const addForm = document.querySelector('#addForm');
+  const addForm = document.querySelector('#addForm');
 
-const addClose = addForm.querySelector('.close-form');
-addClose.addEventListener('click', () => {
-  closeForm(addForm);
-  document.getElementById('error').innerHTML = '';
-});
+  const addClose = addForm.querySelector('.close-form');
+  addClose.addEventListener('click', () => {
+    closeForm(addForm);
+    document.getElementById('error').innerHTML = '';
+  });
 
-const add = document.getElementById('add');
-add.addEventListener('click', () => {
-  openForm(addForm);
-});
-
-/*
-** Submit Add Collection
-*/
-const submitAdd = addForm.querySelector('.submit #submitForm');
-submitAdd.onclick = (event) => {
-  const collection = addForm.querySelector('#collection').value.trim();
-  const e = document.getElementById('error');
+  const add = document.getElementById('add');
+  add.addEventListener('click', () => {
+    openForm(addForm);
+  });
+  /**
+   * template testing
+   */
   let collections = JSON.parse(localStorage.getItem(collectionsKey));
   if (collections === null) {
     collections = [];
   }
+  // for each loop on list
+  collections.forEach((k) => {
+    addCollection(k);
+  });
+  
+  /*
+  ** Submit Add Collection
+  */
+  const submitAdd = addForm.querySelector('.submit #submitForm');
+  submitAdd.onclick = (event) => {
+    const collection = addForm.querySelector('#collection').value.trim();
+    const e = document.getElementById('error');
+    let collections = JSON.parse(localStorage.getItem(collectionsKey));
+    if (collections === null) {
+      collections = [];
+    }
 
-  if (collection == null || collection === '') {
-    e.innerHTML = 'Please enter a valid name.';
-    event.preventDefault();
-  } else if (collections.includes(collection)) {
-    e.innerHTML = 'That collection already exists.';
-    event.preventDefault();
-  } else {
-    collections.push(collection);
-    localStorage.setItem(collectionsKey, JSON.stringify(collections));
-    e.innerHTML = '';
-    addCollection(collection);
-    closeForm(addForm);
+    if (collection == null || collection === '') {
+      e.innerHTML = 'Please enter a valid name.';
+      event.preventDefault();
+    } else if (collections.includes(collection)) {
+      e.innerHTML = 'That collection already exists.';
+      event.preventDefault();
+    } else {
+      collections.push(collection);
+      localStorage.setItem(collectionsKey, JSON.stringify(collections));
+      e.innerHTML = '';
+      addCollection(collection);
+      closeForm(addForm);
+    }
+  };
+
+  root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+  root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
+
+  document.body.getElementsByTagName('main')[0].style.display = "block";
+  document.querySelector('.header_content').style.display = "block";
+
+}
+
+let firstTime = false;
+while (!firstTime) {
+  if(document.querySelector(".modal") != null) {
+    setup();
+    firstTime = true;
   }
+}
+let oldbodyid = document.body.id;
+const callback = function (mutations) {
+  
+  mutations.forEach(function (mutation) {
+  
+    if (document.body.id == 'collections-body') {
+      oldbodyid = document.body.id;
+      setup();
+      document.body.getElementsByTagName('main')[0].style.display = "block";
+      document.querySelector('.header_content').style.display = "block";
+    }
+    oldbodyid = document.body.id;
+});  
 };
+const observer = new MutationObserver(callback);
+const config = { attributes: true };
+observer.observe(document.body, config);

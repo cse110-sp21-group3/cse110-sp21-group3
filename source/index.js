@@ -15,7 +15,7 @@ if ('serviceWorker' in navigator) {
 document.addEventListener('DOMContentLoaded', () => {
   const createdJournal = localStorage.getItem(createdJournalKey);
   if (createdJournal) {
-    window.location.href = './home-dailylog/home.html';
+    window.location.href = './public';
   }
 });
 
