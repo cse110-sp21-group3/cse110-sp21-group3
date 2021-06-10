@@ -39,4 +39,8 @@ export default {
     main: '#EECFF4',
     background: '#FCEEFF',
   },
+  mint: {
+    main: '#8CD4A6',
+    background: '#C9F5D9',
+  },
 };
