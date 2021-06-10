@@ -34,9 +34,9 @@ class BulletList extends HTMLElement {
     /**
      * Gets the closest available bullet, whether up or down.
      *
-     * @param {number} bulletID The id of the bulet to check neighbors for.
-     * @param {boolean} directionUp Whether to look for the top of bottom bullet.
-     * @returns The content of the bullet to switch to.
+     * @param {number} bulletID The id of the bullet to check neighbors for.
+     * @param {boolean} directionUp Whether to look for the top of bullet `bulletID`.
+     * @returns The HTMLElement of the bullet to switch to.
      */
     this.getAdjacentBullet = (bulletID, directionUp) => {
       const parentID = this.listData.parents[bulletID];
@@ -56,13 +56,18 @@ class BulletList extends HTMLElement {
       if (nextBulletID === null) return null;
       return this.listData.bulletElements[nextBulletID];
     };
+
+    /**
+     * Object with callback functions to update BulletList keeping in sync with DOM
+     * Data structures to be updated: listData.bulletElements, listData.parents, listData.tree
+     */
     this.updateCallbacks = {
       saveData: () => console.error('Bullet.saveDataCallback is not setup'), // This callback needs to be provided by the user through `setSaveData()`
       /**
-       * Create a bullet adjacent to the one provided.
+       * Add the new bullet to BulletList's data structures for bullets
        *
        * @param {number} sourceID The original bullet where we're creating another bullet from.
-       * @param {*} newBullet the contents of the next bullet.
+       * @param {HTMLElement} newBullet the contents of the next bullet.
        */
       createBullet: (sourceID, newBullet) => {
         // Assumption: A bullet can be created only in the same nest level as the `sourceID`
@@ -87,10 +92,15 @@ class BulletList extends HTMLElement {
         this.listData.parents[newBullet.uniqueID] = parentID; // Save in parents
       },
       /**
-       * Deletes a bullet with the provided ID, if it exists.
+       *
+       * Decides whether a bullet can be deleted based on the following condition:
+       *    If this is the only top level bullet, this bullet cannot be deleted
+       *    Else bullet can be deleted
+       *
+       * Deletes the bullet from the data structures if bullet can be deleted
        *
        * @param {number} bulletID The ID of the bullet
-       * @returns Whether the bullet was deleted or not.
+       * @returns Whether the bullet can be deleted or not.
        */
       deleteBullet: (bulletID) => {
         if (
@@ -118,7 +128,7 @@ class BulletList extends HTMLElement {
         return true;
       },
       /**
-       * Modifies a bullet's content.
+       * Modifies a bullet's content in the data structures.
        *
        * @param {string} parameter Parameter to modify.
        * @param {number} bulletID ID of bullet to modify.
@@ -131,11 +141,12 @@ class BulletList extends HTMLElement {
         if (saving) { saving.innerHTML = 'Saving...'; }
       },
       /**
-       * Nests the current bullet into another bullet.
+       * Updates the data structure to nest the current bullet into another bullet.
        *
        * @param {number} bulletID Bullet to nest into parent.
        * @param {number} newParentID ID of parent bullet to nest into.
-       * @param {boolean} forward Whether to place at the end of parent or elsewhere.
+       * @param {boolean} forward
+       *    -> Whether the bullet is being nested inside another or outside of one bullet
        */
       nestCurrBullet: (bulletID, newParentID, forward) => {
         this.state.unsaved = true;

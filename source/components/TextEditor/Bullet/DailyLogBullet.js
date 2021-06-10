@@ -148,7 +148,7 @@ class DailyLogBullet extends BaseBullet {
   /**
    * Initialises the bullet
    * @param {*} bulletAttributes
-   * @param {Object} [ storageIndex ]
+   * @param {Object} [ bulletAttributes.storageIndex ]
    * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
    */
   initialiseBullet(bulletAttributes) {
@@ -229,6 +229,17 @@ class DailyLogBullet extends BaseBullet {
   }
 
   // Additional keyboard listeners
+  /**
+   * Keydown keyboard listeners in addition to base listeners
+   *
+   * Shortcuts checked (in order):
+   * 1. Control + k
+   * 2. Control + r
+   * 3. Control + b
+   * 4. Control + i
+   *
+   * @returns {Boolean} true if shortcut was matched, false otherwise
+   */
   keyDownListener() {
     if (this.keysPressed.Control && this.keysPressed.k) {
       this.editContent(bulletParameters.completed, !this.state.completed);

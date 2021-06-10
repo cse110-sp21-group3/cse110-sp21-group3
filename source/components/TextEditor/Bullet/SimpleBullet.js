@@ -80,6 +80,14 @@ class SimpleBullet extends BaseBullet {
     };
   }
 
+  /**
+   * Initialises the bullet
+   * @param {*} bulletAttributes
+   * @param {Object} [ bulletAttributes.storageIndex ]
+   * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
+   * @param {Object} [ bulletAttributes.bulletConfigs ]
+   *    -> Configuration for bullet object. Example: bulletStyle
+   */
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);
     let data = null;

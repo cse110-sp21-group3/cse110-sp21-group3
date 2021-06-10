@@ -174,7 +174,19 @@ export default class Bullet extends HTMLElement {
     }
   }
 
-  // Keyboard Listeners
+  /**
+   * Keydown keyboard Listeners. Must be called on the `input` element in the DOM
+   *
+   * Shortcuts being checked (in order):
+   * 1. Shift + Tab
+   * 2. Tab
+   * 3. Control + s
+   * 4. ArrowUp
+   * 5. ArrowDown
+   *
+   * @param {*} e
+   * @returns {Boolean} true if a shortcut was matched, false otherwise
+   */
   baseKeydownListener(e) {
     if (!this.readOnly && this.keysPressed.Shift && this.keysPressed.Tab) {
       e.preventDefault();
@@ -197,6 +209,16 @@ export default class Bullet extends HTMLElement {
     return true;
   }
 
+  /**
+   * Keyup keyboard Listeners. Must be called on the `input` element in the DOM
+   *
+   * Shortcuts being checked (in order):
+   * 1. Enter
+   * 2. Backspace
+   *
+   * @param {*} e
+   * @returns {Boolean} true if a shortcut was matched, false otherwise
+   */
   baseKeyupListener() {
     if (!this.readOnly && this.keysPressed.Enter) {
       if (this.state.value === '') return true;

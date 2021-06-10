@@ -99,9 +99,10 @@ class TaskBullet extends BaseBullet {
   /**
    * Initialises the bullet
    * @param {*} bulletAttributes
-   * @param {Object} [ storageIndex ]
+   * @param {Object} [ bulletAttributes.storageIndex ]
    * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
    * @param {Object} [ bulletAttributes.bulletConfigs ]
+   *    -> Configuration for bullet object. Example: bulletStyle
    */
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);
@@ -126,8 +127,8 @@ class TaskBullet extends BaseBullet {
 
   /**
    * Serializes the bullet into the format
-   * [content, completed, children]
-   * @returns
+   *
+   * @returns Array with [content, completed, children] as contents
    */
   serialize() {
     return [
@@ -158,7 +159,14 @@ class TaskBullet extends BaseBullet {
     this.updateCallbacks.editContent(parameter, this.uniqueID, this.state[parameter]);
   }
 
-  // Additional Keyboard Listeners
+  /**
+   * Keydown keyboard listeners in addition to base listeners
+   *
+   * Shortcuts checked (in order):
+   * 1. Control + k
+   *
+   * @returns {Boolean} true if shortcut was matched, false otherwise
+   */
   keyDownListener() {
     if (this.keysPressed.Control && this.keysPressed.k) {
       this.editContent(bulletParameters.completed, !this.state.completed);
