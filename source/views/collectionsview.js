@@ -6,16 +6,16 @@ export default class collectionsview extends abstractview{
         super(a);
     }
     getScripts() {
-        let sourcelist = ["../src/collections/scripts/collections.js",
-        "../src/collections/components/collection.js",
-        "../src/components/TextEditor/Bullet/TaskBullet.js",
-        "../src/components/TextEditor/BulletList.js",
-        "../src/components/Navbar/navbar.js",
-        "../src/components/Menu/menu.js"];
+        let sourcelist = ["../collections/scripts/collections.js",
+        "../collections/components/collection.js",
+        "../components/TextEditor/Bullet/TaskBullet.js",
+        "../components/TextEditor/BulletList.js",
+        "../components/Navbar/navbar.js",
+        "../components/Menu/menu.js"];
         return sourcelist;
     }
     getStyles() {
-      let sourcelist = ["../src/settings/css/styles.css"]; 
+      let sourcelist = ["../settings/css/styles.css"]; 
         return sourcelist;
     }
     getHead() {
@@ -24,7 +24,7 @@ export default class collectionsview extends abstractview{
         `
     }
     getStyles() {
-      let sourcelist = ["../src/collections/css/styles.css"]; 
+      let sourcelist = ["../collections/css/styles.css"]; 
         return sourcelist;
     }
     getBody () {

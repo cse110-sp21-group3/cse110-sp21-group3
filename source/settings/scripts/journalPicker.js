@@ -29,7 +29,7 @@ function setup() {
   
   header.style.display = "none";
   let selectedColorStyle = localStorage.getItem(colorStyleKey);
-  if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+  if (selectedColorStyle === null) selectedColorStyle = 'default';
 
   // Set Display CSS Styles
   const root = document.documentElement;

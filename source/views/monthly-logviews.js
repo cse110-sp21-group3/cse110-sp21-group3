@@ -6,12 +6,12 @@ export default class monthlylogview extends abstractview{
         super(a);
     }
     getScripts() {
-        let sourcelist = ["../src/monthly-log/scripts/monthlylog.js",
-        '../src/monthly-log/components/EventWrapper.js',
-        "../src/components/TextEditor/Bullet/SimpleBullet.js",
-        "../src/components/TextEditor/BulletList.js",
-        "../src/components/TextEditor/Bullet/TaskBullet.js",
-        "../src/colorThemes.js"];
+        let sourcelist = ["../monthly-log/scripts/monthlylog.js",
+        '../monthly-log/components/EventWrapper.js',
+        "../components/TextEditor/Bullet/SimpleBullet.js",
+        "../components/TextEditor/BulletList.js",
+        "../components/TextEditor/Bullet/TaskBullet.js",
+        "../colorThemes.js"];
         return sourcelist;
     }
     getHead() {
@@ -20,7 +20,7 @@ export default class monthlylogview extends abstractview{
         `
     }
     getStyles() {
-        let sourcelist = ["../src/monthly-log/monthlylog.css"]; 
+        let sourcelist = ["../monthly-log/monthlylog.css"]; 
           return sourcelist;
     }
     getBody () {

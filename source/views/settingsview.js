@@ -13,16 +13,16 @@ export default class extends abstractview{
         `
     }
     getStyles() {
-        let sourcelist = ["../src/settings/css/styles.css"]; 
+        let sourcelist = ["../settings/css/styles.css"]; 
           return sourcelist;
       }
     getScripts() {
-        let sourcelist = ["../src/journal-creation/components/JournalIcon.js",
-            "../src/settings/scripts/journalPicker.js",
-            "../src/colorThemes.js",
-            "../src/settings/scripts/settings.js",
-            "../src/components/Navbar/navbar.js",
-            "../src/components/Menu/menu.js"]
+        let sourcelist = ["../journal-creation/components/JournalIcon.js",
+            "../settings/scripts/journalPicker.js",
+            "../colorThemes.js",
+            "../settings/scripts/settings.js",
+            "../components/Navbar/navbar.js",
+            "../components/Menu/menu.js"]
         return sourcelist;
     }
     getBody () {

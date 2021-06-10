@@ -6,11 +6,11 @@ export default class trendview extends abstractview{
         super(a);
     }
     getScripts() {
-        let sourcelist = ["../src/components/Navbar/navbar.js",
-        "../src/components/Menu/menu.js",
-        "../src/trends/scripts/trends.js",
-        "../src/trends/components/tracker.js",
-        "../src/trends/components/grid.js"];
+        let sourcelist = ["../components/Navbar/navbar.js",
+        "../components/Menu/menu.js",
+        "../trends/scripts/trends.js",
+        "../trends/components/tracker.js",
+        "../trends/components/grid.js"];
        
         return sourcelist;
     }
@@ -21,7 +21,7 @@ export default class trendview extends abstractview{
         `
     }
     getStyles() {
-      let sourcelist = ["../src/trends/css/styles.css"]; 
+      let sourcelist = ["../trends/css/styles.css"]; 
         return sourcelist;
     }
     getBody () {

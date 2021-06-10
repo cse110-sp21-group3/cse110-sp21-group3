@@ -6,12 +6,12 @@ export default class dailylog extends abstractview{
         super(a);
     }
     getScripts() {
-        let sourcelist = ["../src/components/TextEditor/Bullet/DailyLogBullet.js",
+        let sourcelist = ["../components/TextEditor/Bullet/DailyLogBullet.js",
         
-        "../src/home-dailylog/scripts/dailyLog.js",
-        "../src/components/Navbar/navbar.js",
-        "../src/components/Menu/menu.js",
-        "../src/home-dailylog/components/habitLog.js"]; 
+        "../home-dailylog/scripts/dailyLog.js",
+        "../components/Navbar/navbar.js",
+        "../components/Menu/menu.js",
+        "../home-dailylog/components/habitLog.js"]; 
         return sourcelist;
     }
     getHead() {
@@ -20,7 +20,7 @@ export default class dailylog extends abstractview{
         `
     }
     getStyles() {
-      let sourcelist = ["../src/home-dailylog/css/styles.css"]; 
+      let sourcelist = ["../home-dailylog/css/styles.css"]; 
         return sourcelist;
     }
     getBody () {

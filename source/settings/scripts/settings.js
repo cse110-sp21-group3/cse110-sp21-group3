@@ -30,8 +30,12 @@ function setup() {
   let journalNameEdit = document.getElementById('journal-name-edit');
   let journalThemeEdit = document.getElementById('journal-theme-edit');
   let saveBtn = document.getElementById('save');
-  journalNameEdit.textContent = localStorage.getItem(journalNameKey);
-  journalThemeEdit.textContent = localStorage.getItem(themeKey);
+  console.log(localStorage.getItem(journalNameKey));
+  let journalNameContent = (localStorage.getItem(journalNameKey)) ? localStorage.getItem(journalNameKey) : "Null";
+  let journalThemeContent = (localStorage.getItem(themeKey)) ? localStorage.getItem(themeKey) : "Null";
+  journalNameEdit.textContent = journalNameContent;
+  journalThemeEdit.textContent = journalThemeContent;
+  
 
   journalNameEdit.addEventListener('input', () => {
     showSave();

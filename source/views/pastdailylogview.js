@@ -6,7 +6,7 @@ export default class monthlylogview extends abstractview{
         super(a);
     }
     getScripts() {
-        let sourcelist = ["../src/past-dailylogs/scripts/pastdailylogs.js"];
+        let sourcelist = ["../past-dailylogs/scripts/pastdailylogs.js"];
         return sourcelist;
     }
     getHead() {
@@ -15,7 +15,7 @@ export default class monthlylogview extends abstractview{
         `
     }
     getStyles() {
-        let sourcelist = ["../src/past-dailylogs/css/styles.css"]; 
+        let sourcelist = ["../past-dailylogs/css/styles.css"]; 
           return sourcelist;
     }
     getBody () {

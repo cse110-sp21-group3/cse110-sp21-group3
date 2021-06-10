@@ -2,7 +2,7 @@ import colorThemes from '../../colorThemes.js';
 import { colorStyleKey, getDailyLogUID } from '../../storageKeys.js';
 
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
-if (selectedColorStyle === 'null') selectedColorStyle = 'default';
+if (selectedColorStyle === null) selectedColorStyle = 'default';
 
 const calendarDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesdsay', 'Thursday', 'Friday', 'Saturday'];
 
