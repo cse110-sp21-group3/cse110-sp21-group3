@@ -63,6 +63,7 @@ Notes on how our manual end to end tests ran.
 
 
 
+
 ## Collections Page
 - On page load/reload, verify that each collection that was saved in storage appears on the screen. Also verify that each collection has the previously saved bullets when clicking into a collection.  
 - When viewing a collection's contents, verify that clicking the x button closes that collection's contents.

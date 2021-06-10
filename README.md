@@ -51,6 +51,8 @@ The BuJo is hosted at
 ### [JsDocs]() TODO
 - app component-level breakdown
 
+### [User Manual]()   TODO
+- guide for users on how to utilize the app
 
 ## Source
 
