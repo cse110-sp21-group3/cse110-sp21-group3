@@ -30,32 +30,57 @@ export default class dailylog extends abstractview{
             <div class="daily-log-title">
               <p>daily log</p>
               <p class="date"></p>
+              
               <div class="tooltip">
-                <button class="refresh-date">&#x21bb;</button>
-                <span class="tooltiptext">Refresh Current Date</span>
-              </div>
-              <div class="tooltip">
-                <button class="info">?</button>
-                <span class="tooltiptext">
+                <button class="info">Keyboard Shortcuts</button>
+                <div class="tooltiptext">
                   Keyboard Shortcuts<br>
-                  Enter: create new bullet <br>
-                  Tab: nest bullet<br>
-                  Delete/Backspace: delete bullet<br>
-                  Shift + Enter: exit nesting <br>
-                  Up Arrow: move 1 bullet up<br>
-                  Down Arrow: move 1 bullet down<br>
-                  Control + S: save current bullets <br>
-                  Control + C: toggle complete bullet (strike/unstrike)<br>
-                  Control + P: priority bullet (bold)<br>
-                  Control + I: inspiration bullet (italics) <br>
-                  Control + O: regular style bullet <br>
-                  Hover to the left of the bullet, and toggle the bullet type. 
-                  Bullet Types: <br>
-                  Task: &bull;, Note: &ndash;, Event: &#9702;, Theme: &#11088; <br>
-                </span>
+                  <div class="shortcuts">
+                    <div>
+                      <span class="keyboard-shortcut">Enter</span>: create new bullet
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">Tab</span>: nest bullet
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">Del</span>: delete bullet
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">Shift</span> + <span class="keyboard-shortcut">Tab</span>: exit nesting
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">&uarr;</span>: move 1 bullet up
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">&darr;</span>: move 1 bullet down
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">Ctrl</span> + <span class="keyboard-shortcut">S</span>: save current bullets
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">Ctrl</span> + <span class="keyboard-shortcut">Shift</span> + <span class="keyboard-shortcut">X</span>: toggle complete bullet (strike/unstrike)
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">Ctrl</span> + <span class="keyboard-shortcut">B</span>: priority bullet (bold)
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">Ctrl</span> + <span class="keyboard-shortcut">I</span>: inspiration bullet (italics)
+                    </div>
+                    <div>
+                      <span class="keyboard-shortcut">Ctrl</span> + <span class="keyboard-shortcut">R</span>: regular style bullet <br>
+                    </div>
+                    <div>
+                      Hover to the left of the bullet, and toggle the bullet type.
+                    </div>
+                    <div>
+                      Bullet Types: Task: &bull;, Note: &ndash;, Event: &#9702;, Theme: &#11088;
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <bullet-list></bullet-list> 
+            <div class="saving"></div>
           </div>
           <div class="habits">
             <p><a href="../trends/trends.html">habits</a></p>

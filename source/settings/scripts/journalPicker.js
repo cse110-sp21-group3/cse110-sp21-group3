@@ -1,6 +1,6 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey } from '../../storageKeys.js';
-import { journalNameKey, themeKey } from '../../storageKeys.js';
+
 function setup() {
   let selectedColorStyle = localStorage.getItem(colorStyleKey);
   if (selectedColorStyle === null) selectedColorStyle = 'default';
@@ -10,6 +10,7 @@ function setup() {
   root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
 
   const journalContainer = document.querySelector('#journals-container');
+  
   
   Object.keys(colorThemes).forEach((colorTheme) => {
     const journalDisplayContainer = document.createElement('div');
@@ -21,8 +22,9 @@ function setup() {
     });
 
     const styleDiscriptor = document.createElement('p');
+    
     styleDiscriptor.innerHTML = colorTheme;
-
+    
     journalDisplayContainer.appendChild(journalElement);
     journalDisplayContainer.appendChild(styleDiscriptor);
 
@@ -35,7 +37,7 @@ function setup() {
 let firstTime = false;
 while (!firstTime) {
   if(document.querySelector('#journals-container')!= null) {
-    console.log("does this always run asdfasdf");
+    
     setup();
     firstTime = true;
   }
