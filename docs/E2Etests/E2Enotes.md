@@ -21,7 +21,13 @@ Notes on how our manual end to end tests ran.
 
 ## Journal Creation Pages
 
-
+- first clear localStorage then load up the app and navigate to the creation page
+- pick a journal color and ensure that it is saved in local storage
+- reload the page to make sure the style is still there, then select a new style and verify the change
+- follow the same process for naming the journal after clicking next
+- follow the same process for creating the theme after clicking next
+- ensure that the theme youtube video appears on hover
+- after navigating to the home page, verify the correct keys and values are set in localStorage
 
 
 ## Home Page & Daily Logs
@@ -47,6 +53,10 @@ Notes on how our manual end to end tests ran.
 
 ## Past Logs Page
 
+- create a log and the next day, ensure that the log shows up correctly in its entirety
+- make sure that you are not able to edit the logs 
+- click on the input calendar and make sure that you can't go to future logs, and also clicking on past logs works correctly
+- check localStorage to make sure the keys and values are being stored correctly
 
 
 ## Monthly Logs Page
@@ -69,8 +79,11 @@ Notes on how our manual end to end tests ran.
 
 ## Settings Page
 
-
-
-
-## Routing
+- first observe the keys and values for the `colorStyle`, `theme`, and `journalName` in localStorage
+- change the color style and make sure the background and value for it changes
+  - navigate to other pages to make sure the style is persisten
+- change the name and make sure the value for it changes
+  - navigate to the home page to make sure the title is changed
+- change the theme and make sure the value for it changes
+  - navigate to the home page to make sure the theme prompt is changed
 
