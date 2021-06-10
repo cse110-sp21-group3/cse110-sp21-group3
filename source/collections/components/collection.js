@@ -1,3 +1,6 @@
+/**
+ * Component representing a collection.
+ */
 class Collection extends HTMLElement {
   constructor() {
     super();
@@ -119,6 +122,17 @@ class Collection extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
+  /**
+   * Returns the saved bullets for the current collection, in the following format:
+   *
+   * ```
+   * {
+   *   0: [number] // bullets at first level of collection
+   *   id: [contentOfBullet, completed, typeOfBullet, bulletModifier, bulletChildren]
+   * }
+   * ```
+   * @returns An object representing the collection's bullets in the mentioned format.
+   */
   getSavedBullets() {
     // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
     const initialSetup = { 0: [1], 1: ['', false, []] };
@@ -131,6 +145,12 @@ class Collection extends HTMLElement {
     return listDataTree;
   }
 
+  /**
+   * Show the collection's modal.
+   *
+   * Displays the modal and also initializes its internal TextEditor component with
+   * all existing bullets.
+   */
   openCollection() {
     const listDataTree = this.getSavedBullets();
     this.shadowRoot.querySelector('.textBox-title').innerHTML = this.collectionName;
@@ -153,18 +173,28 @@ class Collection extends HTMLElement {
     this.shadowRoot.querySelector('.modalText-content').appendChild(bulletList);
   }
 
+  /**
+   * Hide the collection's modal.
+   *
+   * In order to preserve memory, it also removes the editor component.
+   */
   closeCollection() {
     this.shadowRoot.querySelector('bullet-list').remove();
     this.shadowRoot.querySelector('#modalText').style.display = 'none';
   }
 
   /**
-   * Collection name
+   * Get the collection name.
    */
   get collection() {
     return this.getAttribute('collection');
   }
 
+  /**
+   * Sets this collection's name.
+   *
+   * Also adjusts the HTMLElement's contents to reflect the new collection name change.
+   */
   set collection(collection) {
     // Set title of grid and id of div to collection
     this.collectionName = collection;
@@ -176,12 +206,15 @@ class Collection extends HTMLElement {
   }
 
   /**
-   * Keyname for storage
+   * Obtain the key used to store this collection in localStorage.
    */
   get keyname() {
     return this.getAttribute('keyname');
   }
 
+  /**
+   * Sets the key used to store this collection in localStorage.
+   */
   set keyname(keyname) {
     this.setAttribute('keyname', keyname);
   }
