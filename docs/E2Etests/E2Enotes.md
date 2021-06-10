@@ -24,13 +24,10 @@ Notes on how our manual end to end tests ran.
 
 
 
-## Home Page & Daily Logs/Habits
+## Home Page & Daily Logs
 
 - load up the app and verify that the home page is shown, with the correct journal title, theme, and date
 - verfiy that the daily log shows an empty input field with a bullet with placeholder text and the habit trackers is empty, the shortcut tooltip appears, and there are no errors in the console
-
-
-### Daily Logs
 
 - add a bullet by typing into the input field and verify the text is correct
 - nest a bullet and verify it's nested and can't be nested another level
@@ -44,10 +41,7 @@ Notes on how our manual end to end tests ran.
 - continually check localStorage to ensure that the bullets are being stored properly with their keys and the values are being updated
 
 
-### Habit Trackers
-
-
-## Habits/Trends Page
+## Habits/Trends Page & Daily Habits
 
 
 
