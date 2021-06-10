@@ -148,7 +148,7 @@ class Collection extends HTMLElement {
   /**
    * Show the collection's modal.
    *
-   * Displays the modal and also initializes its internal TextEditor component with
+   * Displays the modal and also initializes its internal BulletList component with
    * all existing bullets.
    */
   openCollection() {
