@@ -10,6 +10,12 @@ root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
 
 const journalContainer = document.querySelector('#journals-container');
 
+// In the journals container, set out each individual color.
+//
+// For each color, create JournalIcon mock to contain color and to redirect
+// to naming page with proper color.
+//
+// Verbatim lifted from the Journal Creation screen.
 Object.keys(colorThemes).forEach((colorTheme) => {
   const journalDisplayContainer = document.createElement('div');
   const journalElement = document.createElement('journal-icon');
