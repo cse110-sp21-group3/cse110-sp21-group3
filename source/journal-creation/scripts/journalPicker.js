@@ -1,8 +1,7 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey } from '../../storageKeys.js';
-import { router } from '../../router.js';
-setTimeout(() => {  
-  const journalContainer = document.querySelector('#journals-container');
+
+const journalContainer = document.querySelector('#journals-container');
 
 Object.keys(colorThemes).forEach((colorTheme) => {
   const journalDisplayContainer = document.createElement('div');
@@ -10,8 +9,7 @@ Object.keys(colorThemes).forEach((colorTheme) => {
   journalElement.styleName = colorTheme;
   journalElement.addEventListener('click', () => {
     localStorage.setItem(colorStyleKey, colorTheme);
-    router.setState("name-journal");
-    
+    window.location.href = './name-journal.html';
   });
 
   const styleDiscriptor = document.createElement('p');
@@ -21,5 +19,4 @@ Object.keys(colorThemes).forEach((colorTheme) => {
   journalDisplayContainer.appendChild(styleDiscriptor);
 
   journalContainer.appendChild(journalDisplayContainer);
-});}, 30);
-
+});

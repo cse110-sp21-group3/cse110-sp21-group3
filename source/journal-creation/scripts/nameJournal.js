@@ -1,6 +1,6 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey, journalNameKey } from '../../storageKeys.js';
-import { router } from '../../router.js';
+
 let selectedColorStyle = localStorage.getItem(colorStyleKey);
 if (selectedColorStyle === 'null') selectedColorStyle = 'default';
 
@@ -18,6 +18,5 @@ nextButton.addEventListener('click', () => {
   let name = null;
   if (nameInput.value) name = nameInput.value;
   localStorage.setItem(journalNameKey, name);
-  router.setState('theme-creation')
-  
+  window.location.href = './theme-creation.html';
 });

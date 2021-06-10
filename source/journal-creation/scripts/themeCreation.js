@@ -1,5 +1,5 @@
-import { themeKey } from '../../storageKeys.js';
-import { router } from '../../router.js';
+import { themeKey, createdJournalKey } from '../../storageKeys.js';
+
 const themeSuggestions = ['Health', 'Finance', 'Cooking', 'Academics']; // Suggested Themes
 
 // Add Theme Suggestions
@@ -23,6 +23,6 @@ submitBtn.addEventListener('click', () => {
   let theme = null;
   if (themeInput.value) theme = themeInput.value;
   localStorage.setItem(themeKey, theme);
-  router.setState("home");
-  // TODO: Link to next page TBD
+  localStorage.setItem(createdJournalKey, 'true');
+  window.location.href = '../home-dailylog/home.html';
 });
