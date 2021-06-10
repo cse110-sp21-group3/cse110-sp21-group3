@@ -1,12 +1,14 @@
 # User Manual for TaskOverflow Bullet Journal
 
 ## Table of Contents
-1. [Home]{#Home}
-2. [Habits and Trends]{#Habits-and-Trends}
-3. [Past Logs]{#Past-Logs}
-4. [Monthly Log]{#Monthly-Log}
-5. [Collections]{#Collections}
-6. [Settings]{#Settings}
+- [User Manual for TaskOverflow Bullet Journal](#user-manual-for-taskoverflow-bullet-journal)
+  - [Table of Contents](#table-of-contents)
+    - [Home](#home)
+    - [Habits and Trends](#habits-and-trends)
+    - [Past Logs](#past-logs)
+      - [Monthly Log](#monthly-log)
+    - [Collections](#collections)
+    - [Settings](#settings)
 
 ### Home
 // TODO
