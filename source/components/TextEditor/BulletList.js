@@ -31,6 +31,13 @@ class BulletList extends HTMLElement {
       return this.state.nextID - 1;
     };
 
+    /**
+     * Gets the closest available bullet, whether up or down.
+     *
+     * @param {number} bulletID The id of the bulet to check neighbors for.
+     * @param {boolean} directionUp Whether to look for the top of bottom bullet.
+     * @returns The content of the bullet to switch to.
+     */
     this.getAdjacentBullet = (bulletID, directionUp) => {
       const parentID = this.listData.parents[bulletID];
       let sibblingBullets; let
@@ -51,6 +58,12 @@ class BulletList extends HTMLElement {
     };
     this.updateCallbacks = {
       saveData: () => console.error('Bullet.saveDataCallback is not setup'), // This callback needs to be provided by the user through `setSaveData()`
+      /**
+       * Create a bullet adjacent to the one provided.
+       *
+       * @param {number} sourceID The original bullet where we're creating another bullet from.
+       * @param {*} newBullet the contents of the next bullet.
+       */
       createBullet: (sourceID, newBullet) => {
         // Assumption: A bullet can be created only in the same nest level as the `sourceID`
         // Save in tree
@@ -73,6 +86,12 @@ class BulletList extends HTMLElement {
         this.listData.bulletElements[newBullet.uniqueID] = newBullet; // Save in bulletElements
         this.listData.parents[newBullet.uniqueID] = parentID; // Save in parents
       },
+      /**
+       * Deletes a bullet with the provided ID, if it exists.
+       *
+       * @param {number} bulletID The ID of the bullet
+       * @returns Whether the bullet was deleted or not.
+       */
       deleteBullet: (bulletID) => {
         if (
           this.listData.tree[TOP_LEVEL_ORDER_ID].includes(bulletID)
@@ -98,12 +117,26 @@ class BulletList extends HTMLElement {
 
         return true;
       },
+      /**
+       * Modifies a bullet's content.
+       *
+       * @param {string} parameter Parameter to modify.
+       * @param {number} bulletID ID of bullet to modify.
+       * @param {string|boolean|array} newValue new value of parameter for Bullet.
+       */
       editContent: (parameter, bulletID, newValue) => {
         this.state.unsaved = true;
         this.listData.tree[bulletID][this.storageIndex[parameter]] = newValue;
         const saving = document.querySelector('.saving');
         if (saving) { saving.innerHTML = 'Saving...'; }
       },
+      /**
+       * Nests the current bullet into another bullet.
+       *
+       * @param {number} bulletID Bullet to nest into parent.
+       * @param {number} newParentID ID of parent bullet to nest into.
+       * @param {boolean} forward Whether to place at the end of parent or elsewhere.
+       */
       nestCurrBullet: (bulletID, newParentID, forward) => {
         this.state.unsaved = true;
         const oldParentID = this.listData.parents[bulletID];
@@ -166,23 +199,35 @@ class BulletList extends HTMLElement {
     };
   }
 
+  /**
+   * Sets auto-save timer for bullet list.
+   */
   connectedCallback() {
     this.autoSaveHandler = setInterval(() => {
       this.updateCallbacks.saveData();
     }, autoSaveInterval);
   }
 
+  /**
+   * Removes auto-save timer for bullet list.
+   */
   disconnectedCallback() {
     clearInterval(this.autoSaveHandler);
   }
 
+  /**
+   * Gets the tree of bullets in this list.
+   * @returns The tree of bullets in this list.
+   */
   getBulletTree() {
     return this.listData.tree;
   }
 
   /**
-   * Added for testing
-   * @returns map between IDs and their dom element
+   * Added for testing. Gets all of the bullets in the current list,
+   * mapped via ID to their HTMLElement.
+   *
+   * @returns Map with key `bulletID` and value HTMLElement.
    */
   getBulletElements() {
     return this.listData.bulletElements;

@@ -3,10 +3,17 @@
  */
 const flyoutMenu = document.querySelector('navbar-elem').shadowRoot.querySelector('#nav');
 
+/**
+ * Display navbar menu.
+ */
 function showMenu() {
   flyoutMenu.classList.add('show');
 }
 
+/**
+ * Hide menu.
+ * @param {*} e Event received from DOM.
+ */
 function hideMenu(e) {
   flyoutMenu.classList.remove('show');
   e.stopPropagation();

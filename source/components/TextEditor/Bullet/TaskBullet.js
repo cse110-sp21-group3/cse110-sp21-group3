@@ -13,7 +13,7 @@ const defaultParameters = {
 };
 
 /**
- * Bullet Class for Daily Log Page Bullet
+ * Bullet Class for Daily Log Page Bullet with Task box.
  */
 class TaskBullet extends BaseBullet {
   constructor() {
@@ -73,11 +73,17 @@ class TaskBullet extends BaseBullet {
       'ArrowUp',
       'ArrowDown',
     ];
+    /**
+     * Listens for keyboard events that we are interested in and sets state properly.
+     * @param {string} key Key to adjust state for.
+     * @param {*} state New state to set for key.
+     */
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
         this.keysPressed[key] = state;
       }
     };
+    // Listeners for adjusting bullet formatting state.
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
       let matched = this.baseKeydownListener(e);

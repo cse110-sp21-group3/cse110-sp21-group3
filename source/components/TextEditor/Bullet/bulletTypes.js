@@ -1,3 +1,6 @@
+/**
+ * Symbols for each type of bullet.
+ */
 export const bulletTypes = {
   none: '',
   task: '&bull;',
@@ -6,6 +9,9 @@ export const bulletTypes = {
   theme: '&#11088;',
 };
 
+/**
+ * CSS to add for each variation of bullet.
+ */
 export const bulletModifiers = {
   none: {
     'font-style': 'normal',

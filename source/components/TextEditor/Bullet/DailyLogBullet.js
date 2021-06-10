@@ -119,6 +119,11 @@ class DailyLogBullet extends BaseBullet {
       'ArrowUp',
       'ArrowDown',
     ];
+    /**
+     * Listens for keyboard events that we are interested in and sets state properly.
+     * @param {string} key Key to adjust state for.
+     * @param {*} state New state to set for key.
+     */
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
         this.keysPressed[key] = state;
@@ -126,6 +131,7 @@ class DailyLogBullet extends BaseBullet {
     };
 
     let matched = false;
+    // Listeners for adjusting bullet formatting state.
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
       matched = false;
@@ -176,7 +182,7 @@ class DailyLogBullet extends BaseBullet {
   /**
    * Serializes the bullet into the format
    * [content, completed, type, modifier, children]
-   * @returns
+   * @returns Array of form [content, completed, type, modifier, children].
    */
   serialize() {
     return [
