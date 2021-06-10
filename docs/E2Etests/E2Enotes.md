@@ -37,7 +37,7 @@ Notes on how our manual end to end tests ran.
 - When creating a new collection:  
     - If the name already exists, after trimming both sides for whitespace, verify that a new collection doesn't get created and it isn't put into storage. Also verify that the error text appears.  
     - If the name is empty or only contains whitespace, verify that a new collection doesn't get created and it isn't put into storage. Also verify that the error text appears.  
-    - Otherwise, verify that a new collection does get created and that its name is added to the collections array in storage.  
+    - Otherwise, verify that a new collection does get created and that its name is added to the `collections` array in storage.  
     - Verify that collections can be made by both pressing the enter key and by clicking the submit button.  
 - If there was an error when making a new collection, then verify that if we close the creation form and reopen it, then the error text won't appear.
 - When adding content to a collection, verify that a new key with the collection's name gets created, where its value is an object containing the content's info.  
