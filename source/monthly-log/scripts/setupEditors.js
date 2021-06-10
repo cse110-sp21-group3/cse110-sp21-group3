@@ -15,7 +15,7 @@ function clearContainerNode(containerNode) {
 }
 
 /**
- * Save all interal even wrapper's BulletLists to localStorage.
+ * Save all internal event wrapper's BulletLists to localStorage.
  */
 function saveEvents() {
   const eventsContainer = document.querySelector('.events-container');
