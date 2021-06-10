@@ -207,6 +207,9 @@ class DailyLogBullet extends BaseBullet {
   }
 
   setBulletModifier(modifier) {
+    if (modifier === this.state.modifier){ // Allow modifiers to be toggled
+      modifier = 'none'
+    }
     this.state.modifier = modifier;
     const inputElement = this.shadowRoot.querySelector('input');
     Object.assign(inputElement.style, bulletModifiers[modifier]);
