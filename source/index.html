@@ -4,44 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./settings/css/styles.css">
+    <link rel="stylesheet" href="./styles.css">
+    <title>BuJo - Group 3</title>
 </head>
-<script src="./src/journal-creation/components/JournalIcon.js" type="module"></script>
-  <script src="./settings/scripts/journalPicker.js" type="module"></script>
-  <script src="./colorThemes.js" type="module"></script>
-  <script src="./settings/scripts/settings.js" type="module"></script>
-  <script src="./components/Navbar/navbar.js" type="module"></script>
-  <script src="./components/Menu/menu.js" type="module"></script>
 <body>
-    <navbar-elem></navbar-elem>
-    <div>
-        <div class="header">
-            
-            <div class="heading">
-              <div class="menu">
-                  <img src="./menu-icon.png">
-              </div>
-              <h1 id="header-title">settings</h1>
-              <div></div>
-            </div>
-          </div>
-          <div id="journal-name">
-              <p id="journal-name-title">Journal Name</p>
-              <span id="journal-name-edit" contenteditable></span>
-          </div>
-          <div id="journal-color">
-              <p id="journal-color-title">Journal Color</p>
-              <div id="journals-container"></div>
-          </div>
-          <div id="journal-theme">
-              <p id="journal-theme-title">Journal Theme</p>
-              <span id="journal-theme-edit" contenteditable></span>
-          </div>
-          <button id="save">Save</button>
 
 
-
+    <div class="intro">
+        <p class="welcome">Welcome!</p>
+        <div class="name">
+            <p>Task Overflow's <br>Bullet Journal Web App</p>
+            <img class="icon" src="icons/taskoverflow-icon.png">
+        </div>
     </div>
-   
+
+    <div class="onboarding-container">
+        <div class="onboarding-center">
+            <h1>Here's a quick tutorial to help you get started!</h1>
+            <!--Temporary video, replace with created tutorial video-->
+            <iframe src="https://www.youtube.com/embed/NVGuFdX5guE" title="YouTube video player" frameborder="0" allowfullscreen id="onboarding"></iframe>
+            <p>If you cannot access the video above, please follow <a href= "https://www.youtube.com/watch?v=NVGuFdX5guE" target="_blank"><u>this</u></a> link.</p>
+        </div>
+    </div>
+
+    <button id="finish-onboarding" class="submit">Ready to Continue?</button>
+    
+    <script src="./sw.js" type="module"></script>
+
+    <script src="./index.js" type="module"></script>
 </body>
+
 </html>
