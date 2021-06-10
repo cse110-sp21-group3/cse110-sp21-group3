@@ -259,6 +259,31 @@ function addHabit(habit, color) {
 
 
 function setup() {
+
+  addForm = document.querySelector('#addForm');
+  submitEditBtn = editForm.querySelector('#submitEditForm');
+  // close add form button
+  addClose = addForm.querySelector('#add-close-form');
+  addClose.addEventListener('click', () => {
+    closeAddForm(addForm);
+  });
+
+  // add habit button
+  add = document.getElementById('add');
+  console.log("is runniing");
+  add.addEventListener('click', () => {
+    openForm(addForm);
+  });
+
+  // edit habit color form
+  editForm = document.getElementById('edit-form');
+  // submit edit form button
+  submitEditBtn = editForm.querySelector('#submitEditForm');
+  // close edit form button
+  editClose = editForm.querySelector('#edit-close-form');
+  editClose.addEventListener('click', () => {
+    closeForm(editForm);
+  });
   // submit add habit button
   const submitAdd = addForm.querySelector('.submit #submitForm');
   submitAdd.onclick = (event) => {

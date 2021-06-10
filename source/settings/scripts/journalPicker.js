@@ -10,7 +10,7 @@ function setup() {
   root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].background);
 
   const journalContainer = document.querySelector('#journals-container');
-
+  
   Object.keys(colorThemes).forEach((colorTheme) => {
     const journalDisplayContainer = document.createElement('div');
     const journalElement = document.createElement('journal-icon');
@@ -34,8 +34,8 @@ function setup() {
 }
 let firstTime = false;
 while (!firstTime) {
-  if(document.getElementById("journal-theme") != null) {
-    console.log("does this always run");
+  if(document.querySelector('#journals-container')!= null) {
+    console.log("does this always run asdfasdf");
     setup();
     firstTime = true;
   }
