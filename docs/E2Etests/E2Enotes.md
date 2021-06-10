@@ -5,6 +5,7 @@ Notes on how our manual end to end tests ran.
 
 ## BuJo App
 
+- Tested deploy (previews) on netlify 
 
 
 ## Welcome Page
@@ -47,19 +48,6 @@ Notes on how our manual end to end tests ran.
 ## Settings Page
 
 
-
-
-## Components
-
-
-### Navbar & Menu
-
-
-
-### Habit Trackers
-
-
-### TextEditor, BulletList, Bullets
 
 
 
