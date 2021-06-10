@@ -22,6 +22,7 @@ The home page is where you can add your thoughts, tasks and events for the curre
 
 ⭐Theme. Here you should add the actions you have or plan to do related to your theme
 
+#### Daily Log Keyboard Shortcuts
 To encourage rapid logging we have provided you with keyboard shortcuts which you can use to organise your logs rapidly. Here are the available options:
 - Enter: create new bullet
 - Tab: nest bullet
