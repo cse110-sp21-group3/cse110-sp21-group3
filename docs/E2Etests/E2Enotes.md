@@ -49,7 +49,14 @@ Notes on how our manual end to end tests ran.
 
 ## Habits/Trends Page & Daily Habits
 
-
+- check the local storage to ensure the keys and values are set correctly
+- add a habit and test that the color picker works as expected, and either click submit or press enter
+  - add a habit by the same name and ensure that text appears saying this habit already exists
+- go to the home page and click on the habit tracker so that it appears in the color
+  - go back to the habits page and verify that the color is now filled in as well in the monthly tracker view
+- add a lot trackers and click them and make sure everything displays correctly in terms of the grid in the habits page and scrolling in the home page
+- delete a couple trackers and verify they are deleted in both pages
+- change the color of the habit and verify that the color style is changed in both pages
 
 ## Past Logs Page
 
@@ -61,7 +68,9 @@ Notes on how our manual end to end tests ran.
 
 ## Monthly Logs Page
 
-
+- test moving to different months and checking local storage keys & values
+- test adding items to the monthly calendar view & ensure the calendar scrollview shows the correct info and dates
+- test bulleting functionalities in the tasks section
 
 
 ## Collections Page
