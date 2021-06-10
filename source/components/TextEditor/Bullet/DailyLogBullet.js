@@ -112,7 +112,7 @@ class DailyLogBullet extends BaseBullet {
       'Shift',
       'Control',
       's', // save
-      'k', // complete & uncomplete toggle (strikethrough, remove strikethrough)
+      'X', // (with Shift) complete & uncomplete toggle (strikethrough, remove strikethrough)
       'i', // inspiration (italics)
       'b', // priority (bold)
       'r', // regular font style
@@ -244,7 +244,7 @@ class DailyLogBullet extends BaseBullet {
    * @returns {Boolean} true if shortcut was matched, false otherwise
    */
   keyDownListener() {
-    if (this.keysPressed.Control && this.keysPressed.k) {
+    if (this.keysPressed.Control && this.keysPressed.Shift && this.keysPressed.X) {
       this.editContent(bulletParameters.completed, !this.state.completed);
     } else if (this.keysPressed.Control && this.keysPressed.r) {
       this.editContent(bulletParameters.modifier, 'none');
