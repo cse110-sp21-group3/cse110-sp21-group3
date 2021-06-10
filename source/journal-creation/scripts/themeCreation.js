@@ -24,5 +24,5 @@ submitBtn.addEventListener('click', () => {
   if (themeInput.value) theme = themeInput.value;
   localStorage.setItem(themeKey, theme);
   localStorage.setItem(createdJournalKey, 'true');
-  window.location.href = '../home-dailylog/home.html';
+  window.location.href = '../public';
 });

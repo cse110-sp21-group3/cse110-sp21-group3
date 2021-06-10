@@ -44,31 +44,59 @@ function updateLogView(storageKey) {
     },
   });
 }
+function setup() {
+  const dayInput = document.getElementById('date-input');
 
-const dayInput = document.getElementById('date-input');
+  const logDate = new Date();
+  logDate.setDate(logDate.getDate() - 1); // Set to yesterday
+  dayInput.setAttribute('max', getFormattedDate(logDate)); // Restrict selecting future dates
 
-const logDate = new Date();
-logDate.setDate(logDate.getDate() - 1); // Set to yesterday
-dayInput.setAttribute('max', getFormattedDate(logDate)); // Restrict selecting future dates
+  dayInput.value = getFormattedDate(logDate);
+  const dayLabel = document.getElementById('date-input-label');
+  dayLabel.innerText = `${calendarDays[logDate.getDay()]}`;
 
-dayInput.value = getFormattedDate(logDate);
-const dayLabel = document.getElementById('date-input-label');
-dayLabel.innerText = `${calendarDays[logDate.getDay()]}`;
-
-document.addEventListener('DOMContentLoaded', () => {
+  
   const yesterdayDate = new Date();
   yesterdayDate.setDate(yesterdayDate.getDate() - 1); // Set to yesterday
 
   const storageKey = getDailyLogUID(yesterdayDate);
   updateLogView(storageKey);
-});
+  
 
-dayInput.onchange = () => {
-  const [year, month, date] = dayInput.value.split('-');
-  const currDate = new Date();
-  currDate.setDate(date); // Set to first day of the month
-  currDate.setMonth(month - 1); // -1 because input field marks January as 1
-  currDate.setFullYear(year);
-  dayLabel.innerText = calendarDays[currDate.getDay()];
-  updateLogView(getDailyLogUID(currDate));
-};
+  dayInput.onchange = () => {
+    const [year, month, date] = dayInput.value.split('-');
+    const currDate = new Date();
+    currDate.setDate(date); // Set to first day of the month
+    currDate.setMonth(month - 1); // -1 because input field marks January as 1
+    currDate.setFullYear(year);
+    dayLabel.innerText = calendarDays[currDate.getDay()];
+    updateLogView(getDailyLogUID(currDate));
+  };
+
+
+  root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+  root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
+  document.body.getElementsByTagName('main')[0].style.display = "block";
+  document.querySelector('.header_content').style.display = "block";
+}
+
+let firstTime = false;
+while (!firstTime) {
+  if(document.querySelector(".past-dailylogs-container") != null) {
+    setup();
+    firstTime = true;
+  }
+}
+let oldbodyid = 'past-logs';
+const callback = function (mutations) {
+  mutations.forEach(function (mutation) {
+    if (document.body.id == 'past-logs-body') {
+      oldbodyid = document.body.id;
+      setup();
+    }
+    oldbodyid = document.body.id;
+  });  
+}
+const observer = new MutationObserver(callback);
+const config = { attributes: true };
+observer.observe(document.body, config);
