@@ -134,13 +134,16 @@ function setup() {
     });
     habitBody.appendChild(habitElem);
   });
+
+  root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+  root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
   document.body.getElementsByTagName('main')[0].style.display = "block";
   document.querySelector('.header_content').style.display = "block";
 }
 
 let firstTime = false;
 while (!firstTime) {
-  if(document.querySelector(".tooltiptext") != null) {
+  if(document.querySelector(".habits-form") != null) {
     setup();
     firstTime = true;
   }

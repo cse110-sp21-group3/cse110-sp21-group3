@@ -38,7 +38,7 @@ function setup() {
 }
 let firstTime = false;
 while (!firstTime) {
-  if(document.getElementById("journal-name") != null) {
+  if(document.getElementById("journal-theme") != null) {
     setup();
     firstTime = true;
   }

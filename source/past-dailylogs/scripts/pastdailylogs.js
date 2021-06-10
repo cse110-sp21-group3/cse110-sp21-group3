@@ -73,6 +73,9 @@ function setup() {
     updateLogView(getDailyLogUID(currDate));
   };
 
+
+  root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
+  root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
   document.body.getElementsByTagName('main')[0].style.display = "block";
   document.querySelector('.header_content').style.display = "block";
 }

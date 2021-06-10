@@ -353,7 +353,7 @@ function setup() {
 
 let firstTime = false;
 while (!firstTime) {
-  if(document.getElementById("tracker-body") != null) {
+  if(document.getElementById("edit-form" ) != null) {
     setup();
     firstTime = true;
   }

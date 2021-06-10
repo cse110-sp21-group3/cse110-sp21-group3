@@ -1,5 +1,6 @@
 import colorThemes from '../../colorThemes.js';
 import { colorStyleKey } from '../../storageKeys.js';
+import { journalNameKey, themeKey } from '../../storageKeys.js';
 function setup() {
   let selectedColorStyle = localStorage.getItem(colorStyleKey);
   if (selectedColorStyle === null) selectedColorStyle = 'default';
@@ -33,7 +34,8 @@ function setup() {
 }
 let firstTime = false;
 while (!firstTime) {
-  if(document.getElementById("journal-name") != null) {
+  if(document.getElementById("journal-theme") != null) {
+    console.log("does this always run");
     setup();
     firstTime = true;
   }
@@ -41,7 +43,7 @@ while (!firstTime) {
 let oldbodyid = document.body.id;
 const callback = function (mutations) {
   mutations.forEach(function (mutation) {
-    if (document.body.id == 'settings-body'&&oldbodyid != 'settings-body') {
+    if (document.body.id == 'settings-body') {
       oldbodyid = document.body.id;
       setup();
     }

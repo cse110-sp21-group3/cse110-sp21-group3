@@ -78,22 +78,17 @@ router.setState =  async (state, statePopped) => {
                 <div id="add">
                     <p>+</p>
                 </div>
-            </div>
-
-          `;
+            </div>`;
             break;
         default:
             current_view = new Home();
             title = 'Home';
         }
         //this adds the css and other stuff for the head
-     
-        
-        
         let styleList =   await current_view.getStyles();
         let newCSS;
         styleList.forEach(source => {
-            let sources = document.createElement("link");
+            const sources = document.createElement("link");
                 //sources.classList.add = "dummy"
                 sources.setAttribute("rel", "stylesheet");
                 sources.setAttribute("href", source);
@@ -132,7 +127,6 @@ router.setState =  async (state, statePopped) => {
             
         }
         
-        
         //this adds the html 
         body.innerHTML =  await current_view.getBody();
         header.innerHTML = await current_view.getHead();
@@ -157,9 +151,7 @@ router.setState =  async (state, statePopped) => {
             if (window.location.hash == '/' && state == home) {} else {
             pushToHistory(state);
             }
-        }
-        
-      
+        }  
 }
 /**
  * Push a new state to the history stack
@@ -175,8 +167,11 @@ export function pushToHistory(state) {
             history.pushState({ page: `trends` }, '', `./#trends`);
             break;
         case 'monthly-log':
-            history.pushState({ page: `home` }, '', `./#monthly-log`);
+            history.pushState({ page: `monthly-log` }, '', `./#monthly-log`);
             break;
+        case 'past-logs':
+                history.pushState({ page: `past-logs` }, '', `./#past-logs`);
+                break;
         case 'collections':
             history.pushState({ page: `collections` }, '', `./#collections`);
             break;
