@@ -6,23 +6,24 @@ export default class dailylog extends abstractview{
         super(a);
     }
     getScripts() {
-        let sourcelist = ["../components/TextEditor/Bullet/DailyLogBullet.js",
-        
-        "../home-dailylog/scripts/dailyLog.js",
-        "../components/Navbar/navbar.js",
-        "../components/Menu/menu.js",
-        "../home-dailylog/components/habitLog.js"]; 
-        return sourcelist;
+      const sourcelist = ["../components/TextEditor/Bullet/DailyLogBullet.js",
+      
+      "../home-dailylog/scripts/dailyLog.js",
+      "../components/Navbar/navbar.js",
+      "../components/Menu/menu.js",
+      "../home-dailylog/components/habitLog.js"]; 
+      return sourcelist;
     }
     getHead() {
-        return `
-        <p class="question">Please add what you did related to your theme as a theme bullet</p>
-        `
+      return `
+      <p class="question">Please add what you did related to your theme as a theme bullet</p>
+      `;
     }
     getStyles() {
-      let sourcelist = ["../home-dailylog/css/styles.css"]; 
-        return sourcelist;
+      const sourcelist = ["../home-dailylog/css/styles.css"]; 
+      return sourcelist;
     }
+
     getBody () {
         return `
         <div class="log-body">
@@ -83,12 +84,11 @@ export default class dailylog extends abstractview{
             <div class="saving"></div>
           </div>
           <div class="habits">
-            <p><a href="../trends/trends.html">habits</a></p>
+            <p>habits</p>
             <div class="habits-form">
             </div>
           </div>
         </div>
- 
-        `
+        `;
     }
 }

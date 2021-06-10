@@ -1,32 +1,36 @@
 import abstractview from "./abstractview.js";
 
-
 export default class collectionsview extends abstractview{
     constructor(a) {
         super(a);
     }
+
     getScripts() {
-        let sourcelist = ["../collections/scripts/collections.js",
-        "../collections/components/collection.js",
-        "../components/TextEditor/Bullet/TaskBullet.js",
-        "../components/TextEditor/BulletList.js",
-        "../components/Navbar/navbar.js",
-        "../components/Menu/menu.js"];
-        return sourcelist;
+      const sourcelist = ["../collections/scripts/collections.js",
+      "../collections/components/collection.js",
+      "../components/TextEditor/Bullet/TaskBullet.js",
+      "../components/TextEditor/BulletList.js",
+      "../components/Navbar/navbar.js",
+      "../components/Menu/menu.js"];
+      return sourcelist;
     }
+
     getStyles() {
-      let sourcelist = ["../settings/css/styles.css"]; 
-        return sourcelist;
+      const sourcelist = ["../settings/css/styles.css"]; 
+      return sourcelist;
     }
+
     getHead() {
         return `
         <div id="bar"></div>
         `
     }
+
     getStyles() {
       let sourcelist = ["../collections/css/styles.css"]; 
         return sourcelist;
     }
+
     getBody () {
         return `
         <!-- Sets up grid to display collections -->
@@ -51,6 +55,6 @@ export default class collectionsview extends abstractview{
                 <div class="collection-grid"></div>
             </div>
         </template>
-        `
+        `;
     }
 }

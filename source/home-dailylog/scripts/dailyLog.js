@@ -1,4 +1,5 @@
 import colorThemes from '../../colorThemes.js';
+import { router } from '../../router.js';
 import {
   colorStyleKey, habitsKey, getDailyLogUID, journalNameKey, themeKey,
 } from '../../storageKeys.js';
@@ -133,6 +134,11 @@ function setup() {
       toggleHabit(habitElem.habit);
     });
     habitBody.appendChild(habitElem);
+  });
+
+  const navtoHabit = document.querySelector(".habits").getElementsByTagName("p")[0];
+  navtoHabit.addEventListener('click', () => {
+    router.setState("trends");
   });
 
   root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);

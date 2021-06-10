@@ -257,9 +257,7 @@ function addHabit(habit, color) {
   });
 }
 
-
 function setup() {
-
   addForm = document.querySelector('#addForm');
   submitEditBtn = editForm.querySelector('#submitEditForm');
   // close add form button
@@ -270,7 +268,6 @@ function setup() {
 
   // add habit button
   add = document.getElementById('add');
-  console.log("is runniing");
   add.addEventListener('click', () => {
     openForm(addForm);
   });
@@ -320,7 +317,6 @@ function setup() {
   /**
    * When loading the website, add all of the habits in the storage to the DOM
    */
-  
   const headerTitle = document.getElementById('header-title');
   const title = `Trends: ${getMonthName(DATE)}`;
   headerTitle.innerText = title;
@@ -391,7 +387,7 @@ const callback = function (mutations) {
       setup();
     }
     oldbodyid = document.body.id;
-});  
+  });  
 };
 const observer = new MutationObserver(callback);
 const config = { attributes: true };

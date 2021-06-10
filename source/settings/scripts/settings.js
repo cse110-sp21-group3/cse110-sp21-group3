@@ -13,9 +13,9 @@ function saveInputs() {
 function showSave() {
   saveBtn.style.visibility = 'visible';
 }
+
 function setup() {
   journalNameEdit = document.getElementById('journal-name-edit');
-  console.log(journalNameEdit);
   journalThemeEdit = document.getElementById('journal-theme-edit');
   saveBtn = document.getElementById('save');
 
@@ -33,9 +33,11 @@ function setup() {
   saveBtn.addEventListener('click', () => {
     saveInputs();
   });
+  
   document.body.getElementsByTagName('main')[0].style.display = "block";
   document.querySelector('.header_content').style.display = "block";
 }
+
 let firstTime = false;
 while (!firstTime) {
   if(document.getElementById("journal-theme") != null) {
@@ -43,6 +45,7 @@ while (!firstTime) {
     firstTime = true;
   }
 }
+
 let oldbodyid = document.body.id;
 const callback = function (mutations) {
   mutations.forEach(function (mutation) {
@@ -51,7 +54,7 @@ const callback = function (mutations) {
       setup();
     }
     oldbodyid = document.body.id;
-});  
+  });  
 };
 const observer = new MutationObserver(callback);
 const config = { attributes: true };
