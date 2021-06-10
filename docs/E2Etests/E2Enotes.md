@@ -10,16 +10,44 @@ Notes on how our manual end to end tests ran.
 
 ## Welcome Page
 
+- first clear localStorage, then load up the site
+- verify that the welcome page appears and there are no errors in the console
+- click `ready to continue` and then load up the site again (setting the url to the root)
+  - the welcome page should show up again because the journal wasn't yet created
+- continue through the journal creation process until you get to the home page
+  - now, look at localStorage and ensure that `journalCreated` is set to True
+- load up the site again (setting the url to the root) and ensure that the welcome page redirected to the home page
+
 
 ## Journal Creation Pages
 
 
+
+
 ## Home Page & Daily Logs/Habits
 
+- load up the app and verify that the home page is shown, with the correct journal title, theme, and date
+- verfiy that the daily log shows an empty input field with a bullet with placeholder text and the habit trackers is empty, the shortcut tooltip appears, and there are no errors in the console
 
 
+### Daily Logs
 
-## Habits Page
+- add a bullet by typing into the input field and verify the text is correct
+- nest a bullet and verify it's nested and can't be nested another level
+- verify un-nesting a bullet
+- verify the toggling of the bullet types displays the expected types
+- delete both a regular bullet and a nested bullet and verify they are deleted and the focus transfers to the previous bullet
+- add lots of bullets to ensure the container scrolls
+- use the up and down arrows to ensure focus is transferred properly
+- use the keyoboard shortcuts for bolding and italcizing a bullet and toggle them, and then use the shortcut for a regular style bullet
+- continually check if the bullet content (type, modifier, content, completed) is saving and appearing correctly by reloading the page at various points
+- continually check localStorage to ensure that the bullets are being stored properly with their keys and the values are being updated
+
+
+### Habit Trackers
+
+
+## Habits/Trends Page
 
 
 
@@ -50,4 +78,5 @@ Notes on how our manual end to end tests ran.
 
 
 
+## Routing
 
