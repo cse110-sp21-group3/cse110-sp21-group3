@@ -97,3 +97,13 @@ Notes on how our manual end to end tests ran.
 - change the theme and make sure the value for it changes
   - navigate to the home page to make sure the theme prompt is changed
 
+## Routing: Navbar/Menu
+
+- test on both liveserver and deploy preview
+- test clicking on menu pages in the navbar and verify that the correct page is shown
+- click on menu pages and then click on the forward and back buttons in the browser
+  - verfiy that the correct page is pushed/popped
+- verfiy that the correct url path is set for every page
+- verify that all pages appear the same and have the same functionalities as before
+- clear localstorage and reload the page, ensuring that the welcom page appears
+- repeat the journal creation and welcome page tests
