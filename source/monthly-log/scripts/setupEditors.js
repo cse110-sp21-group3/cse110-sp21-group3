@@ -5,21 +5,7 @@ function getDaysInMonth(month, year) {
 }
 
 /**
- * Gets the first day of the month to pad the calendar accordingly
- * @param {*} date date object with the current day
- * @returns day of the first date of the month
- */
-function getFirstDay(month, year) {
-  const firstDay = new Date(year, month, 1);
-  return firstDay.getDay();
-}
-
-// calendar days of the month for habit tracker calendar
-const calendarDays = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'];
-
-/**
  * Remove all HTML children from a given HTML node.
- *
  * @param {HTMLElement} containerNode Node to remove all children from.
  */
 function clearContainerNode(containerNode) {
@@ -48,7 +34,7 @@ function saveEvents() {
  * @param {Object} data Data to place in localStorage.
  */
 function saveTasks(date, data) {
-  localStorage.setItem(getMonthlyLogUID('task', date.getMonth()), JSON.stringify(data));
+  localStorage.setItem(getMonthlyLogUID('task', date), JSON.stringify(data));
 }
 /**
  * Populates the event editors according to number of days in date.month
@@ -59,21 +45,20 @@ function populateEventWrappers(date) {
   clearContainerNode(eventsContainer);
 
   const numDays = getDaysInMonth(date.getMonth(), date.getFullYear());
-  let currDate = getFirstDay(date.getMonth(), date.getFullYear());
   for (let day = 1; day <= numDays; day += 1) {
-    const currDay = calendarDays[currDate % 7];
     const eventWrapper = document.createElement('event-wrapper');
     eventsContainer.appendChild(eventWrapper);
+
+    // Update date object
+    date.setDate(day);
+
     eventWrapper.initialise({
-      dayOfWeek: currDay,
-      dateForMonth: date,
-      dayNum: day,
+      date,
       saveDataCallback: () => {
         saveEvents();
         saveTasks(date, document.querySelector('.task-wrapper bullet-list').getBulletTree());
       },
     });
-    currDate += 1;
   }
 }
 
@@ -83,7 +68,7 @@ function populateEventWrappers(date) {
  */
 function setTaskEditor(date) {
   // Get data from storage or set to initial data
-  const storageKey = getMonthlyLogUID('task', date.getMonth());
+  const storageKey = getMonthlyLogUID('task', date);
   const storageValue = localStorage.getItem(storageKey);
   let dataTree = { 0: [1], 1: ['', false, []] }; // Set to empty data
   if (storageValue !== null) dataTree = JSON.parse(storageValue);

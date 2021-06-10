@@ -1,5 +1,6 @@
 import { getMonthlyLogUID } from '../../storageKeys.js';
 
+const calendarDays = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']; // Sunday as 0 to match with Date.getDay()
 /**
  * Component for a day of the month in the monthly log, containing events in the form of bullets.
  */
@@ -49,17 +50,14 @@ class EventWrapper extends HTMLElement {
   /**
      * Initialises Wrapper
      * @param {*} wrapperAttributes
-     * @param {number} wrapperAttributes.dayNum
-     * @param {Date} wrapperAttributes.dateForMonth
+     * @param {Date} wrapperAttributes.date
      * @param {function} wrapperAttributes.saveDataCallback
      */
   initialise(wrapperAttributes) {
-    this.props.dayOfWeek = wrapperAttributes.dayOfWeek;
-    this.props.dateForMonth = wrapperAttributes.dateForMonth;
-    this.props.dayNum = wrapperAttributes.dayNum;
+    this.props.date = wrapperAttributes.date;
     this.props.saveDataCallback = wrapperAttributes.saveDataCallback;
 
-    this.storageKey = getMonthlyLogUID('event', this.props.dateForMonth.getMonth(), this.props.dayNum);
+    this.storageKey = getMonthlyLogUID('event', this.props.date);
     this.render();
   }
 
@@ -97,9 +95,9 @@ class EventWrapper extends HTMLElement {
                 ${this.elementStyle}
             </style>
             <div class="event">
-              <div class="day">${this.props.dayOfWeek}</div>
+              <div class="day">${calendarDays[this.props.date.getDay()]}</div>
               <div class="event-editor-wrapper">
-                  <div class="day-num">${this.props.dayNum}</div>
+                  <div class="day-num">${this.props.date.getDate()}</div>
                   <bullet-list class="event-editor"></bullet-list>
               </div>
             </div>
