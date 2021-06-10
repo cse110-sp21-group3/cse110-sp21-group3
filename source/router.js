@@ -124,7 +124,7 @@ router.setState =  async (state, statePopped) => {
         if (removed) {
             Array.from(removed).forEach(remove => {
                 
-                if (remove.getAttribute("keep") != "true") {
+                if (remove.getAttribute("canRemove") == "true" && remove.getAttribute("keep") != "true") {
                     document.body.removeChild(remove);
                 }
                 
@@ -142,6 +142,7 @@ router.setState =  async (state, statePopped) => {
         sourceList.forEach(source => {
             let sources = document.createElement("script");
                 sources.setAttribute("keep", "false");
+                sources.setAttribute("canRemove", "true");
                 sources.setAttribute("src", source);
                 sources.setAttribute("type", "module");
                 sources.classList.add = "forthispage";
