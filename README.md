@@ -5,8 +5,8 @@ This is the bullet journal project for CSE 110 Spring 2021 Group 3.
 
 ## Final Project Videos
 
-[Public Version]()   //TODO   
-[Private Version]()  //TODO
+[Public Version](https://www.youtube.com/watch?v=FQ382TRV4_Q)    
+[Private Version](https://www.youtube.com/watch?v=MBOrF9Wh6WM)     
 
 ## Link to app
 The BuJo is hosted at
