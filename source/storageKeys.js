@@ -16,7 +16,7 @@ if (habits === null) {
  * Return UID keys for monthly logs
  * @param {*} itemType - event or task
  * @param {Date} date
- * @returns
+ * @returns The Uid for the item
  */
 export function getMonthlyLogUID(itemType, date) {
   const prefix = 'ML';
