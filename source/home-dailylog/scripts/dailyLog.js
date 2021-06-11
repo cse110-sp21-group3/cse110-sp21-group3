@@ -12,14 +12,22 @@ const root = document.documentElement;
 root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background);
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
+/**
+ * Add current date to title.
+ */
 function addCurrentDate() {
-  // add current date to title
   const titleDate = document.querySelector('.date');
   const DATE = new Date();
   const currentDate = DATE.toLocaleString().split(',')[0];
   titleDate.innerHTML = currentDate;
 }
 
+/**
+ * Gets the bullets saved for today's daily log.
+ *
+ * @param {string} storageKey key of today's daily log in localStorage.
+ * @returns The serialized array containing the bullet content for this daily log.
+ */
 function getSavedBullets(storageKey) {
   // If nothing is stored, this is loaded : [content, completed, type, modifier, children]
   const initialSetup = { 0: [1], 1: ['', false, 'task', 'none', []] };
@@ -32,11 +40,19 @@ function getSavedBullets(storageKey) {
   return listDataTree;
 }
 
+/**
+ * Get the title of the daily log.
+ */
 function getTitle() {
   const title = document.querySelector('#header-title');
   title.innerHTML = localStorage.getItem(journalNameKey);
 }
 
+/**
+ * Get the "theme" banner question for the day.
+ *
+ * TODO: Make this random with interesting theme questions.
+ */
 function getTheme() {
   const themeQuestion = document.querySelector('.question');
   const theme = localStorage.getItem(themeKey);
@@ -44,11 +60,19 @@ function getTheme() {
   themeQuestion.innerHTML = text;
 }
 
+/**
+ * Get month from Date object in full string form.
+ * @param {Date} date Date to get month for.
+ * @returns Name of month in string form.
+ */
 function getMonthName(date) {
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return monthNames[date.getMonth()];
+  return date.toLocaleString('default', { month: 'long' });
 }
 
+/**
+ * Gets the list of habit entries filled in for the current month.
+ * @returns The list of habit entries filled in for the current month.
+ */
 function getHabits() {
   const DATE = new Date();
   const currMonth = getMonthName(DATE);
@@ -64,6 +88,11 @@ function getHabits() {
   return habitList;
 }
 
+/**
+ * Toggle completion for the provided habit name.
+ *
+ * @param {string} habit Name of habit to toggle completion for.
+ */
 function toggleHabit(habit) {
   const DATE = new Date();
   const today = DATE.getDate() - 1;

@@ -1,3 +1,8 @@
+/**
+ * The available set of colors for our journal.
+ *
+ * Extend here for more options.
+ */
 export default {
   default: {
     main: '#55BEDF',
@@ -35,7 +40,7 @@ export default {
     main: '#BC8034',
     background: '#FFD6A3',
   },
-  lavendar: {
+  lavender: {
     main: '#EECFF4',
     background: '#FCEEFF',
   },

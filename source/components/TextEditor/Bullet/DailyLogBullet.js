@@ -119,6 +119,11 @@ class DailyLogBullet extends BaseBullet {
       'ArrowUp',
       'ArrowDown',
     ];
+    /**
+     * Listens for keyboard events that we are interested in and sets state properly.
+     * @param {string} key Key to adjust state for.
+     * @param {*} state New state to set for key.
+     */
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
         this.keysPressed[key] = state;
@@ -126,6 +131,7 @@ class DailyLogBullet extends BaseBullet {
     };
 
     let matched = false;
+    // Listeners for adjusting bullet formatting state.
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
       matched = false;
@@ -142,7 +148,7 @@ class DailyLogBullet extends BaseBullet {
   /**
    * Initialises the bullet
    * @param {*} bulletAttributes
-   * @param {Object} [ storageIndex ]
+   * @param {Object} [ bulletAttributes.storageIndex ]
    * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
    */
   initialiseBullet(bulletAttributes) {
@@ -176,7 +182,7 @@ class DailyLogBullet extends BaseBullet {
   /**
    * Serializes the bullet into the format
    * [content, completed, type, modifier, children]
-   * @returns
+   * @returns Array of form [content, completed, type, modifier, children].
    */
   serialize() {
     return [
@@ -223,6 +229,17 @@ class DailyLogBullet extends BaseBullet {
   }
 
   // Additional keyboard listeners
+  /**
+   * Keydown keyboard listeners in addition to base listeners
+   *
+   * Shortcuts checked (in order):
+   * 1. Control + k
+   * 2. Control + r
+   * 3. Control + b
+   * 4. Control + i
+   *
+   * @returns {Boolean} true if shortcut was matched, false otherwise
+   */
   keyDownListener() {
     if (this.keysPressed.Control && this.keysPressed.k) {
       this.editContent(bulletParameters.completed, !this.state.completed);

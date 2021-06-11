@@ -1,3 +1,8 @@
+/**
+ * The side navigation bar for the journal.
+ *
+ * This contains links to every other page in the journal.
+ */
 class Navbar extends HTMLElement {
   constructor() {
     super();

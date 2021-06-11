@@ -8,6 +8,9 @@ const bulletParameters = {
 const defaultParameters = {
   value: '',
 };
+/**
+ * Standard bullet with no modifications.
+ */
 class SimpleBullet extends BaseBullet {
   constructor() {
     super();
@@ -54,12 +57,18 @@ class SimpleBullet extends BaseBullet {
       'ArrowUp',
       'ArrowDown',
     ];
+    /**
+     * Listens for keyboard events that we are interested in and sets state properly.
+     * @param {string} key Key to adjust state for.
+     * @param {*} state New state to set for key.
+     */
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
         this.keysPressed[key] = state;
       }
     };
 
+    // Listeners for adjusting bullet formatting state.
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
       this.baseKeydownListener(e);
@@ -71,6 +80,14 @@ class SimpleBullet extends BaseBullet {
     };
   }
 
+  /**
+   * Initialises the bullet
+   * @param {*} bulletAttributes
+   * @param {Object} [ bulletAttributes.storageIndex ]
+   * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
+   * @param {Object} [ bulletAttributes.bulletConfigs ]
+   *    -> Configuration for bullet object. Example: bulletStyle
+   */
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);
     let data = null;
@@ -89,6 +106,10 @@ class SimpleBullet extends BaseBullet {
     }
   }
 
+  /**
+   * Serializes contents of bullet into array to serialize to JSON.
+   * @returns Array with [content, noChildren] as contents.
+   */
   serialize() {
     return [this.state.value, []];
   }

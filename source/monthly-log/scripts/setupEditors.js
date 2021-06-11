@@ -5,8 +5,8 @@ function getDaysInMonth(month, year) {
 }
 
 /**
- *
- * @param {*} containerNode
+ * Remove all HTML children from a given HTML node.
+ * @param {HTMLElement} containerNode Node to remove all children from.
  */
 function clearContainerNode(containerNode) {
   while (containerNode.firstChild) {
@@ -14,6 +14,9 @@ function clearContainerNode(containerNode) {
   }
 }
 
+/**
+ * Save all internal event wrapper's BulletLists to localStorage.
+ */
 function saveEvents() {
   const eventsContainer = document.querySelector('.events-container');
   const eventWrappers = eventsContainer.querySelectorAll('event-wrapper');
@@ -26,17 +29,16 @@ function saveEvents() {
 }
 
 /**
- *
- * @param {Date} date
- * @param {Object} data
+ * Save tasks for month to localStorage.
+ * @param {Date} date Current date, to determine month to save tasks to.
+ * @param {Object} data Data to place in localStorage.
  */
 function saveTasks(date, data) {
   localStorage.setItem(getMonthlyLogUID('task', date), JSON.stringify(data));
 }
 /**
  * Populates the event editors according to number of days in date.month
- * @param {*} emptyData
- * @param {Date} date
+ * @param {Date} date Current date. Required to get positioning of days in month.
  */
 function populateEventWrappers(date) {
   const eventsContainer = document.querySelector('.events-container');
@@ -61,8 +63,8 @@ function populateEventWrappers(date) {
 }
 
 /**
- *
- * @param {Date} date
+ * Fill contents of BulletList with current month's tasks.
+ * @param {Date} date Current date. Used to determine month to get bullets for.
  */
 function setTaskEditor(date) {
   // Get data from storage or set to initial data
@@ -126,8 +128,8 @@ function setTaskEditor(date) {
 }
 
 /**
- *
- * @param {Date} date
+ * Update Event Logs for given date.
+ * @param {Date} date Date to update logs for. Should be day or month to view bullets for.
  */
 export default function updateLogs(date) {
   populateEventWrappers(date);

@@ -1,4 +1,7 @@
 const elementName = 'custom-bullet';
+/**
+ * The base class for a Bullet HTMLElement.
+ */
 export default class Bullet extends HTMLElement {
   constructor() {
     super();
@@ -40,6 +43,11 @@ export default class Bullet extends HTMLElement {
     this.shadowRoot.querySelector('style').innerHTML = this.bulletStyle;
   }
 
+  /**
+   * Turn contents of bullet into an easily accessible format.
+   *
+   * Must be overriden by developer in extension of Bullet class.
+   */
   serialize() {
     console.error(`serialize() not implemented for ${this.elementName}`);
   }
@@ -93,6 +101,9 @@ export default class Bullet extends HTMLElement {
     inputField.focus();
   }
 
+  /**
+   * Takes `this` bullet and nests it into the sibling bullet above the current one.
+   */
   nestCurrBullet() {
     const prevBullet = this.previousElementSibling;
     if (prevBullet == null) return;
@@ -102,6 +113,9 @@ export default class Bullet extends HTMLElement {
     this.transferFocusTo(this); // Reset focus
   }
 
+  /**
+   * Creates a bullet underneath the current one as a sibling.
+   */
   createBullet() {
     const newBullet = document.createElement(this.elementName);
     newBullet.initialiseBullet({
@@ -120,6 +134,11 @@ export default class Bullet extends HTMLElement {
     this.transferFocusTo(newBullet);
   }
 
+  /**
+   * Takes this bullet and moves it out of one level of nesting.
+   *
+   * @param {*} e The event activated by tapping the keys to exit nesting.
+   */
   exitSingleNesting(e) {
     const parentBullet = e.target.getRootNode().host.getParentBullet();
     if ((parentBullet === undefined) || (parentBullet.tagName !== this.elementName.toUpperCase())) {
@@ -142,6 +161,9 @@ export default class Bullet extends HTMLElement {
     this.focus(); // Reset focus
   }
 
+  /**
+   * Deletes this bullet.
+   */
   deleteBullet() {
     let nextFocusBullet = this.getAdjacentBullet(this.uniqueID, true);
     if (nextFocusBullet === null) nextFocusBullet = this.getAdjacentBullet(this.uniqueID, false);
@@ -152,7 +174,19 @@ export default class Bullet extends HTMLElement {
     }
   }
 
-  // Keyboard Listeners
+  /**
+   * Keydown keyboard Listeners. Must be called on the `input` element in the DOM
+   *
+   * Shortcuts being checked (in order):
+   * 1. Shift + Tab
+   * 2. Tab
+   * 3. Control + s
+   * 4. ArrowUp
+   * 5. ArrowDown
+   *
+   * @param {*} e
+   * @returns {Boolean} true if a shortcut was matched, false otherwise
+   */
   baseKeydownListener(e) {
     if (!this.readOnly && this.keysPressed.Shift && this.keysPressed.Tab) {
       e.preventDefault();
@@ -175,6 +209,16 @@ export default class Bullet extends HTMLElement {
     return true;
   }
 
+  /**
+   * Keyup keyboard Listeners. Must be called on the `input` element in the DOM
+   *
+   * Shortcuts being checked (in order):
+   * 1. Enter
+   * 2. Backspace
+   *
+   * @param {*} e
+   * @returns {Boolean} true if a shortcut was matched, false otherwise
+   */
   baseKeyupListener() {
     if (!this.readOnly && this.keysPressed.Enter) {
       if (this.state.value === '') return true;

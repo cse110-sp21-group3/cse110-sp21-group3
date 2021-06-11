@@ -5,6 +5,8 @@ export const collectionsKey = 'collections';
 export const createdJournalKey = 'createdJournal';
 
 export const habitsKey = 'habits';
+// Initialize storage
+// Effectively, we need to have at least an empty array for habits.
 const habits = JSON.parse(localStorage.getItem(habitsKey));
 if (habits === null) {
   localStorage.setItem(habitsKey, JSON.stringify([]));

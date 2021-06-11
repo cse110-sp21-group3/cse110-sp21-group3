@@ -1,3 +1,6 @@
+/**
+ * The representation of a day's habit. It is represented by a circle tagged by name.
+ */
 class DailyHabit extends HTMLElement {
   constructor() {
     super();
@@ -40,12 +43,16 @@ class DailyHabit extends HTMLElement {
   }
 
   /**
-   * Habit name
+   * Get the name of the habit this circle represents.
+   * @returns The name of the habit this circle represents.
    */
   get habit() {
     return this.getAttribute('habit');
   }
 
+  /**
+   * Set the habit that this circle represents.
+   */
   set habit(habit) {
     // Set title of grid and id of div to habit
     const title = this.shadowRoot.querySelector('#title');
@@ -54,10 +61,16 @@ class DailyHabit extends HTMLElement {
     this.setAttribute('habit', habit);
   }
 
+  /**
+   * Get the color of the habit circle.
+   */
   get color() {
     return this.getAttribute('color');
   }
 
+  /**
+   * Set the color of the habit circle.
+   */
   set color(color) {
     this.setAttribute('color', color);
   }

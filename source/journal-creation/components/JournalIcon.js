@@ -17,6 +17,9 @@ const stateProperties = {
   },
 };
 
+/**
+ * Journal book icon for selecting journal.
+ */
 class JournalIcon extends HTMLElement {
   constructor() {
     super();
@@ -27,10 +30,16 @@ class JournalIcon extends HTMLElement {
     this.shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
+  /**
+   * Set size of Journal mock.
+   */
   set size(size) {
     this.state = (size in states) ? size : null;
   }
 
+  /**
+   * Set color of Journal Icon.
+   */
   set styleName(styleName) {
     const mainColor = colorThemes[styleName].main;
 

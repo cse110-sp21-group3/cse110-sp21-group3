@@ -1,5 +1,6 @@
 import { createdJournalKey } from './storageKeys.js';
 
+// Register service worker, if available option in browser
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').then((registration) => {
@@ -12,6 +13,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Check to see if user has ever been on website before. If yes, send straight to daily log.
 document.addEventListener('DOMContentLoaded', () => {
   const createdJournal = localStorage.getItem(createdJournalKey);
   if (createdJournal) {
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Make button to send user to pick journal after onboarding.
 const finishOnboardingBtn = document.getElementById('finish-onboarding');
 
 finishOnboardingBtn.addEventListener('click', () => {

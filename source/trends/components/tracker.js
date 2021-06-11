@@ -1,3 +1,6 @@
+/**
+ * Tracker component containing month's habit completions.
+ */
 class Tracker extends HTMLElement {
   constructor() {
     super();
@@ -87,12 +90,16 @@ class Tracker extends HTMLElement {
   }
 
   /**
-   * Habit name
+   * Get habit name.
+   * @returns The habit name for current tracker.
    */
   get habit() {
     return this.getAttribute('habit');
   }
 
+  /**
+   * Set name of habit for tracker.
+   */
   set habit(habit) {
     // Set title of grid and id of div to habit
     const title = this.shadowRoot.querySelector('#title');
@@ -103,10 +110,17 @@ class Tracker extends HTMLElement {
     this.setAttribute('habit', habit);
   }
 
+  /**
+   * Get the color used in the tracker calendar.
+   * @returns The color used in the tracker calendar.
+   */
   get color() {
     return this.getAttribute('color');
   }
 
+  /**
+   * Set the color used in the tracker calendar.
+   */
   set color(color) {
     const habitColor = this.shadowRoot.querySelector('#habit-color');
     habitColor.style.backgroundColor = color;
@@ -120,6 +134,9 @@ class Tracker extends HTMLElement {
     return this.getAttribute('keyname');
   }
 
+  /**
+   * Set the keyname for storage.
+   */
   set keyname(keyname) {
     this.setAttribute('keyname', keyname);
   }

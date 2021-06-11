@@ -11,7 +11,13 @@ root.style.setProperty('--light-bg', colorThemes[selectedColorStyle].background)
 root.style.setProperty('--main-bg', colorThemes[selectedColorStyle].main);
 
 /**
- * Delete collection
+ * Deletes a collection from the page, along with its contents from localStorage.
+ *
+ * The HTMLElement opening the modal for it is removed first, subsequently removed from localStorage
+ * via its name.
+ *
+ * @param {HTMLElement} tracker the HTML element representing a specific collection on our screen.
+ * @param {string} k The collection's name.
  */
 function deleteCollection(tracker, k) {
   // remove from DOM
@@ -24,7 +30,12 @@ function deleteCollection(tracker, k) {
 }
 
 /**
- * Create collection tracker for particular collection
+ * Creates a collection and adds it to the Collections page.
+ *
+ * An HTMLElement for the collection is created, containing a modal activator
+ * as well as the tying the functions for the 'delete collection' button as well.
+ *
+ * @param {string} collection The name of the collection to create.
  */
 function addCollection(collection) {
   const collectionElem = document.createElement('collection-elem');
@@ -47,7 +58,10 @@ function addCollection(collection) {
 }
 
 /**
- * template testing
+ * Function to initialize the collections for the journal.
+ *
+ * If at first our collection set doesn't exist, make an empty set,
+ * and after that, add all the collections to the page.
  */
 document.addEventListener('DOMContentLoaded', () => {
   let collections = JSON.parse(localStorage.getItem(collectionsKey));
@@ -61,13 +75,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Open and close a modal/form
+ * Displays a form on the page.
+ *
+ * Changes its style to display it.
+ * @param {*} form The form to display.
  */
 function openForm(form) {
   const f = form;
   f.style.display = 'block';
 }
 
+/**
+ * Closes a form on the page by hiding it.
+ *
+ * Changes its style to remove it.
+ * @param {*} form The form to close.
+ */
 function closeForm(form) {
   const f = form;
   f.style.display = 'none';
@@ -79,6 +102,11 @@ function closeForm(form) {
  */
 const addForm = document.querySelector('#addForm');
 
+/**
+ * Add various functions to enable the flow for adding collections.
+ *
+ * Tie in buttons for opening and closing the 'add collection' form.
+ */
 const addClose = addForm.querySelector('.close-form');
 addClose.addEventListener('click', () => {
   closeForm(addForm);
@@ -90,9 +118,14 @@ add.addEventListener('click', () => {
   openForm(addForm);
 });
 
-/*
-** Submit Add Collection
-*/
+/**
+ * Tie in functions for the 'add collection' form.
+ *
+ * This form essentially adds a collection to the page, along with its contents in storage,
+ * as well as performing error checking.
+ *
+ * Storage is handled first, and afterwards the element is added on the page.
+ */
 const submitAdd = addForm.querySelector('.submit #submitForm');
 submitAdd.onclick = (event) => {
   const collection = addForm.querySelector('#collection').value.trim();

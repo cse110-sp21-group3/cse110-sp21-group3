@@ -13,7 +13,7 @@ const defaultParameters = {
 };
 
 /**
- * Bullet Class for Daily Log Page Bullet
+ * Bullet Class for Daily Log Page Bullet with Task box.
  */
 class TaskBullet extends BaseBullet {
   constructor() {
@@ -73,11 +73,17 @@ class TaskBullet extends BaseBullet {
       'ArrowUp',
       'ArrowDown',
     ];
+    /**
+     * Listens for keyboard events that we are interested in and sets state properly.
+     * @param {string} key Key to adjust state for.
+     * @param {*} state New state to set for key.
+     */
     const watchKeys = (key, state) => {
       if (keysToWatch.includes(key)) {
         this.keysPressed[key] = state;
       }
     };
+    // Listeners for adjusting bullet formatting state.
     inputElement.onkeydown = (e) => {
       watchKeys(e.key, true);
       let matched = this.baseKeydownListener(e);
@@ -93,9 +99,10 @@ class TaskBullet extends BaseBullet {
   /**
    * Initialises the bullet
    * @param {*} bulletAttributes
-   * @param {Object} [ storageIndex ]
+   * @param {Object} [ bulletAttributes.storageIndex ]
    * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
    * @param {Object} [ bulletAttributes.bulletConfigs ]
+   *    -> Configuration for bullet object. Example: bulletStyle
    */
   initialiseBullet(bulletAttributes) {
     super.initialiseBullet(bulletAttributes);
@@ -120,8 +127,8 @@ class TaskBullet extends BaseBullet {
 
   /**
    * Serializes the bullet into the format
-   * [content, completed, children]
-   * @returns
+   *
+   * @returns Array with [content, completed, children] as contents
    */
   serialize() {
     return [
@@ -152,7 +159,14 @@ class TaskBullet extends BaseBullet {
     this.updateCallbacks.editContent(parameter, this.uniqueID, this.state[parameter]);
   }
 
-  // Additional Keyboard Listeners
+  /**
+   * Keydown keyboard listeners in addition to base listeners
+   *
+   * Shortcuts checked (in order):
+   * 1. Control + k
+   *
+   * @returns {Boolean} true if shortcut was matched, false otherwise
+   */
   keyDownListener() {
     if (this.keysPressed.Control && this.keysPressed.k) {
       this.editContent(bulletParameters.completed, !this.state.completed);

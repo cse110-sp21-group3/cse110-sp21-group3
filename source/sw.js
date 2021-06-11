@@ -3,6 +3,14 @@ const URLS_TO_CACHE = [
   '/',
 ];
 
+// Service Worker file
+//
+// This initializes our Service Worker for the app. It install the cache for the URL's
+// we want to keep (particularly our entire domain) and also handles all the events
+// a Service Worker needs to properly manage its activity.
+//
+// Include this in index to register service worker and cache entire website.
+
 self.addEventListener('install', (event) => { /* eslint-disable-line no-restricted-globals */
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_TO_CACHE)),

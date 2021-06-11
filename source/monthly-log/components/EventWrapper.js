@@ -1,7 +1,9 @@
 import { getMonthlyLogUID } from '../../storageKeys.js';
 
 const calendarDays = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']; // Sunday as 0 to match with Date.getDay()
-
+/**
+ * Component for a day of the month in the monthly log, containing events in the form of bullets.
+ */
 class EventWrapper extends HTMLElement {
   constructor() {
     super();
@@ -59,14 +61,27 @@ class EventWrapper extends HTMLElement {
     this.render();
   }
 
+  /**
+   * Gets the storage key used to store event in localStorage.
+   * @returns The storage key used to store event in localStorage.
+   */
   getStorageKey() {
     return this.storageKey;
   }
 
+  /**
+   * Obtain bullet tree from BulletList component.
+   * @returns Bullet tree from BulletList component.
+   */
   getBulletTree() {
     return this.shadowRoot.querySelector('bullet-list').getBulletTree();
   }
 
+  /**
+   * Renders the current event's contents to the page.
+   *
+   * Takes the bullet tree and inserts it in a TextEditor component inside the wrapper.
+   */
   render() {
     const emptyData = { 0: [1], 1: ['', []] };
 
