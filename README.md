@@ -48,10 +48,10 @@ The BuJo is hosted at
 ### [Pages](https://github.com/cse110-sp21-group3/cse110-sp21-group3/tree/e2e-tests/docs/pages)
 - app page-level breakdown
 
-### [JsDocs]() TODO
+### [JsDocs](https://cse110-sp21-group3.github.io/cse110-sp21-group3/)   
 - app component-level breakdown
 
-### [User Manual]()   TODO
+### [User Manual](docs/user_manual.md)      
 - guide for users on how to utilize the app
 
 ## Source
