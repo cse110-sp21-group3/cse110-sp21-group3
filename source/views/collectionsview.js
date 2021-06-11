@@ -44,7 +44,7 @@ export default class collectionsview extends abstractview{
                 <br>
                 <p id="error" class="e-text"></p>
                 <div class="submit">
-                  <button type="button" id="submitForm">Submit</button>
+                  <button type="submit" id="submitForm">Submit</button>
                 </div>
               </form>
             </div>

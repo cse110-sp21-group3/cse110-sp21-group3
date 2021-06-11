@@ -38,7 +38,7 @@ export default class trendview extends abstractview{
           <br>
           <p id="error">Please fill in habit field</p>
           <div class="submit">
-            <button type="button" id="submitForm">Submit</button>
+            <button type="submit" id="submitForm">Submit</button>
           </div>
         </form>
       </div>
