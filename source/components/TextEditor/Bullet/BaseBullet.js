@@ -113,26 +113,6 @@ export default class Bullet extends HTMLElement {
     this.transferFocusTo(this); // Reset focus
   }
 
-  /**
-   * Creates a bullet underneath the current one as a sibling.
-   */
-  createBullet() {
-    const newBullet = document.createElement(this.elementName);
-    newBullet.initialiseBullet({
-      updateCallbacks: this.updateCallbacks,
-      getNextID: this.getNextID,
-      getAdjacentBullet: this.getAdjacentBullet,
-      bulletStyle: this.bulletStyle,
-      bulletConfigs: this.bulletConfigs,
-    });
-
-    this.updateCallbacks.createBullet(this.uniqueID, newBullet);
-
-    newBullet.setNestDepthRem(this.getNestDepthRem());
-
-    this.after(newBullet);
-    this.transferFocusTo(newBullet);
-  }
 
   /**
    * Takes this bullet and moves it out of one level of nesting.
