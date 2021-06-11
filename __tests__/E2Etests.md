@@ -1,0 +1,1 @@
+End to End Tests were done manually and can be found in [docs/E2ETests](../docs/E2Etests/E2Eguide.md)
