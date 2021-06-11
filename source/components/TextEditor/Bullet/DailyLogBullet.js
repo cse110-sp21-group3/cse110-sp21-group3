@@ -237,7 +237,7 @@ class DailyLogBullet extends BaseBullet {
    * Keydown keyboard listeners in addition to base listeners
    *
    * Shortcuts checked (in order):
-   * 1. Control + k
+   * 1. Control + Shift + x
    * 2. Control + r
    * 3. Control + b
    * 4. Control + i

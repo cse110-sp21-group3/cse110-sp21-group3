@@ -163,7 +163,7 @@ class TaskBullet extends BaseBullet {
    * Keydown keyboard listeners in addition to base listeners
    *
    * Shortcuts checked (in order):
-   * 1. Control + k
+   * 1. Control + Shift + x
    *
    * @returns {Boolean} true if shortcut was matched, false otherwise
    */
