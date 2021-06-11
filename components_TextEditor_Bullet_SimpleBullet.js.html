@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>components/TextEditor/Bullet/SimpleBullet.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,156 @@
 
 <div id="main">
     
+    <h1 class="page-title">components/TextEditor/Bullet/SimpleBullet.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import BaseBullet from './BaseBullet.js';
 
+const elementName = 'simple-bullet';
+const bulletParameters = {
+  value: 'value',
+  children: 'children',
+}; // Stores keywords as defined while initialising BulletList
+const defaultParameters = {
+  value: '',
+};
+/**
+ * Standard bullet with no modifications.
+ */
+class SimpleBullet extends BaseBullet {
+  constructor() {
+    super();
+    this.elementName = elementName;
+    this.state = {
+      nestDepthRem: 1,
+    };
+    this.state[bulletParameters.value] = (this.getAttribute('value') === null) ? '' : this.getAttribute('value');
+    this.bulletStyle = `
+            input[type=text] {
+                border: none;
+                background: inherit;
+                width: 100%;
+                height: 1.8rem;
+            }
+            
+            li ${this.elementName} {
+                position: relative;
+                left: 2rem;
+            }
+        `; // This is default style
 
+    const template = document.createElement('template');
+    template.innerHTML = `
+                &lt;style>${this.bulletStyle}&lt;/style>
+                &lt;li class="bullet">
+                    &lt;input type="text" value="${this.state.value}" placeholder="">&lt;/input>
+                    &lt;div class="nested">&lt;/div>
+                &lt;/li>
+            `;
 
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
 
+    const inputElement = this.shadowRoot.querySelector('input');
 
+    const keysToWatch = [ // Keys used in keyboard shortcuts must be added here
+      'Tab',
+      'Enter',
+      'Backspace',
+      'Shift',
+      'Control',
+      's',
+      'ArrowUp',
+      'ArrowDown',
+    ];
+    /**
+     * Listens for keyboard events that we are interested in and sets state properly.
+     * @param {string} key Key to adjust state for.
+     * @param {*} state New state to set for key.
+     */
+    const watchKeys = (key, state) => {
+      if (keysToWatch.includes(key)) {
+        this.keysPressed[key] = state;
+      }
+    };
 
+    // Listeners for adjusting bullet formatting state.
+    inputElement.onkeydown = (e) => {
+      watchKeys(e.key, true);
+      this.baseKeydownListener(e);
+    };
+    inputElement.onkeyup = (e) => {
+      const matched = this.baseKeyupListener();
+      if (!matched) this.editContent(bulletParameters.value, e.target.value);
+      watchKeys(e.key, false);
+    };
+  }
 
+  /**
+   * Initialises the bullet
+   * @param {*} bulletAttributes
+   * @param {Object} [ bulletAttributes.storageIndex ]
+   * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
+   * @param {Object} [ bulletAttributes.bulletConfigs ]
+   *    -> Configuration for bullet object. Example: bulletStyle
+   */
+  initialiseBullet(bulletAttributes) {
+    super.initialiseBullet(bulletAttributes);
+    let data = null;
+    let storageIndex;
+    if ('data' in bulletAttributes) {
+      data = bulletAttributes.data;
+      storageIndex = bulletAttributes.storageIndex;
+    }
+    this.setValue(
+      (data === null) ? defaultParameters[bulletParameters.value] : data[storageIndex.value],
+    );
+    this.bulletConfigs = bulletAttributes.bulletConfigs;
+    if ('bulletStyle' in this.bulletConfigs) {
+      const styleTag = this.shadowRoot.querySelector('style');
+      styleTag.innerHTML = this.bulletConfigs.bulletStyle;
+    }
+  }
 
+  /**
+   * Serializes contents of bullet into array to serialize to JSON.
+   * @returns Array with [content, noChildren] as contents.
+   */
+  serialize() {
+    return [this.state.value, []];
+  }
 
-    
+  // Setters
+  setValue(value) {
+    this.state.value = value;
+    this.shadowRoot.querySelector('input').value = this.state.value;
+  }
 
+  // Event Handlers
+  editContent(parameter, newValue) {
+    switch (parameter) {
+      case bulletParameters.value:
+        this.setValue(newValue);
+        break;
 
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+      default:
+        break;
+    }
+    this.updateCallbacks.editContent(parameter, this.uniqueID, this.state.value);
+  }
+}
+
+customElements.define(elementName, SimpleBullet);
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

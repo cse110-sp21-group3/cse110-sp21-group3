@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>components/TextEditor/Bullet/TaskBullet.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,197 @@
 
 <div id="main">
     
+    <h1 class="page-title">components/TextEditor/Bullet/TaskBullet.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import BaseBullet from './BaseBullet.js';
 
+const elementName = 'task-bullet';
+const bulletParameters = {
+  value: 'value',
+  children: 'children',
+  completed: 'completed',
+}; // Stores keywords as defined while initialising BulletList
 
+const defaultParameters = {
+  value: '',
+  completed: false,
+};
 
+/**
+ * Bullet Class for Daily Log Page Bullet with Task box.
+ */
+class TaskBullet extends BaseBullet {
+  constructor() {
+    super();
+    this.elementName = elementName;
 
+    this.state = {
+      nestDepthRem: 1,
+    };
+    Object.keys(defaultParameters).forEach((key) => {
+      this.state[key] = defaultParameters[key];
+    });
 
+    this.parameterSetMap = {};
+    this.parameterSetMap[bulletParameters.value] = (value) => this.setValue(value);
+    this.parameterSetMap[bulletParameters.completed] = (value) => this.setCompleted(value);
 
+    this.bulletStyle = `
+        * {
+            font-family: 'Manrope', sans-serif;
+        }
+        
+        input[type=text] {
+            border: 1px solid transparent;
+            background: inherit;
+            font-size: 1.5rem;
+            width: 70%;
+        }
+        
+        li ${this.elementName} {
+            position: relative;
+            left: 2rem;
+        }
+    `; // This is default style
 
+    const template = document.createElement('template');
+    template.innerHTML = `
+        &lt;style>${this.bulletStyle}&lt;/style>
+        &lt;li class="bullet">
+          &lt;input type="text" value="${this.state.value}" placeholder="Add tasks here">&lt;/input>
+          &lt;div class="nested">&lt;/div>
+        &lt;/li>`;
 
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-    
+    const inputElement = this.shadowRoot.querySelector('input');
 
+    const keysToWatch = [ // Keys used in keyboard shortcuts must be added here
+      'Tab',
+      'Enter',
+      'Backspace',
+      'Shift',
+      'Control',
+      's', // save
+      'X', // complete &amp; uncomplete toggle (strikethrough, remove strikethrough)
+      'ArrowUp',
+      'ArrowDown',
+    ];
+    /**
+     * Listens for keyboard events that we are interested in and sets state properly.
+     * @param {string} key Key to adjust state for.
+     * @param {*} state New state to set for key.
+     */
+    const watchKeys = (key, state) => {
+      if (keysToWatch.includes(key)) {
+        this.keysPressed[key] = state;
+      }
+    };
+    // Listeners for adjusting bullet formatting state.
+    inputElement.onkeydown = (e) => {
+      watchKeys(e.key, true);
+      let matched = this.baseKeydownListener(e);
+      if (!matched) matched = this.keyDownListener();
+    };
+    inputElement.onkeyup = (e) => {
+      const matched = this.baseKeyupListener();
+      if (!matched) this.editContent(bulletParameters.value, e.target.value);
+      watchKeys(e.key, false);
+    };
+  }
 
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+  /**
+   * Initialises the bullet
+   * @param {*} bulletAttributes
+   * @param {Object} [ bulletAttributes.storageIndex ]
+   * @param {Array} [ bulletAttributes.data ] - Data as saved in storage
+   * @param {Object} [ bulletAttributes.bulletConfigs ]
+   *    -> Configuration for bullet object. Example: bulletStyle
+   */
+  initialiseBullet(bulletAttributes) {
+    super.initialiseBullet(bulletAttributes);
+    let data = null; let
+      storageIndex;
+    if ('data' in bulletAttributes) {
+      data = bulletAttributes.data;
+      storageIndex = bulletAttributes.storageIndex;
+    }
+
+    Object.keys(defaultParameters).forEach((key) => {
+      this.state[key] = defaultParameters[key];
+      this.parameterSetMap[key]((data === null) ? defaultParameters[key] : data[storageIndex[key]]);
+    });
+
+    this.bulletConfigs = bulletAttributes.bulletConfigs;
+    if ('bulletStyle' in this.bulletConfigs) {
+      const styleTag = this.shadowRoot.querySelector('style');
+      styleTag.innerHTML = this.bulletConfigs.bulletStyle;
+    }
+  }
+
+  /**
+   * Serializes the bullet into the format
+   *
+   * @returns Array with [content, completed, children] as contents
+   */
+  serialize() {
+    return [
+      this.state[bulletParameters.value],
+      this.state[bulletParameters.completed],
+      [], // Since bullets don't have access to their children, this should be updated by BulletList
+    ];
+  }
+
+  // Setters
+  setValue(value) {
+    this.state.value = value;
+    this.shadowRoot.querySelector('input').value = this.state.value;
+  }
+
+  setCompleted(isComplete) {
+    this.state.completed = isComplete;
+    // Change DOM
+    const inputElement = this.shadowRoot.querySelector('input');
+    const newStrikeState = (isComplete) ? 'line-through' : 'none';
+    inputElement.style.setProperty('text-decoration', newStrikeState);
+  }
+
+  // Event Handlers
+  editContent(parameter, newValue) {
+    // Maps between parameter and its Set function
+    this.parameterSetMap[parameter](newValue);
+    this.updateCallbacks.editContent(parameter, this.uniqueID, this.state[parameter]);
+  }
+
+  /**
+   * Keydown keyboard listeners in addition to base listeners
+   *
+   * Shortcuts checked (in order):
+   * 1. Control + Shift + x
+   *
+   * @returns {Boolean} true if shortcut was matched, false otherwise
+   */
+  keyDownListener() {
+    if (this.keysPressed.Control &amp;&amp; this.keysPressed.Shift &amp;&amp; this.keysPressed.X) {
+      this.editContent(bulletParameters.completed, !this.state.completed);
+    } else return false;
+    return true;
+  }
+}
+
+customElements.define(elementName, TaskBullet);
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

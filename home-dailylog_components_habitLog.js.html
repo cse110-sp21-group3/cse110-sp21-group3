@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>home-dailylog/components/habitLog.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,98 @@
 
 <div id="main">
     
+    <h1 class="page-title">home-dailylog/components/habitLog.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The representation of a day's habit. It is represented by a circle tagged by name.
+ */
+class DailyHabit extends HTMLElement {
+  constructor() {
+    super();
+    const template = document.createElement('template');
+    template.innerHTML = `
+        &lt;style>
+            .daily-habit {
+                display: flex;
+                flex-direction: row;
+                text-align: center;
+                flex-grow: 1;
+                align-items: center;
+                width: 100%;
+                margin: 1rem;
+            }
 
+            #title {
+                font-size: x-large;
+                margin: 1rem;
+            }
 
+            #habit-circle {
+              border-radius: 100%;
+              min-height: 2.5rem;
+              min-width: 2.5rem;
+              background-color: #dbdbdb;
+            }
 
+            #habit-circle:hover {
+              cursor: pointer;
+            }
+        &lt;/style>
+        &lt;!-- Template -->
+        &lt;div class="daily-habit">
+          &lt;div id="habit-circle">&lt;/div>
+          &lt;h2 id="title">habit&lt;/h2>
+        &lt;/div>`;
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
 
+  /**
+   * Get the name of the habit this circle represents.
+   * @returns The name of the habit this circle represents.
+   */
+  get habit() {
+    return this.getAttribute('habit');
+  }
 
+  /**
+   * Set the habit that this circle represents.
+   */
+  set habit(habit) {
+    // Set title of grid and id of div to habit
+    const title = this.shadowRoot.querySelector('#title');
+    title.innerHTML = habit;
+    this.id = habit;
+    this.setAttribute('habit', habit);
+  }
 
+  /**
+   * Get the color of the habit circle.
+   */
+  get color() {
+    return this.getAttribute('color');
+  }
 
+  /**
+   * Set the color of the habit circle.
+   */
+  set color(color) {
+    this.setAttribute('color', color);
+  }
+}
 
-
-    
-
-
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+customElements.define('daily-habit', DailyHabit);
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

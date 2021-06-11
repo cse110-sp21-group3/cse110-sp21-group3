@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>trends/components/tracker.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,164 @@
 
 <div id="main">
     
+    <h1 class="page-title">trends/components/tracker.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Tracker component containing month's habit completions.
+ */
+class Tracker extends HTMLElement {
+  constructor() {
+    super();
+    const template = document.createElement('template');
+    template.innerHTML = `
+        &lt;style>
+            :host {
+              width: 30%;
+              height: 50%;
+              margin: 1rem;
+            }
 
+            .habit {
+                display: flex;
+                flex-direction: column;
+                text-align: center;
+                flex-grow: 1;
+                height: 100%;
+            }
 
+            .delete-div {
+              display: flex;
+              flex-direction: row;
+              justify-content: flex-end;
+              width: 100%;
+            }
 
+            .delete-tracker {
+                color: #aaa;
+                font-size: 28px;
+                font-weight: bold;
+                visibility: hidden;
+            }
 
+            :host(:hover) .delete-tracker {
+                visibility: visible;
+            }
 
+            .delete-tracker:hover, .delete-tracker:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
 
+            #title {
+                font-size: 3xl;
+                margin: 1rem;
+            }
 
+            .habit-header {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+            }
 
+            #habit-color {
+              border-radius: 100%;
+              height: 1.5rem;
+              width: 1.5rem;
+              cursor: pointer;
+            }
 
-    
+            #habit-grid {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              width: 100%;
+              background-color: white;
+              border-radius: 1.5rem;
+              box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            }
+        &lt;/style>
+        &lt;!-- Template -->
+        &lt;div class="delete-div">
+          &lt;span class="delete-tracker">&amp;times;&lt;/span>
+        &lt;/div>
+        &lt;div class="habit">
+            &lt;div class="habit-header">
+              &lt;h1 id="title">habit&lt;/h1>
+              &lt;div id="habit-color">&lt;/div>
+            &lt;/div>
+            &lt;div id="habit-grid">&lt;/div>
+        &lt;/div>`;
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
 
+  /**
+   * Get habit name.
+   * @returns The habit name for current tracker.
+   */
+  get habit() {
+    return this.getAttribute('habit');
+  }
 
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+  /**
+   * Set name of habit for tracker.
+   */
+  set habit(habit) {
+    // Set title of grid and id of div to habit
+    const title = this.shadowRoot.querySelector('#title');
+    title.innerHTML = habit;
+    const deleteHabit = this.shadowRoot.querySelector('.delete-tracker');
+    deleteHabit.id = `delete-${habit}`;
+    this.id = habit;
+    this.setAttribute('habit', habit);
+  }
+
+  /**
+   * Get the color used in the tracker calendar.
+   * @returns The color used in the tracker calendar.
+   */
+  get color() {
+    return this.getAttribute('color');
+  }
+
+  /**
+   * Set the color used in the tracker calendar.
+   */
+  set color(color) {
+    const habitColor = this.shadowRoot.querySelector('#habit-color');
+    habitColor.style.backgroundColor = color;
+    this.setAttribute('color', color);
+  }
+
+  /**
+   * Keyname for storage
+   */
+  get keyname() {
+    return this.getAttribute('keyname');
+  }
+
+  /**
+   * Set the keyname for storage.
+   */
+  set keyname(keyname) {
+    this.setAttribute('keyname', keyname);
+  }
+}
+
+customElements.define('tracker-elem', Tracker);
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

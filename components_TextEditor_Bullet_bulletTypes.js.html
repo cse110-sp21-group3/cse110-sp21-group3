@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>components/TextEditor/Bullet/bulletTypes.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,47 @@
 
 <div id="main">
     
+    <h1 class="page-title">components/TextEditor/Bullet/bulletTypes.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Symbols for each type of bullet.
+ */
+export const bulletTypes = {
+  none: '',
+  task: '&amp;bull;',
+  note: '&amp;ndash;',
+  event: '&amp;#9702;',
+  theme: '&amp;#11088;',
+};
 
-
-
-
-
-
-
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+/**
+ * CSS to add for each variation of bullet.
+ */
+export const bulletModifiers = {
+  none: {
+    'font-style': 'normal',
+    'font-weight': 'normal',
+  },
+  priority: {
+    'font-style': 'normal',
+    'font-weight': 'bold',
+  },
+  inspiration: {
+    'font-style': 'italic',
+    'font-weight': 'normal',
+  },
+};
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

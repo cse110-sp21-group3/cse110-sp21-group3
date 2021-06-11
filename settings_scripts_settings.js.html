@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>settings/scripts/settings.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,63 @@
 
 <div id="main">
     
+    <h1 class="page-title">settings/scripts/settings.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { journalNameKey, themeKey } from '../../storageKeys.js';
 
+const journalNameEdit = document.getElementById('journal-name-edit');
+const journalThemeEdit = document.getElementById('journal-theme-edit');
+const saveBtn = document.getElementById('save');
 
+/**
+ * Set settings contents with current saved settings.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  journalNameEdit.textContent = localStorage.getItem(journalNameKey);
+  journalThemeEdit.textContent = localStorage.getItem(themeKey);
+});
 
+/**
+ * Save new settings to localStorage.
+ */
+function saveInputs() {
+  localStorage.setItem(journalNameKey, journalNameEdit.textContent);
+  localStorage.setItem(themeKey, journalThemeEdit.textContent);
+  saveBtn.style.visibility = 'hidden';
+}
 
+/**
+ * Show save button.
+ */
+function showSave() {
+  saveBtn.style.visibility = 'visible';
+}
 
+// Event listeners for the buttons on the page.
+// Ideally, modifying any contents in the settings page should prompt the save button,
+// and the save button should save everything.
+journalNameEdit.addEventListener('input', () => {
+  showSave();
+});
 
+journalThemeEdit.addEventListener('input', () => {
+  showSave();
+});
 
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+saveBtn.addEventListener('click', () => {
+  saveInputs();
+});
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

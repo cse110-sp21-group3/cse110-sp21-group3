@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>monthly-log/components/EventWrapper.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,161 @@
 
 <div id="main">
     
+    <h1 class="page-title">monthly-log/components/EventWrapper.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { getMonthlyLogUID } from '../../storageKeys.js';
 
+const calendarDays = ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa']; // Sunday as 0 to match with Date.getDay()
+/**
+ * Component for a day of the month in the monthly log, containing events in the form of bullets.
+ */
+class EventWrapper extends HTMLElement {
+  constructor() {
+    super();
+    this.storageKey = null;
+    this.props = {};
+    this.state = {};
+    this.elementStyle = `
+            .event {
+              display: flex;
+              align-items: center;
+              justify-content: space-evenly;
+            }
+            .event-editor-wrapper{
+                flex-grow: 1;
+                display: flex;
+                background-color: var(--light-bg);
+                border-radius: 1.25rem;
+                padding: 1rem;
+                margin: 0.5rem 0rem;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            }
+            .event-editor-wrapper > .day-num {
+                margin-right: 0.7rem;
+            }
+            bullet-list.event-editor{
+                width: 100%;
+            }
+            
+            .event-editor-wrapper .day-num{
+                color: var(--day-num-color);
+                font-size: 1.8rem;
+            }
 
+            .day {
+              color: var(--day-num-color);
+              font-size: 1.3rem;
+              width: 1.5rem;
+              margin-right: 0.5rem;
+              text-align: center;
+            }
+        `;
+  }
 
+  /**
+     * Initialises Wrapper
+     * @param {*} wrapperAttributes
+     * @param {Date} wrapperAttributes.date
+     * @param {function} wrapperAttributes.saveDataCallback
+     */
+  initialise(wrapperAttributes) {
+    this.props.date = wrapperAttributes.date;
+    this.props.saveDataCallback = wrapperAttributes.saveDataCallback;
 
+    this.storageKey = getMonthlyLogUID('event', this.props.date);
+    this.render();
+  }
 
+  /**
+   * Gets the storage key used to store event in localStorage.
+   * @returns The storage key used to store event in localStorage.
+   */
+  getStorageKey() {
+    return this.storageKey;
+  }
 
+  /**
+   * Obtain bullet tree from BulletList component.
+   * @returns Bullet tree from BulletList component.
+   */
+  getBulletTree() {
+    return this.shadowRoot.querySelector('bullet-list').getBulletTree();
+  }
 
+  /**
+   * Renders the current event's contents to the page.
+   *
+   * Takes the bullet tree and inserts it in a TextEditor component inside the wrapper.
+   */
+  render() {
+    const emptyData = { 0: [1], 1: ['', []] };
 
+    const dataTree = localStorage.getItem(this.storageKey);
+    if (dataTree === null) this.state.dataTree = emptyData;
+    else this.state.dataTree = JSON.parse(dataTree);
 
-    
+    const templateElement = document.createElement('template');
+    templateElement.innerHTML = `
+            &lt;style>
+                ${this.elementStyle}
+            &lt;/style>
+            &lt;div class="event">
+              &lt;div class="day">${calendarDays[this.props.date.getDay()]}&lt;/div>
+              &lt;div class="event-editor-wrapper">
+                  &lt;div class="day-num">${this.props.date.getDate()}&lt;/div>
+                  &lt;bullet-list class="event-editor">&lt;/bullet-list>
+              &lt;/div>
+            &lt;/div>
+        `;
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(templateElement.content.cloneNode(true));
 
+    // Initialise bullet-list
+    const list = this.shadowRoot.querySelector('bullet-list.event-editor');
+    list.initialiseList({
+      saveDataCallback: this.props.saveDataCallback,
+      nestLimit: 0,
+      bulletTree: this.state.dataTree,
+      storageIndex: {
+        value: 0,
+        children: 1,
+      },
+      elementName: 'simple-bullet',
+      bulletConfigs: {
+        bulletStyle: `
+                    input[type=text] {
+                        font-size: 1.5rem;
+                        font-family: 'Manrope', sans-serif;
+                        color: #4F4F4F;
 
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+                        border: none;
+                        background: inherit;
+                        width: 90%;
+                        height: 1.8rem;
+                    }
+                    
+                    li {
+                        list-style-type: none;
+                        width: 100%;
+                    }
+                `,
+      },
+    });
+  }
+}
+
+customElements.define('event-wrapper', EventWrapper);
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

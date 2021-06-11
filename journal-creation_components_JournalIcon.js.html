@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>journal-creation/components/JournalIcon.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,124 @@
 
 <div id="main">
     
+    <h1 class="page-title">journal-creation/components/JournalIcon.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import colorThemes from '../../colorThemes.js';
 
+const states = {
+  small: 'small',
+  large: 'large',
+};
+const stateProperties = {
+  small: {
+    width: '6rem',
+    height: '9rem',
+    labelMarginTop: '1.5rem',
+  },
+  large: {
+    width: '17rem',
+    height: '23.6rem',
+    labelMarginTop: '5rem',
+  },
+};
 
+/**
+ * Journal book icon for selecting journal.
+ */
+class JournalIcon extends HTMLElement {
+  constructor() {
+    super();
+    this.state = states.small;
 
+    const template = document.createElement('template');
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
 
+  /**
+   * Set size of Journal mock.
+   */
+  set size(size) {
+    this.state = (size in states) ? size : null;
+  }
 
+  /**
+   * Set color of Journal Icon.
+   */
+  set styleName(styleName) {
+    const mainColor = colorThemes[styleName].main;
 
+    this.shadowRoot.innerHTML = `
+            &lt;style>
+                .journal, .backdrop {
+                    width: 67vw;
+                    height: 100vw;
+                    
+                    margin: auto;
 
+                    box-sizing: border-box;
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                    border-radius: 10px;
 
+                    text-center: center;
+                    padding: 0rem;
 
-    
+                    cursor: pointer;
+                }
+                .journal {
+                    position: relative;
+                    background: ${mainColor};
+                    border: 2px solid ${mainColor};
+                }      
+                .backdrop {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    transform: translate(0.25rem, 0.25rem);
+                    background: white;
+                    z-index: -1;
+                }      
+                .white-box {
+                    width: 60%;
+                    height: 10%;    
+                    
+                    margin: ${stateProperties[this.state].labelMarginTop} auto;
 
+                    background: #FFFFFF;
+                    border: 2px solid #FFFFFF;
+                    box-sizing: border-box;
+                    border-radius: 5px;
+                }
 
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+                      
+                @media screen and (min-width: 500px) {
+                    .journal, .backdrop {
+                        width: ${stateProperties[this.state].width};
+                        height: ${stateProperties[this.state].height};  
+                    }
+                }
+                
+            &lt;/style>
+            &lt;div class="journal">
+                ${(this.state === states.small) ? '&lt;div class="white-box">&lt;/div>' : ''}
+                ${(this.state === states.large) ? '&lt;div class="backdrop">&lt;/div>' : ''}
+            &lt;/div>
+        `;
+  }
+}
+
+customElements.define('journal-icon', JournalIcon);
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

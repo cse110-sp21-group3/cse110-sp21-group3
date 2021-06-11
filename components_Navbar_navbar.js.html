@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>components/Navbar/navbar.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,120 @@
 
 <div id="main">
     
+    <h1 class="page-title">components/Navbar/navbar.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The side navigation bar for the journal.
+ *
+ * This contains links to every other page in the journal.
+ */
+class Navbar extends HTMLElement {
+  constructor() {
+    super();
+    const template = document.createElement('template');
+    template.innerHTML = `
+      &lt;style>
+        #nav {
+          position: fixed;
+          width: 25vw;
+          height: 100vh;
+          background-color: #EEE4E1;
+          transform: translate3d(-100vw, 0, 0);
+          transition: 1s;
+          z-index: 1000;
+          top: 0px;
+          left: 0px;
+          overflow: scroll;
+        
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        
+        .nav-component {
+          border-bottom: 1px solid #9A9A9A;
+        }
+        
+        .nav-component > p {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 29px;
+          line-height: 49px;
+        
+          color: #000000;
+        }
+        
+        .nav-component > p:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+        
+        #nav.show {
+          transform: translate3d(0vw, 0, 0);
+          transition: .3s;
+        }
+        
+        /* The Close Button */
+        .close-nav {
+          position: absolute;
+          color: #aaa;
+          top: 8px;
+          right: 15px;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close-nav:hover, .close-nav:focus {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
 
+        .nav-component a{
+          text-decoration: none;
+          color: black;
+        }
+      &lt;/style>
+      &lt;!-- Template -->
+      &lt;div id="nav">
+        &lt;span class="close-nav">&amp;times;&lt;/span>
+        &lt;div class="nav-component">
+          &lt;p>&lt;a href="../home-dailylog/home.html">home&lt;/a>&lt;/p>
+        &lt;/div>
+        &lt;div class="nav-component">
+          &lt;p>&lt;a href="../trends/trends.html">habits &amp; trends&lt;/a>&lt;/p>
+        &lt;/div>
+        &lt;div class="nav-component">
+          &lt;p>&lt;a href="../past-dailylogs/past-daily-logs.html">past logs&lt;/a>&lt;/p>
+        &lt;/div>
+        &lt;div class="nav-component">
+          &lt;p>&lt;a href="../monthly-log/monthlylog.html">monthly log&lt;/a>&lt;/p>
+        &lt;/div>
+        &lt;div class="nav-component">
+          &lt;p>&lt;a href="../collections/collections.html">collections&lt;/a>&lt;/p>
+        &lt;/div>
+        &lt;div class="nav-component">
+          &lt;p>&lt;a href="../settings/settings.html">settings&lt;/a>&lt;/p>
+        &lt;/div>
+      &lt;/div>`;
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+  }
+}
 
-
-
-
-
-
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+customElements.define('navbar-elem', Navbar);
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

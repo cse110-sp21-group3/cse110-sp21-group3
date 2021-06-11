@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Home - Documentation</title>
+    <title>components/Menu/menu.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,35 +29,52 @@
 
 <div id="main">
     
+    <h1 class="page-title">components/Menu/menu.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Menu
+ */
+const flyoutMenu = document.querySelector('navbar-elem').shadowRoot.querySelector('#nav');
 
+/**
+ * Display navbar menu.
+ */
+function showMenu() {
+  flyoutMenu.classList.add('show');
+}
 
+/**
+ * Hide menu.
+ * @param {*} e Event received from DOM.
+ */
+function hideMenu(e) {
+  flyoutMenu.classList.remove('show');
+  e.stopPropagation();
+  document.body.style.overflow = 'auto';
+}
 
+/**
+ * Hamburger menu button
+ */
+const menuButton = document.querySelector('.menu');
+menuButton.addEventListener('click', showMenu, false);
 
-
-
-
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>cse110-sp21-group3</h1>
-<p>This is the bullet journal project for CSE 110 Spring 2021 Group 3.</p>
-<h2>Team Info</h2>
-<p><a href="admin/team.md">team.md</a></p>
-<h2>Link to app</h2>
-<p>The theme bujo is hosted at
-<a href="https://theme-bujo.netlify.app/">https://theme-bujo.netlify.app/</a></p></article>
+/**
+ * Close menu button
+ */
+const navSpan = document.querySelector('navbar-elem').shadowRoot.querySelector('.close-nav');
+navSpan.addEventListener('click', hideMenu, false);
+</code></pre>
+        </article>
     </section>
-
-
 
 
 
