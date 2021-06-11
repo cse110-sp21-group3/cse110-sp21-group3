@@ -16,7 +16,7 @@ if (habits === null) {
  * Return UID keys for monthly logs
  * @param {*} itemType - event or task
  * @param {Date} date
- * @returns
+ * @returns The UID for the provided date in the Monthy Log as a string.
  */
 export function getMonthlyLogUID(itemType, date) {
   const prefix = 'ML';
@@ -42,6 +42,7 @@ export function getMonthlyLogUID(itemType, date) {
  * Returns the UID for daily logs for `date` in the format "DL{monthNum}-{date}-{year}"
  * Example, DL5-9-2021 for 9 June, 2021
  * @param {Date} date
+ * @returns the UID for the Daily Log as a string.
  */
 export function getDailyLogUID(date) {
   // Add 1 to Date.getUTCMonth() as it assumes January as 0
