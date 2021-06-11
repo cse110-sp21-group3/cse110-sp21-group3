@@ -112,7 +112,7 @@ class DailyLogBullet extends BaseBullet {
       'Shift',
       'Control',
       's', // save
-      'k', // complete & uncomplete toggle (strikethrough, remove strikethrough)
+      'X', // (with Shift) complete & uncomplete toggle (strikethrough, remove strikethrough)
       'i', // inspiration (italics)
       'b', // priority (bold)
       'r', // regular font style
@@ -207,9 +207,13 @@ class DailyLogBullet extends BaseBullet {
   }
 
   setBulletModifier(modifier) {
-    this.state.modifier = modifier;
+    if (modifier === this.state.modifier) { // Allow modifiers to be toggled
+      this.state.modifier = 'none';
+    } else {
+      this.state.modifier = modifier;
+    }
     const inputElement = this.shadowRoot.querySelector('input');
-    Object.assign(inputElement.style, bulletModifiers[modifier]);
+    Object.assign(inputElement.style, bulletModifiers[this.state.modifier]);
   }
 
   setCompleted(isComplete) {
@@ -233,7 +237,7 @@ class DailyLogBullet extends BaseBullet {
    * Keydown keyboard listeners in addition to base listeners
    *
    * Shortcuts checked (in order):
-   * 1. Control + k
+   * 1. Control + Shift + x
    * 2. Control + r
    * 3. Control + b
    * 4. Control + i
@@ -241,7 +245,7 @@ class DailyLogBullet extends BaseBullet {
    * @returns {Boolean} true if shortcut was matched, false otherwise
    */
   keyDownListener() {
-    if (this.keysPressed.Control && this.keysPressed.k) {
+    if (this.keysPressed.Control && this.keysPressed.Shift && this.keysPressed.X) {
       this.editContent(bulletParameters.completed, !this.state.completed);
     } else if (this.keysPressed.Control && this.keysPressed.r) {
       this.editContent(bulletParameters.modifier, 'none');
