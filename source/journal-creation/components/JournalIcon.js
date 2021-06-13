@@ -101,5 +101,5 @@ class JournalIcon extends HTMLElement {
         `;
   }
 }
-
+// test comment
 customElements.define('journal-icon', JournalIcon);
